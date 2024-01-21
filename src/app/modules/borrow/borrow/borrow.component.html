@@ -1,0 +1,9 @@
+<p>borrow works!</p>
+
+<p *ngFor="let equipment of equipments">
+  {{ equipment.itemNo }} {{ equipment.itemName }}
+</p>
+
+<input [(ngModel)]="itemNo" #ctrl="ngModel" required>
+
+<button (click)="checkValue()"> get equipment</button>
