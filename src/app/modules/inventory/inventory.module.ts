@@ -14,11 +14,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { ItemsComponent } from './items/items.component';
 
 @NgModule({
   declarations: [
     InventoryComponent,
-    CategoryComponent
+    CategoryComponent,
+    ItemsComponent
   ],
   imports: [
     CommonModule,
