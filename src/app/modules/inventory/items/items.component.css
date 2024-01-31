@@ -2,9 +2,23 @@
 
 .panel-name{
     font-size: 22px;
+    margin: 5px;
+}
+
+.search-item{
     margin: 10px;
 }
+.add-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    max-width: 100px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
 .scrollable-panel {
+    margin: 10px;
     height: 400px;
     overflow-y: auto;
     border: 1px solid #575757;
@@ -16,6 +30,10 @@
     align-items: center;
 }
 
+.edit-button .mat-mdc-raised-button.mat-unthemed{
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
 .spacer {
     margin-right: 70%;
 }

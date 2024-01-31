@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { ThemePalette } from '@angular/material/core';
 interface Equipment {
   value: string;
   viewValue: string;
@@ -20,6 +21,10 @@ interface Description {
 interface Remarks {
   value: string;
   viewValue: string;
+}
+export interface ChipColor {
+  name: string;
+  color: ThemePalette;
 }
 
 @Component({
@@ -51,5 +56,14 @@ export class CategoryComponent {
     {value: 'remarks-1', viewValue: 'Defective'},
     {value: 'remarks-2', viewValue: 'Turnover'},
     {value: 'remarks-3', viewValue: 'Lost'},
+  ];
+
+  availableColors: ChipColor[] = [
+    {name: 'Name (A-Z)', color: undefined},
+    {name: 'Name (Z-A)', color: undefined},
+    {name: 'Color (A-Z)', color: undefined},
+    {name: 'Color (Z-A)', color: undefined},
+    {name: 'Status', color: undefined},
+    {name: 'Tags', color: undefined},
   ];
 }

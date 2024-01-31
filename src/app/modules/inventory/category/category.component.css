@@ -1,9 +1,7 @@
 .panel-name{
     font-size: 20px;
     margin: 10px;
-    text-align: center;
 }
-
 
 .form-fields-container {
     display: flex;
@@ -24,3 +22,7 @@
     margin-left: 10px;
 }
 
+.mat-mdc-chip-set {
+    margin: 10px;
+    max-width: 120px;
+}
