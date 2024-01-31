@@ -8,9 +8,11 @@
 .form-fields-container {
     display: flex;
     flex-direction: column;
+    margin: 10px;
 }
 
 .form-field {
+    height: 70px;
     margin-bottom: -22px;
 }
 .form-container {

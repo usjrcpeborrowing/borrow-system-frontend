@@ -8,16 +8,12 @@ import { InventoryRoutingModule } from './inventory-routing.module';
 import { InventoryComponent } from './inventory/inventory.component';
 
 import { FormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
-interface Equipment {
-  value: string;
-  viewValue: string;
-}
-
 
 @NgModule({
   declarations: [
@@ -33,13 +29,11 @@ interface Equipment {
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class InventoryModule { }
 
-export class EqupimentSelectOverview {
-  equipments: Equipment[] = [
-    {value: 'equpiment-0', viewValue: 'Equpiment 1'},
-  ];
-}

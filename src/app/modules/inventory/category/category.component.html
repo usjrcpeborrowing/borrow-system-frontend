@@ -18,4 +18,40 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Matter Type</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let matter of matters" [value]="matter.value">
+                {{ matter.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Description Type</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let description of descriptions" [value]="description.value">
+                {{ description.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field class="form-field">
+        <mat-label>Date Acquired</mat-label>
+        <input matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Item Remarks</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let remark of remarks" [value]="remark.value">
+                {{ remark.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
 </div>
