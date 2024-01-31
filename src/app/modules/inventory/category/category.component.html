@@ -1,1 +1,21 @@
-<p>category works!</p>
+
+<div class="panel-name">Category</div>
+<div class="form-fields-container">
+    <mat-form-field class="form-field">
+        <mat-label>Equipment Type</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let equipment of equipments" [value]="equipment.value">
+                    {{ equipment.viewValue }}
+                </mat-option>
+            </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Brand Type</mat-label>
+        <mat-select>
+            <mat-option *ngFor="let brand of brands" [value]="brand.value">
+                {{ brand.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

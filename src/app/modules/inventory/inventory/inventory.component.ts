@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./inventory.component.css']
 })
 export class InventoryComponent {
-
+  
 }
+

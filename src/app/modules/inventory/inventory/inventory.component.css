@@ -1,0 +1,18 @@
+.example-container {
+    width: 1510px;
+    height: 600px;
+    margin: 10px;
+    border: 1px solid #555;
+}
+.custom-drawer-items {
+    padding: 2px;
+}
+.panel-name{
+    margin-bottom: 5px;
+}
+
+.custom-drawer {
+    width: 215px; 
+    background-color: #f1efef; 
+  }
+  
