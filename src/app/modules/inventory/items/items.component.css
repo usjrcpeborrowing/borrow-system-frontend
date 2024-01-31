@@ -1,0 +1,21 @@
+
+
+.panel-name{
+    font-size: 22px;
+    margin: 10px;
+}
+.scrollable-panel {
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #575757;
+    border-radius: 5px;
+    padding: 10px;
+}
+.panel-description {
+    display: flex;
+    align-items: center;
+}
+
+.spacer {
+    margin-right: 70%;
+}
