@@ -17,10 +17,5 @@ export class BorrowComponent implements OnInit {
     
   }
 
-  checkValue() {
-    this.equipmentService.getEquipmentById(this.itemNo).subscribe((resp: any) => {
-      this.equipments = resp.data;
-      console.log(resp);
-    });
-  }
+
 }

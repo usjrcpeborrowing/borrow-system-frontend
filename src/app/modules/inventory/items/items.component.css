@@ -2,12 +2,24 @@
 
 .panel-name{
     font-size: 22px;
-    margin: 5px;
+    margin: 20px;
+    margin-bottom: -5px;
 }
 
-.search-item{
-    margin: 10px;
+.search-item {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    height: 70px;
+    margin-bottom: -25px;
+  }
+mat-form-field.searchbar {
+    margin-left: 10px;
+    width: 200px;
+    height: 70px;
 }
+
 .add-button .mat-mdc-raised-button.mat-unthemed{
     display: flex;
     max-width: 100px;

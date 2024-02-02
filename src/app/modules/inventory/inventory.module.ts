@@ -8,18 +8,18 @@ import { InventoryRoutingModule } from './inventory-routing.module';
 import { InventoryComponent } from './inventory/inventory.component';
 import { ItemsComponent } from './items/items.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
+import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
-import { MatChipsModule } from '@angular/material/chips';
 @NgModule({
   declarations: [
     InventoryComponent,
@@ -37,12 +37,14 @@ import { MatChipsModule } from '@angular/material/chips';
     MatSelectModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatExpansionModule,
     MatButtonModule,
     MatChipsModule,
+    MatIconModule,
 
   ]
 })
