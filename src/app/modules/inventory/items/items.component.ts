@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import {
   ActivatedRoute,
@@ -9,7 +10,7 @@ import {
 } from '@angular/router';
 import { Pagination } from 'src/app/models/Pagination';
 import { EquipmentService } from 'src/app/services/equipment.service';
-
+import { AddComponent } from '../add/add.component';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
@@ -29,7 +30,8 @@ export class ItemsComponent implements OnInit{
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog,
   ) {}
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) =>
@@ -78,5 +80,13 @@ export class ItemsComponent implements OnInit{
     const searchword = params['search'] ? params['search'] : '';
     this.searchedWord.patchValue(searchword);
     this.getItems();
+  }
+
+  addItem() {
+    console.log('view');
+    this.dialog.open(AddComponent, {
+      height: '80vh',
+      width: '80vw',
+    });
   }
 }

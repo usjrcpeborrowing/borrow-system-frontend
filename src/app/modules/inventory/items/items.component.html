@@ -2,7 +2,7 @@
 <div class="panel-name">Item List</div>
 <div class="search-item">
     <mat-form-field class="searchbar" floatLabel="always">
-        <mat-label class="searchbar">Search Item</mat-label>
+        <mat-label>Search Item</mat-label>
         <input
             matInput
             placeholder="Type Here"
@@ -16,26 +16,10 @@
 </div>
 
 <div class="scrollable-panel">
-    <mat-accordion>
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Item Name
-                </mat-panel-title>
-                <mat-panel-description>
-                    <span>Serial No.</span>
-                    <span class="spacer"></span>
-                    <span>Quantity</span>
-                </mat-panel-description>
-            </mat-expansion-panel-header>
-            <p>Item Description</p>
-            <div class="edit-button">
-                <button mat-raised-button>Edit</button>
-            </div>
-        </mat-expansion-panel>
-    </mat-accordion>
+    <app-item-panel></app-item-panel>
+    
     
 </div>
 <div class="add-button">
-    <button mat-raised-button>Add Item</button>
+    <button mat-raised-button (click)="addItem()">Add Item</button>
 </div>

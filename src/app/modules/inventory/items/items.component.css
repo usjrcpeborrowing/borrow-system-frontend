@@ -15,6 +15,7 @@
     margin-bottom: -25px;
   }
 mat-form-field.searchbar {
+    font-size: 15px;
     margin-left: 10px;
     width: 200px;
     height: 70px;
