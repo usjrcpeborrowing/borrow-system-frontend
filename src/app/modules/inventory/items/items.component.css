@@ -18,8 +18,19 @@ mat-form-field.searchbar {
     width: 200px;
     height: 70px;
 }
+.generate-buttons{
+    display: flex;
 
+}
 .add-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    max-width: 100px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+.report-button .mat-mdc-raised-button.mat-unthemed{
     display: flex;
     max-width: 100px;
     margin-top: 10px;
@@ -38,6 +49,6 @@ mat-form-field.searchbar {
 }
 
 .spacer {
-    margin-right: 70%;
+    margin-right: 84%;
 }
 
