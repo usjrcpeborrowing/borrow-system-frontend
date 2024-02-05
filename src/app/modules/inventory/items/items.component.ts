@@ -26,7 +26,7 @@ export class ItemsComponent implements OnInit{
   };
   opened: boolean = true;
   searchedWord = new FormControl('');
-  productlist: any = [];
+  itemlist: any = [];
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
@@ -40,7 +40,7 @@ export class ItemsComponent implements OnInit{
   }
   getItems() {
     const searchword = this.searchedWord.value ? this.searchedWord.value : '';
-    this.productlist = this.equipmentService.getItems(
+    this.itemlist = this.equipmentService.getItems(
       this.pagination,
       searchword
     ).data;
@@ -59,7 +59,7 @@ export class ItemsComponent implements OnInit{
         search: this.searchedWord.value,
       },
     };
-    this.router.navigate(['/'], navigationExtras);
+    this.router.navigate(['/inventory'], navigationExtras);
   }
   paginate(event: PageEvent) {
     console.log(event);
@@ -71,7 +71,7 @@ export class ItemsComponent implements OnInit{
         search: this.searchedWord.value,
       },
     };
-    this.router.navigate(['/'], navigationExtras);
+    this.router.navigate(['/inventory'], navigationExtras);
   }
   queryParamsHandler(params: Params) {
     this.opened = params['opened'] == 'true' ? params['opened'] : false;

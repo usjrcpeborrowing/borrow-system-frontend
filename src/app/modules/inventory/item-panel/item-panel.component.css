@@ -16,3 +16,33 @@
 .spacer {
     margin-right: 70%;
 }
+.edit-button .mat-mdc-raised-button.mat-unthemed{
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
+.title {
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.itemlist {
+    padding-bottom: 3px;
+
+}
+
+.expanded-description{
+    display: flex;
+}
+.fit-image{
+    margin-right: 10px;
+    width: 30%;
+    height: 30%;
+}
+.notes-description{
+    display: flex;
+    flex-direction: column;
+}
+.text-bold{
+    font-weight: bold;
+}

@@ -1,5 +1,3 @@
-
-
 .panel-name{
     font-size: 22px;
     margin: 20px;
@@ -38,15 +36,8 @@ mat-form-field.searchbar {
     border-radius: 5px;
     padding: 10px;
 }
-.panel-description {
-    display: flex;
-    align-items: center;
-}
 
-.edit-button .mat-mdc-raised-button.mat-unthemed{
-    background-color: rgb(62, 112, 62);
-    color: white;
-}
 .spacer {
     margin-right: 70%;
 }
+

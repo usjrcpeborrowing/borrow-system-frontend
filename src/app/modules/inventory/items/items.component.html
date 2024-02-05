@@ -16,10 +16,12 @@
 </div>
 
 <div class="scrollable-panel">
-    <app-item-panel></app-item-panel>
-    
-    
+    <app-item-panel
+    *ngFor="let item of itemlist"
+        [item]="item">
+    </app-item-panel>
+
 </div>
 <div class="add-button">
     <button mat-raised-button (click)="addItem()">Add Item</button>
-</div>
+</div> 

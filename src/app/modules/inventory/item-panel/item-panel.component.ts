@@ -9,17 +9,20 @@ import { ItemDialogComponent } from '../item-dialog/item-dialog.component';
   styleUrls: ['./item-panel.component.css']
 })
 export class ItemPanelComponent implements OnInit{
-  @Input() item: Item | any;
+  @Input() item: Item = {} as Item | any;
 
   constructor(
     public dialog: MatDialog,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.item);
+  }
 
   viewItemDetails() {
     console.log('view');
     this.dialog.open(ItemDialogComponent, {
+      data: this.item,
       height: '80vh',
       width: '80vw',
     });

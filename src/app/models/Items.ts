@@ -5,13 +5,13 @@ export interface Item {
     brand: Object;
     color: String;
     modelNo: String;
-    quanitity: Number;
+    quantity: Number;
     unit: String;
     matter: String;
     description: String;
     status: String;
     dateAcquired: Date;
-    image: string[];
+    image: string;
     remarks: String;
     tags: Boolean;
     checkedBy: String;
