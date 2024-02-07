@@ -1,0 +1,16 @@
+
+.header{
+    height: 10%;
+    color: white;
+    background-color: rgb(62, 112, 62);
+}
+.logo{
+    max-width: 4%;
+}
+.header-content{
+    margin-right: 150px;
+    line-height: 1;
+}
+.sub-text {
+    font-size: 12px;
+}
