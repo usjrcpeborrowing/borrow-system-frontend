@@ -14,7 +14,7 @@ interface Matter {
   value: string;
   viewValue: string;
 }
-interface Description {
+interface Description { 
   value: string;
   viewValue: string;
 }

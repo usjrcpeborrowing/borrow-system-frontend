@@ -18,10 +18,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { LoginHeaderModule } from '../login-header/login-header.module';
+import { PanelComponent } from './panel/panel.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
+    PanelComponent,
   ],
   imports: [
     CommonModule,
