@@ -43,11 +43,11 @@ export class ItemsComponent implements OnInit{
     this.itemlist = this.equipmentService.getItems(
       this.pagination,
       searchword
-    ).data;
+    );
     this.pagination.length = this.equipmentService.getItems(
       this.pagination,
       searchword
-    ).data.length;
+    ).length;
   }
 
   searchItem(event: Event) {
