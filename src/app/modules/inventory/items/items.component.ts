@@ -11,13 +11,13 @@ import {
 import { Pagination } from 'src/app/models/Pagination';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { AddComponent } from '../add/add.component';
+
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css'],
 })
-
-export class ItemsComponent implements OnInit{
+export class ItemsComponent implements OnInit {
   pagination: Pagination = {
     length: 100,
     page: 1,
@@ -27,30 +27,41 @@ export class ItemsComponent implements OnInit{
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
+  selectedCategories: any = {};
+
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {}
+
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) =>
       this.queryParamsHandler(params)
     );
   }
-  getItems() {
-    const searchword = this.searchedWord.value ? this.searchedWord.value : '';
-    this.itemlist = this.equipmentService.getItems(
-      this.pagination,
-      searchword
-    );
-    this.pagination.length = this.equipmentService.getItems(
-      this.pagination,
-      searchword
-    ).length;
+
+  handleSelectedCategories(categories: any): void {
+    this.selectedCategories = categories;
+    this.filterItems();
   }
 
-  searchItem(event: Event) {
+  getItems(): void {
+    const searchword = this.searchedWord.value ? this.searchedWord.value : '';
+    this.equipmentService.getItems(this.pagination, searchword)
+      .subscribe(
+        (items) => {
+          this.itemlist = items;
+          this.pagination.length = items.length;
+        },
+        (error) => {
+          console.error('Error fetching items:', error);
+        }
+      );
+  }
+
+  searchItem(event: Event): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         page: this.pagination.page,
@@ -61,8 +72,8 @@ export class ItemsComponent implements OnInit{
     };
     this.router.navigate(['/inventory'], navigationExtras);
   }
-  paginate(event: PageEvent) {
-    console.log(event);
+
+  paginate(event: PageEvent): void {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         page: event.pageIndex + 1,
@@ -73,7 +84,8 @@ export class ItemsComponent implements OnInit{
     };
     this.router.navigate(['/inventory'], navigationExtras);
   }
-  queryParamsHandler(params: Params) {
+
+  queryParamsHandler(params: Params): void {
     this.opened = params['opened'] == 'true' ? params['opened'] : false;
     this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.pagination.page = params['page'] ? params['page'] : 1;
@@ -82,11 +94,26 @@ export class ItemsComponent implements OnInit{
     this.getItems();
   }
 
-  addItem() {
-    console.log('view');
+  addItem(): void {
     this.dialog.open(AddComponent, {
       height: '80vh',
       width: '80vw',
     });
+  }
+
+  filterItems(): void {
+    if (this.selectedCategories) {
+      this.itemlist = this.itemlist.filter((item: any) => {
+        let pass = true;
+        Object.keys(this.selectedCategories).forEach((category) => {
+          if (this.selectedCategories[category].length > 0) {
+            if (!this.selectedCategories[category].includes(item[category])) {
+              pass = false;
+            }
+          }
+        });
+        return pass;
+      });
+    }
   }
 }
