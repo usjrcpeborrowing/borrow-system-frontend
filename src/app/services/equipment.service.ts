@@ -12,11 +12,12 @@ export class EquipmentService {
 
   constructor(private http: HttpClient) {}
 
-  getItems(pagination: Pagination, searchWord: string): Observable<any[]> {
+  getItems(pagination: Pagination, searchWord: string, equipmentWord: string): Observable<any[]> {
     let params = new HttpParams();
     params = params.append('limit', pagination.limit.toString());
     params = params.append('page', pagination.page.toString());
     params = params.append('search', searchWord);
+    params = params.append('equipmentType', equipmentWord);
 
     return of(staticItems).pipe(delay(1000));
 

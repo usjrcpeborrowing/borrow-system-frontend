@@ -11,13 +11,13 @@ import {
 import { Pagination } from 'src/app/models/Pagination';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { AddComponent } from '../add/add.component';
-
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent implements OnInit {
+  
   pagination: Pagination = {
     length: 100,
     page: 1,
@@ -49,9 +49,12 @@ export class ItemsComponent implements OnInit {
 
   getItems(): void {
     const searchword = this.searchedWord.value ? this.searchedWord.value : '';
-    this.equipmentService.getItems(this.pagination, searchword)
+    const equipmentWord = this.selectedCategories.equipmentType ? this.selectedCategories.equipmentType : '';
+    this.equipmentService.getItems(this.pagination, searchword, equipmentWord)
       .subscribe(
         (items) => {
+          console.log(searchword);
+          console.log(equipmentWord);
           this.itemlist = items;
           this.pagination.length = items.length;
         },
@@ -68,9 +71,14 @@ export class ItemsComponent implements OnInit {
         limit: this.pagination.limit,
         opened: this.opened,
         search: this.searchedWord.value,
+        equipmentType: this.selectedCategories.equipmentType,
+        brand: this.selectedCategories.brand,
+        matter: this.selectedCategories.matter,
+        description: this.selectedCategories.description,
       },
     };
     this.router.navigate(['/inventory'], navigationExtras);
+    
   }
 
   paginate(event: PageEvent): void {
@@ -80,6 +88,10 @@ export class ItemsComponent implements OnInit {
         limit: event.pageSize,
         opened: this.opened,
         search: this.searchedWord.value,
+        equipmentType: this.selectedCategories.equipmentType,
+        brand: this.selectedCategories.brand,
+        matter: this.selectedCategories.matter,
+        description: this.selectedCategories.description,
       },
     };
     this.router.navigate(['/inventory'], navigationExtras);
@@ -91,6 +103,16 @@ export class ItemsComponent implements OnInit {
     this.pagination.page = params['page'] ? params['page'] : 1;
     const searchword = params['search'] ? params['search'] : '';
     this.searchedWord.patchValue(searchword);
+    this.getItems();
+
+    const selectedCategories = {
+      equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
+      brand: params['brand'] ? params['brand'] : '',
+      matter: params['matter'] ? params['matter'] : '',
+      description: params['description'] ? params['description'] : '',
+    };
+
+    this.handleSelectedCategories(selectedCategories);
     this.getItems();
   }
 
