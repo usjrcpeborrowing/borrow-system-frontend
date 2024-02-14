@@ -1,31 +1,42 @@
 .split {
     height: 100%;
-    width: 42%;
+    width: 90%;
     position: fixed;
     z-index: 0;
     top: 0;
     overflow-x: hidden;
     transition: transform 0.5s ease;
-    transform: translateX(-100%);
+    transform: translateY(100%);
 }
 
 .left {
     left: 0;
     background-color: white;
+    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 }
 
 .centered {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 70%;
+    left: 25%;
     transform: translate(-50%, -50%);
     text-align: left;
 }
-.generate-buttons{
-    display: flex;
 
+.generate-buttons {
+    display: flex;
 }
-.login-button .mat-mdc-raised-button.mat-unthemed{
+.header-text{
+    font-size: 40px;
+}
+.description {
+    padding-top: 20px;
+    font-size: medium;
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.login-button .mat-mdc-raised-button.mat-unthemed {
     display: flex;
     max-width: 100%;
     margin-top: 10px;
@@ -36,5 +47,5 @@
 }
 
 .swipe-right {
-    transform: translateX(0);
+    transform: translateY(0); /* Slide it back up */
 }

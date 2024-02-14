@@ -119,7 +119,7 @@ export class ItemsComponent implements OnInit {
   addItem(): void {
     this.dialog.open(AddComponent, {
       height: '80vh',
-      width: '80vw',
+      width: '40vw',
     });
   }
 

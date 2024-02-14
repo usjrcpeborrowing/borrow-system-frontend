@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-panel',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-panel.component.css']
 })
 export class LandingPanelComponent implements OnInit{
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -15,5 +16,9 @@ export class LandingPanelComponent implements OnInit{
         splitElement.classList.add('swipe-right');
       }
     });
+  }
+
+  directToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }
