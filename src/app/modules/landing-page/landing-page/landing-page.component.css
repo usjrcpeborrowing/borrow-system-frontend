@@ -1,15 +1,35 @@
-.container{
-    display: flex;
+.grey-bar {
+    width: 100%;
+    height: 50px;
+    background-color: #d8dbd8;
+    z-index: 2;
 }
+
+.top {
+    top: 0;
+    position: relative;
+}
+
+.bottom {
+    
+    position: fixed;
+    bottom: 0;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
 .content {
-    position: absolute;
-    bottom: 7%;
-    left: 3%;
     padding: 20px;
 }
+
 .centered {
     color: white;
-    position:relative;
+    position: relative;
     font-size: 30px;
     text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
 }
@@ -17,9 +37,11 @@
 .generate-buttons {
     display: flex;
 }
-.header-text{
+
+.header-text {
     font-size: 60px;
 }
+
 .description {
     padding-top: 20px;
     font-size: medium;

@@ -10,6 +10,7 @@ export class LandingPageComponent implements OnInit{
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    
   }
   directToLogin(): void {
     this.router.navigate(['/login']);

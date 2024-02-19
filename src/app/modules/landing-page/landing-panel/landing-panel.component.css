@@ -11,7 +11,7 @@
 
 .left {
     left: 0;
-    background-color: white;
+    background-color: rgba(84, 114, 92, 0.9);
     clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 }
 
@@ -21,6 +21,7 @@
     left: 25%;
     transform: translate(-50%, -50%);
     text-align: left;
+    
 }
 
 .generate-buttons {
@@ -47,5 +48,5 @@
 }
 
 .swipe-right {
-    transform: translateY(0); /* Slide it back up */
+    transform: translateY(0);
 }
