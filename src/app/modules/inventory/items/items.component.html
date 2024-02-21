@@ -1,0 +1,33 @@
+
+<div class="panel-name">Item List</div>
+<div class="search-item">
+    <mat-form-field class="searchbar" floatLabel="always">
+        <mat-label>Search Item</mat-label>
+        <input
+            matInput
+            placeholder="Type Here"
+            autocomplete="off"
+            [formControl]="searchedWord"
+            (keyup.enter)="searchItem($event)"
+        />
+        <mat-icon matSuffix class="searchbar">search</mat-icon>
+    </mat-form-field>
+    
+</div>
+
+<div class="scrollable-panel">
+    <app-item-panel
+    *ngFor="let item of itemlist"
+        [item]="item">
+    </app-item-panel>
+
+</div>
+<div class="generate-buttons">
+    <div class="add-button">
+        <button mat-raised-button (click)="addItem()">Add Item</button>
+    </div>
+    <span class="spacer"></span>
+    <div class="report-button">
+        <button mat-raised-button>Print</button>
+    </div>
+</div>

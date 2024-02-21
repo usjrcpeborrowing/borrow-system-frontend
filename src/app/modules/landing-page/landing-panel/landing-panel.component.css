@@ -1,0 +1,52 @@
+.split {
+    height: 100%;
+    width: 90%;
+    position: fixed;
+    z-index: 0;
+    top: 0;
+    overflow-x: hidden;
+    transition: transform 0.5s ease;
+    transform: translateY(100%);
+}
+
+.left {
+    left: 0;
+    background-color: rgba(84, 114, 92, 0.9);
+    clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
+}
+
+.centered {
+    position: absolute;
+    top: 70%;
+    left: 25%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    
+}
+
+.generate-buttons {
+    display: flex;
+}
+.header-text{
+    font-size: 40px;
+}
+.description {
+    padding-top: 20px;
+    font-size: medium;
+    max-width: 400px;
+    word-wrap: break-word;
+}
+
+.login-button .mat-mdc-raised-button.mat-unthemed {
+    display: flex;
+    max-width: 100%;
+    margin-top: 10px;
+    margin-left: 10px;
+    border-radius: 1px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
+.swipe-right {
+    transform: translateY(0);
+}

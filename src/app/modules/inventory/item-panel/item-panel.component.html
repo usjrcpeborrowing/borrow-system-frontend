@@ -1,0 +1,33 @@
+<div class="itemlist">
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{ item.itemName }}
+                </mat-panel-title>
+                <mat-panel-description>
+                    <div class="serial-no">Serial No: {{ item.serialNo }}</div>
+                    <span class="spacer"></span>
+                    <div class="quantity">Quantity: {{ item.quantity }}</div>
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="expanded-description">
+                <img
+                    class="fit-image"
+                    [src]="item.image"
+                    alt=""
+                    />
+                    <div class="notes-description">
+                        <div class="description-item"><a class="text-bold">Brand</a>: {{ item.brand }}</div>
+                        <div class="description-item"><a class="text-bold">Equipment Type</a>: {{ item.equipmentType }}</div>
+                        <div class="description-item"><a class="text-bold">Description</a>: {{ item.description }}</div>
+                        <div class="description-item"><a class="text-bold">Item Status</a>: {{ item.status }}</div>
+                        <div class="description-item"><a class="text-bold">Checked By</a>: {{ item.checkedBy }}</div>
+                    </div>
+                </div>
+            <div class="edit-button">
+                <button mat-raised-button (click)="viewItemDetails()">Edit</button>
+            </div>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

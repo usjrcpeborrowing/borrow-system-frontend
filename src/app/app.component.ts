@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import { EquipmentService } from './services/equipment.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +12,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'usjr-borrowing-system';
+
+  opened: boolean = true;
+
+  constructor(
+    private equipmentService: EquipmentService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 }

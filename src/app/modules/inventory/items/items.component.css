@@ -1,0 +1,54 @@
+.panel-name{
+    font-size: 22px;
+    margin: 20px;
+    margin-bottom: -5px;
+}
+
+.search-item {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    height: 70px;
+    margin-bottom: -25px;
+}
+mat-form-field.searchbar {
+    font-size: 15px;
+    margin-left: 10px;
+    width: 200px;
+    height: 70px;
+}
+.generate-buttons{
+    display: flex;
+
+}
+.add-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    max-width: 100px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+.report-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    max-width: 100px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
+.scrollable-panel {
+    margin: 10px;
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid #575757;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.spacer {
+    margin-right: 84%;
+}
+

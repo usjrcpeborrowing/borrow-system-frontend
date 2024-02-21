@@ -1,0 +1,40 @@
+.addName{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    width: 40%;
+    margin-bottom: -20px;
+}
+.addEquipment{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    width: 40%;
+    margin-bottom: -20px;
+}
+.addBrand{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    width: 40%;
+    margin-bottom: -20px;
+}
+.addMatter{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    width: 40%;
+    margin-bottom: -20px;
+}
+.addDepartment{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 10px;
+    padding: 0 10px;
+    width: 40%;
+    margin-bottom: -20px;
+}
