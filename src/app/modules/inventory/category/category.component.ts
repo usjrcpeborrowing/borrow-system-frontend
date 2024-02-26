@@ -113,7 +113,7 @@ export class CategoryComponent implements OnInit {
       pageSizeOption: [5, 10, 25, 100],
     };
     
-    this.equipmentService.getItems(pagination, '', '').subscribe(
+    this.equipmentService.getItems(pagination, '').subscribe(
       (items) => {
         this.equipments = this.getUniqueValues(items, 'equipmentType');
         this.brands = this.getUniqueValues(items, 'brand');

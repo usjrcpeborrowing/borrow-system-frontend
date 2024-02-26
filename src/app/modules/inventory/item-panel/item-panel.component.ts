@@ -16,7 +16,6 @@ export class ItemPanelComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    console.log(this.item);
   }
 
   viewItemDetails() {

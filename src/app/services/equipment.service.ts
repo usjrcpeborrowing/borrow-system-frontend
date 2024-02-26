@@ -1,7 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { Pagination } from 'src/app/models/Pagination';
 import { Item } from '../models/Items';
 @Injectable({
@@ -12,14 +11,9 @@ export class EquipmentService {
 
   constructor(private http: HttpClient) {}
 
-  getItems(pagination: Pagination, searchWord: string, equipmentWord: string): Observable<any[]> {
-    let params = new HttpParams();
-    params = params.append('limit', pagination.limit.toString());
-    params = params.append('page', pagination.page.toString());
-    params = params.append('search', searchWord);
-    params = params.append('equipmentType', equipmentWord);
+  getItems(pagination: Pagination, searchWord: string): Observable<any[]> {
 
-    return of(staticItems).pipe(delay(1000));
+    return of(staticItems)
 
       // return this.http.get<any[]>(this.apiUrl, { params })
       // .pipe(

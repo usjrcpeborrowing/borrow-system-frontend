@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
 import {
   ActivatedRoute,
   NavigationExtras,
@@ -49,12 +48,10 @@ export class ItemsComponent implements OnInit {
 
   getItems(): void {
     const searchword = this.searchedWord.value ? this.searchedWord.value : '';
-    const equipmentWord = this.selectedCategories.equipmentType ? this.selectedCategories.equipmentType : '';
-    this.equipmentService.getItems(this.pagination, searchword, equipmentWord)
+    this.equipmentService.getItems(this.pagination, searchword)
       .subscribe(
         (items) => {
           console.log(searchword);
-          console.log(equipmentWord);
           this.itemlist = items;
           this.pagination.length = items.length;
         },
@@ -81,22 +78,6 @@ export class ItemsComponent implements OnInit {
     
   }
 
-  paginate(event: PageEvent): void {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        page: event.pageIndex + 1,
-        limit: event.pageSize,
-        opened: this.opened,
-        search: this.searchedWord.value,
-        equipmentType: this.selectedCategories.equipmentType,
-        brand: this.selectedCategories.brand,
-        matter: this.selectedCategories.matter,
-        description: this.selectedCategories.description,
-      },
-    };
-    this.router.navigate(['/inventory'], navigationExtras);
-  }
-
   queryParamsHandler(params: Params): void {
     this.opened = params['opened'] == 'true' ? params['opened'] : false;
     this.pagination.limit = params['limit'] ? params['limit'] : 25;
@@ -104,7 +85,6 @@ export class ItemsComponent implements OnInit {
     const searchword = params['search'] ? params['search'] : '';
     this.searchedWord.patchValue(searchword);
     this.getItems();
-
     const selectedCategories = {
       equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
       brand: params['brand'] ? params['brand'] : '',
@@ -113,7 +93,6 @@ export class ItemsComponent implements OnInit {
     };
 
     this.handleSelectedCategories(selectedCategories);
-    this.getItems();
   }
 
   addItem(): void {
