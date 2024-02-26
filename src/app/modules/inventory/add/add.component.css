@@ -1,40 +1,77 @@
+.add-itme{
+    display: flex;
+    justify-content: space-between;
+}
+.panel-title{
+    margin: 3%;
+}
+.form-container{
+    position: relative;
+    border: 1px solid ;
+    border-color: rgb(136, 136, 136);
+    margin: 2%;
+    width: 50%;
+    padding: 1px;
+}
 .addName{
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 0 10px;
-    width: 40%;
+    width: 100%;
     margin-bottom: -20px;
 }
 .addEquipment{
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 0 10px;
-    width: 40%;
+    width: 100%;
     margin-bottom: -20px;
 }
 .addBrand{
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 0 10px;
-    width: 40%;
+    width: 100%;
     margin-bottom: -20px;
 }
 .addMatter{
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 0 10px;
-    width: 40%;
+    width: 100%;
+    margin-bottom: -20px;
+}
+
+.addRemarks{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
     margin-bottom: -20px;
 }
 .addDepartment{
     display: flex;
     justify-content: flex-end;
-    margin-right: 10px;
-    padding: 0 10px;
-    width: 40%;
+    width: 100%;
     margin-bottom: -20px;
+}
+
+.image-container{
+    position: relative;
+    display: flex;
+    margin: 2%;
+    border: 1px solid ;
+    border-color: rgb(136, 136, 136);
+    width: 20vh;
+    height: 20vh;
+}
+.add-image .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    width: 20%;
+    margin: 2%;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+.add-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    max-width: 100px;
+    margin-top: 15%;
+    margin-left: 10px;
+    background-color: rgb(62, 112, 62);
+    color: white;
 }

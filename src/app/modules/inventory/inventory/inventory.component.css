@@ -1,7 +1,6 @@
 .example-container {
-    width: 1510px;
-    height: 600px;
-    margin: 10px;
+    width: 100%;
+    height: 100%;
     border: 1px solid #555;
 }
 .custom-drawer-items {
@@ -12,7 +11,7 @@
 }
 
 .custom-drawer {
-    width: 215px; 
+    width: 14%;
     background-color: #f1efef; 
   }
   
