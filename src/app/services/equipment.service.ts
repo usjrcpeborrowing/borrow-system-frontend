@@ -1,6 +1,6 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Pagination } from 'src/app/models/Pagination';
 import { Item } from '../models/Items';
 @Injectable({
@@ -11,21 +11,22 @@ export class EquipmentService {
 
   constructor(private http: HttpClient) {}
 
-  getItems(pagination: Pagination, searchWord: string): Observable<any[]> {
+  getItems(pagination: Pagination, searchWord: string, filters: any): Observable<any> {
+    let params = new HttpParams()
+      .set('page', pagination.page.toString())
+      .set('limit', pagination.limit.toString())
+      .set('search', searchWord);
 
-    return of(staticItems)
+    if (filters) {
+      Object.keys(filters).forEach(key => {
+        if (filters[key]) {
+          params = params.set(key, filters[key]);
+        }
+      });
+    }
 
-      // return this.http.get<any[]>(this.apiUrl, { params })
-      // .pipe(
-      //   catchError(this.handleError)
-      // );
+    return this.http.get<any>(`${this.apiUrl}`, { params });
   }
-
-  private handleError(err: HttpErrorResponse) {
-    return throwError(() => new Error(err.message));
-  }
-
-  
 }
 export const staticItems: Item[] = [
   {

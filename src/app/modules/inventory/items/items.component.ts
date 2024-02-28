@@ -10,11 +10,13 @@ import {
 import { Pagination } from 'src/app/models/Pagination';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { AddComponent } from '../add/add.component';
+
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css'],
 })
+
 export class ItemsComponent implements OnInit {
   
   pagination: Pagination = {
@@ -47,13 +49,22 @@ export class ItemsComponent implements OnInit {
   }
 
   getItems(): void {
-    const searchword = this.searchedWord.value ? this.searchedWord.value : '';
-    this.equipmentService.getItems(this.pagination, searchword)
+    const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
+    const filters = {
+      equipmenttype: this.selectedCategories.equipmentType,
+      brand: this.selectedCategories.brand,
+      matter: this.selectedCategories.matter,
+      description: this.selectedCategories.description,
+      dateAcquired: this.selectedCategories.dateAcquired,
+      remarks: this.selectedCategories.remarks,
+      department: this.selectedCategories.department
+    };
+  
+    this.equipmentService.getItems(this.pagination, searchWord, filters)
       .subscribe(
-        (items) => {
-          console.log(searchword);
-          this.itemlist = items;
-          this.pagination.length = items.length;
+        (response) => {
+          this.itemlist = response.data;
+          this.pagination.length = response.total;
         },
         (error) => {
           console.error('Error fetching items:', error);
@@ -85,6 +96,7 @@ export class ItemsComponent implements OnInit {
     const searchword = params['search'] ? params['search'] : '';
     this.searchedWord.patchValue(searchword);
     this.getItems();
+    
     const selectedCategories = {
       equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
       brand: params['brand'] ? params['brand'] : '',

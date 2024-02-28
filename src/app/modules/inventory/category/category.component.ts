@@ -28,6 +28,12 @@ interface Description {
   isSelected: boolean;
 }
 
+interface Status {
+  value: string;
+  viewValue: string;
+  isSelected: boolean;
+}
+
 interface Remarks {
   value: string;
   viewValue: string;
@@ -56,6 +62,7 @@ export class CategoryComponent implements OnInit {
   brands: Brand[] = [];
   matters: Matter[] = [];
   descriptions: Description[] = [];
+  status: Status[] = [];
   remarks: Remarks[] = [];
   departments: Remarks[] = [];
   selectedValue: string[] = [];
@@ -94,7 +101,11 @@ export class CategoryComponent implements OnInit {
     this.descriptions.forEach((description) => {
       description.isSelected = params['description'] === description.value;
     });
-  
+    
+    this.status.forEach((status) => {
+      status.isSelected = params['status'] === status.value;
+    });
+
     this.remarks.forEach((remark) => {
       remark.isSelected = params['remarks'] === remark.value;
     });
@@ -113,12 +124,14 @@ export class CategoryComponent implements OnInit {
       pageSizeOption: [5, 10, 25, 100],
     };
     
-    this.equipmentService.getItems(pagination, '').subscribe(
-      (items) => {
+    this.equipmentService.getItems(pagination, '', {}).subscribe(
+      (response) => {
+        const items = response.data;
         this.equipments = this.getUniqueValues(items, 'equipmentType');
         this.brands = this.getUniqueValues(items, 'brand');
         this.matters = this.getUniqueValues(items, 'matter');
         this.descriptions = this.getUniqueValues(items, 'description');
+        this.status = this.getUniqueValues(items, 'status');
         this.remarks = this.getUniqueValues(items, 'remarks');
         this.departments = this.getUniqueValues(items, 'department');
         
@@ -130,6 +143,7 @@ export class CategoryComponent implements OnInit {
       }
     );
   }
+  
 
   private getUniqueValues(items: any[], key: string): any[] {
     const uniqueValues: any[] = [];
@@ -155,6 +169,7 @@ export class CategoryComponent implements OnInit {
       brands: this.brands.map((b) => b.value),
       matters: this.matters.map((m) => m.value),
       descriptions: this.descriptions.map((d) => d.value),
+      status: this.status.map((r) => r.value),
       remarks: this.remarks.map((r) => r.value),
       departments: this.remarks.map((r) => r.value),
     };

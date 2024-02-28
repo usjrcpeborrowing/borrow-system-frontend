@@ -46,7 +46,16 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
-        <mat-label>Item Remarks</mat-label>
+        <mat-label>Item Status</mat-label>
+        <mat-select (selectionChange)="updateQueryParams('status', $event.value)">
+            <mat-option *ngFor="let status of status" [value]="status.value">
+                {{ status.viewValue }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>Remarks</mat-label>
         <mat-select (selectionChange)="updateQueryParams('remark', $event.value)">
             <mat-option *ngFor="let remark of remarks" [value]="remark.value">
                 {{ remark.viewValue }}
