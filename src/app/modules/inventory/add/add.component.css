@@ -1,17 +1,31 @@
-.add-itme{
+
+.add-item{
+    position: relative;
     display: flex;
-    justify-content: space-between;
+    padding: 1%;
+}
+.first-content{
+    position: relative;
+    margin: 5%;
+}
+.second-content{
+    position: relative;
+    margin: 5%;
+    width: 70%;
 }
 .panel-title{
     margin: 3%;
+}
+.header-form{
+    font-size: large;
+    margin: 2%;
 }
 .form-container{
     position: relative;
     border: 1px solid ;
     border-color: rgb(136, 136, 136);
     margin: 2%;
-    width: 50%;
-    padding: 1px;
+    width: 100%;
 }
 .addName{
     display: flex;
@@ -62,7 +76,7 @@
 }
 .add-image .mat-mdc-raised-button.mat-unthemed{
     display: flex;
-    width: 20%;
+    width: 100%;
     margin: 2%;
     background-color: rgb(62, 112, 62);
     color: white;
@@ -70,8 +84,7 @@
 .add-button .mat-mdc-raised-button.mat-unthemed{
     display: flex;
     max-width: 100px;
-    margin-top: 15%;
-    margin-left: 10px;
+    margin: 5%;
     background-color: rgb(62, 112, 62);
     color: white;
 }
