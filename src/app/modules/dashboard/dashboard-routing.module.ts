@@ -7,7 +7,7 @@ import { DashboardReedsComponent } from './dashboard-reeds/dashboard-reeds.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 const routes: Routes = [
   {
-    path: 'user',
+    path: 'student',
     component: DashboardComponent
   },
   {
