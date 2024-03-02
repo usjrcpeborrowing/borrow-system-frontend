@@ -1,0 +1,11 @@
+.card-test {
+    /* This makes all divs the same width */
+    background-color: lightgray;
+    border: 1px solid black;
+    padding: 10px;
+    /* margin: 5px; */
+    /* width: 100%; */
+    gap: 5px;
+    min-height: 50px;
+}
+

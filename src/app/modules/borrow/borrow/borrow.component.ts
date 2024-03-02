@@ -8,14 +8,21 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 })
 export class BorrowComponent implements OnInit {
   greetings: string = 'CPE';
-  equipments: any = [];
-  itemNo = '';
-
-  constructor(private equipmentService: EquipmentService) {}
+  equipmentlist: any = [1,1,2,3,4,5,6,7,8,9,1];
+  searchedWord = '';
+  opened: boolean = true;
+  constructor(private equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
-    
+
   }
 
+  searchProduct(event: any) {
+    console.log(event)
+  }
+
+  cartClicked() {
+    this.opened = !this.opened;
+  }
 
 }
