@@ -1,9 +1,12 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 import { Pagination } from 'src/app/models/Pagination';
 import { Item } from '../models/Items';
+import { Filter } from '../models/Filter';
+
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,26 +15,18 @@ export class EquipmentService {
 
   constructor(private http: HttpClient) {}
 
-  getItems(pagination: Pagination, searchWord: string, equipmentWord: string): Observable<any[]> {
+  getItems(pagination: Pagination, filters: Filter): Observable<any[]> {
     let params = new HttpParams();
     params = params.append('limit', pagination.limit.toString());
     params = params.append('page', pagination.page.toString());
-    params = params.append('search', searchWord);
-    params = params.append('equipmentType', equipmentWord);
+    params = params.append('search', filters.searchWord);
 
-    return of(staticItems).pipe(delay(1000));
-
-      // return this.http.get<any[]>(this.apiUrl, { params })
-      // .pipe(
-      //   catchError(this.handleError)
-      // );
+    return this.http.get<any[]>(environment.API_URL + '/equipment', { params }).pipe(catchError(this.handleError));
   }
 
   private handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));
   }
-
-  
 }
 export const staticItems: Item[] = [
   {

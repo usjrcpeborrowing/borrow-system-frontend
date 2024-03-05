@@ -113,22 +113,22 @@ export class CategoryComponent implements OnInit {
       pageSizeOption: [5, 10, 25, 100],
     };
     
-    this.equipmentService.getItems(pagination, '', '').subscribe(
-      (items) => {
-        this.equipments = this.getUniqueValues(items, 'equipmentType');
-        this.brands = this.getUniqueValues(items, 'brand');
-        this.matters = this.getUniqueValues(items, 'matter');
-        this.descriptions = this.getUniqueValues(items, 'description');
-        this.remarks = this.getUniqueValues(items, 'remarks');
-        this.departments = this.getUniqueValues(items, 'department');
+    // this.equipmentService.getItems(pagination, '', '').subscribe(
+    //   (items) => {
+    //     this.equipments = this.getUniqueValues(items, 'equipmentType');
+    //     this.brands = this.getUniqueValues(items, 'brand');
+    //     this.matters = this.getUniqueValues(items, 'matter');
+    //     this.descriptions = this.getUniqueValues(items, 'description');
+    //     this.remarks = this.getUniqueValues(items, 'remarks');
+    //     this.departments = this.getUniqueValues(items, 'department');
         
-        this.emitSelectedCategories();
-        console.log(this.equipments);
-      },
-      (error) => {
-        console.error('Error fetching items:', error);
-      }
-    );
+    //     this.emitSelectedCategories();
+    //     console.log(this.equipments);
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching items:', error);
+    //   }
+    // );
   }
 
   private getUniqueValues(items: any[], key: string): any[] {

@@ -50,18 +50,18 @@ export class ItemsComponent implements OnInit {
   getItems(): void {
     const searchword = this.searchedWord.value ? this.searchedWord.value : '';
     const equipmentWord = this.selectedCategories.equipmentType ? this.selectedCategories.equipmentType : '';
-    this.equipmentService.getItems(this.pagination, searchword, equipmentWord)
-      .subscribe(
-        (items) => {
-          console.log(searchword);
-          console.log(equipmentWord);
-          this.itemlist = items;
-          this.pagination.length = items.length;
-        },
-        (error) => {
-          console.error('Error fetching items:', error);
-        }
-      );
+    // this.equipmentService.getItems(this.pagination, searchword, equipmentWord)
+    //   .subscribe(
+    //     (items) => {
+    //       console.log(searchword);
+    //       console.log(equipmentWord);
+    //       this.itemlist = items;
+    //       this.pagination.length = items.length;
+    //     },
+    //     (error) => {
+    //       console.error('Error fetching items:', error);
+    //     }
+    //   );
   }
 
   searchItem(event: Event): void {

@@ -6,6 +6,17 @@
   padding: 12px;
 }
 
+.item-qty {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.item-qty mat-icon {
+  cursor: pointer;
+}
+
 .circle {
   height: 20px;
   width: 20px;
@@ -17,6 +28,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .circle mat-icon {
@@ -24,4 +36,8 @@
   height: 16px;
   width: 16px;
   font-size: 16px;
+}
+
+.fit-image {
+    width: 40px;
 }

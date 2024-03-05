@@ -17,9 +17,9 @@
 }
 
 .added-equipment-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 
 .card {
@@ -52,10 +52,14 @@ mat-drawer {
   align-items: center;
   background: #ecefa3;
   cursor: pointer;
+  z-index: 1;
 }
 
 @media screen and (max-width: 420px) {
-    mat-drawer {
-        width: 100%;
-      }
+  .card {
+    flex-grow: 1;
+  }
+  mat-drawer {
+    width: 100%;
+  }
 }
