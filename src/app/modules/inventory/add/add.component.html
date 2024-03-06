@@ -2,14 +2,6 @@
     <h1>Add Item</h1>
 </div>
 <div class="add-item">
-    <div class="first-content">
-        <div class="image-container">
-            image
-        </div>
-        <div class="add-image">
-            <button mat-raised-button>Add Image</button>
-        </div>
-    </div>
     <div class="second-content">
         <h1 class="header-form">Item Description</h1>
         <div class="form-container">
@@ -58,6 +50,14 @@
                     autocomplete="off"
                 />
             </mat-form-field>
+        </div>
+    </div>
+    <div class="first-content">
+        <div class="image-container">
+            <img *ngIf="imageUrl" [src]="imageUrl">
+        </div>
+        <div class="add-image">
+            <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" (blur)="loadImageFromGoogleDrive()">
         </div>
     </div>
 </div>
