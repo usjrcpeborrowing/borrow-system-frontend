@@ -22,6 +22,7 @@ export class AddComponent implements OnInit {
     
     if (match) {
       const imageId = match[1];
+      console.log(match)
       this.imageUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
       console.log('Image URL:', this.imageUrl);
     } else {

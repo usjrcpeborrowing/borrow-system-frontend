@@ -86,7 +86,7 @@ export class CategoryComponent implements OnInit {
   handleQueryParams(params: Params): void {
     
     this.equipments.forEach((equipment) => {
-      equipment.isSelected = params['equipmentType'] === equipment.value;
+      equipment.isSelected = params['equipmenttype'] === equipment.value;
       console.log(equipment.isSelected);
     });
   
@@ -127,7 +127,7 @@ export class CategoryComponent implements OnInit {
     this.equipmentService.getItems(pagination, '', {}).subscribe(
       (response) => {
         const items = response.data;
-        this.equipments = this.getUniqueValues(items, 'equipmentType');
+        this.equipments = this.getUniqueValues(items, 'equipmenttype');
         this.brands = this.getUniqueValues(items, 'brand');
         this.matters = this.getUniqueValues(items, 'matter');
         this.descriptions = this.getUniqueValues(items, 'description');
