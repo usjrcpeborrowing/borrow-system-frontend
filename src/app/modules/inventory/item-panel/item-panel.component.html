@@ -3,7 +3,7 @@
         <mat-expansion-panel>
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ item.itemName }}
+                    {{ item.name }}
                 </mat-panel-title>
                 <mat-panel-description>
                     <div class="serial-no">Serial No: {{ item.serialNo }}</div>
@@ -15,7 +15,7 @@
                 
                 <img
                     class="fit-image"
-                    [src]="item.image"
+                    [src]="item.images.thumbnailUrl"
                     alt=""
                     />
                     <div class="notes-description">

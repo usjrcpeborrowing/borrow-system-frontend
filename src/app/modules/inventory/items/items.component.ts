@@ -22,8 +22,8 @@ export class ItemsComponent implements OnInit {
   pagination: Pagination = {
     length: 100,
     page: 1,
-    limit: 25,
-    pageSizeOption: [5, 10, 25, 100],
+    limit: 100,
+    pageSizeOption: [5, 10, 100, 100],
   };
   opened: boolean = true;
   searchedWord = new FormControl('');
@@ -91,7 +91,7 @@ export class ItemsComponent implements OnInit {
 
   queryParamsHandler(params: Params): void {
     this.opened = params['opened'] == 'true' ? params['opened'] : false;
-    this.pagination.limit = params['limit'] ? params['limit'] : 25;
+    this.pagination.limit = params['limit'] ? params['limit'] : 100;
     this.pagination.page = params['page'] ? params['page'] : 1;
     const searchword = params['search'] ? params['search'] : '';
     this.searchedWord.patchValue(searchword);

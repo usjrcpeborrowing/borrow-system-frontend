@@ -20,7 +20,13 @@
     *ngFor="let item of itemlist"
         [item]="item">
     </app-item-panel>
-
+</div>
+<div class="paginator">
+    <mat-paginator [length]="100"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 25, 100]"
+        aria-label="Select page">
+    </mat-paginator>
 </div>
 <div class="generate-buttons">
     <div class="add-button">

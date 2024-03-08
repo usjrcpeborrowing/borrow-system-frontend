@@ -41,7 +41,7 @@ mat-form-field.searchbar {
 
 .scrollable-panel {
     margin: 10px;
-    height: 500px;
+    height: 400px;
     overflow-y: auto;
     border: 1px solid #575757;
     border-radius: 5px;
