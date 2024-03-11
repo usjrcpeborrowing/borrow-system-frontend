@@ -2,6 +2,27 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Item } from 'src/app/models/Items';
 
+
+interface Matter {
+  value: string;
+  viewValue: string;
+}
+
+interface Status {
+  value: string;
+  viewValue: string;
+}
+
+interface Remark {
+  value: string;
+  viewValue: string;
+}
+
+interface Department {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -10,6 +31,27 @@ import { Item } from 'src/app/models/Items';
 export class AddComponent implements OnInit {
   imageUrl: string | null = null;
   googleDriveLink: string = '';
+
+  matters: Matter[] = [
+    {value: 'solid-0', viewValue: 'Solid'},
+    {value: 'liquid-0', viewValue: 'Liquid'},
+  ];
+
+  status: Status[] = [
+    {value: 'solid-0', viewValue: 'Solid'},
+    {value: 'liquid-0', viewValue: 'Liquid'},
+  ];
+
+  remarks: Remark[] = [
+    {value: 'solid-0', viewValue: 'Solid'},
+    {value: 'liquid-0', viewValue: 'Liquid'},
+  ];
+
+  departments: Department[] = [
+    {value: 'solid-0', viewValue: 'Solid'},
+    {value: 'liquid-0', viewValue: 'Liquid'},
+  ];
+
   constructor(
     public dialogRef: MatDialogRef<AddComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Item

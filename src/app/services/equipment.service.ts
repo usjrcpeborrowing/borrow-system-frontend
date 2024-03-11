@@ -11,11 +11,12 @@ export class EquipmentService {
   constructor(private http: HttpClient) {}
 
   getItems(pagination: Pagination, searchWord: string, filters: any): Observable<any> {
+    console.log('Fetching items with params:', pagination, searchWord, filters);
     let params = new HttpParams()
       .set('page', pagination.page.toString())
       .set('limit', pagination.limit.toString())
       .set('search', searchWord);
-
+  
     if (filters) {
       Object.keys(filters).forEach(key => {
         if (filters[key]) {
@@ -23,7 +24,9 @@ export class EquipmentService {
         }
       });
     }
-
+  
+    console.log('Request URL:', `${this.apiUrl}`, 'Params:', params.toString());
+  
     return this.http.get<any>(`${this.apiUrl}`, { params });
   }
 }

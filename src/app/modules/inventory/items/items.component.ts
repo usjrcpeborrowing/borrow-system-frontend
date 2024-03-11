@@ -20,10 +20,10 @@ import { AddComponent } from '../add/add.component';
 export class ItemsComponent implements OnInit {
   
   pagination: Pagination = {
-    length: 100,
+    length: 0,
     page: 1,
-    limit: 100,
-    pageSizeOption: [5, 10, 100, 100],
+    limit: 10,
+    pageSizeOption: [5, 10, 25, 50],
   };
   opened: boolean = true;
   searchedWord = new FormControl('');
@@ -42,7 +42,14 @@ export class ItemsComponent implements OnInit {
       this.queryParamsHandler(params)
     );
   }
-
+  onPageChange(event: any): void {
+    console.log('Page index:', event.pageIndex);
+    console.log('Page size:', event.pageSize);
+    this.pagination.page = event.pageIndex + 1;
+    this.pagination.limit = event.pageSize;
+    console.log('Pagination:', this.pagination);
+    this.getItems();
+}
   handleSelectedCategories(categories: any): void {
     this.selectedCategories = categories;
     this.filterItems();
@@ -70,15 +77,16 @@ export class ItemsComponent implements OnInit {
           console.error('Error fetching items:', error);
         }
       );
-  }
+}
 
   searchItem(event: Event): void {
+    const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        page: this.pagination.page,
+        page: 1,
         limit: this.pagination.limit,
         opened: this.opened,
-        search: this.searchedWord.value,
+        search: searchWord,
         equipmentType: this.selectedCategories.equipmentType,
         brand: this.selectedCategories.brand,
         matter: this.selectedCategories.matter,
@@ -86,12 +94,11 @@ export class ItemsComponent implements OnInit {
       },
     };
     this.router.navigate(['/inventory'], navigationExtras);
-    
   }
 
   queryParamsHandler(params: Params): void {
     this.opened = params['opened'] == 'true' ? params['opened'] : false;
-    this.pagination.limit = params['limit'] ? params['limit'] : 100;
+    this.pagination.limit = params['limit'] ? +params['limit'] : 10;
     this.pagination.page = params['page'] ? params['page'] : 1;
     const searchword = params['search'] ? params['search'] : '';
     this.searchedWord.patchValue(searchword);
@@ -118,6 +125,9 @@ export class ItemsComponent implements OnInit {
     if (this.selectedCategories) {
       this.itemlist = this.itemlist.filter((item: any) => {
         let pass = true;
+        if (this.searchedWord.value) {
+          pass = pass && item.name.toLowerCase().includes(this.searchedWord.value.toLowerCase());
+        }
         Object.keys(this.selectedCategories).forEach((category) => {
           if (this.selectedCategories[category].length > 0) {
             if (!this.selectedCategories[category].includes(item[category])) {
