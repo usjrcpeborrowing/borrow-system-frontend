@@ -22,9 +22,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+
 import { MatPaginatorModule } from '@angular/material/paginator';
+
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
 @NgModule({
   declarations: [
     InventoryComponent,
@@ -40,6 +44,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     InventoryRoutingModule,
     HeaderModule,
 
+    
+    MatTableModule,
+    MatSortModule,
     MatPaginatorModule,
     MatDialogModule,
     MatSidenavModule,
@@ -55,7 +62,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
-
   ]
 })
 export class InventoryModule {

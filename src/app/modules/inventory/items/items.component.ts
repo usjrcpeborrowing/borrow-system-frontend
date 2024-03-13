@@ -30,6 +30,7 @@ export class ItemsComponent implements OnInit {
   itemlist: any = [];
   selectedCategories: any = {};
 
+  
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
