@@ -13,6 +13,7 @@ export class AuthService {
         { accountId: 'oic', password: 'oic', role: 'oic' }
     ];
 
+    
     constructor(private router: Router) {}
 
     login(accountId: string, password: string): boolean {
