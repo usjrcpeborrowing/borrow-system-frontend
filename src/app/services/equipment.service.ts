@@ -22,7 +22,7 @@ export class EquipmentService {
     return of(staticItems).pipe(delay(1000));
 
       // return this.http.get<any[]>(this.apiUrl, { params })
-      // .pipe(
+      // .pipe(dsds
       //   catchError(this.handleError)
       // );
   }
