@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, Subject, of, throwError } from 'rxjs';
 import { catchError, delay } from 'rxjs/operators';
 import { Pagination } from 'src/app/models/Pagination';
 import { Item } from '../models/Items';
@@ -12,7 +12,8 @@ import { environment } from 'src/environments/environment';
 })
 export class EquipmentService {
   private apiUrl = '';
-
+  productSubject = new Subject<Item>();
+  
   constructor(private http: HttpClient) {}
 
   getItems(pagination: Pagination, filters: Filter): Observable<any[]> {
@@ -24,9 +25,15 @@ export class EquipmentService {
     return this.http.get<any[]>(environment.API_URL + '/equipment', { params }).pipe(catchError(this.handleError));
   }
 
+  onAddedEquipment(): Observable<Item> {
+    return this.productSubject.asObservable()
+  }
+
   private handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));
   }
+
+  
 }
 export const staticItems: Item[] = [
   {
