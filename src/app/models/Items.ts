@@ -1,7 +1,7 @@
 export interface Item {
     serialNo: String;
     equipmentType: Object;
-    itemName: String;
+    name: String;
     brand: Object;
     color: String;
     modelNo: String;
@@ -11,7 +11,11 @@ export interface Item {
     description: String;
     status: String;
     dateAcquired: Date;
-    image: string;
+    images: {
+        thumbnailUrl: String,
+        midSizeUrl: String,
+        Url: String,
+    };
     remarks: String;
     tags: Boolean;
     checkedBy: String;

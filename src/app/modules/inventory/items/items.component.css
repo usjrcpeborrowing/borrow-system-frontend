@@ -4,6 +4,64 @@
     margin-bottom: -5px;
 }
 
+.table-header {
+    position: sticky;
+    top: 0;
+    background-color: rgb(225, 223, 223);
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5%;
+}
+.table-header .header-name,
+.table-header .header-serial,
+.table-header .header-equipment,
+.table-header .header-brand,
+.table-header .header-desc,
+.table-header .header-status,
+.table-header .header-quantity {
+    flex: 1;
+}
+.table-content {
+    overflow: hidden;
+}
+.item-table {
+    width: 100%;
+    table-layout: fixed;
+}
+.mat-header-row {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+}
+.item-table th,
+    .item-table td {
+    border: 1px solid #ddd;
+    word-wrap: break-word;
+}
+.header-name{
+    margin-left: 2%;
+    margin-right: 20%;
+}
+.header-serial{
+    margin-left: -2%;
+}
+.header-equipment{
+    margin-left: -5%;
+}
+.header-brand{
+    margin-left: -2%;
+}
+.header-desc{
+    margin-left: -5%;
+}
+.header-status{
+    margin-left: -2%;
+}
+.header-quantity{
+    margin-left: -2%;
+}
 .search-item {
     display: flex;
     justify-content: flex-end;
@@ -38,14 +96,12 @@ mat-form-field.searchbar {
     background-color: rgb(62, 112, 62);
     color: white;
 }
-
 .scrollable-panel {
     margin: 10px;
     height: 400px;
     overflow-y: auto;
     border: 1px solid #575757;
     border-radius: 5px;
-    padding: 10px;
 }
 
 .spacer {
