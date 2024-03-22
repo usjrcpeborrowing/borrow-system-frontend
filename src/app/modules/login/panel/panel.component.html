@@ -2,12 +2,12 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in">
-            <form>
+            <form (ngSubmit)="login()">
                 <h1>Sign In</h1>
-                <input matInput type="accountID" placeholder="Account ID">
-                <input matInput type="password" placeholder="Password">
+                <input matInput type="text" name="accountId" [(ngModel)]="accountId" placeholder="Account ID">
+                <input matInput type="password" name="password" [(ngModel)]="password" placeholder="Password">
                 <a href="#">Forget Your Password?</a>
-                <button>Login</button>
+                <button type="submit">Login</button>
             </form>
         </div>
         <div class="register-container">
