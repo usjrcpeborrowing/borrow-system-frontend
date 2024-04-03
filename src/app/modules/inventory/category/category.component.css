@@ -6,6 +6,17 @@
     margin: 10px;
     padding: 2px;
 }
+.mat-mdc-standard-chip.mat-primary.mat-mdc-chip-selected, .mat-mdc-standard-chip.mat-primary.mat-mdc-chip-highlighted {
+    --mdc-chip-elevated-container-color: #5fa55a;
+    --mdc-chip-elevated-disabled-container-color: #5fa55a;
+    --mdc-chip-label-text-color: white;
+    --mdc-chip-disabled-label-text-color: white;
+    --mdc-chip-with-icon-icon-color: white;
+    --mdc-chip-with-icon-disabled-icon-color: white;
+    --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: white;
+    --mdc-chip-with-trailing-icon-trailing-icon-color: white;
+    --mdc-chip-with-icon-selected-icon-color: white;
+}
 
 .form-fields-container {
     display: flex;

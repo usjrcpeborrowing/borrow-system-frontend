@@ -8,6 +8,7 @@ interface Equipment {
   value: string;
   viewValue: string;
   isSelected: boolean;
+  subcategories: { value: string, viewValue: string }[];
 }
 
 interface Brand {
@@ -23,6 +24,12 @@ interface Matter {
 }
 
 interface Description {
+  value: string;
+  viewValue: string;
+  isSelected: boolean;
+}
+
+interface Status {
   value: string;
   viewValue: string;
   isSelected: boolean;
@@ -56,9 +63,11 @@ export class CategoryComponent implements OnInit {
   brands: Brand[] = [];
   matters: Matter[] = [];
   descriptions: Description[] = [];
+  status: Status[] = [];
   remarks: Remarks[] = [];
   departments: Remarks[] = [];
   selectedValue: string[] = [];
+  selectedEquipment: Equipment | null = null;
   @Output() selectedCategories = new EventEmitter<any>();
 
   constructor(
@@ -74,8 +83,48 @@ export class CategoryComponent implements OnInit {
     });
 
     this.loadItemsAndCategories();
+    this.loadEquipmentTypes();
+    this.loadBrandList();
   }
-
+  populateSubcategories(): void {
+    this.equipments.forEach(equipment => {
+      equipment.subcategories = [
+        { value: 'subcategory1', viewValue: 'Subcategory 1' },
+        { value: 'subcategory2', viewValue: 'Subcategory 2' }
+      ];
+    });
+  }
+  loadEquipmentTypes(): void {
+    this.equipmentService.getEquipmentTypes().subscribe(
+      (response) => {
+        this.equipments = response.map((type: any) => ({
+          value: type.name,
+          viewValue: type.name,
+          isSelected: false,
+          subcategories: []
+        }));
+        this.emitSelectedCategories();
+      },
+      (error) => {
+        console.error('Error fetching equipment types:', error);
+      }
+    );
+  }
+  loadBrandList(): void {
+    this.equipmentService.getBrandList().subscribe(
+      (response) => {
+        this.brands = response.map((brand: any) => ({
+          value: brand.name,
+          viewValue: brand.name,
+          isSelected: false
+        }));
+        this.emitSelectedCategories();
+      },
+      (error) => {
+        console.error('Error fetching brand list:', error);
+      }
+    );
+  }
   handleQueryParams(params: Params): void {
     
     this.equipments.forEach((equipment) => {
@@ -94,7 +143,11 @@ export class CategoryComponent implements OnInit {
     this.descriptions.forEach((description) => {
       description.isSelected = params['description'] === description.value;
     });
-  
+    
+    this.status.forEach((status) => {
+      status.isSelected = params['status'] === status.value;
+    });
+
     this.remarks.forEach((remark) => {
       remark.isSelected = params['remarks'] === remark.value;
     });
@@ -112,24 +165,27 @@ export class CategoryComponent implements OnInit {
       limit: 25,
       pageSizeOption: [5, 10, 25, 100],
     };
-    
-    // this.equipmentService.getItems(pagination, '', '').subscribe(
-    //   (items) => {
-    //     this.equipments = this.getUniqueValues(items, 'equipmentType');
-    //     this.brands = this.getUniqueValues(items, 'brand');
-    //     this.matters = this.getUniqueValues(items, 'matter');
-    //     this.descriptions = this.getUniqueValues(items, 'description');
-    //     this.remarks = this.getUniqueValues(items, 'remarks');
-    //     this.departments = this.getUniqueValues(items, 'department');
+  
+    this.equipmentService.getItems(pagination, {}).subscribe(
+      (response) => {
+        const items = response.data;
+        this.matters = this.getUniqueValues(items, 'matter');
+        this.descriptions = this.getUniqueValues(items, 'description');
+        this.status = this.getUniqueValues(items, 'status');
+        this.remarks = this.getUniqueValues(items, 'remarks');
+        this.departments = this.getUniqueValues(items, 'department');
         
-    //     this.emitSelectedCategories();
-    //     console.log(this.equipments);
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching items:', error);
-    //   }
-    // );
+        this.populateSubcategories();
+  
+        this.emitSelectedCategories();
+      },
+      (error) => {
+        console.error('Error fetching items:', error);
+      }
+    );
   }
+  
+  
 
   private getUniqueValues(items: any[], key: string): any[] {
     const uniqueValues: any[] = [];
@@ -149,12 +205,26 @@ export class CategoryComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
+  updateEquipmentSubcategories(selectedEquipmentValue: string): void {
+    this.selectedEquipment = this.equipments.find(equipment => equipment.value === selectedEquipmentValue) || null;
+  }
+  updateQueryParamsWithSubcategory(equipment: Equipment, subcategory: string): void {
+    const queryParams: Params = {};
+    queryParams['equipmentType'] = equipment.value;
+    queryParams['subcategory'] = subcategory;
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
   emitSelectedCategories(): void {
     const selectedCategories = {
       equipments: this.equipments.map((e) => e.value),
       brands: this.brands.map((b) => b.value),
       matters: this.matters.map((m) => m.value),
       descriptions: this.descriptions.map((d) => d.value),
+      status: this.status.map((r) => r.value),
       remarks: this.remarks.map((r) => r.value),
       departments: this.remarks.map((r) => r.value),
     };
