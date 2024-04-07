@@ -3,16 +3,16 @@
   <div class="image-wrapper">
     <img
       class="fit-image"
-      src="../../../../assets//equipment_default_image.png"
+      [src]="equipment?.images?.midSizeUrl ? displayImage : defaultImage"
       alt=""
     />
   </div>
   <div class="text-wrapper">
-    <div class="item-name">Long Nose 001 404</div>
-    <div class="brand">BrandName</div>
+    <div class="item-name">{{ equipment.name }}</div>
+    <div class="brand">{{ equipment.brand }}</div>
   </div>
   <div class="action-wrapper">
     <button mat-flat-button>DETAIL</button>
-    <button mat-flat-button color="primary">ADD</button>
+    <button mat-flat-button color="primary" (click)="addEquipment()">ADD</button>
   </div>
 </div>

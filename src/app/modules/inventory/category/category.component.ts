@@ -81,7 +81,6 @@ export class CategoryComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.handleQueryParams(params);
     });
-
     this.loadItemsAndCategories();
     this.loadEquipmentTypes();
     this.loadBrandList();

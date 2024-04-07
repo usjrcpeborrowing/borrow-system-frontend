@@ -38,7 +38,9 @@ export class BorrowComponent implements OnInit {
     let filter: Filter = {
       searchWord: this.searchedWord,
     };
-    this.equipmentService.getItems(this.pagination, filter).subscribe((resp) => console.log(resp));
+    this.equipmentService.getItems(this.pagination, filter).subscribe((resp) => {
+      this.equipmentlist = resp.data;
+    });
   }
 
   queryParamsHandler(params: Params) {

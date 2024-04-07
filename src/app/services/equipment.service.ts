@@ -1,7 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Pagination } from 'src/app/models/Pagination';
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -23,14 +25,12 @@ export class EquipmentService {
         }
       });
     }
-  
-    console.log('Request URL:', `${this.apiUrl}`, 'Params:', params.toString());
-  
-    return this.http.get<any>(`${this.apiUrl}`, { params });
+
+    return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(catchError(this.handleError));
   }
   
   getEquipmentTypes(): Observable<any> {
-    return this.http.get<any>('http://localhost:3000/api/equipmenttype');
+    return this.http.get<any>(environment.API_URL + "/api/equipmenttype");
   }
   getBrandList(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/api/equipment/getbrandlist');
@@ -40,5 +40,9 @@ export class EquipmentService {
   }
   addEquipmentType(): Observable<any> {
     return this.http.get<any>('http://localhost:3000/api/equipmenttype');
+  }
+
+  handleError(err: HttpErrorResponse) {
+    return throwError(() => new Error(err.message));
   }
 }
