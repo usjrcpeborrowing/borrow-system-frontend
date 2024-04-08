@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class EquipmentService {
-  private apiUrl = 'http://localhost:3000/api/equipment/';
 
   constructor(private http: HttpClient) {}
 
@@ -30,16 +29,16 @@ export class EquipmentService {
   }
   
   getEquipmentTypes(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + "/api/equipmenttype");
+    return this.http.get<any>(environment.API_URL + "/api/equipmenttype").pipe(catchError(this.handleError));;
   }
   getBrandList(): Observable<any> {
-    return this.http.get<any>('http://localhost:3000/api/equipment/getbrandlist');
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist').pipe(catchError(this.handleError));;
   }
   addEquipment(): Observable<any> {
-    return this.http.get<any>('http://localhost:3000/api/equipment');
+    return this.http.get<any>(environment.API_URL + '/api/equipment').pipe(catchError(this.handleError));;
   }
   addEquipmentType(): Observable<any> {
-    return this.http.get<any>('http://localhost:3000/api/equipmenttype');
+    return this.http.get<any>(environment.API_URL + '/api/equipmenttype').pipe(catchError(this.handleError));;
   }
 
   handleError(err: HttpErrorResponse) {
