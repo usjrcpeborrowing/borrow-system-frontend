@@ -34,6 +34,19 @@ export class EquipmentService {
   getBrandList(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist').pipe(catchError(this.handleError));;
   }
+
+  getMatterList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist').pipe(catchError(this.handleError));;
+  }
+
+  getInventoryTypeList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist').pipe(catchError(this.handleError));;
+  }
+
+  getItemStatusList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks').pipe(catchError(this.handleError));;
+  }
+
   addEquipment(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipment').pipe(catchError(this.handleError));;
   }
