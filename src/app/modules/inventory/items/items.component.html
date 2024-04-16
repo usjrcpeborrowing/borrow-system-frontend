@@ -26,7 +26,7 @@
         <div class="header-quantity">Quantity</div>
     </div>
     <div class="table-content">
-        <table mat-table [dataSource]="itemlist" class="mat-elevation-z8">
+        <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
             <ng-container matColumnDef="itemPanel">
                 <td mat-cell *matCellDef="let item">
                     <app-item-panel [item]="item"></app-item-panel>
