@@ -12,17 +12,7 @@ export class EquipmentService {
   constructor(private http: HttpClient) {}
 
   getItems(pagination: Pagination, filters: InventoryFilter): Observable<any> {
-    // let params = new HttpParams()
-    //   .set('page', pagination.page.toString())
-    //   .set('limit', pagination.limit.toString());
 
-    // if (filters) {
-    //   Object.keys(filters).forEach(key => {
-    //     if (filters[key]) {
-    //       params = params.set(key, filters[key]);
-    //     }
-    //   });
-    // }
     let params = new HttpParams();
 
     params = params.append('page', pagination.page);
