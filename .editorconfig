@@ -10,6 +10,10 @@ trim_trailing_whitespace = true
 
 [*.ts]
 quote_type = single
+max_line_length = 250
+
+[*.html]
+quote_type = double
 max_line_length = off
 
 [*.md]

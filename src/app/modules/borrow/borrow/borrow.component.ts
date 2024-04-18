@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Filter } from 'src/app/models/Filter';
+import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Pagination } from 'src/app/models/Pagination';
 import { EquipmentService } from 'src/app/services/equipment.service';
 
@@ -35,12 +36,12 @@ export class BorrowComponent implements OnInit {
   }
 
   getEquipmentList() {
-    let filter: Filter = {
-      searchWord: this.searchedWord,
-    };
-    this.equipmentService.getItems(this.pagination, filter).subscribe((resp) => {
-      this.equipmentlist = resp.data;
-    });
+    // let filter: InventoryFilter = {
+    //   searchWord: this.searchedWord,
+    // };
+    // this.equipmentService.getItems(this.pagination, filter).subscribe((resp) => {
+    //   this.equipmentlist = resp.data;
+    // });
   }
 
   queryParamsHandler(params: Params) {

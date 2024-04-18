@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './services/auth.guard';
 
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'inventory',
-    loadChildren: ()=> import('./modules/inventory/inventory.module').then(m => m.InventoryModule)
+    loadChildren: ()=> import('./modules/inventory/inventory.module').then(m => m.InventoryModule),
+    canActivate: [authGuard]
   },
   {
     path: 'landing-page',
