@@ -4,19 +4,11 @@
     
     <div class="menu-panel">
         <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
                 <mat-icon>inbox</mat-icon>
-                    Items
+                    Browse Items
                 </button>
-            <button style=" justify-content: flex-start;" mat-raised-button>
-                <mat-icon>move_to_inbox</mat-icon>
-                    Borrowed Items
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button>
-                <mat-icon>assignment</mat-icon>
-                    Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button>
+            <button style=" justify-content: flex-start;" mat-raised-button   (click)="directToHistory()">
                 <mat-icon>history</mat-icon>
                     History
                 </button>
@@ -25,7 +17,7 @@
         
     </div>
     <div class="contents">
-        <app-content-tabs></app-content-tabs>
+        <app-student-contents></app-student-contents>
     </div>
 
 </div>

@@ -4,14 +4,42 @@
     display: flex;
     padding: 1%;
 }
+.panel-title{
+    font-size: 50px;
+    margin-left: 30px;
+    margin-right: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: table;
+    width: 95%;
+    font-weight: 700;
+}
+
+.hline {
+    display: table-cell;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: none;
+}
+.hline:after {
+    content: '';
+    border-top: 1px solid rgb(46, 125, 70);
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
 .first-content{
     position: relative;
-    margin: 5%;
+    margin: 3%;
 }
 .second-content{
     position: relative;
     margin-left: 5%;
-    width: 70%;
+    width: 34%;
+}
+.third-content{
+    position: relative;
+    width: 34%;
 }
 .panel-title{
     margin: 3%;
@@ -24,7 +52,7 @@
     border: 1px solid ;
     border-color: rgb(136, 136, 136);
     margin: 2%;
-    width: 100%;
+    width: 87%;
 }
 .addName{
     display: flex;
@@ -86,8 +114,30 @@
 }
 .edit-button .mat-mdc-raised-button.mat-unthemed{
     display: flex;
-    max-width: 100px;
+    width: 100px;
     margin-left: 5%;
     background-color: rgb(62, 112, 62);
     color: white;
+}
+.report-image .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    width: 100%;
+    margin: 10%;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+.report-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    width: 120px;
+    margin-right: 10%;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+.buttons{
+    display: flex;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.spacer {
+    margin-right: 75%;
 }

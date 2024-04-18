@@ -1,72 +1,79 @@
+
 <div class="panel-name">Category</div>
+
 <form [formGroup]="filterForm">
-  <div class="form-fields-container">
-    <mat-form-field>
-      <mat-label>Equipment Type</mat-label>
-      <mat-select formControlName="equipmenttype" (selectionChange)="onSelectChanged('equipmenttype', $event)">
+<div class="form-fields-container">
+    
+    <mat-form-field  class="form-field">
+        <mat-label>Equipment Type</mat-label>
+        <mat-select [(value)]="selectedEquipment"   formControlName="equipmenttype" (selectionChange)="onSelectChanged('equipmenttype', $event)">
         <mat-option *ngFor="let equipmenttype of equipmenttypes" [value]="equipmenttype">
-          {{ equipmenttype }}
+            {{ equipmenttype }}
         </mat-option>
-      </mat-select>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Brand</mat-label>
-      <mat-select (selectionChange)="onSelectChanged('brand', $event)">
+        <mat-label>Brand</mat-label>
+        <mat-select  [(value)]="selectedBrands" (selectionChange)="onSelectChanged('brand', $event)">
         <mat-option *ngFor="let brand of brands" [value]="brand">
-          {{ brand }}
+            {{ brand }}
         </mat-option>
-      </mat-select>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Matter Type</mat-label>
-      <mat-select  (selectionChange)="onSelectChanged('mattertype', $event)">
+        <mat-label>Matter Type</mat-label>
+        <mat-select  [(value)]="selectedMatter" (selectionChange)="onSelectChanged('mattertype', $event)">
         <mat-option *ngFor="let m of matters" [value]="m">
-          {{ m }}
+            {{ m }}
         </mat-option>
-      </mat-select>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Inventory Type</mat-label>
-      <mat-select  (selectionChange)="onSelectChanged('inventorytype', $event)">
+        <mat-label>Inventory Type</mat-label>
+        <mat-select   [(value)]="selectedInventoryType" (selectionChange)="onSelectChanged('inventorytype', $event)">
         <mat-option *ngFor="let inventorytype of inventorytypes" [value]="inventorytype">
-          {{ inventorytype }}
+            {{ inventorytype }}
         </mat-option>
-      </mat-select>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Date Acquired</mat-label>
-      <input matInput [matDatepicker]="picker" />
-      <mat-hint>MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+        <mat-label>Date Acquired</mat-label>
+        <input matInput [matDatepicker]="picker" (selectionChange)="onSelectChanged('dateAcquired', selectedDateAcquired ? selectedDateAcquired.toISOString().split('T')[0] : '')" #dateInput>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Remarks</mat-label>
-      <mat-select (selectionChange)="onSelectChanged('remarks', $event)">
+        <mat-label>Remarks</mat-label>
+        <mat-select  [(value)]="selectedRemarks"  (selectionChange)="onSelectChanged('remarks', $event)">
         <mat-option *ngFor="let x of remarks" [value]="x">
-          {{ x }}
+            {{ x }}
         </mat-option>
-      </mat-select>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Department</mat-label>
-      <mat-select  (selectionChange)="onSelectChanged('department', $event)">
+        <mat-label>Department</mat-label>
+        <mat-select  [(value)]="selectedDepartment" (selectionChange)="onSelectChanged('department', $event)">
         <mat-option *ngFor="let dept of departments" [value]="dept._id">
-          {{ dept.name }}
+            {{ dept.name }}
         </mat-option>
-      </mat-select>
+        </mat-select>
     </mat-form-field>
-  </div>
-  <div class="panel-name">Filter</div>
-  <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
-    <mat-chip-option *ngFor="let chip of availableColors" [selected]="false" [color]="chip.color">
-      {{ chip.name }}
+
+    <div class="edit-button">
+        <button mat-raised-button (click)="resetFilters()">Reset Filter</button>
+    </div>
+</div>
+<div class="panel-name">Filter</div>
+<mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
+    <mat-chip-option *ngFor="let sortSelected of sortSelecteds" [color]="sortSelected.color" [value]="sortSelected.value" (selectionChange)="onSelectChanged('sort', sortSelected.value)">
+        {{ sortSelected.name }}
     </mat-chip-option>
-  </mat-chip-listbox>
+</mat-chip-listbox>
 </form>
