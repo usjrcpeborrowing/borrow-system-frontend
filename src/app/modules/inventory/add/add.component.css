@@ -1,17 +1,50 @@
-
-.add-item{
+form{
+    display: flex;
+    width: 100%;
+    
     position: relative;
+}
+.panel-title{
+    font-size: 50px;
+    margin-left: 30px;
+    margin-right: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: table;
+    width: 95%;
+    font-weight: 700;
+}
+
+.hline {
+    display: table-cell;
+    width: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: none;
+}
+.hline:after {
+    content: '';
+    border-top: 1px solid rgb(46, 125, 70);
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+.add-item{
     display: flex;
     padding: 1%;
+    
 }
 .first-content{
     position: relative;
-    margin: 5%;
+    margin: 3%;
 }
 .second-content{
     position: relative;
     margin-left: 5%;
-    width: 70%;
+    width: 34%;
+}
+.third-content{
+    position: relative;
+    width: 34%;
 }
 .panel-title{
     margin: 3%;
@@ -24,7 +57,7 @@
     border: 1px solid ;
     border-color: rgb(136, 136, 136);
     margin: 2%;
-    width: 100%;
+    width: 87%;
 }
 .addName{
     display: flex;
@@ -51,6 +84,30 @@
     margin-bottom: -20px;
 }
 .addRemarks{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.serialNo{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.checkedBy{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addDescription{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
+.addColor{
     display: flex;
     justify-content: flex-end;
     width: 100%;
@@ -90,4 +147,30 @@
     margin-left: 5%;
     background-color: rgb(62, 112, 62);
     color: white;
+}
+.loading-overlay {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.loading-spinner {
+    position: relative;
+    z-index: 11;
+}
+
+.loading-overlay::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    z-index: 10;
 }

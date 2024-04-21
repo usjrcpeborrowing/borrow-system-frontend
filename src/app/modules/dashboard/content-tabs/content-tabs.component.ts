@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 
 @Component({
   selector: 'app-content-tabs',
@@ -7,5 +8,13 @@ import { Component, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class ContentTabsComponent {
+  
+  borrowedItems: any[] = [];
+  constructor(private borrowedItemsService: BorrowedItemsService) { }
 
+  ngOnInit() {
+  this.borrowedItemsService.currentBorrowedItems.subscribe(items => {
+      this.borrowedItems = items;
+  });
+  }
 }

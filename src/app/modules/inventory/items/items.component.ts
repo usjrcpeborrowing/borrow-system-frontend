@@ -1,89 +1,92 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Pagination } from 'src/app/models/Pagination';
-import { EquipmentService } from 'src/app/services/equipment.service';
-import { AddComponent } from '../add/add.component';
 import * as jsPDFInvoiceTemplate from 'jspdf-invoice-template';
-
+import { Pagination } from 'src/app/models/Pagination';
+import { AuthService } from 'src/app/services/auth.service';
+import { EquipmentService } from 'src/app/services/equipment.service';
+import { ReportDownloadService } from 'src/app/services/report-download-service';
+import { AddComponent } from '../add/add.component';
+import { ReportsComponent } from '../reports/reports.component';
 @Component({
   selector: 'app-items',
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent implements OnInit {
-  pagination: Pagination = {
-    length: 0,
-    page: 1,
-    limit: 10,
-    pageSizeOption: [5, 10, 25, 50],
-  };
+  
+  @Input() pagination: Pagination;
+  @Output() pageChange: EventEmitter<any> = new EventEmitter();
+  
+@Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
   selectedCategories: any = {};
-  usertype: string | null = '';
-  isOIC_Reads: boolean = false;
   @Input() equipmentlist: any;
 
-  constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private router: Router, public dialog: MatDialog) {}
+  constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private router: Router, public dialog: MatDialog) {
+    this.pagination = {
+      length: 0,
+      page: 1,
+      limit: 25,
+      pageSizeOption: [5, 10, 25, 50],
+    };
+  }
 
   ngOnInit(): void {
-    this.usertype = localStorage.getItem('usertype');
-    this.isOIC_Reads = ['oic', 'reads'].includes(this.usertype as string) ? true : false;
+    // this.activatedRoute.queryParams.subscribe((params) =>
+    //   this.queryParamsHandler(params)
+    // );
+    const currentUser = this.authService.getCurrentUser();
+    if (!currentUser || !this.isAllowedRole(currentUser.role)) {
+      this.router.navigate(['/']);
+    }
   }
-  onPageChange(event: any): void {
-    console.log('Page index:', event.pageIndex);
-    console.log('Page size:', event.pageSize);
+  
+  isFaculty(): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    return !currentUser || !this.cantEditRole(currentUser.role);
+  }
+  private cantEditRole(role: string): boolean {
+    const allowedRoles = ['faculty', 'Instructor'];
+    return allowedRoles.includes(role);
+  }
+  private isAllowedRole(role: string): boolean {
+    const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
+    return allowedRoles.includes(role);
+  }
+
+  
+  onPageChange(event: PageEvent): void {
     this.pagination.page = event.pageIndex + 1;
+    console.log("PAGINAAATION:", event.pageIndex)
     this.pagination.limit = event.pageSize;
-    console.log('Pagination:', this.pagination);
-    // this.getItems();
+    this.pageChange.emit(this.pagination);
   }
   handleSelectedCategories(categories: any): void {
     this.selectedCategories = categories;
     this.filterItems();
   }
 
-  // getItems(): void {
-  //   const filters = {
-  //     equipmenttype: this.selectedCategories.equipmentType,
-  //     brand: this.selectedCategories.brand,
-  //     matter: this.selectedCategories.matter,
-  //     description: this.selectedCategories.description,
-  //     dateAcquired: this.selectedCategories.dateAcquired,
-  //     remarks: this.selectedCategories.remarks,
-  //     department: this.selectedCategories.department,
-  //   };
-
-  //   this.equipmentService.getItems(this.pagination, filters).subscribe(
-  //     (response) => {
-  //       this.itemlist = response.data;
-  //       this.pagination.length = response.total;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching items:', error);
-  //     }
-  //   );
-  // }
 
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
-    this.router.navigate(['/inventory/faculty'], {
-      queryParams: {
-        page: 1,
-        limit: this.pagination.limit,
-        opened: this.opened,
-        search: searchWord,
-        equipmentType: this.selectedCategories.equipmentType,
-        brand: this.selectedCategories.brand,
-        matter: this.selectedCategories.matter,
-        description: this.selectedCategories.description,
-      },
+    console.log(searchWord);
+    const currentQueryParams = this.activatedRoute.snapshot.queryParams;
+    const newQueryParams = {
+      ...currentQueryParams,
+      page: 1,
+      search: searchWord,
+    };
+    this.router.navigate(['/inventory'], {
+      queryParams: newQueryParams,
+      queryParamsHandling: 'merge',
     });
   }
-
+  
   queryParamsHandler(params: Params): void {
     this.opened = params['opened'] == 'true' ? params['opened'] : false;
     this.pagination.limit = params['limit'] ? +params['limit'] : 10;
@@ -98,22 +101,51 @@ export class ItemsComponent implements OnInit {
       matter: params['matter'] ? params['matter'] : '',
       description: params['description'] ? params['description'] : '',
     };
-
+    
     this.handleSelectedCategories(selectedCategories);
   }
 
   addItem(): void {
     this.dialog.open(AddComponent, {
-      height: '85vh',
-      width: '40vw',
+      height: '73vh',
+      width: '55vw',
     });
+  }
+  reportItems() {
+    this.dialog.open(ReportsComponent, {
+      height: '80vh',
+      width: '80vw',
+    });
+  }
+  filterItems(): void {
+    if (this.selectedCategories) {
+      this.itemlist = this.itemlist.filter((item: any) => {
+        let pass = true;
+        if (this.searchedWord.value) {
+          pass = pass && item.name.toLowerCase().includes(this.searchedWord.value.toLowerCase());
+        }
+        Object.keys(this.selectedCategories).forEach((category) => {
+          if (this.selectedCategories[category].length > 0) {
+            if (!this.selectedCategories[category].includes(item[category])) {
+              pass = false;
+            }
+          }
+        });
+        return pass;
+      });
+    }
   }
 
   download() {
     var currentDate = new Date();
     var departmentReportType = 'ECL'; // replace with the actual department report type
-
     var fileName = `USJR_${departmentReportType}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`;
+    this.reportDownloadService.addDownloadRecord({
+      type: 'Inventory Report',
+      department: departmentReportType,
+      fileName: fileName,
+      date: new Date(),
+    });
     let props = {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       returnJsPDFDocObject: true,
@@ -190,24 +222,8 @@ export class ItemsComponent implements OnInit {
       pageLabel: 'Page ',
     };
     var pdfObject = jsPDFInvoiceTemplate.default(props);
-  }
 
-  filterItems(): void {
-    if (this.selectedCategories) {
-      this.itemlist = this.itemlist.filter((item: any) => {
-        let pass = true;
-        if (this.searchedWord.value) {
-          pass = pass && item.name.toLowerCase().includes(this.searchedWord.value.toLowerCase());
-        }
-        Object.keys(this.selectedCategories).forEach((category) => {
-          if (this.selectedCategories[category].length > 0) {
-            if (!this.selectedCategories[category].includes(item[category])) {
-              pass = false;
-            }
-          }
-        });
-        return pass;
-      });
-    }
   }
+ 
+
 }

@@ -1,0 +1,37 @@
+<h1 class="page-title">Reports</h1>
+<mat-tab-group class="content-tabs">
+    <mat-tab label="Inventory Reports">
+        <div class="content">
+            <table mat-table [dataSource]="downloadRecords" class="mat-elevation-z8">
+                <!-- Define columns -->
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let record"> {{record.type}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="department">
+                    <th mat-header-cell *matHeaderCellDef> Department </th>
+                    <td mat-cell *matCellDef="let record"> {{record.department}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fileName">
+                    <th mat-header-cell *matHeaderCellDef> File Name </th>
+                    <td mat-cell *matCellDef="let record"> {{record.fileName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef> Date </th>
+                    <td mat-cell *matCellDef="let record"> {{record.date | date}} </td>
+                </ng-container>
+
+                <!-- Row definitions -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </mat-tab>
+    <mat-tab label="Student Reports">
+        <div class="content">
+        </div>
+    </mat-tab>
+</mat-tab-group>

@@ -1,9 +1,28 @@
-<app-header></app-header>
+<ng-container *ngIf="isAdmin(); else readsHeader">
+    <app-admin-header></app-admin-header>
+</ng-container>
+<ng-template #readsHeader>
+    <ng-container *ngIf="isReads(); else oicHeader">
+        <app-header-reads></app-header-reads>
+    </ng-container>
+</ng-template>
+<ng-template #oicHeader>
+    <ng-container *ngIf="isOic(); else regularHeader">
+        <app-header-oic></app-header-oic>
+    </ng-container>
+</ng-template>
+<ng-template #regularHeader>
+    <app-header></app-header>
+</ng-template>
+
 <mat-drawer-container class="example-container">
+    
     <mat-drawer mode="side" opened class="custom-drawer">
-        <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
+        
+<h1 class="page-title">Inventory</h1>
+<app-category (selectedCategories)="onFilterSelect($event)"></app-category>
     </mat-drawer>
     <mat-drawer-content class="custom-drawer-itmes">
-        <app-items [equipmentlist]="equipmentlist"></app-items>
+        <app-items  [pagination]="pagination" (pageChange)="onPageChange($event)" [equipmentlist]="equipmentlist"></app-items>
     </mat-drawer-content>
 </mat-drawer-container>

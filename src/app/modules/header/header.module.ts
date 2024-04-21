@@ -6,8 +6,8 @@ import { HeaderComponent } from './header/header.component';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
 @NgModule({
   declarations: [
     HeaderComponent
@@ -17,7 +17,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     HeaderRoutingModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMenuModule
   ],
   exports: [
     HeaderComponent

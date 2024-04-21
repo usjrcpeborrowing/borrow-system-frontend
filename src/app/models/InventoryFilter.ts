@@ -5,4 +5,5 @@ export interface InventoryFilter {
     inventorytype: string;
     remarks: string;
     deparment: string
+    name: string;
 }
