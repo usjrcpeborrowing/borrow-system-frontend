@@ -9,8 +9,7 @@ export interface Item {
     quantity: number;
     unit: string;
     matter: string;
-    description: string;
-    status: string;
+    inventorytype: string;
     dateAcquired: Date;
     images: {
         thumbnailUrl: string,

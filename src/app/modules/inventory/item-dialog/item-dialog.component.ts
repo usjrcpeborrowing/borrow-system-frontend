@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
@@ -11,9 +11,11 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class ItemDialogComponent implements OnInit {
   
+  selectedFile: File | null = null;
   imageUrl: string | null = null; // Keep imageUrl as a string
   googleDriveLink: string = ''; // Keep googleDriveLink as a string
-
+  
+  @ViewChild('fileInput') fileInput: any;
   isEditingImage = false;
   constructor(
     public dialogRef: MatDialogRef<ItemDialogComponent>,
@@ -64,6 +66,15 @@ export class ItemDialogComponent implements OnInit {
             console.error('data.images is not an object:', this.data.images);
         }
     }
+  }
+
+  toggleEditImage(): void {
+    this.isEditingImage = !this.isEditingImage;
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+    console.log('Selected file:', this.selectedFile);
   }
 
   saveChanges() {

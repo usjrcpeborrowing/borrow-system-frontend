@@ -18,7 +18,7 @@
                         autocomplete="off"
                     />
                 </mat-form-field>
-                <mat-form-field class="addEquipment" floatLabel="always">
+                <!-- <mat-form-field class="addEquipment" floatLabel="always">
                     <mat-label>Equipment Type</mat-label>
                     <input
                         matInput
@@ -33,12 +33,30 @@
                         formControlName="brand"
                         autocomplete="off"
                     />
-                </mat-form-field>
+                </mat-form-field> -->
+                <mat-form-field class="addEquipment" floatLabel="always">
+                    <mat-label>Equipment Type</mat-label>
+                    <input type="text" matInput [formControl]="equipmentTypeControl" [matAutocomplete]="autoEquipmentType">
+                    <mat-autocomplete #autoEquipmentType="matAutocomplete">
+                       <mat-option *ngFor="let option of filteredEquipmentTypes | async" [value]="option">
+                         {{option}}
+                       </mat-option>
+                    </mat-autocomplete>
+                   </mat-form-field>
+                <mat-form-field class="addBrand" floatLabel="always">
+                    <mat-label>Brand Name</mat-label>
+                    <input type="text" matInput [formControl]="brandControl" [matAutocomplete]="autoBrand">
+                    <mat-autocomplete #autoBrand="matAutocomplete">
+                       <mat-option *ngFor="let option of filteredBrands | async" [value]="option">
+                         {{option}}
+                       </mat-option>
+                    </mat-autocomplete>
+                   </mat-form-field>
                 <mat-form-field class="serialNo" floatLabel="always">
                     <mat-label>Serial No.</mat-label>
                     <input
                         matInput
-                        formControlName="serial"
+                        formControlName="serialNo"
                         autocomplete="off"
                     />
                 </mat-form-field>
@@ -51,10 +69,10 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field class="addDescription" floatLabel="always">
-                    <mat-label>Description</mat-label>
-                    <mat-select formControlName="description">
-                        <mat-option *ngFor="let description of descriptions" [value]="description.value">
-                            {{ description.viewValue }}
+                    <mat-label>Inventory Type</mat-label>
+                    <mat-select formControlName="inventorytype">
+                        <mat-option *ngFor="let inventorytype of inventorytypes" [value]="inventorytype.value">
+                            {{ inventorytype.viewValue }}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -73,14 +91,6 @@
             <h1 class="header-form">Item Status</h1>
             <div class="form-container">
                 <mat-form-field class="addRemarks" floatLabel="always">
-                    <mat-label>Status</mat-label>
-                    <mat-select formControlName="status">
-                        <mat-option *ngFor="let statuses of status" [value]="statuses.value">
-                            {{ statuses.viewValue }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field class="addRemarks" floatLabel="always">
                     <mat-label>Remarks</mat-label>
                     <mat-select formControlName="remarks">
                         <mat-option *ngFor="let remark of remarks" [value]="remark.value">
@@ -94,15 +104,18 @@
                         matInput
                         formControlName="checkedBy"
                         autocomplete="off"
+                        
+                        [(ngModel)]="checkedBy"
+                        readonly
                     />
                 </mat-form-field>
                 <mat-form-field class="addDepartment" floatLabel="always">
                     <mat-label>Department</mat-label>
-                    <mat-select formControlName="department">
-                        <mat-option *ngFor="let department of departments" [value]="department.value">
-                            {{ department.viewValue }}
-                        </mat-option>
-                    </mat-select>
+                    <input
+                        matInput
+                        formControlName="department"
+                        autocomplete="off"
+                    />
                 </mat-form-field>
             </div>
         </div>

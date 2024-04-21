@@ -20,7 +20,7 @@
             <!-- Serial No -->
             <mat-form-field class="addEquipment" floatLabel="always">
                 <mat-label>Serial No</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.serialNo" />
+                <input matInput autocomplete="off" readonly [(ngModel)]="data.serialNo" />
             </mat-form-field>
             <!-- Brand Name -->
             <mat-form-field class="addBrand" floatLabel="always">
@@ -31,6 +31,11 @@
             <mat-form-field class="addMatter" floatLabel="always">
                 <mat-label>Matter Type</mat-label>
                 <input matInput autocomplete="off" [(ngModel)]="data.matter"/>
+            </mat-form-field>
+            <!-- Inventory Type -->
+            <mat-form-field class="addMatter" floatLabel="always">
+                <mat-label>Inventory Type</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="data.inventorytype"/>
             </mat-form-field>
             <!-- Color -->
             <mat-form-field class="addMatter" floatLabel="always">
@@ -48,20 +53,16 @@
             </mat-form-field>
             <mat-form-field class="addRemarks" floatLabel="always">
                 <mat-label>Checked By</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.checkedBy" />
+                <input matInput autocomplete="off" readonly [(ngModel)]="data.checkedBy" />
             </mat-form-field>
             <!-- Department -->
             <mat-form-field class="addDepartment" floatLabel="always">
                 <mat-label>Department</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.department" />
+                <input matInput autocomplete="off" readonly [(ngModel)]="data.department" />
             </mat-form-field>
             <mat-form-field class="addDepartment" floatLabel="always">
                 <mat-label>Date Acqured</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.dateAcquired" />
-            </mat-form-field>
-            <mat-form-field class="addDepartment" floatLabel="always">
-                <mat-label>Quanitity</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.quantity" />
+                <input matInput autocomplete="off" readonly [(ngModel)]="data.dateAcquired" />
             </mat-form-field>
         </div>
     </div>
@@ -73,8 +74,10 @@
             </ng-template>
         </div>
         <div class="edit-image" *ngIf="isFaculty()">
-            <button mat-raised-button *ngIf="!isEditingImage" (click)="isEditingImage = true">Edit Image</button>
-            <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" *ngIf="isEditingImage" (input)="loadImageFromGoogleDrive($event)" [disabled]="isFaculty()">
+            <!-- <button mat-raised-button *ngIf="!isEditingImage" (click)="isEditingImage = true">Edit Image</button>
+            <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" *ngIf="isEditingImage" (input)="loadImageFromGoogleDrive($event)" [disabled]="isFaculty()"> -->
+            <button mat-raised-button *ngIf="!isEditingImage" (click)="toggleEditImage()">Edit Image</button>
+            <input type="file" #fileInput (change)="onFileSelected($event)" *ngIf="isEditingImage" accept="image/*">
         </div>
     </div>
 </div>

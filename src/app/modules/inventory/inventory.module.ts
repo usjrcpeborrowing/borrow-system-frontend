@@ -12,6 +12,7 @@ import { ItemPanelComponent } from './item-panel/item-panel.component';
 import { ItemsComponent } from './items/items.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -55,6 +56,7 @@ import { ReadsHeaderModule } from '../reads-header/reads-header.module';
     MatPaginatorModule,
     MatDialogModule,
     MatSidenavModule,
+    MatAutocompleteModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
