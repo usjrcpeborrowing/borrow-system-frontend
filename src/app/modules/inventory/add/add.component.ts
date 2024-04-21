@@ -95,8 +95,8 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     
- this.loadEquipmentTypes();
- this.loadBrandList();
+  this.loadEquipmentTypes();
+  this.loadBrandList();
     this.filteredEquipmentTypes = this.equipmentTypeControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterEquipmentTypes(value))
@@ -113,7 +113,7 @@ export class AddComponent implements OnInit {
     const filteredOptions = this.equipmenttypes.filter(option => option.toLowerCase().includes(filterValue));
     console.log('Filtered options:', filteredOptions);
     return filteredOptions;
-   }
+  }
   
   
   private _filterBrands(value: string): string[] {
@@ -173,15 +173,15 @@ export class AddComponent implements OnInit {
 
   loadEquipmentTypes(): void {
     this.equipmentService.getEquipmentTypes().subscribe(
-       (response) => {
-         this.equipmenttypes = response.data;
-         console.log('Equipment types loaded:', this.equipmenttypes);
-       },
-       (error) => {
-         console.error('Error fetching equipment types:', error);
-       }
+      (response) => {
+        this.equipmenttypes = response.data;
+        console.log('Equipment types loaded:', this.equipmenttypes);
+      },
+      (error) => {
+        console.error('Error fetching equipment types:', error);
+      }
     );
-   }
+  }
 
   loadBrandList(): void {
     this.equipmentService.getBrandList().subscribe(

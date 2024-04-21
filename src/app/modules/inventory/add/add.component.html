@@ -38,8 +38,8 @@
                     <mat-label>Equipment Type</mat-label>
                     <input type="text" matInput [formControl]="equipmentTypeControl" [matAutocomplete]="autoEquipmentType">
                     <mat-autocomplete #autoEquipmentType="matAutocomplete">
-                       <mat-option *ngFor="let option of filteredEquipmentTypes | async" [value]="option">
-                         {{option}}
+                       <mat-option *ngFor="let filter of filteredEquipmentTypes | async" [value]="filter">
+                         {{filter}}
                        </mat-option>
                     </mat-autocomplete>
                    </mat-form-field>
@@ -47,8 +47,8 @@
                     <mat-label>Brand Name</mat-label>
                     <input type="text" matInput [formControl]="brandControl" [matAutocomplete]="autoBrand">
                     <mat-autocomplete #autoBrand="matAutocomplete">
-                       <mat-option *ngFor="let option of filteredBrands | async" [value]="option">
-                         {{option}}
+                       <mat-option *ngFor="let filter of filteredBrands | async" [value]="filter">
+                         {{filter}}
                        </mat-option>
                     </mat-autocomplete>
                    </mat-form-field>
