@@ -51,8 +51,15 @@ export class EquipmentService {
   addEquipment(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipment').pipe(catchError(this.handleError));
   }
+
   addEquipmentType(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipmenttype').pipe(catchError(this.handleError));
+  }
+
+  searchEquipmentbyName(searchWord: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('search', searchWord)
+    return this.http.get<any>(environment.API_URL + '/api/equipment/searchbyname').pipe(catchError(this.handleError));
   }
 
   handleError(err: HttpErrorResponse) {

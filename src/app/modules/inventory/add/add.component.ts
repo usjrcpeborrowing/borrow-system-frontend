@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Item } from 'src/app/models/Items';
+import { EquipmentService } from 'src/app/services/equipment.service';
 
 
 interface Matter {
@@ -54,7 +55,8 @@ export class AddComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Item
+    @Inject(MAT_DIALOG_DATA) public data: Item,
+    private equipmentService: EquipmentService
   ) {}
 
   ngOnInit(): void {}
@@ -70,4 +72,12 @@ export class AddComponent implements OnInit {
       this.imageUrl = null;
     }
   }
+
+  searchEquipment(event: any) {
+    const searchword = event.target.value;
+    this.equipmentService.searchEquipmentbyName(searchword).subscribe(resp=> {
+      console.log(resp.data)
+    })
+  }
+
 }
