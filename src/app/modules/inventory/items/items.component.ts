@@ -16,11 +16,12 @@ import { ReportsComponent } from '../reports/reports.component';
   styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent implements OnInit {
-  
   @Input() pagination: Pagination;
+  @Input() filter: any;
+
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
-  
-@Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+
+  @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
@@ -45,7 +46,7 @@ export class ItemsComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-  
+
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
     return !currentUser || !this.cantEditRole(currentUser.role);
@@ -59,10 +60,9 @@ export class ItemsComponent implements OnInit {
     return allowedRoles.includes(role);
   }
 
-  
   onPageChange(event: PageEvent): void {
     this.pagination.page = event.pageIndex + 1;
-    console.log("PAGINAAATION:", event.pageIndex)
+    console.log('PAGINAAATION:', event.pageIndex);
     this.pagination.limit = event.pageSize;
     this.pageChange.emit(this.pagination);
   }
@@ -70,7 +70,6 @@ export class ItemsComponent implements OnInit {
     this.selectedCategories = categories;
     this.filterItems();
   }
-
 
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
@@ -86,24 +85,24 @@ export class ItemsComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-  
-  queryParamsHandler(params: Params): void {
-    this.opened = params['opened'] == 'true' ? params['opened'] : false;
-    this.pagination.limit = params['limit'] ? +params['limit'] : 10;
-    this.pagination.page = params['page'] ? params['page'] : 1;
-    const searchword = params['search'] ? params['search'] : '';
-    this.searchedWord.patchValue(searchword);
-    // this.getItems();
 
-    const selectedCategories = {
-      equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
-      brand: params['brand'] ? params['brand'] : '',
-      matter: params['matter'] ? params['matter'] : '',
-      description: params['description'] ? params['description'] : '',
-    };
-    
-    this.handleSelectedCategories(selectedCategories);
-  }
+  // queryParamsHandler(params: Params): void {
+  //   this.opened = params['opened'] == 'true' ? params['opened'] : false;
+  //   this.pagination.limit = params['limit'] ? +params['limit'] : 10;
+  //   this.pagination.page = params['page'] ? params['page'] : 1;
+  //   const searchword = params['search'] ? params['search'] : '';
+  //   this.searchedWord.patchValue(searchword);
+  //   // this.getItems();
+
+  //   const selectedCategories = {
+  //     equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
+  //     brand: params['brand'] ? params['brand'] : '',
+  //     matter: params['matter'] ? params['matter'] : '',
+  //     description: params['description'] ? params['description'] : '',
+  //   };
+
+  //   this.handleSelectedCategories(selectedCategories);
+  // }
 
   addItem(): void {
     this.dialog.open(AddComponent, {
@@ -210,10 +209,18 @@ export class ItemsComponent implements OnInit {
           { title: 'Remarks' },
           { title: 'Quantity' },
         ],
-        table: Array.from(this.equipmentlist, (item: any, index) => [item.serialNo, item.name, item.equipmentType, item.brand, item.description, item.remarks, item.quantity]),
+        table: Array.from(this.equipmentlist, (item: any, index) => [
+          item.serialNo ? item.serialNo : '',
+          item.name ? item.name : '',
+          item.equipmentType ? item.equipmentType : '',
+          item.brand ? item.brand : '',
+          item.description ? item.description : '',
+          item.remarks ? item.remarks : '',
+          item.quantity ? item.quantity : '',
+        ]),
         invDescLabel: 'Report Note',
         invDesc:
-          "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+          `Requestor uses this following filter ${JSON.stringify(this.filter)}`
       },
       footer: {
         text: 'The report is created on a computer and is valid without the signature and stamp.',
@@ -222,8 +229,5 @@ export class ItemsComponent implements OnInit {
       pageLabel: 'Page ',
     };
     var pdfObject = jsPDFInvoiceTemplate.default(props);
-
   }
- 
-
 }
