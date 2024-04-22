@@ -110,9 +110,9 @@ export class AddComponent implements OnInit {
 
   searchEquipment(event: any) {
     const searchword = event.target.value;
-    // this.equipmentService.searchEquipmentbyName(searchword).subscribe(resp=> {
-    //   console.log(resp.data)
-    // })
+    this.equipmentService.searchEquipmentbyName(searchword).subscribe(resp=> {
+      console.log(resp.data)
+    })
   }
 
   onSubmit(): void {

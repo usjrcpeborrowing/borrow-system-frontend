@@ -68,7 +68,7 @@
       <img *ngIf="imageUrl" [src]="imageUrl" />
     </div>
     <div class="add-image">
-      <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" (blur)="loadImageFromGoogleDrive()" />
+      <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" (blur)="loadImageFromGoogleDrive($event)" />
     </div>
   </div>
 </div>

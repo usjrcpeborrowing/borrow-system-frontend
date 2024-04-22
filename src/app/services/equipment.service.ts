@@ -146,6 +146,10 @@ export class EquipmentService {
     return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist').pipe(catchError(this.handleError));;
   }
 
+  searchEquipmentbyName(search: string) {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/searchbyname').pipe(catchError(this.handleError));;
+  }
+
   getItemStatusList(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks').pipe(catchError(this.handleError));;
   }
