@@ -136,6 +136,14 @@ export class AddComponent implements OnInit {
         this.imageUrl = null;
     }
   }
+
+  searchEquipment(event: any) {
+    const searchword = event.target.value;
+    this.equipmentService.searchEquipmentbyName(searchword).subscribe(resp=> {
+      console.log(resp.data)
+    })
+  }
+
   onSubmit(): void {
     
     this.isFetching = true;

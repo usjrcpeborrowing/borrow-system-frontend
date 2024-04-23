@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as jsPDFInvoiceTemplate from 'jspdf-invoice-template';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,14 +16,15 @@ import { ReportsComponent } from '../reports/reports.component';
   styleUrls: ['./items.component.css'],
 })
 export class ItemsComponent implements OnInit {
-  
   @Input() pagination: Pagination;
   @Input() filter: any;
   @Input() equipmentlist: any;
 
+
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
   
   @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
@@ -48,7 +49,7 @@ export class ItemsComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
-  
+
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
     return !currentUser || !this.cantEditRole(currentUser.role);
@@ -62,10 +63,10 @@ export class ItemsComponent implements OnInit {
     return allowedRoles.includes(role);
   }
 
-  
   onPageChange(event: PageEvent): void {
     this.pagination.page = event.pageIndex + 1;
     console.log("PAGINAAATION:", this.pagination.length)
+    console.log('PAGINAAATION:', event.pageIndex);
     this.pagination.limit = event.pageSize;
     this.pageChange.emit(this.pagination);
   }
@@ -73,7 +74,6 @@ export class ItemsComponent implements OnInit {
     this.selectedCategories = categories;
     this.filterItems();
   }
-
 
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
@@ -89,24 +89,24 @@ export class ItemsComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-  
-  queryParamsHandler(params: Params): void {
-    this.opened = params['opened'] == 'true' ? params['opened'] : false;
-    this.pagination.limit = params['limit'] ? +params['limit'] : 10;
-    this.pagination.page = params['page'] ? params['page'] : 1;
-    const searchword = params['search'] ? params['search'] : '';
-    this.searchedWord.patchValue(searchword);
-    // this.getItems();
 
-    const selectedCategories = {
-      equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
-      brand: params['brand'] ? params['brand'] : '',
-      matter: params['matter'] ? params['matter'] : '',
-      description: params['description'] ? params['description'] : '',
-    };
-    
-    this.handleSelectedCategories(selectedCategories);
-  }
+  // queryParamsHandler(params: Params): void {
+  //   this.opened = params['opened'] == 'true' ? params['opened'] : false;
+  //   this.pagination.limit = params['limit'] ? +params['limit'] : 10;
+  //   this.pagination.page = params['page'] ? params['page'] : 1;
+  //   const searchword = params['search'] ? params['search'] : '';
+  //   this.searchedWord.patchValue(searchword);
+  //   // this.getItems();
+
+  //   const selectedCategories = {
+  //     equipmentType: params['equipmentType'] ? params['equipmentType'] : '',
+  //     brand: params['brand'] ? params['brand'] : '',
+  //     matter: params['matter'] ? params['matter'] : '',
+  //     description: params['description'] ? params['description'] : '',
+  //   };
+
+  //   this.handleSelectedCategories(selectedCategories);
+  // }
 
   addItem(): void {
     this.dialog.open(AddComponent, {
