@@ -117,8 +117,8 @@ export class BorrowComponent implements OnInit {
       remarks: this.selectedCategories.remarks,
       deparment: this.selectedCategories.deparment,
       inventorytype: this.selectedCategories.inventorytype,
-      
-      dateacquired: this.selectedCategories.dateacquired,
+      location: this.selectedCategories.location,
+      dateAcquired: this.selectedCategories.dateAcquired,
       name: this.wordSearched
     };
 

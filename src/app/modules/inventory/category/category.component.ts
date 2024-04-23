@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { DateRange, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DepartmentService } from 'src/app/services/department.services';
@@ -92,6 +92,8 @@ export class CategoryComponent implements OnInit {
   selectedStatus: Equipment | null = null;
   selectedRemarks: Equipment | null = null;
   selectedDepartment: Equipment | null = null;
+  
+  selectedLocation: Equipment | null = null;
   selectedSort: string | null = null;
   selectedDateAcquired: Date | null = null;
   
@@ -190,16 +192,16 @@ export class CategoryComponent implements OnInit {
       }
     );
   }
-  // getLocationList(): void {
-  //   this.departmentService.getLocationList().subscribe(
-  //     (response) => {
-  //       this.locations = response.data;
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching brand list:', error);
-  //     }
-  //   );
-  // }
+  getLocationList(): void {
+    this.equipmentService.getLocationList().subscribe(
+      (response) => {
+        this.locations = response.data;
+      },
+      (error) => {
+        console.error('Error fetching brand list:', error);
+      }
+    );
+  }
   onSelectChanged(filtername: string, event: MatSelectChange | string) {
     let value: string;
     if (typeof event === 'string') {
@@ -210,15 +212,31 @@ export class CategoryComponent implements OnInit {
 
     this.selectedCategories.emit({ filtername, value });
   }
-  onDateAcquiredChanged(event: MatDatepickerInputEvent<Date>): void {
-    const date: Date | null = event.value;
-    if (date) {
+  onDateChange(event: MatDatepickerInputEvent<Date>, type: 'startDate' | 'endDate'): void {
+    const date = event.value;
+    if (type === 'startDate') {
+      this.startDate = date;
+      const start = this.startDate?.toISOString().split('T')[0];
+      console.log(start)
       
-        const formattedDate = date.toISOString().split('T')[0];
-        this.selectedCategories.emit({ filtername: 'dateacquired', value: formattedDate });
-    } else {
+      this.selectedCategories.emit({ filtername: 'dateAcquired', value: start });
+    } else if (type === 'endDate') {
+      this.endDate = date;
+      const end = this.endDate?.toISOString().split('T')[0];
+      console.log(end)
+      
+      this.selectedCategories.emit({ filtername: 'enddate', value: end });
     }
+}
+
+onDateRangeChanged(dateRange: DateRange<Date>): void {
+  if (dateRange.start && dateRange.end) {
+      const startDate = dateRange.start.toISOString().split('T')[0];
+      const endDate = dateRange.end.toISOString().split('T')[0];
+      this.selectedCategories.emit({ filtername: 'dateacquired', value: startDate });
+      this.selectedCategories.emit({ filtername: 'enddate', value: endDate });
   }
+}
   
   
   resetFilters(): void {
@@ -231,6 +249,7 @@ export class CategoryComponent implements OnInit {
     this.selectedDepartment = null;
     this.selectedDateAcquired = null;
     this.selectedSort = null;
+    this.selectedLocation = null;
       const queryParams: Params = {};
       queryParams['equipmenttype'] = '';
       queryParams['brand'] = '';

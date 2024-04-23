@@ -24,7 +24,8 @@ export class InventoryComponent implements OnInit{
     remarks: '',
     deparment: '',
     name: '',
-    dateacquired: '',
+    dateAcquired: '',
+    location: '',
   };
   equipmentlist: any[] = [];
   sortUsed: 'asc' | 'desc' = 'asc';
@@ -84,8 +85,9 @@ export class InventoryComponent implements OnInit{
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
     this.inventoryFilter.deparment = params['deparment'] ? params['deparment'] : '';
+    this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
-    this.inventoryFilter.dateacquired = params['dateacquired'] ? params['dateacquired'] : '';
+    this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
     console.log(this.inventoryFilter);
     this.getEquipmentList();

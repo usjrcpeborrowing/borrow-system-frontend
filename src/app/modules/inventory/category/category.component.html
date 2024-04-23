@@ -42,11 +42,15 @@
 
     <mat-form-field class="form-field">
         <mat-label>Date Acquired</mat-label>
-        <input matInput [matDatepicker]="picker" (selectionChange)="onSelectChanged('dateacquired', selectedDateAcquired ? selectedDateAcquired.toISOString().split('T')[0] : '')" #dateInput>
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate [matDatepicker]="picker" (dateChange)="onDateChange($event, 'startDate')">
+            <input matEndDate [matDatepicker]="picker" (dateChange)="onDateChange($event, 'endDate')">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker ></mat-date-range-picker>
+
     </mat-form-field>
+    
 
     <mat-form-field class="form-field">
         <mat-label>Remarks</mat-label>
@@ -66,14 +70,14 @@
         </mat-select>
     </mat-form-field>
 
-    <!-- <mat-form-field class="form-field">
+    <mat-form-field class="form-field">
         <mat-label>Location</mat-label>
-        <mat-select  [(value)]="selectedLocation" (selectionChange)="onSelectChanged('lcoation', $event)">
-        <mat-option *ngFor="let location of locations" [value]="location._id">
-            {{ location.name }}
+        <mat-select  [(value)]="selectedLocation" (selectionChange)="onSelectChanged('location', $event)">
+        <mat-option *ngFor="let location of locations" [value]="location">
+            {{ location }}
         </mat-option>
         </mat-select>
-    </mat-form-field> -->
+    </mat-form-field>
 
     <div class="edit-button">
         <button mat-raised-button (click)="resetFilters()">Reset Filter</button>

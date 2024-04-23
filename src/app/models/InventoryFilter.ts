@@ -6,5 +6,6 @@ export interface InventoryFilter {
     remarks: string;
     deparment: string
     name: string;
-    dateacquired: string;
+    dateAcquired: string;
+    location: string;
 }

@@ -64,9 +64,10 @@ export class EquipmentService {
     params = params.append('inventorytype', filters.inventorytype);
     params = params.append('remarks', filters.remarks);
     params = params.append('deparment', filters.deparment);
+    params = params.append('location', filters.location);
     params = params.append('name', filters.name);
     
-    params = params.append('dateAcquired', filters.dateacquired);
+    params = params.append('dateAcquired', filters.dateAcquired);
     console.log("The ordeal",params);
 
     return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(catchError(this.handleError));
@@ -201,6 +202,9 @@ export class EquipmentService {
   }
   getDepartment(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));;
+  }
+  getLocationList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/locationlist').pipe(catchError(this.handleError));;
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));
