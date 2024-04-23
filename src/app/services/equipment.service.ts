@@ -204,7 +204,7 @@ export class EquipmentService {
     return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));;
   }
   getLocationList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/locationlist').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist').pipe(catchError(this.handleError));;
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));

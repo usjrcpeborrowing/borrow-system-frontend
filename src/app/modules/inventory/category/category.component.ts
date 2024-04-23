@@ -125,6 +125,8 @@ export class CategoryComponent implements OnInit {
     this.getInventoryTypeList();
     this.getItemStatusList();
     this.getDepartmentList();
+    
+    this.getLocationList();
   }
   
   loadEquipmentTypes(): void {
@@ -196,6 +198,7 @@ export class CategoryComponent implements OnInit {
     this.equipmentService.getLocationList().subscribe(
       (response) => {
         this.locations = response.data;
+        console.log(this.locations)
       },
       (error) => {
         console.error('Error fetching brand list:', error);
