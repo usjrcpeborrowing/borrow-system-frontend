@@ -18,14 +18,16 @@ import { ReportsComponent } from '../reports/reports.component';
 export class ItemsComponent implements OnInit {
   
   @Input() pagination: Pagination;
+  @Input() filter: any;
+  @Input() equipmentlist: any;
+
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
   
-@Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
+  @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
   selectedCategories: any = {};
-  @Input() equipmentlist: any;
 
   constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private router: Router, public dialog: MatDialog) {
     this.pagination = {
@@ -41,6 +43,7 @@ export class ItemsComponent implements OnInit {
     //   this.queryParamsHandler(params)
     // );
     const currentUser = this.authService.getCurrentUser();
+    
     if (!currentUser || !this.isAllowedRole(currentUser.role)) {
       this.router.navigate(['/']);
     }
@@ -62,7 +65,7 @@ export class ItemsComponent implements OnInit {
   
   onPageChange(event: PageEvent): void {
     this.pagination.page = event.pageIndex + 1;
-    console.log("PAGINAAATION:", event.pageIndex)
+    console.log("PAGINAAATION:", this.pagination.length)
     this.pagination.limit = event.pageSize;
     this.pageChange.emit(this.pagination);
   }
@@ -210,10 +213,18 @@ export class ItemsComponent implements OnInit {
           { title: 'Remarks' },
           { title: 'Quantity' },
         ],
-        table: Array.from(this.equipmentlist, (item: any, index) => [item.serialNo, item.name, item.equipmentType, item.brand, item.description, item.remarks, item.quantity]),
+        table: Array.from(this.equipmentlist, (item: any, index) => [
+          item.serialNo ? item.serialNo : '',
+          item.name ? item.name : '',
+          item.equipmentType ? item.equipmentType : '',
+          item.brand ? item.brand : '',
+          item.description ? item.description : '',
+          item.remarks ? item.remarks : '',
+          item.quantity ? item.quantity : '',
+        ]),
         invDescLabel: 'Report Note',
         invDesc:
-          "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary.",
+          `Requestor uses this following filter ${JSON.stringify(this.filter)}`
       },
       footer: {
         text: 'The report is created on a computer and is valid without the signature and stamp.',
@@ -222,8 +233,5 @@ export class ItemsComponent implements OnInit {
       pageLabel: 'Page ',
     };
     var pdfObject = jsPDFInvoiceTemplate.default(props);
-
   }
- 
-
 }

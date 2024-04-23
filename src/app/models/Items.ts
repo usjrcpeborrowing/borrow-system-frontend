@@ -10,6 +10,7 @@ export interface Item {
     unit: string;
     matter: string;
     inventorytype: string;
+    description: string;
     dateAcquired: Date;
     images: {
         thumbnailUrl: string,

@@ -140,7 +140,6 @@ export class AuthService {
                     _id: string;
                     role: string;
                 }
-
                 const userType = response.data.find((type: UserType) => type._id === userId);
                 return userType ? userType.role : null;
             }),

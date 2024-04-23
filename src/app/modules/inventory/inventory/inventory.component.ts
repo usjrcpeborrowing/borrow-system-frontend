@@ -24,6 +24,7 @@ export class InventoryComponent implements OnInit{
     remarks: '',
     deparment: '',
     name: '',
+    dateacquired: '',
   };
   equipmentlist: any[] = [];
   sortUsed: 'asc' | 'desc' = 'asc';
@@ -63,6 +64,7 @@ export class InventoryComponent implements OnInit{
     };
     this.router.navigate(['/inventory'], navigationExtras);
   }
+  
   private isAllowedRole(role: string): boolean {
     const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
     return allowedRoles.includes(role);
@@ -70,6 +72,7 @@ export class InventoryComponent implements OnInit{
   getEquipmentList() {
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
       this.equipmentlist = resp.data;
+      this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
     });
   }
@@ -82,6 +85,7 @@ export class InventoryComponent implements OnInit{
     this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
     this.inventoryFilter.deparment = params['deparment'] ? params['deparment'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
+    this.inventoryFilter.dateacquired = params['dateacquired'] ? params['dateacquired'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
     console.log(this.inventoryFilter);
     this.getEquipmentList();

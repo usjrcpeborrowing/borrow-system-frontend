@@ -15,6 +15,9 @@ export class ItemDialogComponent implements OnInit {
   imageUrl: string | null = null; // Keep imageUrl as a string
   googleDriveLink: string = ''; // Keep googleDriveLink as a string
   
+  equipmenttypes: string[] = [];
+  brands: string[] = [];
+
   @ViewChild('fileInput') fileInput: any;
   isEditingImage = false;
   constructor(
@@ -24,7 +27,9 @@ export class ItemDialogComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {  
+    this.loadEquipmentTypes();
+    this.loadBrandList();
     if (!this.data.images || typeof this.data.images !== 'object') {
       this.data.images = {
           thumbnailUrl: '',
@@ -66,6 +71,29 @@ export class ItemDialogComponent implements OnInit {
             console.error('data.images is not an object:', this.data.images);
         }
     }
+  }
+
+  loadEquipmentTypes(): void {
+    this.equipmentService.getEquipmentTypes().subscribe(
+      (response) => {
+        this.equipmenttypes = response.data;
+        console.log('Equipment types loaded:', this.equipmenttypes);
+      },
+      (error) => {
+        console.error('Error fetching equipment types:', error);
+      }
+    );
+  }
+
+  loadBrandList(): void {
+    this.equipmentService.getBrandList().subscribe(
+      (response) => {
+        this.brands = response.data;
+      },
+      (error) => {
+        console.error('Error fetching brand list:', error);
+      }
+    );
   }
 
   toggleEditImage(): void {

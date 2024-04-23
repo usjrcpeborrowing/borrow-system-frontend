@@ -39,19 +39,19 @@
                     <input type="text" matInput [formControl]="equipmentTypeControl" [matAutocomplete]="autoEquipmentType">
                     <mat-autocomplete #autoEquipmentType="matAutocomplete">
                        <mat-option *ngFor="let filter of filteredEquipmentTypes | async" [value]="filter">
-                         {{filter}}
-                       </mat-option>
+                            {{filter}}
+                        </mat-option>
                     </mat-autocomplete>
-                   </mat-form-field>
+                </mat-form-field>
                 <mat-form-field class="addBrand" floatLabel="always">
                     <mat-label>Brand Name</mat-label>
                     <input type="text" matInput [formControl]="brandControl" [matAutocomplete]="autoBrand">
                     <mat-autocomplete #autoBrand="matAutocomplete">
                        <mat-option *ngFor="let filter of filteredBrands | async" [value]="filter">
-                         {{filter}}
-                       </mat-option>
+                            {{filter}}
+                        </mat-option>
                     </mat-autocomplete>
-                   </mat-form-field>
+                </mat-form-field>
                 <mat-form-field class="serialNo" floatLabel="always">
                     <mat-label>Serial No.</mat-label>
                     <input

@@ -45,7 +45,7 @@ export class AddComponent implements OnInit {
     
   equipmentTypeControl = new FormControl();
   filteredEquipmentTypes!: Observable<string[]>; // Add ! here
-   
+  
   brandControl = new FormControl();
   filteredBrands!: Observable<string[]>;
   

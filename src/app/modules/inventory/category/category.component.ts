@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DepartmentService } from 'src/app/services/department.services';
@@ -81,7 +82,8 @@ export class CategoryComponent implements OnInit {
   selectedValue: string[] = [];
   equipmenttypes: string[] = [];
   selectedEquipment: Equipment | null = null;
-  dateAcquired: DateAcquired[] = [];
+  startDate: Date | null = null;
+  endDate: Date | null = null;
   
   selectedBrands: Equipment | null = null;
   selectedMatter: Equipment | null = null;
@@ -195,11 +197,24 @@ export class CategoryComponent implements OnInit {
         value = event.value;
     }
 
-    // Emit the selected value
     this.selectedCategories.emit({ filtername, value });
-
-}
+  }
+  onDateAcquiredChanged(event: MatDatepickerInputEvent<Date>): void {
+    const date: Date | null = event.value;
+    if (date) {
+        const formattedDate = date.toISOString().split('T')[0];
+        this.selectedCategories.emit({ filtername: 'dateacquired', value: formattedDate });
+    } else {
+    }
+  }
   
+  onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    const date: Date | null = event.value;
+    if (date) {
+        const formattedDate = date.toISOString().split('T')[0];
+        this.selectedCategories.emit({ filtername: 'dateacquiredEnd', value: formattedDate });
+    }
+}
   resetFilters(): void {
     console.log('Resetting filters...');
     this.selectedEquipment = null;
