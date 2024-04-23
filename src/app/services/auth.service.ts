@@ -10,6 +10,7 @@ interface User {
         firstName: string;
         lastName: string;
     }
+    department: string;
     role: string;
 }
 
@@ -39,9 +40,11 @@ export class AuthService {
                     firstName: 'Admin',
                     lastName: 'Admin'
                 },
+                department: 'ECL',
                 role: 'Admin'
             };
             localStorage.setItem('currentUser', JSON.stringify(adminUser));
+            
             this.navigateToDashboard(adminUser.role);
             return of(true);
         }
@@ -54,6 +57,7 @@ export class AuthService {
                     firstName: 'reads',
                     lastName: 'reads'
                 },
+                department: 'ECL',
                 role: 'reads'
             };
             console.log(userAcc.name.firstName);
@@ -69,6 +73,7 @@ export class AuthService {
                     firstName: 'Student',
                     lastName: 'Student'
                 },
+                department: 'ECL',
                 role: 'Student'
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
@@ -83,6 +88,7 @@ export class AuthService {
                     firstName: 'oic',
                     lastName: 'account'
                 },
+                department: 'ECL',
                 role: 'oic'
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
@@ -97,6 +103,7 @@ export class AuthService {
                     firstName: 'instructor',
                     lastName: 'account'
                 },
+                department: 'ECL',
                 role: 'Instructor'
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));

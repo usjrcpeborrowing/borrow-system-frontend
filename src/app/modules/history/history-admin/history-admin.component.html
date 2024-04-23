@@ -6,22 +6,56 @@
     <mat-drawer mode="side" opened class="custom-drawer">
         <div class="menu-panel">
             <div class="buttons">
-                <button style=" justify-content: flex-start;" mat-raised-button>
-                        Borrowed Items
-                    </button>
-                <button style=" justify-content: flex-start;" mat-raised-button>
-                        History Reports
-                    </button>
+                <button mat-raised-button (click)="showBorrow()">
+                    Borrowed Items
+                </button>
+                <button mat-raised-button (click)="showReports()">
+                    History Reports
+                </button>
             </div>
         </div>
     </mat-drawer>
-    <mat-drawer-content class="custom-drawer-itmes">
-        <h1 class="left-drawer-header"  *ngIf="borrowedItems">Borrowed Items</h1>
-        <h1 class="left-drawer-header"  *ngIf="reports">Report History</h1>
-        <div class="scrollable-panel">
-            <mat-list>
-            </mat-list>
-        </div>
+    <mat-drawer-content class="custom-drawer-items">
+        <h1 class="left-drawer-header" *ngIf="borrowedItems">Borrowed Items</h1>
+        <h1 class="left-drawer-header" *ngIf="reports">Reports</h1>
 
+        <div class="scrollable-panel" *ngIf="reports">
+            <div class="table-header">
+                <div class="header-fileName">File Name</div>
+                <div class="header-name">Downloaded By</div>
+                <div class="header-role">Role</div>
+                <div class="header-department">Department</div>
+                <div class="header-location">Location</div>
+                <div class="header-date">Date</div>
+            </div>
+            <div class="table-content">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let report of reportData">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ report.fileName }}
+                            </mat-panel-title>
+                            <mat-panel-description class="panel-description" >
+                                <div class="detail-download">
+                                    <div class="detail-value">{{ report.downloadedBy }}</div>
+                                </div>
+                                <div class="detail-role">
+                                    <div class="detail-value">{{ report.role}}</div>
+                                </div>
+                                <div class="detail-department">
+                                    <div class="detail-value">{{ report.department }}</div>
+                                </div>
+                                <div class="detail-location">
+                                    <div class="detail-value">{{ report.location }}</div>
+                                </div>
+                                <div class="detail-date">
+                                    <div class="detail-value">{{ report.timeStamp | date:'fullDate'}}</div>
+                                </div>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>

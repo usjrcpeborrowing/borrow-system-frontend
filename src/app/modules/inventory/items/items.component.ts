@@ -5,6 +5,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as jsPDFInvoiceTemplate from 'jspdf-invoice-template';
 import { Pagination } from 'src/app/models/Pagination';
+import { Report } from 'src/app/models/Reports';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { ReportDownloadService } from 'src/app/services/report-download-service';
@@ -29,8 +30,16 @@ export class ItemsComponent implements OnInit {
   searchedWord = new FormControl('');
   itemlist: any = [];
   selectedCategories: any = {};
-
-  constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private router: Router, public dialog: MatDialog) {
+  usertype: any = '';
+  fullName: any = '';
+  userDepartment: any = '';
+  constructor(
+    private reportDownloadService: ReportDownloadService, 
+    private authService: AuthService, 
+    private equipmentService: EquipmentService, 
+    private activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    public dialog: MatDialog) {
     this.pagination = {
       length: 0,
       page: 1,
@@ -48,6 +57,14 @@ export class ItemsComponent implements OnInit {
     if (!currentUser || !this.isAllowedRole(currentUser.role)) {
       this.router.navigate(['/']);
     }
+    this.fullName = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    localStorage.setItem('currentUser.role', JSON.stringify(currentUser?.role));
+    // this.usertype = localStorage.getItem('currentUser.role');
+    this.usertype = currentUser?.role;
+    localStorage.setItem('currentUser.department', JSON.stringify(currentUser?.department));
+    
+    this.userDepartment = currentUser?.department;
+    // this.userDepartment = localStorage.getItem('currentUser.department');
   }
 
   isFaculty(): boolean {
@@ -65,8 +82,6 @@ export class ItemsComponent implements OnInit {
 
   onPageChange(event: PageEvent): void {
     this.pagination.page = event.pageIndex + 1;
-    console.log("PAGINAAATION:", this.pagination.length)
-    console.log('PAGINAAATION:', event.pageIndex);
     this.pagination.limit = event.pageSize;
     this.pageChange.emit(this.pagination);
   }
@@ -141,14 +156,37 @@ export class ItemsComponent implements OnInit {
 
   download() {
     var currentDate = new Date();
-    var departmentReportType = 'ECL'; // replace with the actual department report type
-    var fileName = `USJR_${departmentReportType}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`;
-    this.reportDownloadService.addDownloadRecord({
-      type: 'Inventory Report',
-      department: departmentReportType,
-      fileName: fileName,
-      date: new Date(),
-    });
+    // var departmentReportType = localStorage.getItem('department'); // replace with the actual department report type
+    var user = localStorage.getItem('currentuser');
+    var departmentReportType = this.userDepartment;
+    var usertype = this.usertype;
+    var userName = this.fullName;
+    var location = 'SN-01'; // replace with actual department location
+    // console.log("TEST ", this.filter.equipmenttype);
+
+    var category: { [key: string]: any } = Object.keys(this.filter)
+    .filter(key => this.filter[key] && this.filter[key].length > 0)
+    .reduce((obj, key) => {
+      obj[key] = this.filter[key];
+      return obj;
+    }, {} as { [key: string]: any });
+    var filteredItem = Object.keys(category).map(key => `${key.charAt(0).toUpperCase() + key.slice(1)}: ${category[key]}`).join(', ');
+    // var filteredItem = JSON.stringify(category);
+
+    // console.log("Categories : ", category);
+ 
+    // this.filter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
+    // this.filter.remarks = params['remarks'] ? params['remarks'] : '';
+    // this.filter.department = params['department'] ? params['department'] : '';
+    // this.filter.name = params['search'] ? params['search'] : '';
+ 
+ 
+    // if(this.filter.equipmenttype !== "" ||
+    //   this.filter.brand !== "") {
+    //   console.log("TEST ", this.filter.equipmenttype);
+    // }
+    
+    var fileName = (""+ `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`);
     let props = {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       returnJsPDFDocObject: true,
@@ -158,8 +196,8 @@ export class ItemsComponent implements OnInit {
       logo: {
         src: 'https://scontent-mnl1-1.xx.fbcdn.net/v/t39.30808-1/347586256_1399184523956665_6414462579657343146_n.jpg?stp=dst-jpg_p480x480&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOntxpK6LOAU2gOaG7OLAQq6RTAhRJ3OirpFMCFEnc6G0byer3W2ZlC8_R5Xlxaez3tdw2T68flddBlYLhM1_6&_nc_ohc=Xmb2eDait8cAb57W9A8&_nc_ht=scontent-mnl1-1.xx&oh=00_AfCXL-S8n3gYxtazy0P2fl06aaNKQA7s90I9c7tkwgDWrA&oe=66258429',
         type: 'PNG', //optional, when src= data:uri (nodejs case)
-        width: 53.33, //aspect ratio = width/height
-        height: 26.66,
+        width: 48.33, //aspect ratio = width/height
+        height: 31.66,
         margin: {
           top: 0, //negative or positive num, from the current position
           left: 0, //negative or positive num, from the current position
@@ -179,15 +217,13 @@ export class ItemsComponent implements OnInit {
       business: {
         name: 'University of San Jose- Recoletos',
         address: 'Magallanes Street, 6000 Cebu City, Philippines',
-        phone: '(+355) 069 11 11 111',
-        email: 'email@example.com',
-        email_1: 'info@example.al',
-        website: 'www.example.al',
+        phone: departmentReportType + ' Department',
+        email: location,
       },
       contact: {
         label: 'Report issued for:',
-        name: 'Reads Name',
-        address: 'Department',
+        name: (""+ userName),
+        address: (""+ usertype),
       },
       invoice: {
         label: 'Report #: ',
@@ -201,12 +237,15 @@ export class ItemsComponent implements OnInit {
           },
           {
             title: 'Name',
+            style: {
+              width: 100,
+            }
           },
           {
             title: 'Equipment Type',
-            // style: {
-            //   width: 30,
-            // },
+            style: {
+              width: 50,
+            },
           },
           { title: 'Brand' },
           { title: 'Description' },
@@ -215,23 +254,54 @@ export class ItemsComponent implements OnInit {
         ],
         table: Array.from(this.equipmentlist, (item: any, index) => [
           item.serialNo ? item.serialNo : '',
-          item.name ? item.name : '',
+          item.name ? item.name.toString().replace('�', '') : '',
           item.equipmentType ? item.equipmentType : '',
           item.brand ? item.brand : '',
           item.description ? item.description : '',
           item.remarks ? item.remarks : '',
           item.quantity ? item.quantity : '',
         ]),
-        invDescLabel: 'Report Note',
-        invDesc:
-          `Requestor uses this following filter ${JSON.stringify(this.filter)}`
+        invDescLabel: 'Filter/s used:',
+        invDesc: ('' + filteredItem),
       },
       footer: {
-        text: 'The report is created on a computer and is valid without the signature and stamp.',
+        text: (""+ `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`),
       },
       pageEnable: true,
       pageLabel: 'Page ',
     };
     var pdfObject = jsPDFInvoiceTemplate.default(props);
+
+    this.reportDownloadService.addDownloadRecord({
+      downloadedBy: user,
+      role: usertype,
+      department: departmentReportType,
+      loc: location,
+      selectedItem: filteredItem,
+      fileName: fileName,
+      timestamp: new Date().toISOString(),
+    });
+    const reports: Report = {
+      downloadedBy: userName,
+      role:  usertype,
+      department: departmentReportType,
+      location: 'SN-01',
+      selectedFilter: filteredItem,
+      fileName: fileName,
+      timeStamp: new Date(),
+    };
+    this.submitReport(reports);
+  }
+
+
+  submitReport(reports: any): void {
+    this.equipmentService.addReports(reports).subscribe(
+      data => {
+        console.log('Report submitted successfully:', data);
+      },
+      error => {
+        console.error('Error submitting report:', error);
+      }
+  );
   }
 }

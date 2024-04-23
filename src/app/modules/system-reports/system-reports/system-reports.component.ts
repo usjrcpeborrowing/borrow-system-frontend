@@ -16,10 +16,7 @@ export class SystemReportsComponent {
   constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
-
-    this.reportDownloadService.currentDownloadRecords.subscribe(records => {
-      this.downloadRecords = records;
-    });
+    this.fetchReports();
   }
   isAdmin(): boolean {
     const currentUser = this.authService.getCurrentUser();
@@ -33,4 +30,16 @@ export class SystemReportsComponent {
     const allowedRoles = ['Admin', 'reads', 'oic'];
     return allowedRoles.includes(role);
   }
+
+  fetchReports(): void {
+    this.equipmentService.getReports().subscribe(
+      (data) => {
+        const sortedReports = data.sort((a: any, b: any) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime());
+        this.downloadRecords = sortedReports.slice(0, 5);
+      },
+      (error) => {
+        console.error('Error fetching reports:', error);
+      }
+    );
+}
 }

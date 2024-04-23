@@ -1,9 +1,6 @@
-<div class="add-dialog">
-    <div class="panel-title" >
-        <h1>Add Item</h1>
-        <div class="hline"></div>
-    </div>
-    
+<div class="panel-title">
+  <h1>Add Item</h1>
+</div>
 <div class="add-item">
     
     <form [formGroup]="addItemForm">
@@ -115,6 +112,10 @@
                         matInput
                         formControlName="department"
                         autocomplete="off"
+                        
+                        [(ngModel)]="userDepartment"
+                        
+                        readonly
                     />
                 </mat-form-field>
             </div>
@@ -123,15 +124,17 @@
             <div class="image-container">
                 <img *ngIf="imageUrl" [src]="imageUrl">
             </div>
-            <div class="add-image">
+            <!-- <div class="add-image">
                 <input type="text" placeholder="Enter Google Drive Image Link" (blur)="loadImageFromGoogleDrive($event)">
+            </div> -->
+            <div class="add-image">
+                <input type="file" (change)="loadImageFromFile($event)">
             </div>
         </div>
+        
     </form>
 </div>
 
-<mat-spinner *ngIf="isFetching" class="loading-spinner"></mat-spinner>
-<div class="add-button" *ngIf="!isFetching">
-    <button mat-raised-button (click)="onSubmit()">Add Item</button>
-</div>
+<div class="add-button">
+    <button mat-raised-button>Add Item</button>
 </div>

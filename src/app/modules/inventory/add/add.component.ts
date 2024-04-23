@@ -7,6 +7,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth.service';
 interface Matter {
   value: string;
   viewValue: string;
@@ -40,7 +41,7 @@ interface Equipment{
   styleUrls: ['./add.component.css']
 })
 export class AddComponent implements OnInit {
-  checkedBy: string = "John Doe"; // Checked By value
+  checkedBy: string = ''; // Checked By value
   
     
   equipmentTypeControl = new FormControl();
@@ -53,6 +54,7 @@ export class AddComponent implements OnInit {
   imageUrl: string | null = null;
   googleDriveLink: string = '';
   
+  userDepartment: any = '';
   
   equipmenttypes: string[] = [];
   brands: string[] = [];
@@ -74,6 +76,7 @@ export class AddComponent implements OnInit {
   addItemForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddComponent>,
+    private authService: AuthService, 
     private equipmentService: EquipmentService ,
     @Inject(MAT_DIALOG_DATA) public data: Item,
     private fb: FormBuilder,
@@ -95,8 +98,11 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     
-  this.loadEquipmentTypes();
-  this.loadBrandList();
+    const currentUser = this.authService.getCurrentUser();
+    this.userDepartment = currentUser?.department;
+    this.checkedBy = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    this.loadEquipmentTypes();
+    this.loadBrandList();
     this.filteredEquipmentTypes = this.equipmentTypeControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filterEquipmentTypes(value))
@@ -120,6 +126,19 @@ export class AddComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.brands.filter(option => option.toLowerCase().includes(filterValue));
   }
+  loadImageFromFile(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+        const file = inputElement.files[0];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            this.imageUrl = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        console.log('No file selected');
+    }
+}
   loadImageFromGoogleDrive(event: Event): void {
 
     const inputElement = event.target as HTMLInputElement;
@@ -151,7 +170,6 @@ export class AddComponent implements OnInit {
     
     if (this.addItemForm.valid) {
       const itemData = this.addItemForm.value;
-    
       itemData.images = { Url: this.googleDriveLink };
       this.equipmentService.addEquipment(itemData).subscribe(
         response => {

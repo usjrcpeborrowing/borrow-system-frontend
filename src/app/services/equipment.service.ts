@@ -125,7 +125,19 @@ export class EquipmentService {
       tap(data => console.log('Equipment added:', data)),
       catchError(this.handleError)
     );
-}
+  }
+  addReports(report: Report): Observable<any> {
+    return this.http.post<any>(environment.API_URL + '/api/report', report).pipe(
+      tap(data => console.log('Report added:', data)),
+      catchError(this.handleError)
+    );
+  }
+  getReports(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + "/api/report").pipe(
+      map(response => response.data),
+      catchError(this.handleError)
+    );
+  }
   getBrandListWithPagination(page: number, limit: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
@@ -186,6 +198,9 @@ export class EquipmentService {
   }
   getUserTypes(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/usertypes').pipe(catchError(this.handleError));;
+  }
+  getDepartment(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));;
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));

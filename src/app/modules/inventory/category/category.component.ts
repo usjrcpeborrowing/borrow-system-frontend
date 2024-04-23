@@ -79,6 +79,7 @@ export class CategoryComponent implements OnInit {
   inventorytypes: string[] = [];
   remarks: string[] = [];
   departments: any[] = [];
+  locations: string[] = [];
   selectedValue: string[] = [];
   equipmenttypes: string[] = [];
   selectedEquipment: Equipment | null = null;
@@ -189,6 +190,16 @@ export class CategoryComponent implements OnInit {
       }
     );
   }
+  // getLocationList(): void {
+  //   this.departmentService.getLocationList().subscribe(
+  //     (response) => {
+  //       this.locations = response.data;
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching brand list:', error);
+  //     }
+  //   );
+  // }
   onSelectChanged(filtername: string, event: MatSelectChange | string) {
     let value: string;
     if (typeof event === 'string') {
@@ -202,19 +213,14 @@ export class CategoryComponent implements OnInit {
   onDateAcquiredChanged(event: MatDatepickerInputEvent<Date>): void {
     const date: Date | null = event.value;
     if (date) {
+      
         const formattedDate = date.toISOString().split('T')[0];
         this.selectedCategories.emit({ filtername: 'dateacquired', value: formattedDate });
     } else {
     }
   }
   
-  onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
-    const date: Date | null = event.value;
-    if (date) {
-        const formattedDate = date.toISOString().split('T')[0];
-        this.selectedCategories.emit({ filtername: 'dateacquiredEnd', value: formattedDate });
-    }
-}
+  
   resetFilters(): void {
     console.log('Resetting filters...');
     this.selectedEquipment = null;

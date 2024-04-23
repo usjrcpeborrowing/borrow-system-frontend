@@ -21,5 +21,6 @@ export interface Item {
     tags: boolean;
     checkedBy: string;
     department: number;
+    location: string;
     disp: boolean;
 }
