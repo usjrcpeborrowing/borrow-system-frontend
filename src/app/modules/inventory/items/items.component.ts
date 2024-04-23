@@ -271,16 +271,6 @@ export class ItemsComponent implements OnInit {
       pageLabel: 'Page ',
     };
     var pdfObject = jsPDFInvoiceTemplate.default(props);
-
-    this.reportDownloadService.addDownloadRecord({
-      downloadedBy: user,
-      role: usertype,
-      department: departmentReportType,
-      loc: location,
-      selectedItem: filteredItem,
-      fileName: fileName,
-      timestamp: new Date().toISOString(),
-    });
     const reports: Report = {
       downloadedBy: userName,
       role:  usertype,

@@ -102,7 +102,10 @@ export class CategoryComponent implements OnInit {
     { name: 'Name (Z-A)', color: undefined , value: 'desc', isSelected: false},
   ];
   selectedChipOptions: string[] = [];
-  
+  dateRange = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+ });
   filterForm: FormGroup;
   @Output() selectedCategories: EventEmitter<any> = new EventEmitter();
   constructor(
@@ -117,7 +120,6 @@ export class CategoryComponent implements OnInit {
       equipmenttype: new FormControl('')
     })
   }
-
   ngOnInit(): void {
     this.loadEquipmentTypes();
     this.loadBrandList();
@@ -125,9 +127,20 @@ export class CategoryComponent implements OnInit {
     this.getInventoryTypeList();
     this.getItemStatusList();
     this.getDepartmentList();
-    
     this.getLocationList();
+    this.dateRange.valueChanges.subscribe(value => {
+      console.log('Date range changed:', value);
+      const start = value.start?.toISOString().split('T')[0];
+      let end = value.end?.toISOString().split('T')[0];
+      if (!end) {
+        end = '';
+      }
+      const dateRangeString = end ? `${start}|${end}` : start;
+      console.log(dateRangeString)
+      this.selectedCategories.emit({ filtername: 'dateAcquired', value: dateRangeString });
+    });
   }
+  
   
   loadEquipmentTypes(): void {
     this.equipmentService.getEquipmentTypes().subscribe(
@@ -206,6 +219,7 @@ export class CategoryComponent implements OnInit {
     );
   }
   onSelectChanged(filtername: string, event: MatSelectChange | string) {
+
     let value: string;
     if (typeof event === 'string') {
         value = event;
@@ -217,29 +231,29 @@ export class CategoryComponent implements OnInit {
   }
   onDateChange(event: MatDatepickerInputEvent<Date>, type: 'startDate' | 'endDate'): void {
     const date = event.value;
-    if (type === 'startDate') {
-      this.startDate = date;
-      const start = this.startDate?.toISOString().split('T')[0];
-      console.log(start)
-      
-      this.selectedCategories.emit({ filtername: 'dateAcquired', value: start });
-    } else if (type === 'endDate') {
+    this.startDate = date;
+    const start = date?.toISOString().split('T')[0];
+    console.log(start)
+    this.selectedCategories.emit({ filtername: 'dateAcquired', value: start });
+  }
+  onDateEndChange(event: MatDatepickerInputEvent<Date>, type: 'startDate' | 'endDate'): void {
+    const date = event.value;
       this.endDate = date;
       const end = this.endDate?.toISOString().split('T')[0];
       console.log(end)
-      
-      this.selectedCategories.emit({ filtername: 'enddate', value: end });
+    
+    this.selectedCategories.emit({ filtername: 'enddate', value: end });
+  }
+  onDateRangeChanged(event: MatDatepickerInputEvent<DateRange<Date>>): void {
+    const range = event.value;
+    if (range) {
+        const start = range.start?.toISOString().split('T')[0];
+        const end = range.end?.toISOString().split('T')[0];
+        console.log(start, end);
+        this.selectedCategories.emit({ filtername: 'dateAcquired', value: { start, end } });
     }
 }
 
-onDateRangeChanged(dateRange: DateRange<Date>): void {
-  if (dateRange.start && dateRange.end) {
-      const startDate = dateRange.start.toISOString().split('T')[0];
-      const endDate = dateRange.end.toISOString().split('T')[0];
-      this.selectedCategories.emit({ filtername: 'dateacquired', value: startDate });
-      this.selectedCategories.emit({ filtername: 'enddate', value: endDate });
-  }
-}
   
   
   resetFilters(): void {
@@ -253,6 +267,10 @@ onDateRangeChanged(dateRange: DateRange<Date>): void {
     this.selectedDateAcquired = null;
     this.selectedSort = null;
     this.selectedLocation = null;
+    this.dateRange.reset({
+      start: null,
+      end: null
+  });
       const queryParams: Params = {};
       queryParams['equipmenttype'] = '';
       queryParams['brand'] = '';
