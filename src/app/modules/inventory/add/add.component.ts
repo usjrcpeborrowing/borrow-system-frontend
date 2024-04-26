@@ -7,6 +7,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
 interface Matter {
   value: string;
@@ -55,9 +56,15 @@ export class AddComponent implements OnInit {
   googleDriveLink: string = '';
   
   userDepartment: any = '';
-  
+  userType: any = '';
   equipmenttypes: string[] = [];
+  
+  location: string[] = [];
+  
+  locationControl = new FormControl();
+  filteredLocation!: Observable<string[]>;
   brands: string[] = [];
+  transactiontype: string = '';
   matters: Matter[] = [
     {value: 'Solid', viewValue: 'Solid'},
     {value: 'Liquid', viewValue: 'Liquid'},
@@ -91,6 +98,7 @@ export class AddComponent implements OnInit {
       color: ['', Validators.required],
       remarks: ['', Validators.required],
       checkedBy: ['', Validators.required],
+      location: ['', Validators.required],
       department: ['', Validators.required],
       quantity: [1, Validators.required],
     });
@@ -101,31 +109,38 @@ export class AddComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     this.userDepartment = currentUser?.department;
     this.checkedBy = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    this.userType = currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
-    this.filteredEquipmentTypes = this.equipmentTypeControl.valueChanges.pipe(
+    this.loadLocationList();
+    this.filteredEquipmentTypes = this.addItemForm.get('equipmentType')!.valueChanges.pipe(
       startWith(''),
       map(value => this._filterEquipmentTypes(value))
-    );
-    this.filteredBrands = this.brandControl.valueChanges.pipe(
+   );
+   this.filteredBrands = this.addItemForm.get('brand')!.valueChanges.pipe(
       startWith(''),
       map(value => this._filterBrands(value))
-    );
+   );
+   this.filteredLocation = this.addItemForm.get('location')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterLocation(value))
+   );
   }
 
   private _filterEquipmentTypes(value: string): string[] {
-    console.log('Filtering equipment types with value:', value);
     const filterValue = value.toLowerCase();
-    const filteredOptions = this.equipmenttypes.filter(option => option.toLowerCase().includes(filterValue));
-    console.log('Filtered options:', filteredOptions);
-    return filteredOptions;
-  }
-  
-  
-  private _filterBrands(value: string): string[] {
+    return this.equipmenttypes.filter(option => option.toLowerCase().includes(filterValue));
+   }
+   
+   private _filterBrands(value: string): string[] {
     const filterValue = value.toLowerCase();
     return this.brands.filter(option => option.toLowerCase().includes(filterValue));
-  }
+   }
+   
+   private _filterLocation(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.location.filter(option => option.toLowerCase().includes(filterValue));
+   }
   loadImageFromFile(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
@@ -133,12 +148,14 @@ export class AddComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: any) => {
             this.imageUrl = e.target.result;
+            
+            console.log('Base64:', this.imageUrl);
         };
         reader.readAsDataURL(file);
     } else {
         console.log('No file selected');
     }
-}
+  }
   loadImageFromGoogleDrive(event: Event): void {
 
     const inputElement = event.target as HTMLInputElement;
@@ -170,18 +187,40 @@ export class AddComponent implements OnInit {
     
     if (this.addItemForm.valid) {
       const itemData = this.addItemForm.value;
-      itemData.images = { Url: this.googleDriveLink };
+      if (this.imageUrl) {
+        itemData.images = { Url: this.imageUrl };
+      }
+      else{
+        itemData.images = {Url: ''}
+      }
       this.equipmentService.addEquipment(itemData).subscribe(
         response => {
           
           this.isFetching = false;
           console.log('Item created successfully:', response);
+          
+          this.transactiontype = 'Added Item';
+
+          console.log("Fuck this item ", itemData);
+          const itemID = response.data.equipmentId;
+          const transaction: Transaction = {
+            transactionType: this.transactiontype,
+            user:  this.checkedBy,
+            role:  this.userType,
+            department: itemData.department,
+            location: itemData.location,
+            equipmentId: itemID,
+            timeStamp: new Date(),
+          };
+          console.log('ITEM COOOOOOOOODE', response.data.equipmentId);
+          this.addTransactionItem(transaction);
           this.dialogRef.close();
         },
         error => {
           console.error('Error creating item:', error);
         }
       );
+      
       const equipmentTypeData = { name: itemData.equipmentType };
       this.equipmentService.addEquipmentType(equipmentTypeData).subscribe(
         response => {
@@ -197,6 +236,16 @@ export class AddComponent implements OnInit {
   
   }
 
+  addTransactionItem(transaction: Transaction): void{
+    this.equipmentService.addTransaction(transaction).subscribe(
+      data => {
+        console.log('Transaction submitted successfully:', data);
+      },
+      error => {
+        console.error('Error submitting report:', error);
+      }
+    );
+  }
   loadEquipmentTypes(): void {
     this.equipmentService.getEquipmentTypes().subscribe(
       (response) => {
@@ -219,5 +268,14 @@ export class AddComponent implements OnInit {
       }
     );
   }
-  
+  loadLocationList(): void{
+    this.equipmentService.getLocationList().subscribe(
+      (response) => {
+        this.location = response.data;
+      },
+      (error) => {
+        console.error('Error fetching brand list:', error);
+      }
+    );
+  }
 }

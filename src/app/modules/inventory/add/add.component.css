@@ -120,6 +120,12 @@ form{
     width: 100%;
     margin-bottom: -20px;
 }
+.addLocation{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}
 .image-container{
     position: relative;
     display: flex;

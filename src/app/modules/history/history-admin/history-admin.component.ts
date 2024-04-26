@@ -10,7 +10,9 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 export class HistoryAdminComponent implements OnInit {
   borrowedItems: boolean = false;
   reports: boolean = true;
+  transaction: boolean = false;
   reportData: any[] = [];
+  transactionData: any[] = [];
 
   constructor(private equipmentServices: EquipmentService) {}
 
@@ -18,6 +20,10 @@ export class HistoryAdminComponent implements OnInit {
       this.getReports().subscribe(data => {
         const sortedReports = data.sort((a: any, b: any) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime());
         this.reportData = sortedReports
+      });
+      this.getTransactions().subscribe(data => {
+        const sortedReports = data.sort((a: any, b: any) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime());
+        this.transactionData = sortedReports
       });
   }
 
@@ -29,15 +35,31 @@ export class HistoryAdminComponent implements OnInit {
         })
       );
   }
+  getTransactions(): Observable<any> {
+    return this.equipmentServices.getTransactions().pipe(
+      catchError(error => {
+        console.error('Error fetching reports:', error);
+        return throwError(error);
+      })
+    );
+}
+
 
 
   showBorrow(): void {
     this.borrowedItems = true;
     this.reports = false;
+    this.transaction = false;
   }
 
   showReports(): void {
     this.borrowedItems = false;
     this.reports = true;
+    this.transaction = false;
+  }
+  showTransactions(): void {
+    this.borrowedItems = false;
+    this.reports = false;
+    this.transaction = true;
   }
 }

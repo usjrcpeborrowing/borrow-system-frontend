@@ -66,8 +66,8 @@
     <mat-form-field class="form-field">
         <mat-label>Department</mat-label>
         <mat-select  [(value)]="selectedDepartment" (selectionChange)="onSelectChanged('department', $event)">
-        <mat-option *ngFor="let dept of departments" [value]="dept._id">
-            {{ dept.name }}
+        <mat-option *ngFor="let dept of departments" [value]="dept">
+            {{ dept }}
         </mat-option>
         </mat-select>
     </mat-form-field>

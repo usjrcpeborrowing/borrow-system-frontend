@@ -21,13 +21,15 @@ export class InventoryComponent implements OnInit{
     brand: '',
     mattertype: '',
     inventorytype: '',
+    description: '',
     remarks: '',
-    deparment: '',
+    department: '',
     name: '',
     dateAcquired: '',
     location: '',
   };
   equipmentlist: any[] = [];
+  isFetching: boolean = false;
   sortUsed: 'asc' | 'desc' = 'asc';
   
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
@@ -71,7 +73,10 @@ export class InventoryComponent implements OnInit{
     return allowedRoles.includes(role);
   }
   getEquipmentList() {
+    this.isFetching = true;
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
+      
+      this.isFetching = false;
       this.equipmentlist = resp.data;
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
@@ -83,8 +88,9 @@ export class InventoryComponent implements OnInit{
     this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
     this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
+    this.inventoryFilter.description = params['description'] ? params['description'] : '';
     this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
-    this.inventoryFilter.deparment = params['deparment'] ? params['deparment'] : '';
+    this.inventoryFilter.department = params['department'] ? params['department'] : '';
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';

@@ -31,24 +31,36 @@
                         autocomplete="off"
                     />
                 </mat-form-field> -->
-                <mat-form-field class="addEquipment" floatLabel="always">
+                <!-- <mat-form-field class="addEquipment" floatLabel="always">
                     <mat-label>Equipment Type</mat-label>
-                    <input type="text" matInput [formControl]="equipmentTypeControl" [matAutocomplete]="autoEquipmentType">
+                    <input type="text"
+                        formControlName="equipmentType" matInput [formControl]="equipmentTypeControl" [matAutocomplete]="autoEquipmentType">
                     <mat-autocomplete #autoEquipmentType="matAutocomplete">
                        <mat-option *ngFor="let filter of filteredEquipmentTypes | async" [value]="filter">
                             {{filter}}
                         </mat-option>
                     </mat-autocomplete>
-                </mat-form-field>
+                </mat-form-field> -->
+                <mat-form-field class="addEquipment" floatLabel="always">
+                    <mat-label>Equipment Type</mat-label>
+                    <input type="text" matInput formControlName="equipmentType" [matAutocomplete]="autoEquipmentType">
+                    <mat-autocomplete #autoEquipmentType="matAutocomplete">
+                       <mat-option *ngFor="let option of filteredEquipmentTypes | async" [value]="option">
+                         {{option}}
+                       </mat-option>
+                    </mat-autocomplete>
+                   </mat-form-field>
+                
                 <mat-form-field class="addBrand" floatLabel="always">
                     <mat-label>Brand Name</mat-label>
-                    <input type="text" matInput [formControl]="brandControl" [matAutocomplete]="autoBrand">
+                    <input type="text" matInput formControlName="brand" [matAutocomplete]="autoBrand">
                     <mat-autocomplete #autoBrand="matAutocomplete">
                        <mat-option *ngFor="let filter of filteredBrands | async" [value]="filter">
                             {{filter}}
                         </mat-option>
                     </mat-autocomplete>
                 </mat-form-field>
+                
                 <mat-form-field class="serialNo" floatLabel="always">
                     <mat-label>Serial No.</mat-label>
                     <input
@@ -106,6 +118,21 @@
                         readonly
                     />
                 </mat-form-field>
+                <mat-form-field class="addLocation" floatLabel="always">
+                    <mat-label>Location</mat-label>
+                    <input
+                        matInput
+                        formControlName="location"
+                        autocomplete="off"
+                        [matAutocomplete]="autoLocation"
+                    />
+                    <mat-autocomplete #autoLocation="matAutocomplete" >
+                        <mat-option *ngFor="let location of filteredLocation | async" [value]="location">
+                            {{location}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+
                 <mat-form-field class="addDepartment" floatLabel="always">
                     <mat-label>Department</mat-label>
                     <input
@@ -136,5 +163,5 @@
 </div>
 
 <div class="add-button">
-    <button mat-raised-button>Add Item</button>
+    <button mat-raised-button (click)="onSubmit()">Add Item</button>
 </div>

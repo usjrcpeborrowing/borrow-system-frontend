@@ -10,6 +10,7 @@
 
 .content-tabs{
     position: grid;
+    width: 35vw;
 }
 
 .mat-body, .mat-body-2, .mat-typography .mat-body, .mat-typography .mat-body-2, .mat-typography {

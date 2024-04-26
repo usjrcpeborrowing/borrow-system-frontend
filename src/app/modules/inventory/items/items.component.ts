@@ -29,6 +29,7 @@ export class ItemsComponent implements OnInit {
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
+  isFetching: boolean = false;
   selectedCategories: any = {};
   usertype: any = '';
   fullName: any = '';
@@ -138,6 +139,8 @@ export class ItemsComponent implements OnInit {
   filterItems(): void {
     if (this.selectedCategories) {
       this.itemlist = this.itemlist.filter((item: any) => {
+        
+        this.isFetching = true;
         let pass = true;
         if (this.searchedWord.value) {
           pass = pass && item.name.toLowerCase().includes(this.searchedWord.value.toLowerCase());
@@ -149,6 +152,8 @@ export class ItemsComponent implements OnInit {
             }
           }
         });
+        
+        this.isFetching = false;
         return pass;
       });
     }
@@ -174,13 +179,12 @@ export class ItemsComponent implements OnInit {
     // var filteredItem = JSON.stringify(category);
 
     // console.log("Categories : ", category);
- 
+
     // this.filter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     // this.filter.remarks = params['remarks'] ? params['remarks'] : '';
     // this.filter.department = params['department'] ? params['department'] : '';
     // this.filter.name = params['search'] ? params['search'] : '';
- 
- 
+
     // if(this.filter.equipmenttype !== "" ||
     //   this.filter.brand !== "") {
     //   console.log("TEST ", this.filter.equipmenttype);
@@ -292,6 +296,6 @@ export class ItemsComponent implements OnInit {
       error => {
         console.error('Error submitting report:', error);
       }
-  );
+    );
   }
 }

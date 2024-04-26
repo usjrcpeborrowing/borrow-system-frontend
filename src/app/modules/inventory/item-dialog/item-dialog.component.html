@@ -15,8 +15,14 @@
             <!-- Equipment Type -->
             <mat-form-field class="addEquipment" floatLabel="always">
                 <mat-label>Equipment Type</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.equipmentType" />
+                <input matInput autocomplete="off" [formControl]="equipmentTypeControl"  [(ngModel)]="data.equipmentType" [matAutocomplete]="autoEquipmentType"/>
+                <mat-autocomplete #autoEquipmentType="matAutocomplete">
+                    <mat-option *ngFor="let filter of filteredEquipmentTypes | async" [value]="filter">
+                        {{filter}}
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
+
             <!-- Serial No -->
             <mat-form-field class="addEquipment" floatLabel="always">
                 <mat-label>Serial No</mat-label>
@@ -25,7 +31,12 @@
             <!-- Brand Name -->
             <mat-form-field class="addBrand" floatLabel="always">
                 <mat-label>Brand Name</mat-label>
-                <input matInput autocomplete="off" [(ngModel)]="data.brand" />
+                <input matInput autocomplete="off" [(ngModel)]="data.brand" [formControl]="brandControl" [matAutocomplete]="autoBrand"/>
+                <mat-autocomplete #autoBrand="matAutocomplete">
+                    <mat-option *ngFor="let filter of filteredBrands | async" [value]="filter">
+                        {{filter}}
+                    </mat-option>
+                </mat-autocomplete>
             </mat-form-field>
             <!-- Matter Type -->
             <mat-form-field class="addMatter" floatLabel="always">
@@ -52,7 +63,7 @@
                 <input matInput autocomplete="off" [(ngModel)]="data.remarks" />
             </mat-form-field>
             <mat-form-field class="addRemarks" floatLabel="always">
-                <mat-label>Checked By</mat-label>
+                <mat-label>Updated By</mat-label>
                 <input matInput autocomplete="off" readonly [(ngModel)]="data.checkedBy" />
             </mat-form-field>
             <!-- Department -->
@@ -61,7 +72,11 @@
                 <input matInput autocomplete="off" readonly [(ngModel)]="data.department" />
             </mat-form-field>
             <mat-form-field class="addDepartment" floatLabel="always">
-                <mat-label>Date Acqured</mat-label>
+                <mat-label>Location</mat-label>
+                <input matInput autocomplete="off" readonly [(ngModel)]="data.location" />
+            </mat-form-field>
+            <mat-form-field class="addDepartment" floatLabel="always">
+                <mat-label>Date Acquired</mat-label>
                 <input matInput autocomplete="off" readonly [(ngModel)]="data.dateAcquired" />
             </mat-form-field>
         </div>
@@ -77,7 +92,7 @@
             <!-- <button mat-raised-button *ngIf="!isEditingImage" (click)="isEditingImage = true">Edit Image</button>
             <input type="text" placeholder="Enter Google Drive Image Link" [(ngModel)]="googleDriveLink" *ngIf="isEditingImage" (input)="loadImageFromGoogleDrive($event)" [disabled]="isFaculty()"> -->
             <button mat-raised-button *ngIf="!isEditingImage" (click)="toggleEditImage()">Edit Image</button>
-            <input type="file" #fileInput (change)="onFileSelected($event)" *ngIf="isEditingImage" accept="image/*">
+            <input type="file" #fileInput (change)="loadImageFromFile($event)" *ngIf="isEditingImage" accept="image/*">
         </div>
     </div>
 </div>

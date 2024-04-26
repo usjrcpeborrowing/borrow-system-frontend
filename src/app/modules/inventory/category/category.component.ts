@@ -105,7 +105,7 @@ export class CategoryComponent implements OnInit {
   dateRange = new FormGroup({
     start: new FormControl<Date | null>(null),
     end: new FormControl<Date | null>(null),
- });
+  });
   filterForm: FormGroup;
   @Output() selectedCategories: EventEmitter<any> = new EventEmitter();
   constructor(
@@ -198,7 +198,7 @@ export class CategoryComponent implements OnInit {
   }
 
   getDepartmentList(): void {
-    this.departmentService.getDepartmentList().subscribe(
+    this.equipmentService.getDepartmentList().subscribe(
       (response) => {
         this.departments = response.data;
       },
@@ -276,9 +276,11 @@ export class CategoryComponent implements OnInit {
       queryParams['brand'] = '';
       queryParams['mattertype'] = '';
       queryParams['description'] = '';
+      queryParams['inventorytype'] = '';
       queryParams['remarks'] = '';
       queryParams['department'] = '';
       queryParams['dateAcquired'] = '';
+      queryParams['location'] = '';
       queryParams['status'] = '';
       queryParams['sort'] = '';
       this.router.navigate([], {

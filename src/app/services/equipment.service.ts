@@ -5,6 +5,7 @@ import { Pagination } from 'src/app/models/Pagination';
 import { environment } from 'src/environments/environment.development';
 import { InventoryFilter } from '../models/InventoryFilter';
 import { Item } from '../models/Items';
+import { Transaction } from '../models/Transaction';
 
 @Injectable({
   providedIn: 'root',
@@ -63,7 +64,7 @@ export class EquipmentService {
     params = params.append('matter', filters.mattertype);
     params = params.append('inventorytype', filters.inventorytype);
     params = params.append('remarks', filters.remarks);
-    params = params.append('deparment', filters.deparment);
+    params = params.append('department', filters.department);
     params = params.append('location', filters.location);
     params = params.append('name', filters.name);
     
@@ -139,6 +140,18 @@ export class EquipmentService {
       catchError(this.handleError)
     );
   }
+  getTransactions(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + "/api/transaction").pipe(
+      map(response => response.data),
+      catchError(this.handleError)
+    );
+  }
+  addTransaction(transaction: Transaction): Observable<any> {
+    return this.http.post<any>(environment.API_URL + '/api/transaction', transaction).pipe(
+      tap(data => console.log('Report added:', data)),
+      catchError(this.handleError)
+    );
+  }
   getBrandListWithPagination(page: number, limit: number): Observable<any> {
     const params = new HttpParams()
       .set('page', page.toString())
@@ -154,6 +167,10 @@ export class EquipmentService {
   }
   getMatterList(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist').pipe(catchError(this.handleError));;
+  }
+
+  getDepartmentList(): Observable<any> {
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getdepartmentlist').pipe(catchError(this.handleError));;
   }
 
   getInventoryTypeList(): Observable<any> {

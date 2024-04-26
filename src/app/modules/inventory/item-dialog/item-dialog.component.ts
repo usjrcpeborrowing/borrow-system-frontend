@@ -3,6 +3,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
 
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-item-dialog',
@@ -17,7 +20,12 @@ export class ItemDialogComponent implements OnInit {
   
   equipmenttypes: string[] = [];
   brands: string[] = [];
-
+  
+  equipmentTypeControl = new FormControl();
+  filteredEquipmentTypes!: Observable<string[]>; // Add ! here
+  
+  brandControl = new FormControl();
+  filteredBrands!: Observable<string[]>;
   @ViewChild('fileInput') fileInput: any;
   isEditingImage = false;
   constructor(
@@ -37,12 +45,32 @@ export class ItemDialogComponent implements OnInit {
           Url: ''
       };
     }
+    
+    this.filteredEquipmentTypes = this.equipmentTypeControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterEquipmentTypes(value))
+    );
+    this.filteredBrands = this.brandControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterBrands(value))
+    );
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
     return !currentUser || !this.cantEditRole(currentUser.role);
   }
+  private _filterEquipmentTypes(value: string): string[] {
+    console.log('Filtering equipment types with value:', value);
+    const filterValue = value.toLowerCase();
+    const filteredOptions = this.equipmenttypes.filter(option => option.toLowerCase().includes(filterValue));
+    console.log('Filtered options:', filteredOptions);
+    return filteredOptions;
+  }
 
+  private _filterBrands(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.brands.filter(option => option.toLowerCase().includes(filterValue));
+  }
   private cantEditRole(role: string): boolean {
     const allowedRoles = ['faculty', 'Instructor'];
     return allowedRoles.includes(role);
@@ -104,13 +132,27 @@ export class ItemDialogComponent implements OnInit {
     this.selectedFile = event.target.files[0];
     console.log('Selected file:', this.selectedFile);
   }
-
+  loadImageFromFile(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+        const file = inputElement.files[0];
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            this.imageUrl = e.target.result;
+            
+            console.log('Base64:', this.imageUrl);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        console.log('No file selected');
+    }
+  }
   saveChanges() {
     if (typeof this.data.images !== 'object') {
         console.error('data.images is not an object:', this.data.images);
         return;
     }
-
+    this.data.dateAcquired = new Date();
     if (this.imageUrl) {
         this.data.images.Url = this.imageUrl;
         this.data.images.midSizeUrl = this.imageUrl;

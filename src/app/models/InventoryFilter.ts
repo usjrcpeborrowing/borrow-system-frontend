@@ -3,8 +3,9 @@ export interface InventoryFilter {
     brand: string;
     mattertype: string;
     inventorytype: string;
+    description: string;
     remarks: string;
-    deparment: string
+    department: string
     name: string;
     dateAcquired: string;
     location: string;

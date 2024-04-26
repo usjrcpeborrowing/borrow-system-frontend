@@ -10,7 +10,7 @@ import { ReportDownloadService } from 'src/app/services/report-download-service'
   
 })
 export class SystemReportsComponent {
-  displayedColumns: string[] = ['type', 'department', 'fileName', 'date'];
+  displayedColumns: string[] = ['user', 'location', 'department', 'fileName', 'date'];
   downloadRecords: any[] = [];
 
   constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }

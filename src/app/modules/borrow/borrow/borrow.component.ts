@@ -115,8 +115,9 @@ export class BorrowComponent implements OnInit {
       brand: this.selectedCategories.brand,
       mattertype: this.selectedCategories.mattertype,
       remarks: this.selectedCategories.remarks,
-      deparment: this.selectedCategories.deparment,
+      department: this.selectedCategories.department,
       inventorytype: this.selectedCategories.inventorytype,
+      description: this.selectedCategories.description,
       location: this.selectedCategories.location,
       dateAcquired: this.selectedCategories.dateAcquired,
       name: this.wordSearched
