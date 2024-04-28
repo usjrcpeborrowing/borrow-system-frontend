@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Item } from 'src/app/models/Items';
-import { EquipmentService } from 'src/app/services/equipment.service';
-
 import { FormControl } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Item } from 'src/app/models/Items';
+import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
+import { EquipmentService } from 'src/app/services/equipment.service';
 @Component({
   selector: 'app-item-dialog',
   templateUrl: './item-dialog.component.html',
@@ -21,9 +21,11 @@ export class ItemDialogComponent implements OnInit {
   equipmenttypes: string[] = [];
   brands: string[] = [];
   
+  transactiontype: string = '';
   equipmentTypeControl = new FormControl();
   filteredEquipmentTypes!: Observable<string[]>; // Add ! here
-  
+  userType: any = '';
+  checkedBy: any = '';
   brandControl = new FormControl();
   filteredBrands!: Observable<string[]>;
   @ViewChild('fileInput') fileInput: any;
@@ -35,7 +37,11 @@ export class ItemDialogComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  ngOnInit(): void {  
+  ngOnInit(): void { 
+    
+    const currentUser = this.authService.getCurrentUser();
+    this.checkedBy = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    this.userType = currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
     if (!this.data.images || typeof this.data.images !== 'object') {
@@ -123,7 +129,17 @@ export class ItemDialogComponent implements OnInit {
       }
     );
   }
+  addTransactionItem(transaction: Transaction): void{
+    this.equipmentService.addTransaction(transaction).subscribe(
+      data => {
+        console.log('Transaction submitted successfully:', data);
 
+      },
+      error => {
+        console.error('Error submitting report:', error);
+      }
+    );
+  }
   toggleEditImage(): void {
     this.isEditingImage = !this.isEditingImage;
   }
@@ -161,6 +177,20 @@ export class ItemDialogComponent implements OnInit {
       if (response.success) {
         console.log('Updating item with ID:', this.data._id);
         console.log('Item updated successfully:', response.data);
+        this.transactiontype = 'Edited Item';
+
+        const itemID = this.data._id;
+        const transaction: Transaction = {
+          transactionType: this.transactiontype,
+          user:  this.checkedBy,
+          role:  this.userType,
+          department: this.data.department,
+          location: this.data.location,
+          equipmentId: itemID,
+          timeStamp: new Date(),
+        };
+        console.log('ITEM COOOOOOOOODE', transaction);
+        this.addTransactionItem(transaction);
         this.dialogRef.close();
       } else {
         console.log('Updating item with ID:', this.data._id);

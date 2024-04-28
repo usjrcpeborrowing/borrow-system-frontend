@@ -20,7 +20,7 @@ export interface Item {
     remarks: string;
     tags: boolean;
     checkedBy: string;
-    department: number;
+    department: string;
     location: string;
     disp: boolean;
 }

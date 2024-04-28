@@ -134,14 +134,33 @@ export class EquipmentService {
       catchError(this.handleError)
     );
   }
-  getReports(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + "/api/report").pipe(
+  // getReports(): Observable<any> {
+  //   return this.http.get<any>(environment.API_URL + "/api/report").pipe(
+  //     map(response => response.data),
+  //     catchError(this.handleError)
+  //   );
+  // }
+  // getTransactions(): Observable<any> {
+  //   return this.http.get<any>(environment.API_URL + "/api/transaction").pipe(
+  //     map(response => response.data),
+  //     catchError(this.handleError)
+  //   );
+  // }
+  getReports(pagination: Pagination): Observable<any> {
+    
+    let params = new HttpParams();
+    params = params.append('page', pagination.page);
+    params = params.append('limit', pagination.limit);
+    return this.http.get<any>(environment.API_URL + "/api/report", { params }).pipe(
       map(response => response.data),
       catchError(this.handleError)
     );
   }
-  getTransactions(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + "/api/transaction").pipe(
+  getTransactions(pagination: Pagination): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('page', pagination.page);
+    params = params.append('limit', pagination.limit);
+    return this.http.get<any>(environment.API_URL + "/api/transaction", { params }).pipe(
       map(response => response.data),
       catchError(this.handleError)
     );

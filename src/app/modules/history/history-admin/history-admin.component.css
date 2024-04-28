@@ -63,14 +63,24 @@
     background-color: white;
     z-index: 1000;
 }
+.header-transaction{
+    margin-left: 2%;
+    margin-right: 20%;
+}
 .header-fileName{
     margin-left: 2%;
     margin-right: 20%;
 }
-.header-name{
+.header-id{
     margin-left: -7%;
 }
+.header-name{
+    margin-left: 7%;
+}
 .header-role{
+    margin-left: -4%;
+}
+.header-transaction-role{
     margin-left: -4%;
 }
 .header-department{
@@ -126,29 +136,82 @@
     flex-wrap: wrap;
 }
 
+.transaction-title{
+    max-width: 20%;
+}
 .detail-container {
     width: 8%;
     margin-right: 5%;
 }
-
+.detail-id{
+    width: 3%;
+    margin-right: 20%;
+    margin-left: -5%;
+}
+.detail-user{
+    width: 12%;
+    margin-right: 7%;
+}
 .detail-download{
     width: 12%;
     margin-right: 7%;
 }
 .detail-role{
-    width: 12%;
+    width: 10%;
     margin-right: 3%;
 }
 .detail-department{
-    width: 12%;
+    width: 10%;
     margin-right: 5%;
 }
 .detail-location{
-    width: 7%;
+    width: 5%;
     margin-right: 9%;
 }
 .detail-date{
-    width: 20%;
+    width: 10%;
+}
+
+.detail-container {
+    width: 8%;
+    margin-right: 5%;
+}
+.detail-id{
+    width: 3%;
+    margin-right: 20%;
+    margin-left: -5%;
+}
+.detail-user-transaction{
+    width: 12%;
+    margin-right: 7%;
+}
+.detail-download{
+    width: 12%;
+    margin-right: 7%;
+    margin-left: 17%;
+}
+.detail-role{
+    width: 10%;
+    margin-right: 3%;
+}
+.detail-department{
+    width: 10%;
+    margin-right: 5%;
+}
+.detail-location{
+    width: 10%;
+    margin-right: 9%;
+    margin-left: -4%;
+}
+.detail-location-transaction{
+    width: 5%;
+    margin-right: 9%;
+}
+.detail-date{
+    width: 10%;
+}
+.detail-date-transaction{
+    width: 10%;
 }
 .detail-container
 .detail-label {

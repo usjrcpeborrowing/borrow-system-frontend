@@ -21,7 +21,7 @@
     <mat-drawer-content class="custom-drawer-items">
         <h1 class="left-drawer-header" *ngIf="borrowedItems">Borrowed Items</h1>
         <h1 class="left-drawer-header" *ngIf="reports">Reports</h1>
-        <h1 class="left-drawer-header" *ngIf="transaction">Reports</h1>
+        <h1 class="left-drawer-header" *ngIf="transaction">Transactions</h1>
 
         <div class="scrollable-panel" *ngIf="reports">
             <div class="table-header">
@@ -64,7 +64,8 @@
 
         <div class="scrollable-panel" *ngIf="transaction">
             <div class="table-header">
-                <div class="header-fileName">Transaction Type</div>
+                <div class="header-transaction">Transaction Type</div>
+                <div class="header-id">Equipment Id</div>
                 <div class="header-name">User</div>
                 <div class="header-role">Role</div>
                 <div class="header-department">Department</div>
@@ -75,11 +76,14 @@
                 <mat-accordion>
                     <mat-expansion-panel *ngFor="let transaction of transactionData">
                         <mat-expansion-panel-header>
-                            <mat-panel-title>
+                            <mat-panel-title class="transaction-title">
                                 {{ transaction.transactionType }}
                             </mat-panel-title>
                             <mat-panel-description class="panel-description" >
-                                <div class="detail-download">
+                                <div class="detail-id">
+                                    <div class="detail-value">{{ transaction.equipmentId }}</div>
+                                </div>
+                                <div class="detail-user-transaction">
                                     <div class="detail-value">{{ transaction.user }}</div>
                                 </div>
                                 <div class="detail-role">
@@ -88,10 +92,10 @@
                                 <div class="detail-department">
                                     <div class="detail-value">{{ transaction.department }}</div>
                                 </div>
-                                <div class="detail-location">
+                                <div class="detail-location-transaction">
                                     <div class="detail-value">{{ transaction.location }}</div>
                                 </div>
-                                <div class="detail-date">
+                                <div class="detail-date-transaction">
                                     <div class="detail-value">{{ transaction.timeStamp | date:'fullDate'}}</div>
                                 </div>
                             </mat-panel-description>

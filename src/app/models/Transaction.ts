@@ -7,6 +7,6 @@ export interface Transaction {
     department: string;
     location: string;
     timeStamp: Date;
-    equipmentId: object;
+    equipmentId: string;
     disp?: boolean;
 }
