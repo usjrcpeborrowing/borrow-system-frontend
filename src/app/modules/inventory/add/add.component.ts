@@ -200,9 +200,7 @@ export class AddComponent implements OnInit {
           console.log('Item created successfully:', response);
           
           this.transactiontype = 'Added Item';
-
-          console.log("Fuck this item ", itemData);
-          const itemID = response.data.equipmentId;
+          const itemID = response.data._id;
           const transaction: Transaction = {
             transactionType: this.transactiontype,
             user:  this.checkedBy,
@@ -212,7 +210,7 @@ export class AddComponent implements OnInit {
             equipmentId: itemID,
             timeStamp: new Date(),
           };
-          console.log('ITEM COOOOOOOOODE', response.data.equipmentId);
+          console.log('ITEM COOOOOOOOODE', itemID);
           this.addTransactionItem(transaction);
           this.dialogRef.close();
         },
