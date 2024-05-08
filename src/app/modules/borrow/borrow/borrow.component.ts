@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
+import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Item } from 'src/app/models/Items';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,14 +17,9 @@ export class BorrowComponent implements OnInit {
   addedEquipment: Item[] = [];
   isFetching: boolean = false;
   noItems: boolean = false;
-  pagination: Pagination = {
-    length: 100,
-    page: 1,
-    limit: 25,
-    pageSizeOption: [5, 10, 25, 100],
-  };
+
   greetings: string = 'CPE';
-  equipmentlist: any = [1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1];
+  equipmentlist: any[] = [];
   openedCart: boolean = false;
 
   openedCategory: boolean = false;
@@ -35,6 +31,25 @@ export class BorrowComponent implements OnInit {
   wordSearched: any = '';
   sortUsed: 'asc' | 'desc' = 'asc';
   dateSelected = new FormControl('');
+
+  pagination: Pagination = {
+    length: 0,
+    page: 1,
+    limit: 25,
+    pageSizeOption: [5, 10, 25, 50],
+  };
+  inventoryFilter: InventoryFilter = {
+    equipmenttype: '',
+    brand: '',
+    mattertype: '',
+    inventorytype: '',
+    description: '',
+    remarks: '',
+    department: '',
+    name: '',
+    dateAcquired: '',
+    location: '',
+  };
   constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private authService: AuthService, private router: Router, 
     private changeDetector: ChangeDetectorRef,private borrowedItemsService: BorrowedItemsService) {}
 
@@ -43,7 +58,10 @@ export class BorrowComponent implements OnInit {
     if (!currentUser || !this.isAllowedRole(currentUser.role)) {
       this.router.navigate(['/']);
     }
-    this.activatedRoute.queryParams.subscribe((params) => this.queryParamsHandler(params));
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      this.queryParamsHandling(params);
+      console.log('QUEUE LOOK: ', this.equipmentlist)
+    });
   }
 
   private isAllowedRole(role: string): boolean {
@@ -102,59 +120,7 @@ export class BorrowComponent implements OnInit {
       this.addedEquipment[index].quantity = quantity;
     }
   }
-  getItems(searchWord: string = ''): void {
-    console.log(searchWord);
-    const sortOrder = this.sortUsed;
-    console.log(this.sortUsed);
-    const dateSelected = this.dateSelected.value ? this.dateSelected.value : '';
-    this.isFetching = true;
-    this.noItems = false;
-    console.log('Equipment type used for fetching items:', this.selectedCategories.equipmentType);
-    const filters = {
-      equipmenttype: this.selectedCategories.equipmenttype,
-      brand: this.selectedCategories.brand,
-      mattertype: this.selectedCategories.mattertype,
-      remarks: this.selectedCategories.remarks,
-      department: this.selectedCategories.department,
-      inventorytype: this.selectedCategories.inventorytype,
-      description: this.selectedCategories.description,
-      location: this.selectedCategories.location,
-      dateAcquired: this.selectedCategories.dateAcquired,
-      name: this.wordSearched
-    };
-
-    const paginationSettings: Pagination = {
-      length: 0,
-      page: this.pagination.page,
-      limit: (dateSelected || searchWord) ? 10000 : this.pagination.limit,
-      pageSizeOption: this.pagination.pageSizeOption
-    };
-    
-    this.equipmentService.getItems(paginationSettings, filters)
-      .subscribe(
-        (response) => {
-          this.itemlist = this.filterItemsBySearchWord(response.data, searchWord, dateSelected);
-          this.pagination.length = response.total;
-          this.sortItemsByName(sortOrder);
-          this.isFetching = false;
-          
-          this.changeDetector.detectChanges();
-        },
-        (error) => {
-          console.error('Error fetching items:', error);
-          this.noItems = true;
-          this.isFetching = false;
-        }
-      );
-  }
-  searchItem(): void {
-    const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
-    console.log('Searching for:', searchWord);
-    this.wordSearched = searchWord;
-    
-    console.log("SEARCH WORD", searchWord);
-    this.getItems(searchWord,);
-  }
+  
 
   formatDate(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
@@ -184,18 +150,6 @@ export class BorrowComponent implements OnInit {
     
   return filteredItems;
   }
-  sortItemsByName(order: 'asc' | 'desc'): void {
-    this.itemlist.sort((a: any, b: any) => {
-      const nameA = a.name ? a.name.toUpperCase() : '';
-      const nameB = b.name ? b.name.toUpperCase() : '';
-  
-      if (order === 'asc') {
-        return nameA.localeCompare(nameB);
-      } else {
-        return nameB.localeCompare(nameA);
-      }
-    });
-  }
 
   // getEquipmentList() {
   //   let filter: Filter = {
@@ -208,36 +162,49 @@ export class BorrowComponent implements OnInit {
   onPageChange(event: any): void {
     this.pagination.page = event.pageIndex + 1;
     this.pagination.limit = event.pageSize;
-    this.getItems();
+    this.getEquipmentList();
   }
   handleSelectedCategories(categories: any): void {
     this.selectedCategories = categories;
-    this.getItems();
-  }
-  queryParamsHandler(params: Params): void {
-    this.opened = params['opened'] == 'true' ? params['opened'] : false;
-    this.pagination.limit = params['limit'] ? +params['limit'] : 25;
-    this.pagination.page = params['page'] ? params['page'] : 1;
-    const searchword = params['search'] ? params['search'] : '';
-    this.searchedWord.patchValue(searchword);
-    
-    const selectedCategories = {
-      equipmenttype: params['equipmentType'] ? params['equipmentType'] : '',
-      brand: params['brand'] ? params['brand'] : '',
-      mattertype: params['mattertype'] ? params['mattertype'] : '',
-      deparment: params['department'] ? params['department'] : '',
-      inventorytype: params['inventorytype'] ? params['inventorytype'] : '',
-      remarks: params['remarks'] ? params['remarks'] : '',
-      dateAcquired: params['dateAcquired'] ? params['dateAcquired'] : '',
-      selectedSort: params['sort'] ? params['sort'] : ''
-    };
-    this.sortUsed = params['sort'] ? params['sort'] : 'asc';
-    const dateSelected = selectedCategories.dateAcquired;
-    this.dateSelected.patchValue(dateSelected);
-    console.log('Selected equipment type from query params:', this.sortUsed);
-    this.handleSelectedCategories(selectedCategories);
   }
 
+  queryParamsHandling(params: Params) {
+    this.inventoryFilter.equipmenttype = params['equipmenttype'] ? params['equipmenttype'] : '';
+    this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
+    this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
+    this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
+    this.inventoryFilter.description = params['description'] ? params['description'] : '';
+    this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
+    this.inventoryFilter.department = params['department'] ? params['department'] : '';
+    this.inventoryFilter.location = params['location'] ? params['location'] : '';
+    this.inventoryFilter.name = params['search'] ? params['search'] : '';
+    this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
+    this.sortUsed = params['sort'] ? params['sort'] : 'asc';
+    console.log(this.inventoryFilter);
+    this.getEquipmentList();
+  }
+  getEquipmentList() {
+    this.isFetching = true;
+    this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
+      this.isFetching = false;
+      this.equipmentlist = resp.data;
+      console.log(this.equipmentlist)
+      this.pagination.length = resp.total;
+      this.sortItemsByName(this.sortUsed);
+    });
+  }
+  sortItemsByName(order: 'asc' | 'desc'): void {
+    this.equipmentlist.sort((a: any, b: any) => {
+      const nameA = a.name ? a.name.toUpperCase() : '';
+      const nameB = b.name ? b.name.toUpperCase() : '';
+  
+      if (order === 'asc') {
+        return nameA.localeCompare(nameB);
+      } else {
+        return nameB.localeCompare(nameA);
+      }
+    });
+  }
   onFilterSelect(event: any) {
     let filter = event.filtername;
     let value = event.value;
@@ -255,4 +222,19 @@ export class BorrowComponent implements OnInit {
     });
     this.addedEquipment = [];
   }
+  searchItem(event: Event): void {
+    const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
+    console.log(searchWord);
+    const currentQueryParams = this.activatedRoute.snapshot.queryParams;
+    const newQueryParams = {
+      ...currentQueryParams,
+      page: 1,
+      search: searchWord,
+    };
+    this.router.navigate(['/inventory'], {
+      queryParams: newQueryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
 }

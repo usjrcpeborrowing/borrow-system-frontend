@@ -12,12 +12,12 @@ export class BorrowEquipmentCardComponent implements OnInit {
   opened: boolean = true;
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
-  @Input() equipment: Item | any;
+  @Input() equipmentlist: Item | any;
   @Output() addToCart = new EventEmitter<Item>();
   constructor(private _snackbar: MatSnackBar, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
-    const midsizeurl = this.equipment?.images?.midSizeUrl?.length ? this.equipment?.images?.midSizeUrl : '';
+    const midsizeurl = this.equipmentlist?.images?.midSizeUrl?.length ? this.equipmentlist?.images?.midSizeUrl : '';
     const id: string = midsizeurl.substring(midsizeurl.lastIndexOf('/d/') + 3, midsizeurl.lastIndexOf('/view'));
     console.log(id);
     this.displayImage = `https://drive.google.com/thumbnail?id=${id}&&sz=w1000`;
@@ -26,7 +26,7 @@ export class BorrowEquipmentCardComponent implements OnInit {
   addEquipment() {
     // this.equipmentService.productSubject.next(this.equipment);
     
-    this.addToCart.emit(this.equipment);
+    this.addToCart.emit(this.equipmentlist);
     this._snackbar.open('Item Added Successful', '', {
       horizontalPosition: 'center',
       verticalPosition: 'top',

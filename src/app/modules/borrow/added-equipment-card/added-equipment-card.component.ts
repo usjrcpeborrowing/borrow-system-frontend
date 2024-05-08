@@ -7,7 +7,7 @@ templateUrl: './added-equipment-card.component.html',
 styleUrls: ['./added-equipment-card.component.css']
 })
 export class AddedEquipmentCardComponent {
-  @Input() equipment!: Item;
+  @Input() equipmentlist!: Item;
   @Output() removeFromCart = new EventEmitter<Item>();
   @Output() updateQuantity = new EventEmitter<{ item: Item; quantity: number }>();
   
@@ -15,13 +15,13 @@ export class AddedEquipmentCardComponent {
   constructor() {}
 
   removeItem() {
-    this.removeFromCart.emit(this.equipment);
+    this.removeFromCart.emit(this.equipmentlist);
   }
 
   updateItemQuantity(quantity: number) {
-      this.updateQuantity.emit({ item: this.equipment, quantity });
+      this.updateQuantity.emit({ item: this.equipmentlist, quantity });
   }
   toggleItemInCart() {
-    this.toggleInCart.emit(this.equipment);
+    this.toggleInCart.emit(this.equipmentlist);
   }
 }

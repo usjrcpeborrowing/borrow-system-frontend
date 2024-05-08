@@ -24,6 +24,8 @@ export class AuthService {
     private static oicPassword = 'oic123';
     private static readsAccountId    = 'reads';
     private static readsPassword = 'reads123';
+    private static readscpeAccountId    = 'readscpe';
+    private static readscpePassword = 'readscpe123';
     private static instructorAccountId    = 'instructor';
     private static instructorPassword = 'instructor123';
     private static studentAccountId    = 'student';
@@ -58,6 +60,22 @@ export class AuthService {
                     lastName: 'reads'
                 },
                 department: 'ECL',
+                role: 'reads'
+            };
+            console.log(userAcc.name.firstName);
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        if (accountId === AuthService.readscpeAccountId && password === AuthService.readscpePassword) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'readscpe',
+                    lastName: 'readscpe'
+                },
+                department: 'CPE',
                 role: 'reads'
             };
             console.log(userAcc.name.firstName);

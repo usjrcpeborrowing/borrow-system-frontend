@@ -33,15 +33,15 @@
         <div *ngIf="isFetching" class="loading-overlay">
           <mat-spinner class="loading-spinner"></mat-spinner>
       </div>
-        <div class="no-results" *ngIf="!itemlist.length; else elseblock">
+        <div class="no-results" *ngIf="!equipmentlist.length; else elseblock">
           <span>no results available</span>
         </div>
         <ng-template #elseblock>
           <div class="equipment-list-wrapper">
             <app-borrow-equipment-card
               class="card"
-              *ngFor="let equipment of itemlist"
-              [equipment]="equipment"
+              *ngFor="let equipment of equipmentlist"
+              [equipmentlist]="equipment"
               
               (addToCart)="addItemToAddedEquipment($event)"
             ></app-borrow-equipment-card>
@@ -61,7 +61,7 @@
               placeholder="Type Here"
               autocomplete="off"
               [formControl]="searchedWord"
-              (keyup.enter)="searchItem()"
+              (keyup.enter)="searchItem($event)"
             />
             <mat-icon matSuffix (click)="searchProduct($event)">search</mat-icon>
           </mat-form-field>
@@ -74,7 +74,7 @@
           <h1>Added Items</h1>
           <app-added-equipment-card
             *ngFor="let equipment of addedEquipment"
-            [equipment]="equipment"
+            [equipmentlist]="equipment"
             (toggleInCart)="toggleItemInCart($event)"
             (removeFromCart)="removeItemFromAddedEquipment($event)"
           ></app-added-equipment-card>
