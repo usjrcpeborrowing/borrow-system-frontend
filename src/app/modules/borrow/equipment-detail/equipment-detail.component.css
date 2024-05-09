@@ -1,0 +1,32 @@
+.dialog-detail{
+    padding: 3%;
+}
+.item-details-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.fit-image {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.item-details div {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.item-details div:last-child {
+    margin-bottom: 0;
+}

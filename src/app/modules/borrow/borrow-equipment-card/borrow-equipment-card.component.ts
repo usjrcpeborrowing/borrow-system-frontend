@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { EquipmentDetailComponent } from '../equipment-detail/equipment-detail.component';
 
 @Component({
   selector: 'app-borrow-equipment-card',
@@ -13,8 +15,10 @@ export class BorrowEquipmentCardComponent implements OnInit {
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
   @Input() equipmentlist: Item | any;
+  @Input() item: Item = {} as Item | any;
   @Output() addToCart = new EventEmitter<Item>();
-  constructor(private _snackbar: MatSnackBar, private equipmentService: EquipmentService) {}
+  constructor(
+    public dialog: MatDialog, private _snackbar: MatSnackBar, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
     const midsizeurl = this.equipmentlist?.images?.midSizeUrl?.length ? this.equipmentlist?.images?.midSizeUrl : '';
@@ -32,6 +36,15 @@ export class BorrowEquipmentCardComponent implements OnInit {
       verticalPosition: 'top',
       duration: 1000,
       panelClass: ['custom-snackbar'],
+    });
+  }
+
+  viewItemDetails() {
+    console.log('view');
+    this.dialog.open(EquipmentDetailComponent, {
+      data: this.equipmentlist,
+      height: '50vh',
+      width: '40vw',
     });
   }
 

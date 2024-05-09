@@ -16,8 +16,9 @@ import { AddedEquipmentCardComponent } from './added-equipment-card/added-equipm
 import { BorrowEquipmentCardComponent } from './borrow-equipment-card/borrow-equipment-card.component';
 import { BorrowRoutingModule } from './borrow-routing.module';
 import { BorrowComponent } from './borrow/borrow.component';
+import { EquipmentDetailComponent } from './equipment-detail/equipment-detail.component';
 @NgModule({
-  declarations: [BorrowComponent, BorrowEquipmentCardComponent, AddedEquipmentCardComponent],
+  declarations: [BorrowComponent, BorrowEquipmentCardComponent, AddedEquipmentCardComponent, EquipmentDetailComponent],
   imports: [CommonModule, BorrowRoutingModule, FormsModule, ReactiveFormsModule, MaterialModule,
     MatToolbarModule,
     MatIconModule,
