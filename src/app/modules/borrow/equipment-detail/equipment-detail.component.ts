@@ -16,6 +16,11 @@ export class EquipmentDetailComponent implements OnInit {
     this.itemDetails = data;
   }
   ngOnInit(): void {
+    
+    const thumbnailUrl = this.itemDetails?.images?.midSizeUrl?.length ? this.itemDetails?.images?.midSizeUrl : '';
+    const id: string = thumbnailUrl.substring(thumbnailUrl.lastIndexOf('/d/') + 3, thumbnailUrl.lastIndexOf('/view'));
+    console.log(id);
+    this.displayImage = `https://drive.google.com/thumbnail?id=${id}&&sz=w1000`;
     console.log("Image: ", this.itemDetails.images.thumbnailUrl)
   }
 }

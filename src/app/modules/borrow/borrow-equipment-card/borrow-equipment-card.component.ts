@@ -43,8 +43,8 @@ export class BorrowEquipmentCardComponent implements OnInit {
     console.log('view');
     this.dialog.open(EquipmentDetailComponent, {
       data: this.equipmentlist,
-      height: '50vh',
-      width: '40vw',
+      height: '54vh',
+      width: '39vw',
     });
   }
 
