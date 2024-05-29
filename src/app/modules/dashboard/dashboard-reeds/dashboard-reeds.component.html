@@ -1,31 +1,31 @@
-<app-student-header></app-student-header>
+<app-header-reads></app-header-reads>
 <h1 class="page-title">Dashboard <div class="hline"></div></h1>
 <div class="dashboard-content">
-    
     <div class="menu-panel">
         <div class="buttons">
             <button style=" justify-content: flex-start;" mat-raised-button (click)="directToInventory()">
                 <mat-icon>inbox</mat-icon>
                     Inventory List
                 </button>
-            <button style=" justify-content: flex-start;" mat-raised-button>
-                <mat-icon>move_to_inbox</mat-icon>
-                    View Borrowed List
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showStudentRequests()">
                 <mat-icon>assignment</mat-icon>
-                    Item Requests
+                    Student Requests
                 </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showReports()">
+                <mat-icon>report</mat-icon>
+                        Reports
+                    </button>
             <button style=" justify-content: flex-start;" mat-raised-button (click)="directToHistory()">
                 <mat-icon>history</mat-icon>
-                    Borrowed History
+                    Requests History
                 </button>
+            
         </div>
-        
         
     </div>
     <div class="contents">
-        <app-content-tabs></app-content-tabs>
+        <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>
+        <app-system-reports *ngIf="showReportsComponent"></app-system-reports>
     </div>
 
 </div>

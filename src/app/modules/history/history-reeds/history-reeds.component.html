@@ -1,46 +1,108 @@
-<app-student-header></app-student-header>
+<app-header-reads></app-header-reads>
 <div>
-    <h1 class="page-title">Borrow History<div class="hline"></div></h1>
+    <h1 class="page-title">Reports and History<div class="hline"></div></h1>
 </div>
 <mat-drawer-container class="example-container">
     <mat-drawer mode="side" opened class="custom-drawer">
         <div class="menu-panel">
             <div class="buttons">
-                <button style=" justify-content: flex-start;" mat-raised-button>
-                        Borrowed Items
-                    </button>
-                <button style=" justify-content: flex-start;" mat-raised-button>
-                        Reports
-                    </button>
+                <button mat-raised-button (click)="showBorrow()">
+                    Borrowed Items
+                </button>
+                <button mat-raised-button (click)="showReports()">
+                    Reports
+                </button>
+                <button mat-raised-button (click)="showTransactions()">
+                    Transactions
+                </button>
             </div>
         </div>
     </mat-drawer>
-    <mat-drawer-content class="custom-drawer-itmes">
-        <h1 class="left-drawer-header">(Selected Button Title)</h1>
-        <div class="scrollable-panel">
-            <mat-list>
-                <mat-list-item>Item 1</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 2</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 3</mat-list-item>
-                <mat-list-item>Item 1</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 2</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 3</mat-list-item>
-                <mat-list-item>Item 1</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 2</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 3</mat-list-item>
-                <mat-list-item>Item 1</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 2</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Item 3</mat-list-item>
-            </mat-list>
+    <mat-drawer-content class="custom-drawer-items">
+        <h1 class="left-drawer-header" *ngIf="borrowedItems">Borrowed Items</h1>
+        <h1 class="left-drawer-header" *ngIf="reports">Reports</h1>
+        <h1 class="left-drawer-header" *ngIf="transaction">Transactions</h1>
+
+        <div class="scrollable-panel" *ngIf="reports">
+            <div class="table-header">
+                <div class="header-fileName">File Name</div>
+                <div class="header-name">Downloaded By</div>
+                <div class="header-role">Role</div>
+                <div class="header-department">Department</div>
+                <div class="header-location">Location</div>
+                <div class="header-date">Date</div>
+            </div>
+            <div class="table-content">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let report of reportData">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{ report.fileName }}
+                            </mat-panel-title>
+                            <mat-panel-description class="panel-description" >
+                                <div class="detail-download">
+                                    <div class="detail-value">{{ report.downloadedBy }}</div>
+                                </div>
+                                <div class="detail-role">
+                                    <div class="detail-value">{{ report.role}}</div>
+                                </div>
+                                <div class="detail-department">
+                                    <div class="detail-value">{{ report.department }}</div>
+                                </div>
+                                <div class="detail-location">
+                                    <div class="detail-value">{{ report.location }}</div>
+                                </div>
+                                <div class="detail-date">
+                                    <div class="detail-value">{{ report.timeStamp | date:'fullDate'}}</div>
+                                </div>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
         </div>
 
+        <div class="scrollable-panel" *ngIf="transaction">
+            <div class="table-header">
+                <div class="header-transaction">Transaction Type</div>
+                <div class="header-id">Equipment Id</div>
+                <div class="header-name">User</div>
+                <div class="header-role">Role</div>
+                <div class="header-department">Department</div>
+                <div class="header-location">Location</div>
+                <div class="header-date">Date</div>
+            </div>
+            <div class="table-content">
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let transaction of transactionData">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="transaction-title">
+                                {{ transaction.transactionType }}
+                            </mat-panel-title>
+                            <mat-panel-description class="panel-description" >
+                                <div class="detail-id">
+                                    <div class="detail-value">{{ transaction.equipmentId }}</div>
+                                </div>
+                                <div class="detail-user-transaction">
+                                    <div class="detail-value">{{ transaction.user }}</div>
+                                </div>
+                                <div class="detail-role">
+                                    <div class="detail-value">{{ transaction.role}}</div>
+                                </div>
+                                <div class="detail-department">
+                                    <div class="detail-value">{{ transaction.department }}</div>
+                                </div>
+                                <div class="detail-location-transaction">
+                                    <div class="detail-value">{{ transaction.location }}</div>
+                                </div>
+                                <div class="detail-date-transaction">
+                                    <div class="detail-value">{{ transaction.timeStamp | date:'fullDate'}}</div>
+                                </div>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>

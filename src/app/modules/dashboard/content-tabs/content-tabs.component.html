@@ -1,15 +1,20 @@
 
+<div class="contents">
+    <h1 class="page-title">Item Requests</h1>
 <mat-tab-group class="content-tabs">
     
     <mat-tab label="Borrowed Items">
         <div class="content">
-            
             No Borrowed Item on list
         </div>
     </mat-tab>
     <mat-tab label="Requested Items">
         <div class="content">
-            No items requested
+            <div *ngFor="let item of borrowedItems">
+                <p>{{ item.name }} - {{ item.quantity }}</p>
+            </div>
         </div>
     </mat-tab>
 </mat-tab-group>
+
+</div>

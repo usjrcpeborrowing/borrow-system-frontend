@@ -11,8 +11,8 @@ import { ItemDialogComponent } from './item-dialog/item-dialog.component';
 import { ItemPanelComponent } from './item-panel/item-panel.component';
 import { ItemsComponent } from './items/items.component';
 
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -22,13 +22,16 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
-
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { AdminHeaderModule } from '../admin-header/admin-header.module';
+import { HeaderOicModule } from '../header-oic/header-oic.module';
+import { HeaderReadsModule } from '../header-reads/header-reads.module';
+import { ReadsHeaderModule } from '../reads-header/reads-header.module';
 @NgModule({
   declarations: [
     InventoryComponent,
@@ -43,13 +46,17 @@ import { MatSortModule } from '@angular/material/sort';
     CommonModule,
     InventoryRoutingModule,
     HeaderModule,
-
-    
+    AdminHeaderModule,
+    ReadsHeaderModule,
+    MatProgressSpinnerModule,
     MatTableModule,
+    HeaderReadsModule,
+    HeaderOicModule,
     MatSortModule,
     MatPaginatorModule,
     MatDialogModule,
     MatSidenavModule,
+    MatAutocompleteModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
@@ -62,7 +69,11 @@ import { MatSortModule } from '@angular/material/sort';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+  ],
+  exports:[
+    CategoryComponent,
   ]
+  
 })
 export class InventoryModule {
   

@@ -18,16 +18,30 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { AdminHeaderModule } from '../admin-header/admin-header.module';
+import { HeaderOicModule } from '../header-oic/header-oic.module';
+import { HeaderReadsModule } from '../header-reads/header-reads.module';
+import { HeaderModule } from '../header/header.module';
+import { HistoryAdminComponent } from './history-admin/history-admin.component';
+import { HistoryFacultyComponent } from './history-faculty/history-faculty.component';
+import { HistoryOicComponent } from './history-oic/history-oic.component';
 import { HistoryReedsComponent } from './history-reeds/history-reeds.component';
 @NgModule({
   declarations: [
     HistoryStudentComponent,
-    HistoryReedsComponent
+    HistoryReedsComponent,
+    HistoryAdminComponent,
+    HistoryOicComponent,
+    HistoryFacultyComponent
   ],
   imports: [
     CommonModule,
     HistoryRoutingModule,
+    HeaderReadsModule,
     StudentHeaderModule,
+    HeaderOicModule,
+    HeaderModule,
+    AdminHeaderModule,
     MatDialogModule,
     MatSidenavModule,
     MatFormFieldModule,

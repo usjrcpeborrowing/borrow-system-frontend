@@ -1,0 +1,40 @@
+
+<div class="dialog-detail">
+    <h2 mat-dialog-title>Item Details</h2>
+    <div mat-dialog-content>
+        <div class="item-details-container">
+            <div class="image-container">
+                <img
+                    class="fit-image"
+                    [src]="itemDetails?.images?.thumbnailUrl ? displayImage : defaultImage"
+                    alt=""
+                />
+            </div>
+            <div class="item-details">
+                <div class="row">
+                    <div class="label">Name:</div>
+                    <div class="detail">{{itemDetails.name}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Equipment Type:</div>
+                    <div class="detail">{{itemDetails.equipmentType}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Brand:</div>
+                    <div class="detail">{{itemDetails.brand}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Matter:</div>
+                    <div class="detail">{{itemDetails.matter}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Inventory Type:</div>
+                    <div class="detail">{{itemDetails.inventorytype}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions class="close-button">
+        <button mat-button (click)="dialogRef.close()">Close</button>
+    </div>
+</div>

@@ -7,15 +7,30 @@ import { Router } from '@angular/router';
 })
 export class DashboardReedsComponent implements OnInit{
 
+  showReportsComponent: boolean = false;
+  showContentTabs: boolean = true;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     
   }
   directToInventory(): void {
-    this.router.navigate(['/inventory/faculty']);
+    this.router.navigate(['/inventory']);
   }
   directToHistory(): void {
     this.router.navigate(['/history/reads']);
+  }
+  directToPeriodicInventory(): void {
+    this.router.navigate(['/history/reads']);
+  }
+
+  showReports(): void {
+    this.showReportsComponent = true;
+    this.showContentTabs = false;
+  }
+
+  showStudentRequests(): void {
+    this.showReportsComponent = false;
+    this.showContentTabs = true;
   }
 }
