@@ -16,6 +16,14 @@
 <div class="spacer"></div>
 <span>
     <div class="button-header-profile">
+        <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+            <mat-icon>notifications</mat-icon> <!-- Use 'notifications' for a generic notifications icon -->
+        </button>
+        <mat-menu #notificationMenu="matMenu">
+            <div class="not-panel">
+            <h3>Notification</h3>
+        </div>
+        </mat-menu>
         <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
             <span>Hello, {{ currentUser?.name.firstName }}{{ currentUser?.name.lastName }}</span>
         </button>

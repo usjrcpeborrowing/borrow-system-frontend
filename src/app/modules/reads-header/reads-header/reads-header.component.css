@@ -64,3 +64,9 @@ a:hover::after{
     min-height: 1em;
 }
 
+
+.not-panel{
+    padding: 10px;
+    width: 15vw;
+
+}
