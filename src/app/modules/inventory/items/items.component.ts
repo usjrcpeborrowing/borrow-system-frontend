@@ -21,9 +21,8 @@ export class ItemsComponent implements OnInit {
   @Input() filter: any;
   @Input() equipmentlist: any;
 
-
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
-  
+
   @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
   opened: boolean = true;
@@ -34,13 +33,7 @@ export class ItemsComponent implements OnInit {
   usertype: any = '';
   fullName: any = '';
   userDepartment: any = '';
-  constructor(
-    private reportDownloadService: ReportDownloadService, 
-    private authService: AuthService, 
-    private equipmentService: EquipmentService, 
-    private activatedRoute: ActivatedRoute, 
-    private router: Router, 
-    public dialog: MatDialog) {
+  constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private router: Router, public dialog: MatDialog) {
     this.pagination = {
       length: 0,
       page: 1,
@@ -54,7 +47,7 @@ export class ItemsComponent implements OnInit {
     //   this.queryParamsHandler(params)
     // );
     const currentUser = this.authService.getCurrentUser();
-    
+
     if (!currentUser || !this.isAllowedRole(currentUser.role)) {
       this.router.navigate(['/']);
     }
@@ -63,7 +56,7 @@ export class ItemsComponent implements OnInit {
     // this.usertype = localStorage.getItem('currentUser.role');
     this.usertype = currentUser?.role;
     localStorage.setItem('currentUser.department', JSON.stringify(currentUser?.department));
-    
+
     this.userDepartment = currentUser?.department;
     // this.userDepartment = localStorage.getItem('currentUser.department');
   }
@@ -139,7 +132,6 @@ export class ItemsComponent implements OnInit {
   filterItems(): void {
     if (this.selectedCategories) {
       this.itemlist = this.itemlist.filter((item: any) => {
-        
         this.isFetching = true;
         let pass = true;
         if (this.searchedWord.value) {
@@ -152,7 +144,7 @@ export class ItemsComponent implements OnInit {
             }
           }
         });
-        
+
         this.isFetching = false;
         return pass;
       });
@@ -170,12 +162,14 @@ export class ItemsComponent implements OnInit {
     // console.log("TEST ", this.filter.equipmenttype);
 
     var category: { [key: string]: any } = Object.keys(this.filter)
-    .filter(key => this.filter[key] && this.filter[key].length > 0)
-    .reduce((obj, key) => {
-      obj[key] = this.filter[key];
-      return obj;
-    }, {} as { [key: string]: any });
-    var filteredItem = Object.keys(category).map(key => `${key.charAt(0).toUpperCase() + key.slice(1)}: ${category[key]}`).join(', ');
+      .filter((key) => this.filter[key] && this.filter[key].length > 0)
+      .reduce((obj, key) => {
+        obj[key] = this.filter[key];
+        return obj;
+      }, {} as { [key: string]: any });
+    var filteredItem = Object.keys(category)
+      .map((key) => `${key.charAt(0).toUpperCase() + key.slice(1)}: ${category[key]}`)
+      .join(', ');
     // var filteredItem = JSON.stringify(category);
 
     // console.log("Categories : ", category);
@@ -189,8 +183,8 @@ export class ItemsComponent implements OnInit {
     //   this.filter.brand !== "") {
     //   console.log("TEST ", this.filter.equipmenttype);
     // }
-    
-    var fileName = (""+ `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`);
+
+    var fileName = '' + `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`;
     let props = {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       returnJsPDFDocObject: true,
@@ -198,7 +192,7 @@ export class ItemsComponent implements OnInit {
       orientationLandscape: true,
       compress: true,
       logo: {
-        src: 'https://scontent-mnl1-1.xx.fbcdn.net/v/t39.30808-1/347586256_1399184523956665_6414462579657343146_n.jpg?stp=dst-jpg_p480x480&_nc_cat=101&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeFOntxpK6LOAU2gOaG7OLAQq6RTAhRJ3OirpFMCFEnc6G0byer3W2ZlC8_R5Xlxaez3tdw2T68flddBlYLhM1_6&_nc_ohc=Xmb2eDait8cAb57W9A8&_nc_ht=scontent-mnl1-1.xx&oh=00_AfCXL-S8n3gYxtazy0P2fl06aaNKQA7s90I9c7tkwgDWrA&oe=66258429',
+        src: 'https://raw.githubusercontent.com/usjrcpeborrowing/borrow-system-frontend/main/src/assets/USJR1.png',
         type: 'PNG', //optional, when src= data:uri (nodejs case)
         width: 48.33, //aspect ratio = width/height
         height: 31.66,
@@ -207,17 +201,17 @@ export class ItemsComponent implements OnInit {
           left: 0, //negative or positive num, from the current position
         },
       },
-      stamp: {
-        inAllPages: true, //by default = false, just in the last page
-        src: 'https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg',
-        type: 'JPG', //optional, when src= data:uri (nodejs case)
-        width: 20, //aspect ratio = width/height
-        height: 20,
-        margin: {
-          top: 0, //negative or positive num, from the current position
-          left: 0, //negative or positive num, from the current position
-        },
-      },
+      // stamp: {
+      //   inAllPages: true, //by default = false, just in the last page
+      //   src: 'https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg',
+      //   type: 'JPG', //optional, when src= data:uri (nodejs case)
+      //   width: 20, //aspect ratio = width/height
+      //   height: 20,
+      //   margin: {
+      //     top: 0, //negative or positive num, from the current position
+      //     left: 0, //negative or positive num, from the current position
+      //   },
+      // },
       business: {
         name: 'University of San Jose- Recoletos',
         address: 'Magallanes Street, 6000 Cebu City, Philippines',
@@ -226,8 +220,8 @@ export class ItemsComponent implements OnInit {
       },
       contact: {
         label: 'Report issued for:',
-        name: (""+ userName),
-        address: (""+ usertype),
+        name: '' + userName,
+        address: '' + usertype,
       },
       invoice: {
         label: 'Report #: ',
@@ -243,7 +237,7 @@ export class ItemsComponent implements OnInit {
             title: 'Name',
             style: {
               width: 100,
-            }
+            },
           },
           {
             title: 'Equipment Type',
@@ -266,34 +260,34 @@ export class ItemsComponent implements OnInit {
           item.quantity ? item.quantity : '',
         ]),
         invDescLabel: 'Filter/s used:',
-        invDesc: ('' + filteredItem),
+        invDesc: '',
       },
       footer: {
-        text: (""+ `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`),
+        text: '' + `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`,
       },
       pageEnable: true,
       pageLabel: 'Page ',
     };
-    var pdfObject = jsPDFInvoiceTemplate.default(props);
-    const reports: Report = {
-      downloadedBy: userName,
-      role:  usertype,
-      department: departmentReportType,
-      location: 'SN-01',
-      selectedFilter: filteredItem,
-      fileName: fileName,
-      timeStamp: new Date(),
-    };
-    this.submitReport(reports);
-  }
 
+    var pdfObject = jsPDFInvoiceTemplate.default(props);
+    // const reports: Report = {
+    //   downloadedBy: userName,
+    //   role:  usertype,
+    //   department: departmentReportType,
+    //   location: 'SN-01',
+    //   selectedFilter: filteredItem,
+    //   fileName: fileName,
+    //   timeStamp: new Date(),
+    // };
+    // this.submitReport(reports);
+  }
 
   submitReport(reports: any): void {
     this.equipmentService.addReports(reports).subscribe(
-      data => {
+      (data) => {
         console.log('Report submitted successfully:', data);
       },
-      error => {
+      (error) => {
         console.error('Error submitting report:', error);
       }
     );
