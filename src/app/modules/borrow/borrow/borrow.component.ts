@@ -231,7 +231,7 @@ export class BorrowComponent implements OnInit {
       page: 1,
       search: searchWord,
     };
-    this.router.navigate(['/inventory'], {
+    this.router.navigate(['/borrow'], {
       queryParams: newQueryParams,
       queryParamsHandling: 'merge',
     });
