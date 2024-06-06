@@ -21,6 +21,9 @@ export class DashboardAdminComponent implements OnInit{
   directToInventory(): void {
     this.router.navigate(['/inventory']);
   }
+  directToItemDetails(): void {
+    this.router.navigate(['/item-details']);
+  }
   directToHistory(): void {
     this.router.navigate(['/history/admin']);
   }
