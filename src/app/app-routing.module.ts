@@ -31,6 +31,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'item-details',
+    loadChildren: ()=> import('./modules/item-details/item-details.module').then(m => m.ItemDetailsModule),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'history',
     loadChildren: ()=> import('./modules/history/history.module').then(m => m.HistoryModule)
   },

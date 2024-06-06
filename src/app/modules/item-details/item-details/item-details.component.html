@@ -1,0 +1,64 @@
+<ng-container *ngIf="isAdmin(); else readsHeader">
+    <app-admin-header></app-admin-header>
+</ng-container>
+<ng-template #readsHeader>
+    <ng-container *ngIf="isReads(); else oicHeader">
+        <app-header-reads></app-header-reads>
+    </ng-container>
+</ng-template>
+<ng-template #oicHeader>
+    <ng-container *ngIf="isOic(); else regularHeader">
+        <app-header-oic></app-header-oic>
+    </ng-container>
+</ng-template>
+<ng-template #regularHeader>
+    <app-header></app-header>
+</ng-template>
+
+<div>
+    <h1 class="page-title">Item Details<div class="hline"></div></h1>
+</div>
+
+<mat-drawer-container class="example-container">
+
+    <mat-drawer-content class="custom-drawer-items">
+
+
+        <div class="scrollable-panel">
+            <div class="table-header">
+                <div class="header-transaction">Transaction Type</div>
+                <div class="header-id">Equipment Id</div>
+                <div class="header-name">User</div>
+                <div class="header-role">Role</div>
+                <div class="header-department">Department</div>
+                <div class="header-location">Location</div>
+                <div class="header-date">Date</div>
+            </div>
+            <div class="table-content">
+                <mat-accordion>
+                    <mat-expansion-panel>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="transaction-title">
+                            </mat-panel-title>
+                            <mat-panel-description class="panel-description" >
+                                <div class="detail-id">
+                                </div>
+                                <div class="detail-user-transaction">
+                                </div>
+                                <div class="detail-role">
+                                </div>
+                                <div class="detail-department">
+                                </div>
+                                <div class="detail-location-transaction">
+                                </div>
+                                <div class="detail-date-transaction"> 
+
+                                </div>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
