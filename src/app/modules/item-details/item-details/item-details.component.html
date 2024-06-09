@@ -25,40 +25,59 @@
 
 
         <div class="scrollable-panel">
-            <div class="table-header">
-                <div class="header-transaction">Transaction Type</div>
-                <div class="header-id">Equipment Id</div>
-                <div class="header-name">User</div>
-                <div class="header-role">Role</div>
-                <div class="header-department">Department</div>
-                <div class="header-location">Location</div>
-                <div class="header-date">Date</div>
+            <!-- <div class="table-header">
+                <div class="header-name">Name</div>
+                <div class="header-serial">Serial No</div>
+                <div class="header-equipment">Equipment Type</div>
+                <div class="header-brand">Brand</div>
+                <div class="header-desc">Inventory Type</div>
+                <div class="header-status">Remarks</div>
+                <div class="header-quantity">Quantity</div>
             </div>
             <div class="table-content">
-                <mat-accordion>
-                    <mat-expansion-panel>
-                        <mat-expansion-panel-header>
-                            <mat-panel-title class="transaction-title">
-                            </mat-panel-title>
-                            <mat-panel-description class="panel-description" >
-                                <div class="detail-id">
-                                </div>
-                                <div class="detail-user-transaction">
-                                </div>
-                                <div class="detail-role">
-                                </div>
-                                <div class="detail-department">
-                                </div>
-                                <div class="detail-location-transaction">
-                                </div>
-                                <div class="detail-date-transaction"> 
+                <div *ngFor="let item of equipmentlist" class="table-row">
 
-                                </div>
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
+                </div>
+            </div> -->
+            <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
+                <!-- Define columns -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Item Name</th>
+                    <td mat-cell *matCellDef="let item"> {{item.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="serialNo">
+                    <th mat-header-cell *matHeaderCellDef> Serial No. </th>
+                    <td mat-cell *matCellDef="let item"> {{item.serialNo}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="equipmentType">
+                    <th mat-header-cell *matHeaderCellDef> Equipment Type </th>
+                    <td mat-cell *matCellDef="let item"> {{item.equipmentType}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="brand">
+                    <th mat-header-cell *matHeaderCellDef> Brand </th>
+                    <td mat-cell *matCellDef="let item"> {{item.brand}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="inventoryType">
+                    <th mat-header-cell *matHeaderCellDef> Inventory Type </th>
+                    <td mat-cell *matCellDef="let item"> {{item.inventorytype}} </td>
+                </ng-container>
+                <ng-container matColumnDef="remarks">
+                    <th mat-header-cell *matHeaderCellDef> Remarks </th>
+                    <td mat-cell *matCellDef="let item"> {{item.remarks}} </td>
+                </ng-container>
+                <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                    <td mat-cell *matCellDef="let item"> {{item.quantity}} </td>
+                </ng-container>
+
+                <!-- Row definitions -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
         </div>
     </mat-drawer-content>
 </mat-drawer-container>
