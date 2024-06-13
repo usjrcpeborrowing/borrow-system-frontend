@@ -1,83 +1,86 @@
 <ng-container *ngIf="isAdmin(); else readsHeader">
-    <app-admin-header></app-admin-header>
+  <app-admin-header></app-admin-header>
 </ng-container>
 <ng-template #readsHeader>
-    <ng-container *ngIf="isReads(); else oicHeader">
-        <app-header-reads></app-header-reads>
-    </ng-container>
+  <ng-container *ngIf="isReads(); else oicHeader">
+    <app-header-reads></app-header-reads>
+  </ng-container>
 </ng-template>
 <ng-template #oicHeader>
-    <ng-container *ngIf="isOic(); else regularHeader">
-        <app-header-oic></app-header-oic>
-    </ng-container>
+  <ng-container *ngIf="isOic(); else regularHeader">
+    <app-header-oic></app-header-oic>
+  </ng-container>
 </ng-template>
 <ng-template #regularHeader>
-    <app-header></app-header>
+  <app-header></app-header>
 </ng-template>
 
 <div>
-    <h1 class="page-title">Item Details<div class="hline"></div></h1>
+  <h1 class="page-title">
+    Item Details
+    <div class="hline"></div>
+  </h1>
 </div>
-
 <mat-drawer-container class="example-container">
+  <mat-drawer-content class="custom-drawer-items">
+    <div class="scrollable-panel">
+      <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
+        <!-- Define columns -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Item Name</th>
+          <td mat-cell *matCellDef="let item">{{ item.name }}</td>
+        </ng-container>
 
-    <mat-drawer-content class="custom-drawer-items">
+        <ng-container matColumnDef="serialNo">
+          <th mat-header-cell *matHeaderCellDef>Serial No.</th>
+          <td mat-cell *matCellDef="let item">{{ item.serialNo }}</td>
+        </ng-container>
 
+        <ng-container matColumnDef="equipmentType">
+          <th mat-header-cell *matHeaderCellDef>Equipment Type</th>
+          <td mat-cell *matCellDef="let item">{{ item.equipmentType }}</td>
+        </ng-container>
 
-        <div class="scrollable-panel">
-            <!-- <div class="table-header">
-                <div class="header-name">Name</div>
-                <div class="header-serial">Serial No</div>
-                <div class="header-equipment">Equipment Type</div>
-                <div class="header-brand">Brand</div>
-                <div class="header-desc">Inventory Type</div>
-                <div class="header-status">Remarks</div>
-                <div class="header-quantity">Quantity</div>
-            </div>
-            <div class="table-content">
-                <div *ngFor="let item of equipmentlist" class="table-row">
+        <ng-container matColumnDef="brand">
+          <th mat-header-cell *matHeaderCellDef>Brand</th>
+          <td mat-cell *matCellDef="let item" [matMenuTriggerFor]="brand">
+            {{ item.brand }}
+            <mat-menu #brand="matMenu">
+              <button mat-menu-item>
+                {{ item.brand }}
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
 
-                </div>
-            </div> -->
-            <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
-                <!-- Define columns -->
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Item Name</th>
-                    <td mat-cell *matCellDef="let item"> {{item.name}} </td>
-                </ng-container>
+        <ng-container matColumnDef="inventoryType">
+          <th mat-header-cell *matHeaderCellDef>Inventory Type</th>
+          <td mat-cell *matCellDef="let item">{{ item.inventorytype }}</td>
+        </ng-container>
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef>Remarks</th>
+          <td mat-cell *matCellDef="let item">{{ item.remarks }}</td>
+        </ng-container>
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+        </ng-container>
 
-                <ng-container matColumnDef="serialNo">
-                    <th mat-header-cell *matHeaderCellDef> Serial No. </th>
-                    <td mat-cell *matCellDef="let item"> {{item.serialNo}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="equipmentType">
-                    <th mat-header-cell *matHeaderCellDef> Equipment Type </th>
-                    <td mat-cell *matCellDef="let item"> {{item.equipmentType}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="brand">
-                    <th mat-header-cell *matHeaderCellDef> Brand </th>
-                    <td mat-cell *matCellDef="let item"> {{item.brand}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="inventoryType">
-                    <th mat-header-cell *matHeaderCellDef> Inventory Type </th>
-                    <td mat-cell *matCellDef="let item"> {{item.inventorytype}} </td>
-                </ng-container>
-                <ng-container matColumnDef="remarks">
-                    <th mat-header-cell *matHeaderCellDef> Remarks </th>
-                    <td mat-cell *matCellDef="let item"> {{item.remarks}} </td>
-                </ng-container>
-                <ng-container matColumnDef="quantity">
-                    <th mat-header-cell *matHeaderCellDef> Quantity </th>
-                    <td mat-cell *matCellDef="let item"> {{item.quantity}} </td>
-                </ng-container>
-
-                <!-- Row definitions -->
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </div>
-    </mat-drawer-content>
+        <!-- Row definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </mat-drawer-content>
 </mat-drawer-container>
+<section id="pagination">
+  <mat-paginator
+    [length]="pagination.length"
+    [pageSize]="pagination.limit"
+    [pageIndex]="pagination.page - 1"
+    [pageSizeOptions]="pagination.pageSizeOption"
+    [showFirstLastButtons]="true"
+    (page)="paginate($event)"
+  >
+  </mat-paginator>
+</section>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
@@ -8,10 +9,9 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.css']
+  styleUrls: ['./item-details.component.css'],
 })
-export class ItemDetailsComponent implements OnInit{
-  
+export class ItemDetailsComponent implements OnInit {
   displayedColumns: string[] = ['name', 'serialNo', 'equipmentType', 'brand', 'inventoryType', 'remarks', 'quantity'];
   pagination: Pagination = {
     length: 0,
@@ -32,9 +32,9 @@ export class ItemDetailsComponent implements OnInit{
     location: '',
   };
   equipmentlist: any[] = [];
-  
+
   sortUsed: 'asc' | 'desc' = 'asc';
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
+  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
@@ -62,10 +62,9 @@ export class ItemDetailsComponent implements OnInit{
     const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
     return allowedRoles.includes(role);
   }
-  
+
   getEquipmentList() {
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
-      
       this.equipmentlist = resp.data;
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
@@ -87,17 +86,20 @@ export class ItemDetailsComponent implements OnInit{
     console.log(this.inventoryFilter);
     this.getEquipmentList();
   }
-  
+
   sortItemsByName(order: 'asc' | 'desc'): void {
     this.equipmentlist.sort((a: any, b: any) => {
       const nameA = a.name ? a.name.toUpperCase() : '';
       const nameB = b.name ? b.name.toUpperCase() : '';
-  
+
       if (order === 'asc') {
         return nameA.localeCompare(nameB);
       } else {
         return nameB.localeCompare(nameA);
       }
     });
+
   }
+
+  paginate(event: PageEvent) {}
 }

@@ -26,6 +26,7 @@ import { HistoryAdminComponent } from './history-admin/history-admin.component';
 import { HistoryFacultyComponent } from './history-faculty/history-faculty.component';
 import { HistoryOicComponent } from './history-oic/history-oic.component';
 import { HistoryReedsComponent } from './history-reeds/history-reeds.component';
+import { MaterialModule } from '../material.module';
 @NgModule({
   declarations: [
     HistoryStudentComponent,
@@ -56,7 +57,8 @@ import { HistoryReedsComponent } from './history-reeds/history-reeds.component';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MaterialModule
   ],
 })
 export class HistoryModule { }

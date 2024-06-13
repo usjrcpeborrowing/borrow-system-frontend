@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Pagination } from 'src/app/models/Pagination';
@@ -6,7 +7,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 @Component({
   selector: 'app-history-admin',
   templateUrl: './history-admin.component.html',
-  styleUrls: ['./history-admin.component.css']
+  styleUrls: ['./history-admin.component.css'],
 })
 export class HistoryAdminComponent implements OnInit {
   borrowedItems: boolean = false;
@@ -23,36 +24,34 @@ export class HistoryAdminComponent implements OnInit {
   constructor(private equipmentServices: EquipmentService) {}
 
   ngOnInit(): void {
-    this.getReports().subscribe(data => {
+    this.getReports().subscribe((data) => {
       const sortedReports = data.sort((a: any, b: any) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime());
-      this.reportData = sortedReports
-      console.log(this.reportData)
+      this.reportData = sortedReports;
+      console.log(this.reportData);
     });
-    this.getTransactions().subscribe(data => {
+    this.getTransactions().subscribe((data) => {
       const sortedTransactions = data.sort((a: any, b: any) => new Date(b.timeStamp).getTime() - new Date(a.timeStamp).getTime());
-      this.transactionData = sortedTransactions
-      console.log(this.transactionData)
+      this.transactionData = sortedTransactions;
+      console.log(this.transactionData);
     });
   }
 
   getReports(): Observable<any> {
-      return this.equipmentServices.getReports(this.pagination).pipe(
-        catchError(error => {
-          console.error('Error fetching reports:', error);
-          return throwError(error);
-        })
-      );
-  }
-  getTransactions(): Observable<any> {
-    return this.equipmentServices.getTransactions(this.pagination).pipe(
-      catchError(error => {
+    return this.equipmentServices.getReports(this.pagination).pipe(
+      catchError((error) => {
         console.error('Error fetching reports:', error);
         return throwError(error);
       })
     );
-}
-
-
+  }
+  getTransactions(): Observable<any> {
+    return this.equipmentServices.getTransactions(this.pagination).pipe(
+      catchError((error) => {
+        console.error('Error fetching reports:', error);
+        return throwError(error);
+      })
+    );
+  }
 
   showBorrow(): void {
     this.borrowedItems = true;

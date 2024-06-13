@@ -27,6 +27,7 @@ import { HeaderOicModule } from '../header-oic/header-oic.module';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { HeaderModule } from '../header/header.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
+import { MaterialModule } from '../material.module';
 @NgModule({
   declarations: [
     ItemDetailsComponent
@@ -58,6 +59,7 @@ import { ReadsHeaderModule } from '../reads-header/reads-header.module';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+    MaterialModule
   ]
 })
 export class ItemDetailsModule { }
