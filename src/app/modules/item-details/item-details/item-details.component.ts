@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -16,8 +17,8 @@ export class ItemDetailsComponent implements OnInit {
   pagination: Pagination = {
     length: 0,
     page: 1,
-    limit: 500,
-    pageSizeOption: [5, 10, 25, 50],
+    limit: 25,
+    pageSizeOption: [25, 50, 100, 500],
   };
   inventoryFilter: InventoryFilter = {
     equipmenttype: '',
@@ -32,9 +33,17 @@ export class ItemDetailsComponent implements OnInit {
     location: '',
   };
   equipmentlist: any[] = [];
+  isloading: boolean = false;
+  transactionlist = [];
 
   sortUsed: 'asc' | 'desc' = 'asc';
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private equipmentService: EquipmentService,
+    private transactionService: TransactionService
+  ) {}
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
@@ -64,11 +73,50 @@ export class ItemDetailsComponent implements OnInit {
   }
 
   getEquipmentList() {
+    this.isloading = true;
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
-      this.equipmentlist = resp.data;
-      this.pagination.length = resp.total;
-      this.sortItemsByName(this.sortUsed);
+      if (resp.success) {
+        this.equipmentlist = resp.data;
+        this.pagination.length = resp.total;
+        this.sortItemsByName(this.sortUsed);
+
+        const equipmentIds: string[] = this.equipmentlist.map((eqpmnt) => eqpmnt._id);
+
+        this.transactionService.getTransation(equipmentIds).subscribe((res) => {
+          if (res.success) {
+            // console.log('resss', res.data);
+            this.transactionlist = res.data;
+            this.combineEquipmentAndTransaction();
+          }
+        });
+      }
+      this.isloading = false;
     });
+  }
+
+  combineEquipmentAndTransaction() {
+    this.equipmentlist = this.equipmentlist.map((eqpmnt) => {
+      const found: any = this.transactionlist.find((transaction: any) => transaction._id == eqpmnt._id);
+      let revision = [];
+      if (found) {
+        revision = found.data
+          .map((transaction: any) =>
+            transaction.revision.map((rev: any) => {
+              let { location, transactionType, user, timeStamp } = transaction;
+              return {
+                ...rev,
+                location,
+                transactionType,
+                user,
+                timeStamp,
+              };
+            })
+          )
+          .flat(1);
+      }
+      return { ...eqpmnt, revision };
+    });
+    console.log(this.equipmentlist);
   }
 
   queryParamsHandling(params: Params) {
@@ -83,7 +131,8 @@ export class ItemDetailsComponent implements OnInit {
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
-    console.log(this.inventoryFilter);
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.getEquipmentList();
   }
 
@@ -98,8 +147,20 @@ export class ItemDetailsComponent implements OnInit {
         return nameB.localeCompare(nameA);
       }
     });
-
   }
 
-  paginate(event: PageEvent) {}
+  isFieldRevised(field: string, revision: any[]): boolean {
+    return revision?.filter((rev: any) => rev.field == field).length ? true : false;
+  }
+
+  paginate(event: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/item-details'], navigationExtras);
+  }
 }
