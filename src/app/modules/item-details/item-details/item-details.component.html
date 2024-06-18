@@ -32,17 +32,17 @@
         <td
           mat-cell
           *matCellDef="let item"
-          [matMenuTriggerFor]="description"
-          [class.revised]="isFieldRevised('description', item?.revision)"
+          [matMenuTriggerFor]="name"
+          [class.revised]="isFieldRevised('name', item?.revision)"
         >
-          {{ item.description }}
-          <mat-menu #description="matMenu">
+          {{ item.name }}
+          <mat-menu #name="matMenu">
             <div
               class="revision-wrapper"
-              [class.nodisp]="!isFieldRevised('description', item?.revision)"
+              [class.nodisp]="!isFieldRevised('name', item?.revision)"
             >
               <div *ngFor="let rev of item?.revision">
-                <p *ngIf="rev.field == 'description'">
+                <p *ngIf="rev.field == 'name'">
                   {{ rev.oldValue }} - {{ rev.newValue }} -
                   {{ rev.timeStamp | date : "mediumDate" }}
                 </p>

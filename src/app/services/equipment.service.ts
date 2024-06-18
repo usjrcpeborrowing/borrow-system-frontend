@@ -167,7 +167,6 @@ export class EquipmentService {
   }
   addTransaction(transaction: Transaction): Observable<any> {
     return this.http.post<any>(environment.API_URL + '/api/transaction', transaction).pipe(
-      tap(data => console.log('Report added:', data)),
       catchError(this.handleError)
     );
   }

@@ -208,6 +208,7 @@ export class AddComponent implements OnInit {
             department: itemData.department,
             location: itemData.location,
             equipmentId: itemID,
+            revision: [],
             timeStamp: new Date(),
           };
           console.log('ITEM COOOOOOOOODE', itemID);
