@@ -1,4 +1,6 @@
 export interface Item {
+    
+    [key: string]: any;
     _id: string;
     serialNo: string;
     equipmentType: object;

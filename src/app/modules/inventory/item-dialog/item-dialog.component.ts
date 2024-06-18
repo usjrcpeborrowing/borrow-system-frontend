@@ -173,21 +173,43 @@ export class ItemDialogComponent implements OnInit {
         this.data.images.Url = this.imageUrl;
         this.data.images.midSizeUrl = this.imageUrl;
     }
+
+    const oldData = JSON.parse(JSON.stringify(this.data));
+
+    const revisions = Object.keys(this.data).reduce<{ field: string; oldValue: string; newValue: string; }[]>((acc, key) => {
+      if (key!== '_id' && this.data[key]!== oldData[key]) {
+        acc.push({
+          field: key,
+          oldValue: oldData[key]?.toString() || 'N/A',
+          newValue: this.data[key]?.toString() || 'N/A'
+        });
+      }
+      return acc;
+    }, []);
+
     this.equipmentService.updateItem(this.data._id, this.data).subscribe(response => {
       if (response.success) {
         console.log('Updating item with ID:', this.data._id);
+        
         console.log('Item updated successfully:', response.data);
-        this.transactiontype = 'Edited Item';
-
+        this.transactiontype = 'update';
+        
         const itemID = this.data._id;
+
+        const valueRevisions = revisions.map(revision => ({
+          field: revision.field,
+          oldValue: revision.oldValue,
+          newValue: revision.newValue
+        }));
+        
         const transaction: Transaction = {
           transactionType: this.transactiontype,
           user:  this.checkedBy,
           role:  this.userType,
-          department: this.data.department,
           location: this.data.location,
+          department: "",
+          revision: valueRevisions,
           equipmentId: itemID,
-          timeStamp: new Date(),
         };
         console.log('ITEM COOOOOOOOODE', transaction);
         this.addTransactionItem(transaction);
