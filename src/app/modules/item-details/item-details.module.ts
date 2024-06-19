@@ -26,16 +26,20 @@ import { AdminHeaderModule } from '../admin-header/admin-header.module';
 import { HeaderOicModule } from '../header-oic/header-oic.module';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { HeaderModule } from '../header/header.module';
-import { ReadsHeaderModule } from '../reads-header/reads-header.module';
+import { InventoryModule } from '../inventory/inventory.module';
 import { MaterialModule } from '../material.module';
+import { ReadsHeaderModule } from '../reads-header/reads-header.module';
+import { ItemDetailDialogComponent } from './item-detail-dialog/item-detail-dialog.component';
 @NgModule({
   declarations: [
-    ItemDetailsComponent
+    ItemDetailsComponent,
+    ItemDetailDialogComponent
   ],
   imports: [
     CommonModule,
     ItemDetailsRoutingModule,
     HeaderModule,
+    InventoryModule,
     AdminHeaderModule,
     ReadsHeaderModule,
     MatProgressSpinnerModule,

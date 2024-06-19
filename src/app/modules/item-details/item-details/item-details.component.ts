@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
-
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dialog.component';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.css'],
 })
 export class ItemDetailsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'serialNo', 'equipmentType', 'brand', 'inventoryType', 'remarks', 'quantity'];
+  displayedColumns: string[] = ['name', 'serialNo', 'equipmentType', 'brand', 'inventoryType', 'remarks', 'quantity', 'info'];
   pagination: Pagination = {
     length: 0,
     page: 1,
@@ -38,6 +39,7 @@ export class ItemDetailsComponent implements OnInit {
 
   sortUsed: 'asc' | 'desc' = 'asc';
   constructor(
+    public dialog: MatDialog,
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -70,6 +72,18 @@ export class ItemDetailsComponent implements OnInit {
   private isAllowedRole(role: string): boolean {
     const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
     return allowedRoles.includes(role);
+  }
+
+  onFilterSelect(event: any) {
+    let filter = event.filtername;
+    let value = event.value;
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        [filter]: value,
+      },
+      queryParamsHandling: 'merge'
+    };
+    this.router.navigate(['/item-details'], navigationExtras);
   }
 
   getEquipmentList() {
@@ -162,5 +176,13 @@ export class ItemDetailsComponent implements OnInit {
       queryParamsHandling: 'merge',
     };
     this.router.navigate(['/item-details'], navigationExtras);
+  }
+
+  viewItemDetails() {
+    console.log('view');
+    this.dialog.open(ItemDetailDialogComponent, {
+      height: '73vh',
+      width: '55vw',
+    });
   }
 }

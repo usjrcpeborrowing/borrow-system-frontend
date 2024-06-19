@@ -199,18 +199,20 @@ export class AddComponent implements OnInit {
           this.isFetching = false;
           console.log('Item created successfully:', response);
           
-          this.transactiontype = 'Added Item';
+          this.transactiontype = 'add';
           const itemID = response.data._id;
+          
           const transaction: Transaction = {
             transactionType: this.transactiontype,
             user:  this.checkedBy,
             role:  this.userType,
             department: itemData.department,
-            location: itemData.location,
-            equipmentId: itemID,
+            location: this.data.location,
             revision: [],
+            equipmentId: itemID,
             timeStamp: new Date(),
           };
+
           console.log('ITEM COOOOOOOOODE', itemID);
           this.addTransactionItem(transaction);
           this.dialogRef.close();
