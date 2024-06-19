@@ -30,7 +30,7 @@ export class ItemPanelComponent implements OnInit{
       if (match) {
         const imageId = match[1];
         this.item.images.thumbnailUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
-        console.log('Image URL:', this.item);
+        // console.log('Image URL:', this.item);
       } else {
         this.item.images.thumbnailUrl = "";
       }

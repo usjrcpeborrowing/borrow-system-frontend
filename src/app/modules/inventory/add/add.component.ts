@@ -210,6 +210,7 @@ export class AddComponent implements OnInit {
             location: this.data.location,
             revision: [],
             equipmentId: itemID,
+            timeStamp: new Date(),
           };
 
           console.log('ITEM COOOOOOOOODE', itemID);

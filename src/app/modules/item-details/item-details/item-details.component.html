@@ -1,3 +1,4 @@
+
 <ng-container *ngIf="isAdmin(); else readsHeader">
   <app-admin-header></app-admin-header>
 </ng-container>
@@ -21,66 +22,207 @@
     <div class="hline"></div>
   </h1>
 </div>
+
+
 <mat-drawer-container class="example-container">
-  <mat-drawer-content class="custom-drawer-items">
-    <div class="scrollable-panel">
-      <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
-        <!-- Define columns -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Item Name</th>
-          <td mat-cell *matCellDef="let item">{{ item.name }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="serialNo">
-          <th mat-header-cell *matHeaderCellDef>Serial No.</th>
-          <td mat-cell *matCellDef="let item">{{ item.serialNo }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="equipmentType">
-          <th mat-header-cell *matHeaderCellDef>Equipment Type</th>
-          <td mat-cell *matCellDef="let item">{{ item.equipmentType }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="brand">
-          <th mat-header-cell *matHeaderCellDef>Brand</th>
-          <td mat-cell *matCellDef="let item" [matMenuTriggerFor]="brand">
-            {{ item.brand }}
-            <mat-menu #brand="matMenu">
-              <button mat-menu-item>
-                {{ item.brand }}
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
-
-        <ng-container matColumnDef="inventoryType">
-          <th mat-header-cell *matHeaderCellDef>Inventory Type</th>
-          <td mat-cell *matCellDef="let item">{{ item.inventorytype }}</td>
-        </ng-container>
-        <ng-container matColumnDef="remarks">
-          <th mat-header-cell *matHeaderCellDef>Remarks</th>
-          <td mat-cell *matCellDef="let item">{{ item.remarks }}</td>
-        </ng-container>
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>Quantity</th>
-          <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
-        </ng-container>
-
-        <!-- Row definitions -->
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-  </mat-drawer-content>
+    <mat-drawer mode="side" opened class="custom-drawer">  
+        <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
+    </mat-drawer>
+    <mat-drawer-content class="custom-drawer-itmes">
+                
+        <div class="spinner-wrapper" *ngIf="isloading; else display">
+            <mat-spinner></mat-spinner>
+        </div>
+        <ng-template #display>
+            <div class="scrollable-panel">
+            <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
+                <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Item Name</th>
+                <td
+                    mat-cell
+                    *matCellDef="let item"
+                    [matMenuTriggerFor]="name"
+                    [class.revised]="isFieldRevised('name', item?.revision)"
+                >
+                    {{ item.name }}
+                    <mat-menu #name="matMenu">
+                    <div
+                        class="revision-wrapper"
+                        [class.nodisp]="!isFieldRevised('name', item?.revision)"
+                    >
+                        <div *ngFor="let rev of item?.revision">
+                        <p *ngIf="rev.field == 'name'">
+                            {{ rev.oldValue }} - {{ rev.newValue }} -
+                            {{ rev.timeStamp | date : "mediumDate" }}
+                        </p>
+                        </div>
+                    </div>
+                    </mat-menu>
+                </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="serialNo">
+                <th mat-header-cell *matHeaderCellDef>Serial No.</th>
+                <td
+                    mat-cell
+                    *matCellDef="let item"
+                    [matMenuTriggerFor]="serialNo"
+                    [class.revised]="isFieldRevised('serialNo', item?.revision)"
+                >
+                    {{ item.serialNo }}
+                    <mat-menu #serialNo="matMenu">
+                    <div
+                        class="revision-wrapper"
+                        [class.nodisp]="!isFieldRevised('serialNo', item?.revision)"
+                    >
+                        <div *ngFor="let rev of item?.revision">
+                        <p *ngIf="rev.field == 'serialNo'">
+                            {{ rev.oldValue }} - {{ rev.newValue }} -
+                            {{ rev.timeStamp | date : "mediumDate" }}
+                        </p>
+                        </div>
+                    </div>
+                    </mat-menu>
+                </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="equipmentType">
+                <th mat-header-cell *matHeaderCellDef>Equipment Type</th>
+                <td
+                    mat-cell
+                    *matCellDef="let item"
+                    [matMenuTriggerFor]="equipmentType"
+                    [class.revised]="isFieldRevised('equipmentType', item?.revision)"
+                >
+                    {{ item.equipmentType }}
+                    <mat-menu #equipmentType="matMenu">
+                    <div
+                        class="revision-wrapper"
+                        [class.nodisp]="!isFieldRevised('equipmentType', item?.revision)"
+                    >
+                        <div *ngFor="let rev of item?.revision">
+                        <p *ngIf="rev.field == 'equipmentType'">
+                            {{ rev.oldValue }} - {{ rev.newValue }} -
+                            {{ rev.timeStamp | date : "mediumDate" }}
+                        </p>
+                        </div>
+                    </div>
+                    </mat-menu>
+                </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="brand">
+                <th mat-header-cell *matHeaderCellDef>Brand</th>
+                <td
+                    mat-cell
+                    *matCellDef="let item"
+                    [matMenuTriggerFor]="brand"
+                    [class.revised]="isFieldRevised('brand', item?.revision)"
+                >
+                    {{ item.brand }}
+                    <mat-menu #brand="matMenu">
+                    <div
+                        class="revision-wrapper"
+                        [class.nodisp]="!isFieldRevised('brand', item?.revision)"
+                    >
+                        <div *ngFor="let rev of item?.revision">
+                        <p *ngIf="rev.field == 'brand'">
+                            {{ rev.oldValue }} - {{ rev.newValue }} -
+                            {{ rev.timeStamp | date : "mediumDate" }}
+                        </p>
+                        </div>
+                    </div>
+                    </mat-menu>
+                </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="inventoryType">
+                <th mat-header-cell *matHeaderCellDef>Inventory Type</th>
+                <td
+                    mat-cell
+                    *matCellDef="let item"
+                    [matMenuTriggerFor]="inventorytype"
+                    [class.revised]="isFieldRevised('inventoryType', item?.revision)"
+                >
+                    {{ item.inventorytype }}
+                    <mat-menu #inventorytype="matMenu">
+                    <div
+                        class="revision-wrapper"
+                        [class.nodisp]="!isFieldRevised('inventoryType', item?.revision)"
+                    >
+                        <div *ngFor="let rev of item?.revision">
+                        <p *ngIf="rev.field == 'inventoryType'">
+                            {{ rev.oldValue }} - {{ rev.newValue }} -
+                            {{ rev.timeStamp | date : "mediumDate" }}
+                        </p>
+                        </div>
+                    </div>
+                    </mat-menu>
+                </td>
+                </ng-container>
+        
+                <ng-container matColumnDef="remarks">
+                <th mat-header-cell *matHeaderCellDef>Remarks</th>
+                <td
+                    mat-cell
+                    *matCellDef="let item"
+                    [matMenuTriggerFor]="remarks"
+                    [class.revised-defective]="
+                    item.remarks == 'Defective' && item?.revision?.length
+                    "
+                >
+                    {{ item.remarks }}
+                    <mat-menu #remarks="matMenu">
+                    <div
+                        class="revision-wrapper"
+                        [class.nodisp]="!isFieldRevised('remarks', item?.revision)"
+                    >
+                        <div *ngFor="let rev of item?.revision">
+                        <p *ngIf="rev.field == 'remarks'">
+                            {{ rev.oldValue }} - {{ rev.newValue }} -
+                            {{ rev.timeStamp | date : "mediumDate" }}
+                        </p>
+                        </div>
+                    </div>
+                    </mat-menu>
+                </td>
+                </ng-container>
+                <ng-container matColumnDef="quantity">
+                    <th mat-header-cell *matHeaderCellDef>Quantity</th>
+                    <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+                </ng-container>
+                
+                <ng-container matColumnDef="info">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let item">
+                        <button mat-icon-button  (click)="viewItemDetails()">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </td>
+                    
+                    <button mat-icon-button>
+                        <mat-icon>notifications</mat-icon>
+                    </button>
+                </ng-container>
+                <!-- Row definitions -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+            </div>
+        </ng-template>
+        
+        <section id="pagination">
+            <mat-paginator
+            [length]="pagination.length"
+            [pageSize]="pagination.limit"
+            [pageIndex]="pagination.page - 1"
+            [pageSizeOptions]="pagination.pageSizeOption"
+            [showFirstLastButtons]="true"
+            (page)="paginate($event)"
+            >
+            </mat-paginator>
+        </section>
+    </mat-drawer-content>
 </mat-drawer-container>
-<section id="pagination">
-  <mat-paginator
-    [length]="pagination.length"
-    [pageSize]="pagination.limit"
-    [pageIndex]="pagination.page - 1"
-    [pageSizeOptions]="pagination.pageSizeOption"
-    [showFirstLastButtons]="true"
-    (page)="paginate($event)"
-  >
-  </mat-paginator>
-</section>
+
+

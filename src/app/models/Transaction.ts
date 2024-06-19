@@ -1,13 +1,12 @@
 export interface Transaction {
-    transactionType: string;
-    user: string;
-    role: string;
-    location: string;
-    department: string;
-    revision: {
-        field: string;
-        oldValue: string;
-        newValue: string;
-    }[];
-    equipmentId: string;
+  _id?: string;
+  transactionType: string;
+  user: string;
+  role: string;
+  department: string;
+  location: string;
+  timeStamp: Date;
+  equipmentId: string;
+  disp?: boolean;
+  revision: any[];
 }
