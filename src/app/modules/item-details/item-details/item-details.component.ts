@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
+import { Item } from 'src/app/models/Items';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
@@ -14,6 +15,8 @@ import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dia
   styleUrls: ['./item-details.component.css'],
 })
 export class ItemDetailsComponent implements OnInit {
+  
+  @Input() item: Item = {} as Item | any;
   displayedColumns: string[] = ['name', 'serialNo', 'equipmentType', 'brand', 'inventoryType', 'remarks', 'quantity', 'info'];
   pagination: Pagination = {
     length: 0,
@@ -178,11 +181,11 @@ export class ItemDetailsComponent implements OnInit {
     this.router.navigate(['/item-details'], navigationExtras);
   }
 
-  viewItemDetails() {
-    console.log('view');
+  viewItemDetails(item: any): void {
     this.dialog.open(ItemDetailDialogComponent, {
-      height: '73vh',
-      width: '55vw',
+      height: '68vh',
+      width: '45vw',
+      data: item,
     });
   }
 }
