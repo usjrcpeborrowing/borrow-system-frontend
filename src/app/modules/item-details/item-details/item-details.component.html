@@ -195,7 +195,7 @@
                 <ng-container matColumnDef="info">
                     <th mat-header-cell *matHeaderCellDef></th>
                     <td mat-cell *matCellDef="let item">
-                        <button mat-icon-button  (click)="viewItemDetails()">
+                        <button mat-icon-button (click)="viewItemDetails(item)">
                             <mat-icon>info</mat-icon>
                         </button>
                     </td>
