@@ -29,7 +29,23 @@
         <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
     </mat-drawer>
     <mat-drawer-content class="custom-drawer-itmes">
-                
+        <mat-stepper #stepper>
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Progress Report</ng-template>
+                <p>Reeds report.</p>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" label="Pending Progress">
+              <form [formGroup]="secondFormGroup">
+                <p>Approved by OIC (name..).</p>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Approvals</ng-template>
+              <p>Approved by Administrator</p>
+            </mat-step>
+          </mat-stepper>
         <div class="spinner-wrapper" *ngIf="isloading; else display">
             <mat-spinner></mat-spinner>
         </div>

@@ -21,6 +21,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { AdminHeaderModule } from '../admin-header/admin-header.module';
 import { HeaderOicModule } from '../header-oic/header-oic.module';
@@ -48,6 +49,7 @@ import { ItemDetailDialogComponent } from './item-detail-dialog/item-detail-dial
     HeaderOicModule,
     MatSortModule,
     MatPaginatorModule,
+    MatStepperModule,
     MatDialogModule,
     MatSidenavModule,
     MatAutocompleteModule,

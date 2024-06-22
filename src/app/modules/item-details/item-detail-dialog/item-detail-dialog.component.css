@@ -54,3 +54,13 @@
 .item-details div:last-child {
     margin-bottom: 0;
 }
+
+.close-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    width: 100px;
+    margin-left: auto;
+    margin-right: 2%;
+    margin-top: 2%;
+    background-color: rgb(227, 149, 104);
+    color: white;
+}

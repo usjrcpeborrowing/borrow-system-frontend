@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
@@ -36,6 +37,14 @@ export class ItemDetailsComponent implements OnInit {
     dateAcquired: '',
     location: '',
   };
+  
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+
   equipmentlist: any[] = [];
   isloading: boolean = false;
   transactionlist = [];
@@ -47,7 +56,8 @@ export class ItemDetailsComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private equipmentService: EquipmentService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private _formBuilder: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -183,8 +193,8 @@ export class ItemDetailsComponent implements OnInit {
 
   viewItemDetails(item: any): void {
     this.dialog.open(ItemDetailDialogComponent, {
-      height: '68vh',
-      width: '45vw',
+      height: '90vh',
+      width: '47vw',
       data: item,
     });
   }

@@ -16,12 +16,20 @@
                     <div class="detail">{{itemDetails.name}}</div>
                 </div>
                 <div class="row">
+                    <div class="label">Model No. :</div>
+                    <div class="detail">{{itemDetails.modelNo}}</div>
+                </div>
+                <div class="row">
                     <div class="label">Equipment Type:</div>
                     <div class="detail">{{itemDetails.equipmentType}}</div>
                 </div>
                 <div class="row">
                     <div class="label">Brand:</div>
                     <div class="detail">{{itemDetails.brand}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Color:</div>
+                    <div class="detail">{{itemDetails.color}}</div>
                 </div>
                 <div class="row">
                     <div class="label">Matter:</div>
@@ -31,10 +39,31 @@
                     <div class="label">Inventory Type:</div>
                     <div class="detail">{{itemDetails.inventorytype}}</div>
                 </div>
+                <div class="row">
+                    <div class="label">Remarks:</div>
+                    <div class="detail">{{itemDetails.remarks}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Date Acquired:</div>
+                    <div class="detail">{{itemDetails.dateAcquired}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Checked By:</div>
+                    <div class="detail">{{itemDetails.checkedBy}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Department:</div>
+                    <div class="detail">{{itemDetails.department}}</div>
+                </div>
+                <div class="row">
+                    <div class="label">Location:</div>
+                    <div class="detail">{{itemDetails.location}}</div>
+                </div>
             </div>
         </div>
     </div>
-    <div mat-dialog-actions class="close-button">
-        <button mat-button (click)="dialogRef.close()">Close</button>
+    <div class="close-button">
+        <button mat-raised-button  (click)="dialogRef.close()">Close</button>
     </div>
+    
 </div>
