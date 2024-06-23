@@ -212,3 +212,8 @@
 .nodisp {
     display: none;
 }
+
+.mat-stepper-horizontal {
+  margin-top: 8px;
+  margin-right: 5%;
+}
