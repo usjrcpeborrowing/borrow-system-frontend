@@ -27,6 +27,7 @@
     <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
   </mat-drawer>
   <mat-drawer-content class="custom-drawer-itmes">
+    <app-inventory-report-progress [inventoryReport]="inventoryReport"></app-inventory-report-progress>
     <div class="spinner-wrapper" *ngIf="isloading; else display">
       <mat-spinner></mat-spinner>
     </div>

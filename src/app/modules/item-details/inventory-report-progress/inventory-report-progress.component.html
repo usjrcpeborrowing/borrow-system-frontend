@@ -1,13 +1,28 @@
-<mat-stepper #stepper>
-  <mat-step>
-    <ng-template matStepLabel>Progress Report</ng-template>
-    <p>Reeds report.</p>
+<mat-stepper #stepper *ngIf="inventoryReport">
+  <mat-step label="Issued" completed="true">
+    <div class="inventory-detail-wrapper">
+      <mat-form-field floatLabel="always">
+        <mat-label>Issued By:</mat-label>
+        <input matInput [value]="issuedBy" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Issued Date:</mat-label>
+        <input
+          matInput
+          [value]="inventoryReport.issuedDate | date : 'mediumDate'"
+          readonly
+        />
+      </mat-form-field>
+    </div>
   </mat-step>
-  <mat-step label="Pending Progress">
-    <p>Approved by OIC (name..).</p>
+  <mat-step
+    *ngFor="let appr of inventoryReport.approval; let i = index"
+    [label]="appr['status']"
+    [state]="inventoryReport.approval !== 'pending' ? 'pending' : 'done'"
+  >
+    <div>{{ i + 1 }}</div>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Approvals</ng-template>
-    <p>Approved by Administrator</p>
-  </mat-step>
+  <ng-template matStepperIcon="pending">
+    <mat-icon>pending</mat-icon>
+  </ng-template>
 </mat-stepper>

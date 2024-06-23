@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dialog.component';
+import { InventoryReportService } from 'src/app/services/inventory-report.service';
+import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -40,6 +42,12 @@ export class ItemDetailsComponent implements OnInit {
   equipmentlist: any[] = [];
   isloading: boolean = false;
   transactionlist = [];
+  inventoryReport: InventoryReportInterface = {
+    schoolYear: '',
+    semester: '',
+    department: '',
+    approval: [],
+  };
 
   sortUsed: 'asc' | 'desc' = 'asc';
   constructor(
@@ -49,7 +57,7 @@ export class ItemDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private equipmentService: EquipmentService,
     private transactionService: TransactionService,
-    private _formBuilder: FormBuilder
+    private inventoryReportService: InventoryReportService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +67,7 @@ export class ItemDetailsComponent implements OnInit {
     }
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
+      this.getInventoryReport()
     });
   }
   isAdmin(): boolean {
@@ -91,6 +100,12 @@ export class ItemDetailsComponent implements OnInit {
     this.router.navigate(['/item-details'], navigationExtras);
   }
 
+  getInventoryReport() {
+    this.inventoryReportService.getInventoryReport().subscribe((resp: any) => {
+      this.inventoryReport = resp.data;
+    });
+  }
+
   getEquipmentList() {
     this.isloading = true;
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
@@ -103,7 +118,7 @@ export class ItemDetailsComponent implements OnInit {
 
         this.transactionService.getTransation(equipmentIds).subscribe((res) => {
           if (res.success) {
-            // console.log('resss', res.data);
+            console.log('resss', res.data);
             this.transactionlist = res.data;
             this.combineEquipmentAndTransaction();
           }
@@ -118,6 +133,7 @@ export class ItemDetailsComponent implements OnInit {
       const found: any = this.transactionlist.find((transaction: any) => transaction._id == eqpmnt._id);
       let revision = [];
       if (found) {
+        console.log({revision_data: found.data})
         revision = found.data
           .map((transaction: any) =>
             transaction.revision.map((rev: any) => {

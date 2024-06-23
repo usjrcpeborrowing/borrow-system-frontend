@@ -1,0 +1,7 @@
+export interface InventoryReportInterface {
+  schoolYear: string;
+  semester: string;
+  department: string;
+  issuedBy?: Record<any, any>;
+  approval: Record<any, any>[];
+}
