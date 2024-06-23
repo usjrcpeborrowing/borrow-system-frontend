@@ -16,7 +16,6 @@ import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dia
   styleUrls: ['./item-details.component.css'],
 })
 export class ItemDetailsComponent implements OnInit {
-  
   @Input() item: Item = {} as Item | any;
   displayedColumns: string[] = ['name', 'serialNo', 'equipmentType', 'brand', 'inventoryType', 'remarks', 'quantity', 'info'];
   pagination: Pagination = {
@@ -37,13 +36,6 @@ export class ItemDetailsComponent implements OnInit {
     dateAcquired: '',
     location: '',
   };
-  
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
 
   equipmentlist: any[] = [];
   isloading: boolean = false;
@@ -57,7 +49,7 @@ export class ItemDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private equipmentService: EquipmentService,
     private transactionService: TransactionService,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -94,7 +86,7 @@ export class ItemDetailsComponent implements OnInit {
       queryParams: {
         [filter]: value,
       },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
     this.router.navigate(['/item-details'], navigationExtras);
   }

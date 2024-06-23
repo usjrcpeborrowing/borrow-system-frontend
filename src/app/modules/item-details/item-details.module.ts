@@ -31,10 +31,12 @@ import { InventoryModule } from '../inventory/inventory.module';
 import { MaterialModule } from '../material.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
 import { ItemDetailDialogComponent } from './item-detail-dialog/item-detail-dialog.component';
+import { InventoryReportProgressComponent } from './inventory-report-progress/inventory-report-progress.component';
 @NgModule({
   declarations: [
     ItemDetailsComponent,
-    ItemDetailDialogComponent
+    ItemDetailDialogComponent,
+    InventoryReportProgressComponent
   ],
   imports: [
     CommonModule,
