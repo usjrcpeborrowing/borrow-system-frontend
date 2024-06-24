@@ -7,10 +7,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class InventoryReportService {
+  token = localStorage.getItem('token');
+
   constructor(private http: HttpClient) {}
 
   getInventoryReport() {
-    return this.http.get(environment.API_URL + '/api/inventoryreport').pipe(catchError(this.handleError));
+    const headers = {
+      Authorization: this.token as string,
+    };
+    return this.http.get(environment.API_URL + '/api/inventoryreport', { headers }).pipe(catchError(this.handleError));
   }
 
   handleError(err: HttpErrorResponse) {

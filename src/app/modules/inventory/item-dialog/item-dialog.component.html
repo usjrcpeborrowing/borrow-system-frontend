@@ -77,7 +77,7 @@
             </mat-form-field>
             <mat-form-field class="addDepartment" floatLabel="always">
                 <mat-label>Date Acquired</mat-label>
-                <input matInput autocomplete="off" readonly [(ngModel)]="data.dateAcquired" />
+                <input matInput autocomplete="off" readonly [value]="data.dateAcquired | date: 'mediumDate'" />
             </mat-form-field>
         </div>
     </div>

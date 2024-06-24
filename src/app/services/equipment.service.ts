@@ -11,6 +11,7 @@ import { Transaction } from '../models/Transaction';
   providedIn: 'root',
 })
 export class EquipmentService {
+  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {}
 
@@ -22,14 +23,11 @@ export class EquipmentService {
     }
   }
   getItemsShop(pagination: Pagination, filters: any): Observable<any> {
-    
     console.log('Fetching items with params:', pagination, filters);
-    let params = new HttpParams()
-      .set('page', pagination.page.toString())
-      .set('limit', pagination.limit.toString());
-  
+    let params = new HttpParams().set('page', pagination.page.toString()).set('limit', pagination.limit.toString());
+
     if (filters) {
-      Object.keys(filters).forEach(key => {
+      Object.keys(filters).forEach((key) => {
         if (filters[key]) {
           params = params.set(key, filters[key]);
         }
@@ -37,7 +35,7 @@ export class EquipmentService {
     }
 
     return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(
-      map(response => {
+      map((response) => {
         return response;
       }),
       catchError(this.handleError)
@@ -67,20 +65,20 @@ export class EquipmentService {
     params = params.append('department', filters.department);
     params = params.append('location', filters.location);
     params = params.append('name', filters.name);
-    
-    params = params.append('dateAcquired', filters.dateAcquired);
-    console.log("The ordeal",params);
 
-    return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(catchError(this.handleError));
+    params = params.append('dateAcquired', filters.dateAcquired);
+    console.log('The ordeal', params);
+
+    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
 
   // getItems(pagination: Pagination, filters: any): Observable<any> {
-    
+
   //   console.log('Fetching items with params:', pagination, filters);
   //   let params = new HttpParams()
   //     .set('page', pagination.page.toString())
   //     .set('limit', pagination.limit.toString());
-  
+
   //   if (filters) {
   //     Object.keys(filters).forEach(key => {
   //       if (filters[key]) {
@@ -96,41 +94,39 @@ export class EquipmentService {
   //     catchError(this.handleError)
   //   );
   // }
-  
+
   searchEquipment(searchTerm: string, filters: any): Observable<any> {
     let params = new HttpParams().set('search', searchTerm);
-  
+
     if (filters) {
-      Object.keys(filters).forEach(key => {
+      Object.keys(filters).forEach((key) => {
         if (filters[key]) {
           params = params.set(key, filters[key]);
         }
       });
     }
-  
-    return this.http.get<any>(environment.API_URL + "/api/equipment/search", { params }).pipe(catchError(this.handleError));
+
+    return this.http.get<any>(environment.API_URL + '/api/equipment/search', { params }).pipe(catchError(this.handleError));
   }
-  
+
   getEquipmentTypesWithPagination(page: number, limit: number): Observable<any> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('limit', limit.toString());
-  
+    const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
+
     return this.http.get<any>(environment.API_URL + '/api/equipmenttype', { params }).pipe(
-       tap(data => console.log('Equipment Types:', data)), // Debugging line
+      tap((data) => console.log('Equipment Types:', data)), // Debugging line
       catchError(this.handleError)
     );
   }
-  
+
   addEquipment(item: Item): Observable<any> {
     return this.http.post<any>(environment.API_URL + '/api/equipment', item).pipe(
-      tap(data => console.log('Equipment added:', data)),
+      tap((data) => console.log('Equipment added:', data)),
       catchError(this.handleError)
     );
   }
   addReports(report: Report): Observable<any> {
     return this.http.post<any>(environment.API_URL + '/api/report', report).pipe(
-      tap(data => console.log('Report added:', data)),
+      tap((data) => console.log('Report added:', data)),
       catchError(this.handleError)
     );
   }
@@ -147,12 +143,11 @@ export class EquipmentService {
   //   );
   // }
   getReports(pagination: Pagination): Observable<any> {
-    
     let params = new HttpParams();
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
-    return this.http.get<any>(environment.API_URL + "/api/report", { params }).pipe(
-      map(response => response.data),
+    return this.http.get<any>(environment.API_URL + '/api/report', { params }).pipe(
+      map((response) => response.data),
       catchError(this.handleError)
     );
   }
@@ -160,86 +155,78 @@ export class EquipmentService {
     let params = new HttpParams();
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
-    return this.http.get<any>(environment.API_URL + "/api/transaction", { params }).pipe(
-      map(response => response.data),
+    return this.http.get<any>(environment.API_URL + '/api/transaction', { params }).pipe(
+      map((response) => response.data),
       catchError(this.handleError)
     );
   }
   addTransaction(transaction: Transaction): Observable<any> {
-    return this.http.post<any>(environment.API_URL + '/api/transaction', transaction).pipe(
-      catchError(this.handleError)
-    );
+    return this.http.post<any>(environment.API_URL + '/api/transaction', transaction).pipe(catchError(this.handleError));
   }
   getBrandListWithPagination(page: number, limit: number): Observable<any> {
-    const params = new HttpParams()
-      .set('page', page.toString())
-      .set('limit', limit.toString());
-  
+    const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
+
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params }).pipe(catchError(this.handleError));
   }
   getEquipmentTypes(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + "/api/equipment/getequipmenttype").pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getequipmenttype').pipe(catchError(this.handleError));
   }
   getBrandList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist').pipe(catchError(this.handleError));
   }
   getMatterList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist').pipe(catchError(this.handleError));
   }
 
   getDepartmentList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getdepartmentlist').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getdepartmentlist').pipe(catchError(this.handleError));
   }
 
   getInventoryTypeList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist').pipe(catchError(this.handleError));
   }
 
   searchEquipmentbyName(search: string) {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/searchbyname').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/searchbyname').pipe(catchError(this.handleError));
   }
 
   getItemStatusList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks').pipe(catchError(this.handleError));
   }
   addEquipmentType(equipmentType: any): Observable<any> {
     return this.http.post<any>(environment.API_URL + '/api/equipmenttype', equipmentType).pipe(
-      tap(data => console.log('Equipment added:', data)),
+      tap((data) => console.log('Equipment added:', data)),
       catchError(this.handleError)
     );
   }
 
-
-
-  
   updateItem(_id: string, item: Item): Observable<any> {
     return this.http.patch<any>(environment.API_URL + '/api/equipment/' + `${item._id}`, item);
   }
   equipmentNameAscending(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbynameasc').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbynameasc').pipe(catchError(this.handleError));
   }
   equipmentNameDescending(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbynamedesc').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbynamedesc').pipe(catchError(this.handleError));
   }
   equipmentColorAscending(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbycolorasc').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbycolorasc').pipe(catchError(this.handleError));
   }
   equipmentColorDescending(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbycolordesc').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbycolordesc').pipe(catchError(this.handleError));
   }
-
 
   getUsers(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/users').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/users').pipe(catchError(this.handleError));
   }
   getUserTypes(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/usertypes').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/usertypes').pipe(catchError(this.handleError));
   }
   getDepartment(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));
   }
   getLocationList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist').pipe(catchError(this.handleError));;
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist').pipe(catchError(this.handleError));
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));

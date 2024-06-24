@@ -17,6 +17,7 @@ export class InventoryReportProgressComponent implements OnChanges {
   @Input() inventoryReport: any;
   issuedBy: string = '';
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.inventoryReport)
     this.issuedBy = this.inventoryReport?.issuedBy['firstName'] + ' ' + this.inventoryReport?.issuedBy['lastName'];
   }
 }

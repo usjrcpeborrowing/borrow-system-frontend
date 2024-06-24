@@ -20,7 +20,12 @@
     [label]="appr['status']"
     [state]="inventoryReport.approval !== 'pending' ? 'pending' : 'done'"
   >
-    <div>{{ i + 1 }}</div>
+    <div class="inventory-detail-wrapper">
+      <mat-form-field floatLabel="always">
+        <mat-label>Approved By:</mat-label>
+        <input matInput [value]="appr.approveBy.lastName" readonly />
+      </mat-form-field>
+    </div>
   </mat-step>
   <ng-template matStepperIcon="pending">
     <mat-icon>pending</mat-icon>
