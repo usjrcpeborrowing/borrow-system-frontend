@@ -21,7 +21,7 @@ export class ItemPanelComponent implements OnInit{
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser? currentUser.role.includes('Instructor') : false;
+    return currentUser ? currentUser.role === 'Instructor' : false;
   }
   viewImage() {
     if (this.item.images && this.item.images.thumbnailUrl) {

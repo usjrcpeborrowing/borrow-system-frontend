@@ -1,36 +1,155 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { EquipmentService } from 'src/app/services/equipment.service';
-import { environment } from 'src/environments/environment';
 interface User {
-    schoolId: string;
+    userId: string;
     password: string;
     name:{
         firstName: string;
         lastName: string;
     }
     department: string;
-    role: string[];
+    role: string;
 }
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(private http: HttpClient, private router: Router, private equipmentService: EquipmentService) {}
-    private loginUrl = environment.API_URL + '/api/login'; // Adjusted to match your API endpoint
+    private static adminAccountId = 'admin';
+    private static adminPassword = 'admin123';
+    private static oicAccountId    = 'oic';
+    private static oicPassword = 'oic123';
+    private static readsAccountId    = 'reads';
+    private static readsPassword = 'reads123';
+    private static readscpeAccountId    = 'readscpe';
+    private static readscpePassword = 'readscpe123';
+    private static instructorAccountId    = 'instructor';
+    private static instructorPassword = 'instructor123';
+    private static studentAccountId    = 'student';
+    private static studenPasswrd = 'student123';
+    // add more accounts
+    constructor(private router: Router, private equipmentService: EquipmentService) {}
 
-    login(schoolId: string, password: string): Observable<any> {
-        return this.http.post<any>(this.loginUrl, { schoolId, password }).pipe(
-            map(user => {
-                localStorage.setItem('authTokenUser', user.token); // Store the token
-                localStorage.setItem('currentUser', JSON.stringify(user)); // Store user data
-                console.log("role", user.data.role);
-                this.navigateToDashboard('administrator');
-                return true;
+    login(accountId: string, password: string): Observable<boolean> {
+        if (accountId === AuthService.adminAccountId && password === AuthService.adminPassword) {
+            const adminUser: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'Admin',
+                    lastName: 'Admin'
+                },
+                department: 'ECL',
+                role: 'Admin'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(adminUser));
+            
+            this.navigateToDashboard(adminUser.role);
+            return of(true);
+        }
+        
+        if (accountId === AuthService.readsAccountId && password === AuthService.readsPassword) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'reads',
+                    lastName: 'reads'
+                },
+                department: 'ECL',
+                role: 'reads'
+            };
+            console.log(userAcc.name.firstName);
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        if (accountId === AuthService.readscpeAccountId && password === AuthService.readscpePassword) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'readscpe',
+                    lastName: 'readscpe'
+                },
+                department: 'CPE',
+                role: 'reads'
+            };
+            console.log(userAcc.name.firstName);
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        if (accountId === AuthService.studentAccountId && password === AuthService.studenPasswrd) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'Student',
+                    lastName: 'Student'
+                },
+                department: 'ECL',
+                role: 'Student'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        if (accountId === AuthService.oicAccountId && password === AuthService.oicPassword) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'oic',
+                    lastName: 'account'
+                },
+                department: 'ECL',
+                role: 'oic'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        if (accountId === AuthService.instructorAccountId && password === AuthService.instructorPassword) {
+            const userAcc: User = {
+                userId: accountId,
+                password: password,
+                name: {
+                    firstName: 'instructor',
+                    lastName: 'account'
+                },
+                department: 'ECL',
+                role: 'Instructor'
+            };
+            localStorage.setItem('currentUser', JSON.stringify(userAcc));
+            this.navigateToDashboard(userAcc.role);
+            return of(true);
+        }
+        return this.equipmentService.getUsers().pipe(
+            switchMap(response => {
+                const users = response.data;
+                console.log('All users:', users);
+                const user = users.find((u: User) => u.userId === accountId);
+                if (user) {
+                    return this.fetchUserType(user.role).pipe(
+                        map(role => {
+                            user.role = role;
+                            console.log('Identified role:', role);
+                            localStorage.setItem('currentUser', JSON.stringify(user));
+                            this.navigateToDashboard(user.role);
+                            return true;
+                        }),
+                        catchError(error => {
+                            console.error('Failed to fetch user type', error);
+                            return of(false);
+                        })
+                    );
+                } else {
+                    return of(false);
+                }
             }),
             catchError(error => {
                 console.error('Login failed', error);
@@ -38,49 +157,15 @@ export class AuthService {
             })
         );
     }
-    // login(schoolId: string, password: string): Observable<boolean> {
 
-    //     return this.equipmentService.getUsers().pipe(
-    //         switchMap(response => {
-    //             const users = response.data;
-    //             console.log('All users:', users);
-    //             const user = users.find((u: User) => u.schoolId === schoolId);
-    //             const pass = users.find((u: User) => u.password === password);
-
-    //             if (user && pass) {
-    //                 return this.fetchUserType(user.role).pipe(
-    //                     map(role => {
-    //                         user.role = role;
-    //                         console.log('Identified role:', role);
-    //                         console.log('TOKEN' , user.token);
-    //                         localStorage.setItem('currentUser', JSON.stringify(user));
-    //                         this.navigateToDashboard(user.role);
-    //                         return true;
-    //                     }),
-    //                     catchError(error => {
-    //                         console.error('Failed to fetch user type', error);
-    //                         return of(false);
-    //                     })
-    //                 );
-    //             } else {
-    //                 return of(false);
-    //             }
-    //         }),
-    //         catchError(error => {
-    //             console.error('Login failed', error);
-    //             return throwError(() => new Error('Login failed'));
-    //         })
-    //     );
-    // }
-
-    private fetchUserType(schoolId: string): Observable<string> {
+    private fetchUserType(userId: string): Observable<string> {
         return this.equipmentService.getUserTypes().pipe(
             map(response => {
                 interface UserType {
                     _id: string;
                     role: string;
                 }
-                const userType = response.data.find((type: UserType) => type._id === schoolId);
+                const userType = response.data.find((type: UserType) => type._id === userId);
                 return userType ? userType.role : null;
             }),
             catchError(error => {
@@ -104,31 +189,13 @@ export class AuthService {
             case 'oic':
                 this.router.navigate(['/dashboard/oic']);
                 break;
-            case 'administrator':
-                this.router.navigate(['/dashboard/administrator']);
+            case 'Admin':
+                this.router.navigate(['/dashboard/admin']);
                 break;
             default:
                 this.router.navigate(['/dashboard']);
         }
     }
-    // private navigateToDashboard(roles: string[]): void {
-    //     // Define the priority of roles
-    //     const priorityRoles = ['administrator', 'Instructor', 'reads', 'oic', 'faculty', 'Student'];
-    
-    //     // Iterate through the priority roles
-    //     for (const role of priorityRoles) {
-    //         // Check if the roles array contains the current priority role
-    //         if (roles.includes(role)) {
-    //             // Construct the navigation path based on the role
-    //             const path = ['/dashboard/' + role.toLowerCase()];
-    //             this.router.navigate(path);
-    //             return; // Exit the function once a matching role is found
-    //         }
-    //     }
-    
-    //     // Default navigation if none of the priority roles match
-    //     this.router.navigate(['/dashboard/default']); // Adjust the default path as needed
-    // }
     
     getCurrentUser(): User | null {
         const user = localStorage.getItem('currentUser');

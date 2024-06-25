@@ -45,16 +45,15 @@ export class InventoryComponent implements OnInit{
   }
   isAdmin(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser? currentUser.role.includes('administrator') : false;
-
+    return currentUser ? currentUser.role === 'Admin' : false;
   }
   isReads(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser? currentUser.role.includes('reads') : false;
+    return currentUser ? currentUser.role === 'reads' : false;
   }
   isOic(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser? currentUser.role.includes('oic') : false;
+    return currentUser ? currentUser.role === 'oic' : false;
   }
   
   onFilterSelect(event: any) {
@@ -69,9 +68,9 @@ export class InventoryComponent implements OnInit{
     this.router.navigate(['/inventory'], navigationExtras);
   }
   
-  private isAllowedRole(roles: string[]): boolean {
-    const allowedRoles = ['administrator', 'Instructor', 'reads', 'oic', 'faculty'];
-    return roles.some(role => allowedRoles.includes(role));
+  private isAllowedRole(role: string): boolean {
+    const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
+    return allowedRoles.includes(role);
   }
   getEquipmentList() {
     this.isFetching = true;

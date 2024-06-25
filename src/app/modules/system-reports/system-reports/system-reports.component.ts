@@ -30,11 +30,11 @@ export class SystemReportsComponent {
   }
   isAdmin(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser? currentUser.role.includes('administrator') : false;
+    return currentUser ? currentUser.role === 'Admin' : false;
   }
   isReads(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser? currentUser.role.includes('reads') : false;
+    return currentUser ? currentUser.role === 'reads' : false;
   }
 
   private isAllowedRole(role: string): boolean {

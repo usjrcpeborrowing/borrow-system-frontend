@@ -13,8 +13,7 @@ export class AdminHeaderComponent {
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
-    console.log(this.currentUser.data.lastName)
-    if (!this.currentUser.data || this.currentUser.data.role !== 'administrator') {
+    if (!this.currentUser || this.currentUser.role !== 'Admin') {
       this.router.navigate(['/']);
     }
   }
@@ -24,7 +23,7 @@ export class AdminHeaderComponent {
   }
   dashboard(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/dashboard/administrator']);
+    this.router.navigate(['/dashboard/admin']);
   }
   inventory(event: Event): void {
     event.preventDefault();

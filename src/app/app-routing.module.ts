@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// import { AuthGuard } from './services/auth.guard';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: 'dashboard',
     loadChildren: ()=> import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'borrow',
@@ -28,12 +28,12 @@ const routes: Routes = [
   {
     path: 'inventory',
     loadChildren: ()=> import('./modules/inventory/inventory.module').then(m => m.InventoryModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'item-details',
     loadChildren: ()=> import('./modules/item-details/item-details.module').then(m => m.ItemDetailsModule),
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'history',

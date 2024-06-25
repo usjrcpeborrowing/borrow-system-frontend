@@ -73,9 +73,9 @@ export class ItemDialogComponent implements OnInit {
     const filterValue = value.toLowerCase();
     return this.brands.filter((option) => option.toLowerCase().includes(filterValue));
   }
-  private cantEditRole(role: string[]): boolean {
+  private cantEditRole(role: string): boolean {
     const allowedRoles = ['faculty', 'Instructor'];
-    return role.some(r => allowedRoles.includes(r));
+    return allowedRoles.includes(role);
   }
 
   loadImageFromGoogleDrive(event: Event): void {

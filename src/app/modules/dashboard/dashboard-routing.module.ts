@@ -28,7 +28,7 @@ const routes: Routes = [
     component: DashboardOicComponent
   },
   {
-    path: 'administrator',
+    path: 'admin',
     component: DashboardAdminComponent
   }
 ];
