@@ -13,7 +13,8 @@ export class AdminHeaderComponent {
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser || this.currentUser.role !== 'administrator') {
+    console.log(this.currentUser.data.lastName)
+    if (!this.currentUser.data || this.currentUser.data.role !== 'administrator') {
       this.router.navigate(['/']);
     }
   }

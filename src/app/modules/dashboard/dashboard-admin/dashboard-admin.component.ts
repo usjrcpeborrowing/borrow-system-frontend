@@ -14,7 +14,9 @@ export class DashboardAdminComponent implements OnInit{
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser || this.currentUser.role !== 'Admin') {
+    if (!this.currentUser ||!this.currentUser.data.role.includes('administrator')) {
+      
+      console.log(this.currentUser.data.role)
       this.router.navigate(['/']);
     }
   }
