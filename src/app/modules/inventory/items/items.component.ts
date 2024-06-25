@@ -5,7 +5,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as jsPDFInvoiceTemplate from 'jspdf-invoice-template';
 import { Pagination } from 'src/app/models/Pagination';
-import { Report } from 'src/app/models/Reports';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { ReportDownloadService } from 'src/app/services/report-download-service';
@@ -65,13 +64,13 @@ export class ItemsComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     return !currentUser || !this.cantEditRole(currentUser.role);
   }
-  private cantEditRole(role: string): boolean {
+  private cantEditRole(roles: string[]): boolean {
     const allowedRoles = ['faculty', 'Instructor'];
-    return allowedRoles.includes(role);
+    return roles.some(role => allowedRoles.includes(role));
   }
-  private isAllowedRole(role: string): boolean {
-    const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
-    return allowedRoles.includes(role);
+  private isAllowedRole(roles: string[]): boolean {
+    const allowedRoles = ['administrator', 'Instructor', 'reads', 'oic', 'faculty'];
+    return roles.some(role => allowedRoles.includes(role));
   }
 
   onPageChange(event: PageEvent): void {
