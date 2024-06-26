@@ -13,7 +13,7 @@ import { Transaction } from '../models/Transaction';
 export class EquipmentService {
   token = localStorage.getItem('token');
 
-  constructor(private http: HttpClient) {}
+  constructor(private http:   HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
     if (searchWord) {

@@ -12,6 +12,7 @@ interface User {
     }
     department: string;
     role: string;
+    token: string;
 }
 
 @Injectable({
@@ -43,10 +44,11 @@ export class AuthService {
                     lastName: 'Admin'
                 },
                 department: 'ECL',
-                role: 'Admin'
+                role: 'Admin',
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzY2hvb2xJZCI6eyJzY2hvb2xJZCI6IjIwMjQyMjIyMjIifSwiaWF0IjoxNzE5MjM2NzMzLCJleHAiOjE3MjAxMDA3MzN9.XThBKRUgihYMO8WofyS1wDpbkLjdRrxr-sktnoRNdjo',
             };
             localStorage.setItem('currentUser', JSON.stringify(adminUser));
-            
+            localStorage.setItem('token', adminUser.token);
             this.navigateToDashboard(adminUser.role);
             return of(true);
         }
@@ -60,7 +62,8 @@ export class AuthService {
                     lastName: 'reads'
                 },
                 department: 'ECL',
-                role: 'reads'
+                role: 'reads',
+                token: ''
             };
             console.log(userAcc.name.firstName);
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
@@ -76,7 +79,8 @@ export class AuthService {
                     lastName: 'readscpe'
                 },
                 department: 'CPE',
-                role: 'reads'
+                role: 'reads',
+                token: ''
             };
             console.log(userAcc.name.firstName);
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
@@ -92,7 +96,8 @@ export class AuthService {
                     lastName: 'Student'
                 },
                 department: 'ECL',
-                role: 'Student'
+                role: 'Student',
+                token: ''
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
             this.navigateToDashboard(userAcc.role);
@@ -107,7 +112,8 @@ export class AuthService {
                     lastName: 'account'
                 },
                 department: 'ECL',
-                role: 'oic'
+                role: 'oic',
+                token: ''
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
             this.navigateToDashboard(userAcc.role);
@@ -122,7 +128,8 @@ export class AuthService {
                     lastName: 'account'
                 },
                 department: 'ECL',
-                role: 'Instructor'
+                role: 'Instructor',
+                token: ''
             };
             localStorage.setItem('currentUser', JSON.stringify(userAcc));
             this.navigateToDashboard(userAcc.role);

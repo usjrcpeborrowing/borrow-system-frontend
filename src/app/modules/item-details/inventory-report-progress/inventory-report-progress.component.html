@@ -13,6 +13,30 @@
           readonly
         />
       </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>School Year:</mat-label>
+        <input
+          matInput
+          [value]="inventoryReport.schoolYear"
+          readonly
+        />
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Semester:</mat-label>
+        <input
+          matInput
+          [value]="inventoryReport.semester"
+          readonly
+        />
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Department:</mat-label>
+        <input
+          matInput
+          [value]="inventoryReport.department"
+          readonly
+        />
+      </mat-form-field>
     </div>
   </mat-step>
   <mat-step
@@ -24,6 +48,14 @@
       <mat-form-field floatLabel="always">
         <mat-label>Approved By:</mat-label>
         <input matInput [value]="appr.approveBy.lastName" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Role:</mat-label>
+        <input matInput [value]="appr.role" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always">
+        <mat-label>Updated at:</mat-label>
+        <input matInput [value]="appr.updatedAt  | date : 'mediumDate'" readonly />
       </mat-form-field>
     </div>
   </mat-step>

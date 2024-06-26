@@ -52,6 +52,9 @@
     </div>
     <span class="spacer"></span>
     <div class="report-button"  *ngIf="isFaculty()">
+        <button mat-raised-button (click)="reportItems()">Report Inventory</button>
+    </div>
+    <div class="report-button"  *ngIf="isFaculty()">
         <button mat-raised-button (click)="download()">Download Report</button>
     </div>
 </div>
