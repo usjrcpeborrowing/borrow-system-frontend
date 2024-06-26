@@ -32,6 +32,8 @@ import { AdminHeaderModule } from '../admin-header/admin-header.module';
 import { HeaderOicModule } from '../header-oic/header-oic.module';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
+import { ReportsComponent } from './reports/reports.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     InventoryComponent,
@@ -40,7 +42,8 @@ import { ReadsHeaderModule } from '../reads-header/reads-header.module';
     FilterItemsComponent,
     ItemPanelComponent,
     AddComponent,
-    ItemDialogComponent
+    ItemDialogComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,
@@ -69,6 +72,7 @@ import { ReadsHeaderModule } from '../reads-header/reads-header.module';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+    SharedModule
   ],
   exports:[
     CategoryComponent,
