@@ -1,6 +1,10 @@
 <div class="panel-title">
   <h1>Add Item</h1>
 </div>
+<div class="spinner-wrapper" *ngIf="isloading; else display">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #display>
 <div class="add-item">
     
     <form [formGroup]="addItemForm">
@@ -161,6 +165,7 @@
         
     </form>
 </div>
+</ng-template>
 
 <div class="add-button">
     <button mat-raised-button (click)="onSubmit()">Add Item</button>

@@ -124,8 +124,8 @@ export class ItemsComponent implements OnInit {
   }
   reportItems() {
     this.dialog.open(ReportsComponent, {
-      height: '70vh',
-      width: '60vw',
+      height: '67vh',
+      width: '40vw',
     });
   }
   filterItems(): void {

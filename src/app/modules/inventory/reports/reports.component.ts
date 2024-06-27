@@ -17,7 +17,6 @@ export class ReportsComponent implements OnInit {
   isloading: boolean = false;
   schoolYears: string[] = [];
   semester: string[] = ['1st', '2nd', 'summer'];
-
   inventoryReport: InventoryReportInterface = {
     schoolYear: '',
     semester: '',
@@ -28,6 +27,14 @@ export class ReportsComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ReportsComponent>, private inventoryReportService: InventoryReportService, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
+    const currentUserJson = localStorage.getItem('currentUser');
+    if (currentUserJson) {
+      const currentUser = JSON.parse(currentUserJson);
+      const firstName = currentUser.name.firstName;
+      const lastName = currentUser.name.lastName;
+
+      this.inventoryReport.issuer = `${firstName} ${lastName}`;
+    }
     this.generateYearRanges(2024, 5);
   }
 

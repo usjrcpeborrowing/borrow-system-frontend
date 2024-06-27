@@ -64,3 +64,22 @@
     background-color: rgb(227, 149, 104);
     color: white;
 }
+
+
+.second-content{
+    position: relative;
+    margin-left: 5%;
+    width: 50%;
+}
+.form-container{
+    position: relative;
+    margin: 2%;
+    width: 100%;
+}
+
+.formName{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -20px;
+}

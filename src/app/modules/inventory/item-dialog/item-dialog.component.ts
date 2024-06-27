@@ -20,6 +20,7 @@ export class ItemDialogComponent implements OnInit {
   equipmenttypes: string[] = [];
   brands: string[] = [];
 
+  isloading: boolean = false;
   transactiontype: string = '';
   equipmentTypeControl = new FormControl();
   filteredEquipmentTypes!: Observable<string[]>; // Add ! here
@@ -154,6 +155,8 @@ export class ItemDialogComponent implements OnInit {
     }
   }
   saveChanges() {
+    
+    this.isloading = true;
     if (typeof this.data.images !== 'object') {
       console.error('data.images is not an object:', this.data.images);
       return;
@@ -168,6 +171,8 @@ export class ItemDialogComponent implements OnInit {
     this.equipmentService.updateItem(this.data._id, this.data).subscribe(
       (response) => {
         if (response.success) {
+          
+          this.isloading = false;
           console.log('Updating item with ID:', this.data._id);
           console.log('Item updated successfully:', response.data);
           let revisions = Object.entries(this.data)

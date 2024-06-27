@@ -6,29 +6,33 @@
         <mat-spinner></mat-spinner>
       </div>
       <ng-template #display>
-        <mat-form-field floatLabel="always">
-          <mat-label>Issued By:</mat-label>
-          <input matInput [(ngModel)]="inventoryReport.issuer" readonly />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>School Year</mat-label>
-          <mat-select
-            (selectionChange)="selectRange($event)"
-            [(ngModel)]="inventoryReport.schoolYear"
-          >
-            <mat-option *ngFor="let range of schoolYears" [value]="range">{{
-              range
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Semester</mat-label>
-          <mat-select [(ngModel)]="inventoryReport.semester">
-            <mat-option *ngFor="let sem of semester" [value]="sem">{{
-              sem
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="second-content">
+            <div class="form-container">
+                <mat-form-field floatLabel="always" class="formName">
+                <mat-label>Issued By:</mat-label>
+                <input matInput [(ngModel)]="inventoryReport.issuer" readonly />
+                </mat-form-field>
+                <mat-form-field class="formName">
+                <mat-label>School Year</mat-label>
+                <mat-select
+                    (selectionChange)="selectRange($event)"
+                    [(ngModel)]="inventoryReport.schoolYear"
+                >
+                    <mat-option *ngFor="let range of schoolYears" [value]="range">{{
+                    range
+                    }}</mat-option>
+                </mat-select>
+                </mat-form-field>
+                <mat-form-field class="formName">
+                <mat-label>Semester</mat-label>
+                <mat-select [(ngModel)]="inventoryReport.semester">
+                    <mat-option *ngFor="let sem of semester" [value]="sem">{{
+                    sem
+                    }}</mat-option>
+                </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
       </ng-template>
     </div>
   </div>

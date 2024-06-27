@@ -43,8 +43,7 @@ interface Equipment{
 })
 export class AddComponent implements OnInit {
   checkedBy: string = ''; // Checked By value
-  
-    
+  isloading: boolean = false;
   equipmentTypeControl = new FormControl();
   filteredEquipmentTypes!: Observable<string[]>; // Add ! here
   
@@ -182,7 +181,7 @@ export class AddComponent implements OnInit {
 
   onSubmit(): void {
     
-    this.isFetching = true;
+    this.isloading = true;
     console.log('Form check valid: ', this.addItemForm.value);
     
     if (this.addItemForm.valid) {
@@ -196,7 +195,7 @@ export class AddComponent implements OnInit {
       this.equipmentService.addEquipment(itemData).subscribe(
         response => {
           
-          this.isFetching = false;
+          this.isloading = false;
           console.log('Item created successfully:', response);
           
           this.transactiontype = 'add';
