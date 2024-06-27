@@ -24,7 +24,14 @@ export class InventoryReportService {
       Authorization: this.token as string,
     };
 
-    return this.http.post(environment.API_URL + '/api/inventoryreport', inventoryReport, {}).pipe(catchError(this.handleError));
+    return this.http.post(environment.API_URL + '/api/inventoryreport', inventoryReport, { headers }).pipe(catchError(this.handleError));
+  }
+
+  updateInventoryReport(inventoryReportId: string, role: string, status: string) {
+    const headers = {
+      Authorization: this.token as string,
+    };
+    return this.http.patch(environment.API_URL + '/api/inventoryreport/' + inventoryReportId, { role, status }, { headers }).pipe(catchError(this.handleError));
   }
 
   handleError(err: HttpErrorResponse) {
