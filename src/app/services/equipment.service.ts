@@ -34,7 +34,7 @@ export class EquipmentService {
       });
     }
 
-    return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(
+    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: { Authorization: this.token as string }  }).pipe(
       map((response) => {
         return response;
       }),
@@ -119,16 +119,26 @@ export class EquipmentService {
   }
 
   addEquipment(item: Item): Observable<any> {
+    
+    const headers = {
+      Authorization: this.token as string,
+    };
+
     return this.http.post<any>(environment.API_URL + '/api/equipment', item).pipe(
-      tap((data) => console.log('Equipment added:', data)),
+      tap((data) => console.log('Equipment added:', data, { headers })),
       catchError(this.handleError)
     );
   }
   addReports(report: Report): Observable<any> {
+    const headers = {
+      Authorization: this.token as string,
+    };
+
     return this.http.post<any>(environment.API_URL + '/api/report', report).pipe(
-      tap((data) => console.log('Report added:', data)),
+      tap((data) => console.log('Report added:', data, { headers })),
       catchError(this.handleError)
     );
+
   }
   // getReports(): Observable<any> {
   //   return this.http.get<any>(environment.API_URL + "/api/report").pipe(
@@ -146,44 +156,60 @@ export class EquipmentService {
     let params = new HttpParams();
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
-    return this.http.get<any>(environment.API_URL + '/api/report', { params }).pipe(
+    
+    const headers = {
+      Authorization: this.token as string,
+    };
+
+    return this.http.get<any>(environment.API_URL + '/api/report', { params, headers: { Authorization: this.token as string }  }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
+
   }
   getTransactions(pagination: Pagination): Observable<any> {
     let params = new HttpParams();
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
-    return this.http.get<any>(environment.API_URL + '/api/transaction', { params }).pipe(
+    return this.http.get<any>(environment.API_URL + '/api/transaction', { params, headers: { Authorization: this.token as string }  }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
   }
   addTransaction(transaction: Transaction): Observable<any> {
-    return this.http.post<any>(environment.API_URL + '/api/transaction', transaction).pipe(catchError(this.handleError));
+    const headers = {
+      Authorization: this.token as string,
+    };
+
+    return this.http.post<any>(environment.API_URL + '/api/transaction', transaction, { headers }).pipe(catchError(this.handleError));
+
   }
   getBrandListWithPagination(page: number, limit: number): Observable<any> {
     const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
 
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params }).pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params, headers: { Authorization: this.token as string }  }).pipe(catchError(this.handleError));
   }
   getEquipmentTypes(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getequipmenttype').pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getequipmenttype', {
+      headers: { Authorization: this.token as string }}).pipe(catchError(this.handleError));
   }
   getBrandList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist').pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', {
+      headers: { Authorization: this.token as string }}).pipe(catchError(this.handleError));
   }
   getMatterList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist').pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getmatterlist', {
+      headers: { Authorization: this.token as string }}).pipe(catchError(this.handleError));
   }
 
   getDepartmentList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getdepartmentlist').pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getdepartmentlist', {
+      headers: { Authorization: this.token as string }}).pipe(catchError(this.handleError));
   }
 
   getInventoryTypeList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist').pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getinventorytypelist', {
+      headers: { Authorization: this.token as string }}).pipe(catchError(this.handleError));
   }
 
   searchEquipmentbyName(search: string) {
@@ -191,17 +217,24 @@ export class EquipmentService {
   }
 
   getItemStatusList(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks').pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getremarks', {
+      headers: { Authorization: this.token as string }}).pipe(catchError(this.handleError));
   }
   addEquipmentType(equipmentType: any): Observable<any> {
-    return this.http.post<any>(environment.API_URL + '/api/equipmenttype', equipmentType).pipe(
+    const headers = {
+      Authorization: this.token as string,
+    };
+    return this.http.post<any>(environment.API_URL + '/api/equipmenttype', equipmentType, { headers }).pipe(
       tap((data) => console.log('Equipment added:', data)),
       catchError(this.handleError)
     );
   }
 
   updateItem(_id: string, item: Item): Observable<any> {
-    return this.http.patch<any>(environment.API_URL + '/api/equipment/' + `${item._id}`, item);
+    const headers = {
+      Authorization: this.token as string,
+    };
+    return this.http.patch<any>(environment.API_URL + '/api/equipment/' + `${item._id}`, item, { headers });
   }
   equipmentNameAscending(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbynameasc').pipe(catchError(this.handleError));

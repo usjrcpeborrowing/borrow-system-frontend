@@ -32,6 +32,7 @@ export class InventoryComponent implements OnInit{
   isFetching: boolean = false;
   sortUsed: 'asc' | 'desc' = 'asc';
   
+  isloading: boolean = false;
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
@@ -73,10 +74,10 @@ export class InventoryComponent implements OnInit{
     return allowedRoles.includes(role);
   }
   getEquipmentList() {
-    this.isFetching = true;
+    this.isloading = true;
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
       
-      this.isFetching = false;
+      this.isloading = false;
       this.equipmentlist = resp.data;
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);

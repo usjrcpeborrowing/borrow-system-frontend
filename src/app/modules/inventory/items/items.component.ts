@@ -24,6 +24,7 @@ export class ItemsComponent implements OnInit {
 
   @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+  isloading: boolean = false;
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
