@@ -10,6 +10,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ItemDetailDialogComponent implements OnInit {
   itemDetails: any;
   
+  isloading: boolean = false;
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
   constructor(

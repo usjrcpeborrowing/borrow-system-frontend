@@ -16,3 +16,20 @@
 ::ng-deep .mat-step-header .mat-step-icon {
   background-color: rgb(62, 112, 62);
 }
+
+
+.second-content{
+  position: relative;
+  width: 50%;
+}
+.form-container{
+  position: relative;
+  margin: 2%;
+  width: 60%;
+}
+.formName{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-bottom: -31px;
+}

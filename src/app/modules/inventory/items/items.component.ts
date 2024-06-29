@@ -5,7 +5,6 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as jsPDFInvoiceTemplate from 'jspdf-invoice-template';
 import { Pagination } from 'src/app/models/Pagination';
-import { Report } from 'src/app/models/Reports';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { ReportDownloadService } from 'src/app/services/report-download-service';
@@ -25,6 +24,7 @@ export class ItemsComponent implements OnInit {
 
   @Output() paginationChange: EventEmitter<Pagination> = new EventEmitter<Pagination>();
 
+  isloading: boolean = false;
   opened: boolean = true;
   searchedWord = new FormControl('');
   itemlist: any = [];
@@ -125,8 +125,8 @@ export class ItemsComponent implements OnInit {
   }
   reportItems() {
     this.dialog.open(ReportsComponent, {
-      height: '80vh',
-      width: '80vw',
+      height: '67vh',
+      width: '40vw',
     });
   }
   filterItems(): void {
