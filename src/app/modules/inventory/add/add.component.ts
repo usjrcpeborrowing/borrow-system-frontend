@@ -5,10 +5,13 @@ import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
 
 import { FormControl } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
+
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 interface Matter {
   value: string;
   viewValue: string;
@@ -84,6 +87,7 @@ export class AddComponent implements OnInit {
     public dialogRef: MatDialogRef<AddComponent>,
     private authService: AuthService, 
     private equipmentService: EquipmentService ,
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Item,
     private fb: FormBuilder,
   ) {
@@ -277,5 +281,15 @@ export class AddComponent implements OnInit {
         console.error('Error fetching brand list:', error);
       }
     );
+  }
+
+  openSnackBar(message: string) {
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      data: {
+        error: true,
+        message: 'Success',
+      },
+      duration: 2000,
+    });
   }
 }
