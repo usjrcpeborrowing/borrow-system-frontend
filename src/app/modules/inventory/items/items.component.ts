@@ -46,18 +46,18 @@ export class ItemsComponent implements OnInit {
     // this.activatedRoute.queryParams.subscribe((params) =>
     //   this.queryParamsHandler(params)
     // );
-    const currentUser = this.authService.getCurrentUser();
+    // const currentUser = this.authService.getCurrentUser();
 
-    if (!currentUser || !this.isAllowedRole(currentUser.role)) {
-      this.router.navigate(['/']);
-    }
-    this.fullName = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
-    localStorage.setItem('currentUser.role', JSON.stringify(currentUser?.role));
-    // this.usertype = localStorage.getItem('currentUser.role');
-    this.usertype = currentUser?.role;
-    localStorage.setItem('currentUser.department', JSON.stringify(currentUser?.department));
+    // if (!currentUser || !this.isAllowedRole(currentUser.role)) {
+    //   this.router.navigate(['/']);
+    // }
+    // this.fullName = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    // localStorage.setItem('currentUser.role', JSON.stringify(currentUser?.role));
+    // // this.usertype = localStorage.getItem('currentUser.role');
+    // this.usertype = currentUser?.role;
+    // localStorage.setItem('currentUser.department', JSON.stringify(currentUser?.department));
 
-    this.userDepartment = currentUser?.department;
+    // this.userDepartment = currentUser?.department;
     // this.userDepartment = localStorage.getItem('currentUser.department');
   }
 
