@@ -33,59 +33,59 @@ interface Department {
   viewValue: string;
 }
 
-interface Equipment{
+interface Equipment {
   name: string;
 }
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.css'],
 })
 export class AddComponent implements OnInit {
   checkedBy: string = ''; // Checked By value
   isloading: boolean = false;
   equipmentTypeControl = new FormControl();
   filteredEquipmentTypes!: Observable<string[]>; // Add ! here
-  
+
   brandControl = new FormControl();
   filteredBrands!: Observable<string[]>;
-  
+
   isFetching: boolean = false;
   imageUrl: string | null = null;
   googleDriveLink: string = '';
-  
+
   userDepartment: any = '';
   userType: any = '';
   equipmenttypes: string[] = [];
-  
+
   location: string[] = [];
-  
+
   locationControl = new FormControl();
   filteredLocation!: Observable<string[]>;
   brands: string[] = [];
   transactiontype: string = '';
   matters: Matter[] = [
-    {value: 'Solid', viewValue: 'Solid'},
-    {value: 'Liquid', viewValue: 'Liquid'},
+    { value: 'Solid', viewValue: 'Solid' },
+    { value: 'Liquid', viewValue: 'Liquid' },
   ];
 
   remarks: Remark[] = [
-    {value: 'Functional', viewValue: 'Functional'},
-    {value: 'Defective', viewValue: 'Defective'},
-    {value: 'Turnover', viewValue: 'Turnover'},
+    { value: 'Functional', viewValue: 'Functional' },
+    { value: 'Defective', viewValue: 'Defective' },
+    { value: 'Turnover', viewValue: 'Turnover' },
   ];
   inventorytypes: InventoryType[] = [
-    {value: 'Inventory', viewValue: 'Inventory'},
-    {value: 'Non-inventory', viewValue: 'Non-inventory'},
+    { value: 'Inventory', viewValue: 'Inventory' },
+    { value: 'Non-inventory', viewValue: 'Non-inventory' },
   ];
-  
+
   addItemForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddComponent>,
-    private authService: AuthService, 
-    private equipmentService: EquipmentService ,
+    private authService: AuthService,
+    private equipmentService: EquipmentService,
     @Inject(MAT_DIALOG_DATA) public data: Item,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
@@ -104,7 +104,6 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     const currentUser = this.authService.getCurrentUser();
     this.userDepartment = currentUser?.department;
     this.checkedBy = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
@@ -114,134 +113,131 @@ export class AddComponent implements OnInit {
     this.loadLocationList();
     this.filteredEquipmentTypes = this.addItemForm.get('equipmentType')!.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterEquipmentTypes(value))
-   );
-   this.filteredBrands = this.addItemForm.get('brand')!.valueChanges.pipe(
+      map((value) => this._filterEquipmentTypes(value))
+    );
+    this.filteredBrands = this.addItemForm.get('brand')!.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterBrands(value))
-   );
-   this.filteredLocation = this.addItemForm.get('location')!.valueChanges.pipe(
+      map((value) => this._filterBrands(value))
+    );
+    this.filteredLocation = this.addItemForm.get('location')!.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterLocation(value))
-   );
+      map((value) => this._filterLocation(value))
+    );
   }
 
   private _filterEquipmentTypes(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.equipmenttypes.filter(option => option.toLowerCase().includes(filterValue));
-   }
-   
-   private _filterBrands(value: string): string[] {
+    return this.equipmenttypes.filter((option) => option.toLowerCase().includes(filterValue));
+  }
+
+  private _filterBrands(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.brands.filter(option => option.toLowerCase().includes(filterValue));
-   }
-   
-   private _filterLocation(value: string): string[] {
+    return this.brands.filter((option) => option.toLowerCase().includes(filterValue));
+  }
+
+  private _filterLocation(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.location.filter(option => option.toLowerCase().includes(filterValue));
-   }
+    return this.location.filter((option) => option.toLowerCase().includes(filterValue));
+  }
   loadImageFromFile(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
-        const file = inputElement.files[0];
-        const reader = new FileReader();
-        reader.onload = (e: any) => {
-            this.imageUrl = e.target.result;
-            
-            console.log('Base64:', this.imageUrl);
-        };
-        reader.readAsDataURL(file);
+      const file = inputElement.files[0];
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imageUrl = e.target.result;
+
+        console.log('Base64:', this.imageUrl);
+      };
+      reader.readAsDataURL(file);
     } else {
-        console.log('No file selected');
+      console.log('No file selected');
     }
   }
   loadImageFromGoogleDrive(event: Event): void {
-
     const inputElement = event.target as HTMLInputElement;
     const googleDriveLink = inputElement.value;
 
     this.googleDriveLink = googleDriveLink;
     const match = this.googleDriveLink.match(/\/(?:file\/d\/|thumbnail\?id=)([\w-]+)(?:\/|$)/);
-    
+
     if (match) {
-        const imageId = match[1];
-        this.imageUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
-        console.log('Image URL:', this.imageUrl);
+      const imageId = match[1];
+      this.imageUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
+      console.log('Image URL:', this.imageUrl);
     } else {
-        this.imageUrl = null;
+      this.imageUrl = null;
     }
   }
 
   searchEquipment(event: any) {
     const searchword = event.target.value;
-    this.equipmentService.searchEquipmentbyName(searchword).subscribe(resp=> {
-      console.log(resp.data)
-    })
+    this.equipmentService.searchEquipmentbyName(searchword).subscribe((resp) => {
+      console.log(resp.data);
+    });
   }
 
   onSubmit(): void {
-    
-    this.isloading = true;
     console.log('Form check valid: ', this.addItemForm.value);
-    
+
     if (this.addItemForm.valid) {
+      this.isloading = true;
       const itemData = this.addItemForm.value;
       if (this.imageUrl) {
         itemData.images = { Url: this.imageUrl };
-      }
-      else{
-        itemData.images = {Url: ''}
+      } else {
+        itemData.images = { Url: '' };
       }
       this.equipmentService.addEquipment(itemData).subscribe(
-        response => {
-          
-          this.isloading = false;
-          console.log('Item created successfully:', response);
-          
-          this.transactiontype = 'add';
-          const itemID = response.data._id;
-          
-          const transaction: Transaction = {
-            transactionType: this.transactiontype,
-            user:  this.checkedBy,
-            role:  this.userType,
-            department: itemData.department,
-            location: this.data.location,
-            revision: [],
-            equipmentId: itemID,
-            timeStamp: new Date(),
-          };
+        (resp) => {
+          if (resp.success) {
+            this.isloading = false;
+            console.log('Item created successfully:', resp);
 
-          console.log('ITEM COOOOOOOOODE', itemID);
-          this.addTransactionItem(transaction);
-          this.dialogRef.close();
+            this.transactiontype = 'add';
+            const itemID = resp.data._id;
+
+            const transaction: Transaction = {
+              transactionType: this.transactiontype,
+              user: this.checkedBy,
+              role: this.userType,
+              department: itemData.department,
+              location: this.data.location,
+              revision: [],
+              equipmentId: itemID,
+              timeStamp: new Date(),
+            };
+
+            console.log('ITEM COOOOOOOOODE', itemID);
+            this.addTransactionItem(transaction);
+            this.dialogRef.close();
+          } else {
+            console.log('error creating equipment', resp)
+          }
         },
-        error => {
+        (error) => {
           console.error('Error creating item:', error);
         }
       );
-      
+
       const equipmentTypeData = { name: itemData.equipmentType };
       this.equipmentService.addEquipmentType(equipmentTypeData).subscribe(
-        response => {
+        (response) => {
           console.log('Equipment type added successfully:', response);
         },
-        error => {
+        (error) => {
           console.error('Error adding equipment type:', error);
         }
       );
-  } else {
-      console.log('Form is not valid');
-  }
-  
+    }
   }
 
-  addTransactionItem(transaction: Transaction): void{
+  addTransactionItem(transaction: Transaction): void {
     this.equipmentService.addTransaction(transaction).subscribe(
-      data => {
+      (data) => {
         console.log('Transaction submitted successfully:', data);
       },
-      error => {
+      (error) => {
         console.error('Error submitting report:', error);
       }
     );
@@ -268,7 +264,7 @@ export class AddComponent implements OnInit {
       }
     );
   }
-  loadLocationList(): void{
+  loadLocationList(): void {
     this.equipmentService.getLocationList().subscribe(
       (response) => {
         this.location = response.data;
