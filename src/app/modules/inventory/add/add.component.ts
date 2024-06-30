@@ -1,14 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Item } from 'src/app/models/Items';
-import { EquipmentService } from 'src/app/services/equipment.service';
-
-import { FormControl } from '@angular/forms';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Item } from 'src/app/models/Items';
 import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
+import { EquipmentService } from 'src/app/services/equipment.service';
+
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 interface Matter {
   value: string;
   viewValue: string;
@@ -82,8 +83,9 @@ export class AddComponent implements OnInit {
   addItemForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddComponent>,
-    private authService: AuthService,
-    private equipmentService: EquipmentService,
+    private authService: AuthService, 
+    private equipmentService: EquipmentService ,
+    private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Item,
     private fb: FormBuilder
   ) {
@@ -202,12 +204,13 @@ export class AddComponent implements OnInit {
               user: this.checkedBy,
               role: this.userType,
               department: itemData.department,
-              location: this.data.location,
+              location: itemData.location,
               revision: [],
               equipmentId: itemID,
               timeStamp: new Date(),
             };
-
+            
+            this.openSnackBar('Item added successfully!', 'Close', false);
             console.log('ITEM COOOOOOOOODE', itemID);
             this.addTransactionItem(transaction);
             this.dialogRef.close();
@@ -216,6 +219,8 @@ export class AddComponent implements OnInit {
           }
         },
         (error) => {
+          
+          this.openSnackBar('Item added failed!', 'Close', true);
           console.error('Error creating item:', error);
         }
       );
@@ -273,5 +278,28 @@ export class AddComponent implements OnInit {
         console.error('Error fetching brand list:', error);
       }
     );
+  }
+
+  openSnackBar(message: string, action: string, isError: boolean = false): void {
+    let config: MatSnackBarConfig = {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    };
+  
+    if (isError) {
+      config.panelClass = ['red-snackbar'];
+    } else {
+      config.panelClass = ['green-snackbar'];
+    }
+  
+    this._snackBar.openFromComponent(SnackbarComponent, {
+    ...config,
+      data: {
+        error: isError,
+        message: message,
+      },
+      duration: 3000,
+    });
   }
 }

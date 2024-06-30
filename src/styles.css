@@ -16,3 +16,23 @@ body {
   text-align: center !important;
 }
 
+.mat-mdc-snack-bar-container {
+  &.green-snackbar {
+      --mdc-snackbar-container-color: rgb(91, 199, 91);
+      --mat-mdc-snack-bar-container: rgb(255, 255, 255);
+      --mdc-snackbar-supporting-text-color: rgb(0, 0, 0);
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+  }
+}
+.mat-mdc-snack-bar-container {
+  &.red-snackbar {
+      --mdc-snackbar-container-color: rgb(199, 91, 91);
+      --mat-mdc-snack-bar-container: rgb(255, 255, 255);
+      --mdc-snackbar-supporting-text-color: rgb(255, 255, 255);
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+  }
+}

@@ -182,3 +182,23 @@ form{
     backdrop-filter: blur(5px);
     z-index: 10;
 }
+::ng-deep .red-snackbar {
+    background-color: #912d2d !important;
+    color: rgb(252, 252, 252) !important; 
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: 100%;
+}
+
+.mat-mdc-snack-bar-container {
+    &.green-snackbar {
+        --mdc-snackbar-container-color: rgb(91, 199, 91);
+        --mat-mdc-snack-bar-container: rgb(255, 255, 255);
+        --mdc-snackbar-supporting-text-color: blue;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+    
+}
