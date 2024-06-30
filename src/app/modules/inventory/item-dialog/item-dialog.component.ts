@@ -1,12 +1,14 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Item } from 'src/app/models/Items';
 import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 @Component({
   selector: 'app-item-dialog',
   templateUrl: './item-dialog.component.html',
@@ -31,7 +33,8 @@ export class ItemDialogComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   isEditingImage = false;
   current_data: any;
-  constructor(public dialogRef: MatDialogRef<ItemDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Item, private equipmentService: EquipmentService, private authService: AuthService) {
+  constructor(public dialogRef: MatDialogRef<ItemDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Item, private equipmentService: EquipmentService, 
+  private _snackBar: MatSnackBar, private authService: AuthService) {
     this.current_data = { ...data };
   }
 
@@ -202,6 +205,8 @@ export class ItemDialogComponent implements OnInit {
             timeStamp: new Date(),
           };
           console.log('ITEM COOOOOOOOODE', transaction);
+          
+          this.openSnackBar('Item Edit successfully!', 'Close', false);
           this.addTransactionItem(transaction);
           this.dialogRef.close();
         } else {
@@ -210,8 +215,32 @@ export class ItemDialogComponent implements OnInit {
         }
       },
       (error) => {
+        
+        this.openSnackBar('Item edit failed!', 'Close', true);
         console.error('Error updating item:', error);
       }
     );
+  }
+  openSnackBar(message: string, action: string, isError: boolean = false): void {
+    let config: MatSnackBarConfig = {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    };
+  
+    if (isError) {
+      config.panelClass = ['red-snackbar'];
+    } else {
+      config.panelClass = ['green-snackbar'];
+    }
+  
+    this._snackBar.openFromComponent(SnackbarComponent, {
+    ...config,
+      data: {
+        error: isError,
+        message: message,
+      },
+      duration: 3000,
+    });
   }
 }
