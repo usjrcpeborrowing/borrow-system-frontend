@@ -19,6 +19,10 @@ const routes: Routes = [
   {
     path: 'reads',
     component: DashboardReedsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['reads'],
+    },
   },
   {
     path: 'faculty',

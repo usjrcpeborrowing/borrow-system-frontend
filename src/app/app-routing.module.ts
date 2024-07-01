@@ -30,7 +30,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic'],
+      roles: ['administrator', 'oic', 'reads'],
     },
   },
   {
