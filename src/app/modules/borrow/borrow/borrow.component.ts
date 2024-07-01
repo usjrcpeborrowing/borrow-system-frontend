@@ -54,10 +54,10 @@ export class BorrowComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,private borrowedItemsService: BorrowedItemsService) {}
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser || !this.isAllowedRole(currentUser.role)) {
-      this.router.navigate(['/']);
-    }
+    // const currentUser = this.authService.getCurrentUser();
+    // if (!currentUser || !this.isAllowedRole(currentUser.role)) {
+    //   this.router.navigate(['/']);
+    // }
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
       console.log('QUEUE LOOK: ', this.equipmentlist)

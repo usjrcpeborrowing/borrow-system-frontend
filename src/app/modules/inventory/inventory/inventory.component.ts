@@ -36,10 +36,10 @@ export class InventoryComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser || !this.isAllowedRole(currentUser.role)) {
-      this.router.navigate(['/']);
-    }
+    // const currentUser = this.authService.getCurrentUser();
+    // if (!currentUser || !this.isAllowedRole(currentUser.role)) {
+    //   this.router.navigate(['/']);
+    // }
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });

@@ -1,4 +1,4 @@
-<ng-container *ngIf="isFaculty(); else regularHeader">
+<!-- <ng-container *ngIf="isFaculty(); else regularHeader">
   <div class="header">
     <app-header></app-header>
   </div>
@@ -7,32 +7,32 @@
   <div class="header">
     <app-student-header></app-student-header>
   </div>
-</ng-template>
+</ng-template> -->
 
-<div class="page-title">   <div
-  class="view-category-container clickable"
-  [class.cart-openside]="openedCategory"
-  (click)="categoryClicked()"
+<div class="page-title">
+  <div
+    class="view-category-container clickable"
+    [class.cart-openside]="openedCategory"
+    (click)="categoryClicked()"
   >
-  <mat-icon>menu</mat-icon>
-  </div> <h1 class="title-page">Browse Items</h1> <div class="hline"></div></div>
-<div class="normal-bar">
+    <mat-icon>menu</mat-icon>
+  </div>
+  <h1 class="title-page">Browse Items</h1>
+  <div class="hline"></div>
 </div>
+<div class="normal-bar"></div>
 <div class="page-container">
   <!-- search filters -->
 
-  <div class="filter-bar">
-    
-  </div>
+  <div class="filter-bar"></div>
   <!-- equipment lists -->
 
   <div class="equipment-container">
-
-    <mat-drawer-container class="example-container" >
+    <mat-drawer-container class="example-container">
       <mat-drawer-content class="item-container">
         <div *ngIf="isFetching" class="loading-overlay">
           <mat-spinner class="loading-spinner"></mat-spinner>
-      </div>
+        </div>
         <div class="no-results" *ngIf="!equipmentlist.length; else elseblock">
           <span>no results available</span>
         </div>
@@ -42,16 +42,13 @@
               class="card"
               *ngFor="let equipment of equipmentlist"
               [equipmentlist]="equipment"
-              
               (addToCart)="addItemToAddedEquipment($event)"
             ></app-borrow-equipment-card>
           </div>
         </ng-template>
       </mat-drawer-content>
 
-
       <mat-drawer mode="side" [opened]="openedCategory" position="start">
-        
         <h1>Search Items</h1>
         <div class="search-filter-wrapper">
           <mat-form-field floatLabel="always">
@@ -63,11 +60,15 @@
               [formControl]="searchedWord"
               (keyup.enter)="searchItem($event)"
             />
-            <mat-icon matSuffix (click)="searchProduct($event)">search</mat-icon>
+            <mat-icon matSuffix (click)="searchProduct($event)"
+              >search</mat-icon
+            >
           </mat-form-field>
         </div>
 
-        <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
+        <app-category
+          (selectedCategories)="onFilterSelect($event)"
+        ></app-category>
       </mat-drawer>
       <mat-drawer mode="side" [opened]="openedCart" position="end">
         <div class="added-equipment-wrapper">
@@ -79,11 +80,12 @@
             (removeFromCart)="removeItemFromAddedEquipment($event)"
           ></app-added-equipment-card>
           <div class="add-button">
-            <button mat-raised-button (click)="borrowItems()">Borrow Items</button>
+            <button mat-raised-button (click)="borrowItems()">
+              Borrow Items
+            </button>
           </div>
         </div>
       </mat-drawer>
-
     </mat-drawer-container>
   </div>
 
@@ -95,3 +97,4 @@
   >
     <mat-icon>inbox</mat-icon>
   </div>
+</div>

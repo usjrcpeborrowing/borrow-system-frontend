@@ -6,34 +6,43 @@ import { DashboardInstructorComponent } from './dashboard-instructor/dashboard-i
 import { DashboardOicComponent } from './dashboard-oic/dashboard-oic.component';
 import { DashboardReedsComponent } from './dashboard-reeds/dashboard-reeds.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from 'src/app/services/auth.guard';
 const routes: Routes = [
   {
     path: 'student',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['student'],
+    },
   },
   {
     path: 'reads',
-    component: DashboardReedsComponent
+    component: DashboardReedsComponent,
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['reads'],
+    },
   },
   {
     path: 'faculty',
-    component: DashboardFacultyComponent
+    component: DashboardFacultyComponent,
   },
   {
     path: 'instructor',
-    component: DashboardInstructorComponent
+    component: DashboardInstructorComponent,
   },
   {
     path: 'oic',
-    component: DashboardOicComponent
+    component: DashboardOicComponent,
   },
   {
     path: 'admin',
-    component: DashboardAdminComponent
-  }
+    component: DashboardAdminComponent,
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}
