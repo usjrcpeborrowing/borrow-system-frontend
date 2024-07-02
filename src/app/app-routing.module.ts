@@ -24,33 +24,53 @@ const routes: Routes = [
   {
     path: 'borrow',
     loadChildren: () => import('./modules/borrow/borrow.module').then((m) => m.BorrowModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator', 'oic', 'reads', 'student'],
+    },
   },
   {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
-    canActivate: [AuthGuard],
-    data: {
-      roles: ['administrator', 'oic', 'reads'],
-    },
+    // canActivate: [AuthGuard],
+    // data: {
+    //   roles: ['administrator', 'oic', 'reads'],
+    // },
   },
   {
     path: 'item-details',
     loadChildren: () => import('./modules/item-details/item-details.module').then((m) => m.ItemDetailsModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator', 'oic', 'reads'],
+    },
     // canActivate: [AuthGuard]
   },
   {
     path: 'history',
     loadChildren: () => import('./modules/history/history.module').then((m) => m.HistoryModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator', 'oic', 'reads','student'],
+    },
   },
 
   {
     path: 'account-manager',
     loadChildren: () => import('./modules/account-manager/account-manager.module').then((m) => m.AccountManagerModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator'],
+    },
   },
 
   {
     path: 'settings',
     loadChildren: () => import('./modules/settings/settings.module').then((m) => m.SettingsModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator'],
+    },
   },
   {
     path: '**',

@@ -1,17 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
+import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 import { Item } from 'src/app/models/Items';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { InventoryReportService } from 'src/app/services/inventory-report.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dialog.component';
-import { InventoryReportService } from 'src/app/services/inventory-report.service';
-import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -61,10 +60,6 @@ export class ItemDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (!currentUser || !this.isAllowedRole(currentUser.role)) {
-      this.router.navigate(['/']);
-    }
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
       this.getInventoryReport()
@@ -83,10 +78,6 @@ export class ItemDetailsComponent implements OnInit {
     return currentUser ? currentUser.role === 'oic' : false;
   }
 
-  private isAllowedRole(role: string): boolean {
-    const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
-    return allowedRoles.includes(role);
-  }
 
   onFilterSelect(event: any) {
     let filter = event.filtername;

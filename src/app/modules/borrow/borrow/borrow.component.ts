@@ -64,11 +64,6 @@ export class BorrowComponent implements OnInit {
     });
   }
 
-  private isAllowedRole(role: string): boolean {
-    const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty', 'Student'];
-    return allowedRoles.includes(role);
-  }
-  
   addToCart(item: Item) {
     this.addedEquipment.push(item);
   }

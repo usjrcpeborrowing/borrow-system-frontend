@@ -18,7 +18,7 @@ body {
 
 .mat-mdc-snack-bar-container {
   &.green-snackbar {
-      --mdc-snackbar-container-color: rgb(91, 199, 91);
+      --mdc-snackbar-container-color: rgb(128, 214, 128);
       --mat-mdc-snack-bar-container: rgb(255, 255, 255);
       --mdc-snackbar-supporting-text-color: rgb(0, 0, 0);
       display: flex !important;
