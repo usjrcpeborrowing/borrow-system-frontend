@@ -167,9 +167,11 @@ form{
     z-index: 10;
 }
 
-.loading-spinner {
+.spinner-wrapper {
     position: relative;
     z-index: 11;
+    display: flex;
+    align-items: center;
 }
 
 .loading-overlay::before {
