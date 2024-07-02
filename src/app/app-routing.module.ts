@@ -32,10 +32,10 @@ const routes: Routes = [
   {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
-    // canActivate: [AuthGuard],
-    // data: {
-    //   roles: ['administrator', 'oic', 'reads'],
-    // },
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator', 'oic', 'reads'],
+    },
   },
   {
     path: 'item-details',
