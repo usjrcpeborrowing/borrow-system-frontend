@@ -151,6 +151,7 @@ form{
 }
 .add-button .mat-mdc-raised-button.mat-unthemed{
     display: flex;
+    top: 85%;
     max-width: 100px;
     margin-left: 5%;
     background-color: rgb(62, 112, 62);
@@ -172,6 +173,7 @@ form{
     z-index: 11;
     display: flex;
     align-items: center;
+    left: 50%;
 }
 
 .loading-overlay::before {
