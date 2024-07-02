@@ -19,6 +19,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { LoginHeaderModule } from '../login-header/login-header.module';
 import { PanelComponent } from './panel/panel.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { PanelComponent } from './panel/panel.component';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
+    MatSnackBarModule
   ]
 })
 export class LoginModule { }
