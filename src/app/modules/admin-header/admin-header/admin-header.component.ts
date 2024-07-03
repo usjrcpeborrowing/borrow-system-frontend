@@ -12,7 +12,10 @@ export class AdminHeaderComponent {
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
-
+    this.currentUser = this.authService.getCurrentUser();
+    // if (!this.currentUser || this.currentUser.role !== 'Admin') {
+    //   this.router.navigate(['/']);
+    // }
   }
   logout(event: Event): void {
     event.preventDefault();
