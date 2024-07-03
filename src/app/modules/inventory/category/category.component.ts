@@ -121,8 +121,8 @@ export class CategoryComponent implements OnInit {
     })
   }
   ngOnInit(): void {
-    this.loadEquipmentTypes();
     this.loadBrandList();
+    this.loadEquipmentTypes();
     this.loadMatterList();
     this.getInventoryTypeList();
     this.getItemStatusList();
@@ -155,12 +155,18 @@ export class CategoryComponent implements OnInit {
 
   loadBrandList(): void {
     this.equipmentService.getBrandList().subscribe(
-      (response) => {
-        this.brands = response.data;
-      },
-      (error) => {
-        console.error('Error fetching brand list:', error);
+      {
+        next: (resp)=> {
+          console.log({resp});
+          this.brands = resp.data;
+        }
       }
+      // (response) => {
+      //   this.brands = response.data;
+      // },
+      // (error) => {
+      //   console.error('Error fetching brand list:', error);
+      // }
     );
   }
 
@@ -178,6 +184,7 @@ export class CategoryComponent implements OnInit {
   getInventoryTypeList(): void {
     this.equipmentService.getInventoryTypeList().subscribe(
       (response) => {
+        console.log('test test')
         this.inventorytypes = response.data;
       },
       (error) => {

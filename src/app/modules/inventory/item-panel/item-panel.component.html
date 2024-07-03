@@ -36,7 +36,7 @@
                 
                 <img
                     class="fit-image"
-                    [src]="item.images.thumbnailUrl"
+                    [src]="item.images.thumbnailUrl ? item.images.thumbnailUrl : defaultImage"
                     alt=""
                     />
                 </div>

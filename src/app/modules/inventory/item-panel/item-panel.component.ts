@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/models/Items';
 import { AuthService } from 'src/app/services/auth.service';
 import { ItemDialogComponent } from '../item-dialog/item-dialog.component';
+
 @Component({
   selector: 'app-item-panel',
   templateUrl: './item-panel.component.html',
@@ -11,6 +12,8 @@ import { ItemDialogComponent } from '../item-dialog/item-dialog.component';
 export class ItemPanelComponent implements OnInit{
   @Input() item: Item = {} as Item | any;
   panelOpenState = false;
+  defaultImage = './../../../../assets//equipment_default_image.png';
+
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,

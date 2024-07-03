@@ -155,6 +155,7 @@ export class ItemsComponent implements OnInit, OnChanges {
   }
 
   download() {
+    console.log('donwload')
     var currentDate = new Date();
     // var departmentReportType = localStorage.getItem('department'); // replace with the actual department report type
     var user = localStorage.getItem('currentuser');

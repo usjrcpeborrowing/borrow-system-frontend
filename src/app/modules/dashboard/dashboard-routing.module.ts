@@ -27,15 +27,19 @@ const routes: Routes = [
   {
     path: 'faculty',
     component: DashboardFacultyComponent,
-  },
-  {
-    path: 'instructor',
-    component: DashboardInstructorComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['instructor'],
+      roles: ['faculty'],
     },
   },
+  // {
+  //   path: 'instructor',
+  //   component: DashboardInstructorComponent,
+  //   canActivate: [AuthGuard],
+  //   data: {
+  //     roles: ['instructor'],
+  //   },
+  // },
   {
     path: 'oic',
     component: DashboardOicComponent,
@@ -49,7 +53,7 @@ const routes: Routes = [
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['admin'],
+      roles: ['administrator'],
     },
   },
 ];
