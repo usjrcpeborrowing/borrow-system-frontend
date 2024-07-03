@@ -33,7 +33,7 @@ const routes: Routes = [
     component: DashboardInstructorComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['instructor'],
+      roles: ['faculty'],
     },
   },
   {
@@ -49,7 +49,7 @@ const routes: Routes = [
     component: DashboardAdminComponent,
     canActivate: [AuthGuard],
     data: {
-      roles: ['admin'],
+      roles: ['administrator'],
     },
   },
 ];

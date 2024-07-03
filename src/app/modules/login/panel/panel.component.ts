@@ -24,6 +24,8 @@ export class PanelComponent {
         if (resp.success) {
           localStorage.setItem('token', resp?.token);
           localStorage.setItem('roles', JSON.stringify(resp?.data?.role));
+          localStorage.setItem('firstName', JSON.stringify(resp?.data?.firstName));
+          localStorage.setItem('lastName', JSON.stringify(resp?.data?.lastName));
           this.authService.navigateToDashboard(resp?.data?.role[0]);
         } else {
           let config: MatSnackBarConfig = {

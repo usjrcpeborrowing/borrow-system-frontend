@@ -50,14 +50,14 @@ export class BorrowComponent implements OnInit {
     dateAcquired: '',
     location: '',
   };
+  currentUserRole: any;
   constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private authService: AuthService, private router: Router, 
     private changeDetector: ChangeDetectorRef,private borrowedItemsService: BorrowedItemsService) {}
 
   ngOnInit(): void {
-    // const currentUser = this.authService.getCurrentUser();
-    // if (!currentUser || !this.isAllowedRole(currentUser.role)) {
-    //   this.router.navigate(['/']);
-    // }
+    const rolesString = localStorage.getItem('roles');
+    const rolesArray = rolesString ? JSON.parse(rolesString) : [];
+    this.currentUserRole = rolesArray.join(', ');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
       console.log('QUEUE LOOK: ', this.equipmentlist)
@@ -69,7 +69,7 @@ export class BorrowComponent implements OnInit {
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'Instructor' : false;
+    return currentUser ? currentUser.role === 'faculty' : false;
   }
   searchProduct(event: any) {
     console.log(event);

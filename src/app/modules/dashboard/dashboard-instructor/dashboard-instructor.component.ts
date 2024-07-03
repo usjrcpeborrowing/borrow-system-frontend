@@ -13,9 +13,9 @@ export class DashboardInstructorComponent implements OnInit{
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser || this.currentUser.role !== 'Instructor') {
-      this.router.navigate(['/']);
-    }
+    // if (!this.currentUser || this.currentUser.role !== 'Instructor') {
+    //   this.router.navigate(['/']);
+    // }
   }
   directToInventory(): void {
     this.router.navigate(['/borrow']);

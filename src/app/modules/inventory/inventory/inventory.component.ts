@@ -31,30 +31,26 @@ export class InventoryComponent implements OnInit{
   equipmentlist: any[] = [];
   isFetching: boolean = false;
   sortUsed: 'asc' | 'desc' = 'asc';
-  
+  currentUserRole: any;
   isloading: boolean = false;
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
 
   ngOnInit(): void {
-    // const currentUser = this.authService.getCurrentUser();
-    // if (!currentUser || !this.isAllowedRole(currentUser.role)) {
-    //   this.router.navigate(['/']);
-    // }
+    const rolesString = localStorage.getItem('roles');
+    const rolesArray = rolesString ? JSON.parse(rolesString) : [];
+    this.currentUserRole = rolesArray.join(', ');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
   }
   isAdmin(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'admin' : false;
+    return this.currentUserRole.includes("administrator");
   }
   isReads(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'reads' : false;
+    return this.currentUserRole.includes("reads");
   }
   isOic(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'oic' : false;
+    return this.currentUserRole.includes("oic");
   }
   
   onFilterSelect(event: any) {
