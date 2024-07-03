@@ -42,7 +42,7 @@ export class AuthService {
       schoolId: accountId,
       password: password,
     };
-    return this.http.post(environment.API_URL + '/api/inventoryreport', body).pipe(catchError(this.handleError));
+    return this.http.post(environment.API_URL + '/api/login', body).pipe(catchError(this.handleError));
   }
 
   private fetchUserType(userId: string): Observable<string> {
@@ -62,8 +62,8 @@ export class AuthService {
     );
   }
 
-  private navigateToDashboard(role: string): void {
-    switch (role) {
+  navigateToDashboard(role: string): void {
+    switch (role.toLowerCase()) {
       case 'student':
         this.router.navigate(['/dashboard/student']);
         break;
@@ -77,6 +77,7 @@ export class AuthService {
         this.router.navigate(['/dashboard/oic']);
         break;
       case 'admin':
+      case 'administrator':
         this.router.navigate(['/dashboard/admin']);
         break;
       default:

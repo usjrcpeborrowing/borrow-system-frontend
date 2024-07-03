@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
@@ -15,7 +15,7 @@ import { ReportsComponent } from '../reports/reports.component';
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css'],
 })
-export class ItemsComponent implements OnInit {
+export class ItemsComponent implements OnInit, OnChanges {
   @Input() pagination: Pagination;
   @Input() filter: any;
   @Input() equipmentlist: any;
@@ -40,6 +40,9 @@ export class ItemsComponent implements OnInit {
       limit: 25,
       pageSizeOption: [5, 10, 25, 50],
     };
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log({equipmentlistlenght: this.equipmentlist?.length})
   }
 
   ngOnInit(): void {
