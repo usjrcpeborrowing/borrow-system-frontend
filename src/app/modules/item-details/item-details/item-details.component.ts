@@ -67,7 +67,7 @@ export class ItemDetailsComponent implements OnInit {
   }
   isAdmin(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'Admin' : false;
+    return currentUser ? currentUser.role === 'admin' : false;
   }
   isReads(): boolean {
     const currentUser = this.authService.getCurrentUser();

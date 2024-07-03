@@ -12,10 +12,10 @@ export class HeaderOicComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser || this.currentUser.role !== 'oic') {
-      this.router.navigate(['/']);
-    }
+    // this.currentUser = this.authService.getCurrentUser();
+    // if (!this.currentUser || this.currentUser.role !== 'oic') {
+    //   this.router.navigate(['/']);
+    // }
   }
   logout(event: Event): void {
     event.preventDefault();

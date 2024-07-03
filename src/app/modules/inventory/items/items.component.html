@@ -24,11 +24,10 @@
     <div class="header-quantity">Quantity</div>
   </div>
   <div class="table-content">
-    <div class="spinner-wrapper" *ngIf="equipmentlist.length; else display">
+    <div class="spinner-wrapper" *ngIf="!equipmentlist.length; else display">
       <mat-spinner></mat-spinner>
     </div>
     <ng-template #display>
-      
   <ng-container *ngIf="equipmentlist.length > 0; else noResults">
       <table mat-table [dataSource]="equipmentlist" class="mat-elevation-z8">
         <ng-container matColumnDef="itemPanel">

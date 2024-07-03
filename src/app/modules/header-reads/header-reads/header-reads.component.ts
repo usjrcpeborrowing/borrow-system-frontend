@@ -13,10 +13,10 @@ export class HeaderReadsComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
-    if (!this.currentUser || this.currentUser.role !== 'reads') {
-      this.router.navigate(['/']);
-    }
+    // this.currentUser = this.authService.getCurrentUser();
+    // if (!this.currentUser || this.currentUser.role !== 'reads') {
+    //   this.router.navigate(['/']);
+    // }
   }
   logout(event: Event): void {
     event.preventDefault();

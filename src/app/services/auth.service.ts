@@ -64,19 +64,19 @@ export class AuthService {
 
   private navigateToDashboard(role: string): void {
     switch (role) {
-      case 'Student':
+      case 'student':
         this.router.navigate(['/dashboard/student']);
         break;
       case 'reads':
         this.router.navigate(['/dashboard/reads']);
         break;
-      case 'Instructor':
+      case 'instructor':
         this.router.navigate(['/dashboard/instructor']);
         break;
       case 'oic':
         this.router.navigate(['/dashboard/oic']);
         break;
-      case 'Admin':
+      case 'admin':
         this.router.navigate(['/dashboard/admin']);
         break;
       default:
