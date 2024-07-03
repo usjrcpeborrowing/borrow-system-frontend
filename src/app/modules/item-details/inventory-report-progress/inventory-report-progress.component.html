@@ -57,14 +57,20 @@
             />
           </mat-form-field>
         </div>
-        <button mat-fab extended>
-          <mat-icon>check</mat-icon>
-          Approve
-        </button>
-        <button mat-fab extended>
-          <mat-icon>wrong</mat-icon>
-          Reject
-        </button>
+        <div class="decide-buttons">
+          <div class="approve-button">
+            <button mat-fab extended>
+              <mat-icon>check</mat-icon>
+              Approve
+            </button>
+          </div>
+          <div class="reject-button">
+            <button mat-fab extended>
+              <mat-icon>error</mat-icon>
+              Reject
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </mat-step>
