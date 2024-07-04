@@ -1,7 +1,7 @@
 
 .inventory-detail-wrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 10px;
 }
 
@@ -19,24 +19,25 @@
 }
 
 
-.second-content{
+.second-content {
   position: relative;
-  width: 50%;
+  width: 100%;
+  flex-wrap: wrap;
 }
 .form-container{
   position: relative;
   margin: 2%;
-  width: 45%;
+  width: 75%;
 }
 .formName{
-    display: flex;
     justify-content: flex-end;
-    width: 100%;
-    margin-bottom: -31px;
+    width: 80%;
+    margin-bottom: -50px;
 }
 .decide-buttons{
   display: flex;
-  margin-top: 7%;
+  
+  margin-top: 5%;
 }
 .approve-button
 .mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {

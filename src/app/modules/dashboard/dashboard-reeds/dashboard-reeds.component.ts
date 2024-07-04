@@ -20,6 +20,9 @@ export class DashboardReedsComponent implements OnInit{
   directToHistory(): void {
     this.router.navigate(['/history/reads']);
   }
+  directToItemDetails(): void {
+    this.router.navigate(['/item-details']);
+  }
   directToPeriodicInventory(): void {
     this.router.navigate(['/history/reads']);
   }
