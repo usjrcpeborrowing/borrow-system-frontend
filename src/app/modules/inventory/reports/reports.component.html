@@ -1,53 +1,75 @@
 <div class="dialog-detail">
-  <h2 mat-dialog-title>Item Details</h2>
-  <div mat-dialog-content>
-    <div class="item-details-container">
-      <div class="spinner-wrapper" *ngIf="isloading; else display">
-        <mat-spinner></mat-spinner>
-      </div>
-      <ng-template #display>
-        <div class="second-content">
+  <h2 mat-dialog-title>Issue Inventory Report</h2>
+  <form [formGroup]="inventoryReportForm" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content>
+      <div class="item-details-container">
+        <div class="spinner-wrapper" *ngIf="isloading; else display">
+          <mat-spinner></mat-spinner>
+        </div>
+        <ng-template #display>
+          <div class="second-content">
             <div class="form-container">
-                <mat-form-field floatLabel="always" class="formName">
-                <mat-label>Issued By:</mat-label>
-                <input matInput [(ngModel)]="inventoryReport.issuer" readonly />
-                </mat-form-field>
-                <mat-form-field class="formName">
+              <mat-form-field floatLabel="always" class="formName">
+                <mat-label>Department:</mat-label>
+                <input
+                  matInput
+                  formControlName="department"
+                  readonly
+                />
+              </mat-form-field>
+              
+              <div class="year-form">
+              <mat-form-field class="formName">
                 <mat-label>School Year</mat-label>
                 <mat-select
-                    (selectionChange)="selectRange($event)"
-                    [(ngModel)]="inventoryReport.schoolYear"
+                  (selectionChange)="selectRange($event)"
+                  formControlName="schoolYear"
                 >
-                    <mat-option *ngFor="let range of schoolYears" [value]="range">{{
-                    range
-                    }}</mat-option>
+                  <mat-option
+                    *ngFor="let range of schoolYears"
+                    [value]="range"
+                    >{{ range }}</mat-option
+                  >
                 </mat-select>
-                </mat-form-field>
-                <mat-form-field class="formName">
+              </mat-form-field>
+              <mat-form-field class="formName">
                 <mat-label>Semester</mat-label>
-                <mat-select [(ngModel)]="inventoryReport.semester">
-                    <mat-option *ngFor="let sem of semester" [value]="sem">{{
+                <mat-select formControlName="semester">
+                  <mat-option *ngFor="let sem of semester" [value]="sem">{{
                     sem
-                    }}</mat-option>
+                  }}</mat-option>
                 </mat-select>
-                </mat-form-field>
+              </mat-form-field>
             </div>
-        </div>
-      </ng-template>
+              <mat-form-field floatLabel="always" class="formName">
+                <mat-label>Issued By:</mat-label>
+                <input matInput formControlName="issuer" readonly />
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-template>
+      </div>
     </div>
-  </div>
-  <div>
-    <button
-      mat-raised-button
-      (click)="issueInventoryReport()"
-      [disabled]="isloading"
-    >
-      Issue
-    </button>
-  </div>
-  <div class="close-button">
-    <button mat-raised-button (click)="dialogRef.close()" [disabled]="isloading">
-      Close
-    </button>
-  </div>
+    <div class="action-wrapper">
+      <div 
+      class="submit-button">
+      <button
+      
+        mat-raised-button
+        [disabled]="isloading"
+        type="submit"
+      >
+        Issue
+      </button>
+    </div>
+      <button
+        class="close-button"
+        mat-raised-button
+        (click)="dialogRef.close()"
+        [disabled]="isloading"
+      >
+        Close
+      </button>
+    </div>
+  </form>
 </div>

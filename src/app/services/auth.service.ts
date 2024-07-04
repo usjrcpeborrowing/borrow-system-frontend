@@ -9,11 +9,9 @@ import { environment } from 'src/environments/environment';
 interface User {
   userId: string;
   password: string;
-  name: {
-    firstName: string;
-    lastName: string;
-  };
-  department: string;
+  firstName: string;
+  lastName: string;
+  department: string[];
   role: string;
   token: string;
 }

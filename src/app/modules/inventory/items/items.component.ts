@@ -128,7 +128,7 @@ export class ItemsComponent implements OnInit, OnChanges {
   }
   reportItems() {
     this.dialog.open(ReportsComponent, {
-      height: '67vh',
+      height: '62vh',
       width: '40vw',
     });
   }

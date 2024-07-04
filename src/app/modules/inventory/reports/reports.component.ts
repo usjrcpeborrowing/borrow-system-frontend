@@ -4,6 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 import { InventoryReportService } from 'src/app/services/inventory-report.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
@@ -17,24 +18,30 @@ export class ReportsComponent implements OnInit {
   isloading: boolean = false;
   schoolYears: string[] = [];
   semester: string[] = ['1st', '2nd', 'summer'];
+  user = JSON.parse(localStorage.getItem('user') as string);
   inventoryReport: InventoryReportInterface = {
+    _id: '',
     schoolYear: '',
     semester: '',
     issuer: '',
     approval: [],
-    department: localStorage.getItem('currentUser.department') as string,
+    department: '',
   };
-  constructor(public dialogRef: MatDialogRef<ReportsComponent>, private inventoryReportService: InventoryReportService, private _snackBar: MatSnackBar) {}
+  inventoryReportForm: FormGroup;
+  constructor(public dialogRef: MatDialogRef<ReportsComponent>, private inventoryReportService: InventoryReportService, private _snackBar: MatSnackBar, private fb: FormBuilder) {
+    this.inventoryReportForm = this.fb.group({
+      schoolYear: ['', Validators.required],
+      semester: ['', Validators.required],
+      issuer: [`${this.user.firstName} ${this.user.lastName}`, Validators.required],
+      issuedBy: [this.user._id, Validators.required],
+      department: [this.user.department.shift(), Validators.required],
+    });
+  }
 
   ngOnInit(): void {
-    const currentUserJson = localStorage.getItem('currentUser');
-    if (currentUserJson) {
-      const currentUser = JSON.parse(currentUserJson);
-      const firstName = currentUser.name.firstName;
-      const lastName = currentUser.name.lastName;
-
-      this.inventoryReport.issuer = `${firstName} ${lastName}`;
-    }
+    // let user = JSON.parse(localStorage.getItem('user') as string);
+    // this.inventoryReport.issuer = user.firstName + ' ' + user.lastName;
+    // this.inventoryReport.department = user.department;
     this.generateYearRanges(2024, 5);
   }
 
@@ -51,25 +58,33 @@ export class ReportsComponent implements OnInit {
 
   selectRange(event: MatSelectChange) {}
 
-  issueInventoryReport() {
-    this.isloading = true;
-    this.inventoryReportService.createInventoryReport(this.inventoryReport).subscribe((resp: any) => {
-      if (resp.success) {
-        this.openSnackBar(resp.message);
-      } else {
-        this.openSnackBar(resp.message);
-      }
-      this.isloading = false;
-    });
+  onSubmit() {
+    if (this.inventoryReportForm.valid) {
+      this.isloading = true;
+      this.inventoryReportService.createInventoryReport(this.inventoryReportForm.value).subscribe({
+        next: (resp: any) => {
+          console.log(resp);
+          this.openSnackBar(resp.message);
+        },
+        error: (err: any) => {
+          console.log(err);
+          this.openSnackBar('Error');
+        },
+        complete: () => {
+          this.isloading = false;
+          this.dialogRef.close();
+        },
+      });
+    }
   }
 
   openSnackBar(message: string) {
     this._snackBar.openFromComponent(SnackbarComponent, {
       data: {
         error: true,
-        message: 'Success',
+        message: message,
       },
-      duration: 2000,
+      duration: 4000,
     });
   }
 }

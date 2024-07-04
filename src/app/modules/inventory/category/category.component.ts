@@ -291,6 +291,7 @@ export class CategoryComponent implements OnInit {
       queryParams['location'] = '';
       queryParams['status'] = '';
       queryParams['sort'] = '';
+      queryParams['search'] = '';
       this.router.navigate([], {
         relativeTo: this.activatedRoute,
         queryParams,

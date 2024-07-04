@@ -1,4 +1,5 @@
 export interface InventoryReportInterface {
+  _id: string;
   schoolYear: string;
   semester: string;
   department: string;

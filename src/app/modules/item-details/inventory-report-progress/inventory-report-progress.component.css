@@ -25,15 +25,20 @@
   background-color: rgb(62, 112, 62);
 }
 
-.approve.mat-mdc-fab,
-.approve.mat-mdc-mini-fab {
+::ng-deep .mat-step-icon.mat-step-icon-state-reject {
+  background-color: rgb(170, 40, 35);
+
+}
+
+.approve.mat-mdc-fab:not(:disabled),
+.approve.mat-mdc-mini-fab:not(:disabled) {
   --mdc-fab-container-color: rgb(62, 112, 62);
   --mdc-fab-icon-color: #fff;
   --mat-mdc-fab-color: #fff;
 }
 
-.reject.mat-mdc-fab,
-.reject.mat-mdc-mini-fab {
+.reject.mat-mdc-fab:not(:disabled),
+.reject.mat-mdc-mini-fab:not(:disabled) {
   --mdc-fab-container-color:rgb(172, 111, 111);
   --mdc-fab-icon-color: #fff;
   --mat-mdc-fab-color: #fff;
