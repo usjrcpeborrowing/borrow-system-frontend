@@ -1,5 +1,5 @@
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,64 +16,52 @@ import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation
   ],
 })
 export class InventoryReportProgressComponent implements OnChanges {
+  @Output() updateInventoryEvent: EventEmitter<any> = new EventEmitter();
   @Input() inventoryReport: any;
   issuedBy: string = '';
-  
-  constructor(private dialog: MatDialog,
-    private snackBar: MatSnackBar) {
-  }
-  user = JSON.parse(localStorage.getItem('user') as string)
+
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
+  user = JSON.parse(localStorage.getItem('user') as string);
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.inventoryReport)
+    console.log(this.inventoryReport);
     this.issuedBy = this.inventoryReport?.issuedBy['firstName'] + ' ' + this.inventoryReport?.issuedBy['lastName'];
   }
 
-  confirmDialog() {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-      data:{
+  confirmDialog(role: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
         message: 'Are you sure want to approve this report?',
         buttonText: {
           ok: 'Approve',
-          cancel: 'Cancel'
-        }
-      }
+          cancel: 'Cancel',
+        },
+      },
     });
-    
 
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
-        const a = document.createElement('a');
-        a.click();
-        a.remove();
-        this.snackBar.open('Report Confirmed', '', {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
+        this.updateInventoryEvent.emit({ status: 'approve', role: role });
       }
     });
   }
-  rejectDialog() {
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-      data:{
+  rejectDialog(role: string) {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: {
         message: 'Are you sure want to reject this report?',
         buttonText: {
           ok: 'Reject',
-          cancel: 'Cancel'
-        }
+          cancel: 'Cancel',
+        },
+      },
+    });
+    dialogRef.afterClosed().subscribe((reject: boolean) => {
+      if (reject) {
+        this.updateInventoryEvent.emit({ status: 'reject', role: role });
       }
     });
-    dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        const a = document.createElement('a');
-        a.click();
-        a.remove();
-        this.snackBar.open('Report Confirmed', '', {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'center',
-        });
-      }
-    });
+  }
+
+  getMatStepperState(status: string): string {
+    return status == 'pending' ? 'pending' : status == 'reject' ? 'reject' : 'done';
   }
 }

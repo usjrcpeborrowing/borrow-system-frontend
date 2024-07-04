@@ -83,8 +83,8 @@ export class AddComponent implements OnInit {
   addItemForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddComponent>,
-    private authService: AuthService, 
-    private equipmentService: EquipmentService ,
+    private authService: AuthService,
+    private equipmentService: EquipmentService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Item,
     private fb: FormBuilder
@@ -107,8 +107,8 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
-    this.userDepartment = currentUser?.department;
-    this.checkedBy = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    this.userDepartment = currentUser?.department.shift();
+    this.checkedBy = `${currentUser?.firstName} ${currentUser?.lastName}`;
     this.userType = currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
@@ -184,14 +184,49 @@ export class AddComponent implements OnInit {
 
     if (this.addItemForm.valid) {
       this.isloading = true;
+
       const itemData = this.addItemForm.value;
       if (this.imageUrl) {
         itemData.images = { Url: this.imageUrl };
       } else {
         itemData.images = { Url: '' };
       }
-      this.equipmentService.addEquipment(itemData).subscribe(
-        (resp) => {
+      // this.equipmentService.addEquipment(itemData).subscribe(
+      //   (resp) => {
+      //     if (resp.success) {
+      //       this.isloading = false;
+      //       console.log('Item created successfully:', resp);
+
+      //       this.transactiontype = 'add';
+      //       const itemID = resp.data._id;
+
+      //       const transaction: Transaction = {
+      //         transactionType: this.transactiontype,
+      //         user: this.checkedBy,
+      //         role: this.userType,
+      //         department: itemData.department,
+      //         location: itemData.location,
+      //         revision: [],
+      //         equipmentId: itemID,
+      //         timeStamp: new Date(),
+      //       };
+
+      //       this.openSnackBar('Item added successfully!', 'Close', false);
+      //       console.log('ITEM COOOOOOOOODE', itemID);
+      //       this.addTransactionItem(transaction);
+      //       this.dialogRef.close();
+      //     } else {
+      //       console.log('error creating equipment', resp);
+      //     }
+      //   },
+      //   (error) => {
+      //     this.openSnackBar('Item added failed!', 'Close', true);
+      //     console.error('Error creating item:', error);
+      //   }
+      // );
+
+      this.equipmentService.addEquipment(itemData).subscribe({
+        next: (resp) => {
           if (resp.success) {
             this.isloading = false;
             console.log('Item created successfully:', resp);
@@ -209,21 +244,22 @@ export class AddComponent implements OnInit {
               equipmentId: itemID,
               timeStamp: new Date(),
             };
-            
+
             this.openSnackBar('Item added successfully!', 'Close', false);
             console.log('ITEM COOOOOOOOODE', itemID);
             this.addTransactionItem(transaction);
             this.dialogRef.close();
           } else {
-            console.log('error creating equipment', resp)
+            this.openSnackBar(resp.message, 'Close', true);
           }
         },
-        (error) => {
-          
-          this.openSnackBar('Item added failed!', 'Close', true);
-          console.error('Error creating item:', error);
+        error: (err: any) => {
+          this.openSnackBar(err.message, 'Close', true);
+        },
+        complete: ()=> {
+          this.isloading = false;
         }
-      );
+      });
 
       const equipmentTypeData = { name: itemData.equipmentType };
       this.equipmentService.addEquipmentType(equipmentTypeData).subscribe(
@@ -286,15 +322,15 @@ export class AddComponent implements OnInit {
       verticalPosition: 'top',
       horizontalPosition: 'center',
     };
-  
+
     if (isError) {
       config.panelClass = ['red-snackbar'];
     } else {
       config.panelClass = ['green-snackbar'];
     }
-  
+
     this._snackBar.openFromComponent(SnackbarComponent, {
-    ...config,
+      ...config,
       data: {
         error: isError,
         message: message,

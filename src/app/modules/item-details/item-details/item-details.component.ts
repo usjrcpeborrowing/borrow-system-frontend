@@ -11,6 +11,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { InventoryReportService } from 'src/app/services/inventory-report.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -42,6 +43,7 @@ export class ItemDetailsComponent implements OnInit {
   isloading: boolean = false;
   transactionlist = [];
   inventoryReport: InventoryReportInterface = {
+    _id: '',
     schoolYear: '',
     semester: '',
     department: '',
@@ -56,7 +58,8 @@ export class ItemDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private equipmentService: EquipmentService,
     private transactionService: TransactionService,
-    private inventoryReportService: InventoryReportService
+    private inventoryReportService: InventoryReportService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -65,19 +68,18 @@ export class ItemDetailsComponent implements OnInit {
     this.currentUserRole = rolesArray.join(', ');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
-      this.getInventoryReport()
+      this.getInventoryReport();
     });
   }
   isAdmin(): boolean {
-    return this.currentUserRole.includes("administrator");
+    return this.currentUserRole.includes('administrator');
   }
   isReads(): boolean {
-    return this.currentUserRole.includes("reads");
+    return this.currentUserRole.includes('reads');
   }
   isOic(): boolean {
-    return this.currentUserRole.includes("oic");
+    return this.currentUserRole.includes('oic');
   }
-
 
   onFilterSelect(event: any) {
     let filter = event.filtername;
@@ -94,6 +96,31 @@ export class ItemDetailsComponent implements OnInit {
   getInventoryReport() {
     this.inventoryReportService.getInventoryReport().subscribe((resp: any) => {
       this.inventoryReport = resp.data;
+    });
+  }
+
+  updateInventoryReport(event: any) {
+    this.inventoryReportService.updateInventoryReport(this.inventoryReport._id, event.role, event.status).subscribe({
+      next: (resp: any) => {
+        this.snackBar.open(resp.message, '', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
+      },
+      error: (err: any) => {
+        this.snackBar.open(err.message, '', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'center',
+        });
+      },
+      complete: () => {
+        const currentUrl = this.router.url;
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate([currentUrl]);
+        });
+      },
     });
   }
 
@@ -124,7 +151,7 @@ export class ItemDetailsComponent implements OnInit {
       const found: any = this.transactionlist.find((transaction: any) => transaction._id == eqpmnt._id);
       let revision = [];
       if (found) {
-        console.log({revision_data: found.data})
+        console.log({ revision_data: found.data });
         revision = found.data
           .map((transaction: any) =>
             transaction.revision.map((rev: any) => {

@@ -83,3 +83,10 @@
     width: 100%;
     margin-bottom: -20px;
 }
+
+.action-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}

@@ -40,7 +40,7 @@ export class ItemDialogComponent implements OnInit {
 
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
-    this.checkedBy = `${currentUser?.name.firstName} ${currentUser?.name.lastName}`;
+    this.checkedBy = `${currentUser?.firstName} ${currentUser?.lastName}`;
     this.userType = currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
