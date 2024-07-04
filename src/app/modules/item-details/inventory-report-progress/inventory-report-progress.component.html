@@ -58,6 +58,7 @@
         mat-fab
         extended
         [disabled]="appr.status != 'pending'"
+        (click)="confirmDialog()"
       >
         <mat-icon>check</mat-icon>
         Approve
@@ -68,6 +69,7 @@
         mat-fab
         extended
         [disabled]="appr.status != 'pending'"
+        (click)="rejectDialog()"
       >
         <mat-icon>error</mat-icon>
         Reject

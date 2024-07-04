@@ -32,11 +32,13 @@ import { MaterialModule } from '../material.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
 import { ItemDetailDialogComponent } from './item-detail-dialog/item-detail-dialog.component';
 import { InventoryReportProgressComponent } from './inventory-report-progress/inventory-report-progress.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 @NgModule({
   declarations: [
     ItemDetailsComponent,
     ItemDetailDialogComponent,
-    InventoryReportProgressComponent
+    InventoryReportProgressComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
