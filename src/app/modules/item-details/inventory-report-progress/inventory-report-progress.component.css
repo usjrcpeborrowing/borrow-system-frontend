@@ -1,3 +1,4 @@
+
 .inventory-detail-wrapper {
   display: flex;
   flex-direction: column;
@@ -25,11 +26,27 @@
 .form-container{
   position: relative;
   margin: 2%;
-  width: 60%;
+  width: 45%;
 }
 .formName{
     display: flex;
     justify-content: flex-end;
     width: 100%;
     margin-bottom: -31px;
+}
+.decide-buttons{
+  display: flex;
+  margin-top: 7%;
+}
+.approve-button
+.mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
+  --mdc-fab-container-color:rgb(62, 112, 62);
+  --mdc-fab-icon-color: #fff;
+  --mat-mdc-fab-color: #fff;
+}
+.reject-button
+.mat-mdc-fab.mat-accent, .mat-mdc-mini-fab.mat-accent {
+  --mdc-fab-container-color:rgb(172, 111, 111);
+  --mdc-fab-icon-color: #fff;
+  --mat-mdc-fab-color: #fff;
 }

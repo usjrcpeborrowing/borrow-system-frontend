@@ -94,12 +94,11 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
   logout(): void {
-    localStorage.removeItem('currentUser');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
 
   isLoggedIn(): boolean {
-    // return localStorage.getItem('currentUser') !== null;
     return localStorage.getItem('token') !== null;
   }
 

@@ -8,11 +8,15 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class AdminHeaderComponent {
   currentUser: any;
-
+  firstName: any;
+  lastName: any;
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
+    
+    this.firstName = localStorage.getItem('firstName');
+    this.lastName = localStorage.getItem('lastName');
     // if (!this.currentUser || this.currentUser.role !== 'Admin') {
     //   this.router.navigate(['/']);
     // }

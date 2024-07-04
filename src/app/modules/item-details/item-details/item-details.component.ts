@@ -47,7 +47,7 @@ export class ItemDetailsComponent implements OnInit {
     department: '',
     approval: [],
   };
-
+  currentUserRole: any;
   sortUsed: 'asc' | 'desc' = 'asc';
   constructor(
     public dialog: MatDialog,
@@ -60,22 +60,22 @@ export class ItemDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const rolesString = localStorage.getItem('roles');
+    const rolesArray = rolesString ? JSON.parse(rolesString) : [];
+    this.currentUserRole = rolesArray.join(', ');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
       this.getInventoryReport()
     });
   }
   isAdmin(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'admin' : false;
+    return this.currentUserRole.includes("administrator");
   }
   isReads(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'reads' : false;
+    return this.currentUserRole.includes("reads");
   }
   isOic(): boolean {
-    const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'oic' : false;
+    return this.currentUserRole.includes("oic");
   }
 
 

@@ -26,7 +26,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/borrow/borrow.module').then((m) => m.BorrowModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic', 'reads', 'student'],
+      roles: ['administrator', 'oic', 'reads', 'student', 'faculty'],
     },
   },
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic', 'reads'],
+      roles: ['administrator', 'oic', 'reads', 'faculty'],
     },
   },
   {
@@ -42,7 +42,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/item-details/item-details.module').then((m) => m.ItemDetailsModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic', 'reads'],
+      roles: ['administrator', 'oic', 'reads', 'faculty'],
     },
     // canActivate: [AuthGuard]
   },
@@ -51,7 +51,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/history/history.module').then((m) => m.HistoryModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic', 'reads','student'],
+      roles: ['administrator', 'oic', 'reads','student', 'faculty'],
     },
   },
 
