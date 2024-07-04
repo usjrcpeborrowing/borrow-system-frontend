@@ -13,7 +13,7 @@ export class HeaderReadsComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
-    // this.currentUser = this.authService.getCurrentUser();
+    this.currentUser = this.authService.getCurrentUser();
     // if (!this.currentUser || this.currentUser.role !== 'reads') {
     //   this.router.navigate(['/']);
     // }
@@ -25,12 +25,8 @@ export class HeaderReadsComponent implements OnInit{
   dashboard(event: Event): void {
     
     event.preventDefault();
-    const userRole = this.currentUser.role;
-
-    let dashboardRoute = '/dashboard/default';
-    if (userRole === 'reads') {
-      dashboardRoute = '/dashboard/reads';
-    }
+    let dashboardRoute = '/dashboard/reads';
+    
     this.router.navigate([dashboardRoute]);
   }
   inventory(event: Event): void {

@@ -12,10 +12,7 @@ export class HeaderComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
-    // this.currentUser = this.authService.getCurrentUser();
-    // if (!this.currentUser || this.currentUser.role !== 'Instructor') {
-    //   this.router.navigate(['/']);
-    // }
+    this.currentUser = this.authService.getCurrentUser();
   }
   logout(event: Event): void {
     event.preventDefault();
@@ -24,12 +21,9 @@ export class HeaderComponent implements OnInit{
   dashboard(event: Event): void {
     
     event.preventDefault();
-    const userRole = this.currentUser.role;
 
-    let dashboardRoute = '/dashboard/default';
-    if (userRole === 'Instructor') {
-      dashboardRoute = '/dashboard/instructor';
-    }
+    let dashboardRoute = '/dashboard/instructor';
+    
     this.router.navigate([dashboardRoute]);
   }
   inventory(event: Event): void {

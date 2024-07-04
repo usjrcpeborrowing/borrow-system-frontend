@@ -25,7 +25,7 @@
         </div>
         </mat-menu>
         <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
-            <span>Hello, {{ this.firstName }}</span>
+            <span>Hello, {{ this.currentUser.firstName }}</span>
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="logout($event)">Logout</button>

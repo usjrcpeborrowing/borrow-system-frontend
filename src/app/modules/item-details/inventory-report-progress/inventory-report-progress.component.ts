@@ -39,7 +39,6 @@ export class InventoryReportProgressComponent implements OnChanges {
       }
     });
     
-
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         const a = document.createElement('a');

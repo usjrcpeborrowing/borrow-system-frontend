@@ -12,7 +12,7 @@ export class HeaderOicComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router,) { }
 
   ngOnInit(): void {
-    // this.currentUser = this.authService.getCurrentUser();
+    this.currentUser = this.authService.getCurrentUser();
     // if (!this.currentUser || this.currentUser.role !== 'oic') {
     //   this.router.navigate(['/']);
     // }
@@ -26,10 +26,8 @@ export class HeaderOicComponent implements OnInit{
     event.preventDefault();
     const userRole = this.currentUser.role;
 
-    let dashboardRoute = '/dashboard/default';
-    if (userRole === 'oic') {
-      dashboardRoute = '/dashboard/oic';
-    }
+    let dashboardRoute = '/dashboard/oic';
+    
     this.router.navigate([dashboardRoute]);
   }
   inventory(event: Event): void {

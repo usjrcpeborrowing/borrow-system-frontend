@@ -15,8 +15,6 @@ export class AdminHeaderComponent {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     
-    this.firstName = localStorage.getItem('firstName');
-    this.lastName = localStorage.getItem('lastName');
     // if (!this.currentUser || this.currentUser.role !== 'Admin') {
     //   this.router.navigate(['/']);
     // }

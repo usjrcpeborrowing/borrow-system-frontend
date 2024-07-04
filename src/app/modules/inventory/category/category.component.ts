@@ -279,6 +279,7 @@ export class CategoryComponent implements OnInit {
       end: null
   });
       const queryParams: Params = {};
+      queryParams['search'] = '';
       queryParams['equipmenttype'] = '';
       queryParams['brand'] = '';
       queryParams['mattertype'] = '';
