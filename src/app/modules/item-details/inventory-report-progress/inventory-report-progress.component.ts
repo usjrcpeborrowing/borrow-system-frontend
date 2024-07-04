@@ -16,6 +16,7 @@ import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 export class InventoryReportProgressComponent implements OnChanges {
   @Input() inventoryReport: any;
   issuedBy: string = '';
+  user = JSON.parse(localStorage.getItem('user') as string)
   ngOnChanges(changes: SimpleChanges): void {
     console.log(this.inventoryReport)
     this.issuedBy = this.inventoryReport?.issuedBy['firstName'] + ' ' + this.inventoryReport?.issuedBy['lastName'];

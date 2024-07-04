@@ -1,34 +1,30 @@
 <mat-stepper #stepper *ngIf="inventoryReport">
-  <mat-step label="Issued" [state]="'done'">
-    <div class="second-content">
-      <div class="form-container">
-        <div class="inventory-detail-wrapper">
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Issued By:</mat-label>
-            <input matInput [value]="issuedBy" readonly />
-          </mat-form-field>
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Issued Date:</mat-label>
-            <input
-              matInput
-              [value]="inventoryReport.issuedDate | date : 'mediumDate'"
-              readonly
-            />
-          </mat-form-field>
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>School Year:</mat-label>
-            <input matInput [value]="inventoryReport.schoolYear" readonly />
-          </mat-form-field>
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Semester:</mat-label>
-            <input matInput [value]="inventoryReport.semester" readonly />
-          </mat-form-field>
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Department:</mat-label>
-            <input matInput [value]="inventoryReport.department" readonly />
-          </mat-form-field>
-        </div>
-      </div>
+  <mat-step label="Issued" [state]="'done'" [completed]="true">
+    <div class="inventory-detail-wrapper">
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Issued By:</mat-label>
+        <input matInput [value]="issuedBy" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Department:</mat-label>
+        <input matInput [value]="inventoryReport.department" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>School Year:</mat-label>
+        <input matInput [value]="inventoryReport.schoolYear" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Semester:</mat-label>
+        <input matInput [value]="inventoryReport.semester" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Issued Date:</mat-label>
+        <input
+          matInput
+          [value]="inventoryReport.issuedDate | date : 'mediumDate'"
+          readonly
+        />
+      </mat-form-field>
     </div>
   </mat-step>
   <mat-step
@@ -37,41 +33,45 @@
     [state]="appr['status'] == 'pending' ? 'pending' : 'done'"
     [completed]="false"
   >
-    <div class="second-content">
-      <div class="form-container">
-        <div class="inventory-detail-wrapper">
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Approved By:</mat-label>
-            <input matInput [value]="appr.approveBy.lastName" readonly />
-          </mat-form-field>
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Role:</mat-label>
-            <input matInput [value]="appr.role" readonly />
-          </mat-form-field>
-          <mat-form-field floatLabel="always" class="formName">
-            <mat-label>Updated at:</mat-label>
-            <input
-              matInput
-              [value]="appr.updatedAt | date : 'mediumDate'"
-              readonly
-            />
-          </mat-form-field>
-        </div>
-        <div class="decide-buttons">
-          <div class="approve-button">
-            <button mat-fab extended>
-              <mat-icon>check</mat-icon>
-              Approve
-            </button>
-          </div>
-          <div class="reject-button">
-            <button mat-fab extended>
-              <mat-icon>error</mat-icon>
-              Reject
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="inventory-detail-wrapper">
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Approved By:</mat-label>
+        <input matInput [value]="appr.approveBy.lastName" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Role:</mat-label>
+        <input matInput [value]="appr.role" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Updated at:</mat-label>
+        <input
+          matInput
+          [value]="appr.updatedAt | date : 'mediumDate'"
+          readonly
+        />
+      </mat-form-field>
+    </div>
+    <div class="action-wrapper" *ngIf="appr.approveBy._id == user._id">
+      <!-- <div class="approve-button"> -->
+      <button
+        class="approve"
+        mat-fab
+        extended
+        [disabled]="appr.status != 'pending'"
+      >
+        <mat-icon>check</mat-icon>
+        Approve
+      </button>
+      <!-- </div> -->
+      <button
+        class="reject"
+        mat-fab
+        extended
+        [disabled]="appr.status != 'pending'"
+      >
+        <mat-icon>error</mat-icon>
+        Reject
+      </button>
     </div>
   </mat-step>
   <ng-template matStepperIcon="pending">
