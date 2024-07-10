@@ -1,7 +1,15 @@
 <mat-card class="added-equipment">
   <img class="fit-image" [src]="equipmentlist.images.thumbnailUrl ? equipmentlist.images.thumbnailUrl : '../../../../assets/equipment_default_image_thumbnail.png'" alt="" />
+
   <div class="item-name">{{ equipmentlist.name }}</div>
-  <div class="item-qty">
+  <div *ngIf="!equipmentlist.inventorytype || equipmentlist.inventorytype === 'Non-inventory'" class="item-qty">
+    <span>{{ equipmentlist.quantity }}</span>
+    <button mat-icon-button (click)="decreaseQuantity()" [disabled]="equipmentlist.quantity <= 1">
+      <mat-icon>remove</mat-icon>
+    </button>
+    <button mat-icon-button (click)="increaseQuantity()">
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
   <div class="circle">
     <button mat-icon-button (click)="removeItem()">

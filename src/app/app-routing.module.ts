@@ -30,6 +30,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'borrowed-list',
+    loadChildren: () => import('./modules/borrowed-list/borrowed-list.module').then((m) => m.BorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['reads'],
+    },
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],

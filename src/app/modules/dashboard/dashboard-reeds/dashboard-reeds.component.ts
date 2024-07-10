@@ -33,7 +33,6 @@ export class DashboardReedsComponent implements OnInit{
   }
 
   showStudentRequests(): void {
-    this.showReportsComponent = false;
-    this.showContentTabs = true;
+    this.router.navigate(['/borrowed-list']);
   }
 }

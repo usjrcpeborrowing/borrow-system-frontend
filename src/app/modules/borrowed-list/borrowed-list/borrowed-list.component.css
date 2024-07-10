@@ -1,0 +1,28 @@
+.page-title{
+    font-size: 50px;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    margin-top: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 95%;
+    font-weight: 700;
+    border-color: #ffffff;
+}
+
+
+.example-container {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #555;
+}
+.custom-drawer-items {
+    padding: 2px;
+}
+.panel-name{
+    margin-bottom: 5px;
+}
+
+.custom-drawer {
+    width: 25%;
+    background-color: #f1efef;
+}

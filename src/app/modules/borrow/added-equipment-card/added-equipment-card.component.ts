@@ -18,6 +18,22 @@ export class AddedEquipmentCardComponent {
     this.removeFromCart.emit(this.equipmentlist);
   }
 
+  increaseQuantity() {
+    if (!this.equipmentlist.inventorytype || this.equipmentlist.inventorytype === 'Non-inventory') {
+      this.equipmentlist.quantity++;
+      this.updateQuantity.emit({ item: this.equipmentlist, quantity: this.equipmentlist.quantity });
+    }
+  }
+
+  decreaseQuantity() {
+    if (!this.equipmentlist.inventorytype || this.equipmentlist.inventorytype === 'Non-inventory') {
+      if (this.equipmentlist.quantity > 1) {
+        this.equipmentlist.quantity--;
+        this.updateQuantity.emit({ item: this.equipmentlist, quantity: this.equipmentlist.quantity });
+      }
+    }
+  }
+
   updateItemQuantity(quantity: number) {
       this.updateQuantity.emit({ item: this.equipmentlist, quantity });
   }
