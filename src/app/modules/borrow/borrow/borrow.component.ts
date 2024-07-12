@@ -16,6 +16,7 @@ export class BorrowComponent implements OnInit {
   
   addedEquipment: Item[] = [];
   isFetching: boolean = false;
+  
   noItems: boolean = false;
 
   greetings: string = 'CPE';
@@ -182,6 +183,7 @@ export class BorrowComponent implements OnInit {
     this.isFetching = true;
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
       this.isFetching = false;
+      this.noItems = true;
       this.equipmentlist = resp.data;
       console.log(this.equipmentlist)
       this.pagination.length = resp.total;

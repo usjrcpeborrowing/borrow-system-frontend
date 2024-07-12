@@ -37,7 +37,7 @@
           <span>no results available</span>
         </div>
         <ng-template #elseblock>
-          <div class="equipment-list-wrapper">
+          <div *ngIf="!isFetching && noItems" class="equipment-list-wrapper">
             <app-borrow-equipment-card
               class="card"
               *ngFor="let equipment of equipmentlist"

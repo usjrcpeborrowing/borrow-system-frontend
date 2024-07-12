@@ -1,3 +1,23 @@
 mat-card-content p {
-    margin-bottom: 0.2em; /* Adjust the value as needed */
+    margin-bottom: 0.2em;
+}
+
+.detail-value {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.item-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.last-item .item-row {
+    margin-bottom: 0;
 }

@@ -19,7 +19,9 @@
   </div>
   <div class="table-content">
       <ng-container matColumnDef="itemPanel">
-          <app-borrow-card-panel></app-borrow-card-panel>
+        <div *ngFor="let item of items">
+          <app-borrow-card-panel [user]="item" [items]="item.itemborrowed"></app-borrow-card-panel>
+        </div>
       </ng-container>
     <ng-template #noResults>
       <p>No Results Found</p>
