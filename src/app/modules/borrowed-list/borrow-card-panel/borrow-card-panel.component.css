@@ -2,10 +2,28 @@ mat-card-content p {
     margin-bottom: 0.2em;
 }
 
+
+.detail-name {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+}
 .detail-value {
     display: inline-flex;
     align-items: center;
     margin-right: 10px;
+}
+
+.detail-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.detail-value,
+.detail-date {
+    margin-right: 10px;
+    font-size: 15px;
 }
 .item-container {
     display: flex;
@@ -20,4 +38,21 @@ mat-card-content p {
 
 .last-item .item-row {
     margin-bottom: 0;
+}
+.borrowed-items-class{
+    font-size: 16px;
+}
+
+.hline {
+    position: relative;
+    width: 100%;
+    border: none;
+    margin-top: -13px;
+}
+.hline:after {
+    content: '';
+    border-top: 1px solid rgb(46, 125, 70);
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
 }
