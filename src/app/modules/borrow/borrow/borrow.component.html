@@ -2,8 +2,8 @@
   <div class="header">
     <app-header></app-header>
   </div>
-  </ng-container>
-  <ng-template #regularHeader>
+</ng-container>
+<ng-template #regularHeader>
   <div class="header">
     <app-student-header></app-student-header>
   </div>
@@ -73,13 +73,19 @@
       <mat-drawer mode="side" [opened]="openedCart" position="end">
         <div class="added-equipment-wrapper">
           <h1>Added Items</h1>
-          <app-added-equipment-card
+          <div class="spinner-wrapper" *ngIf="isFetching; else display">
+            <mat-spinner></mat-spinner>
+          </div>
+          <ng-template #display>
+            <app-added-equipment-card
             *ngFor="let equipment of addedEquipment"
             [equipmentlist]="equipment"
             (toggleInCart)="toggleItemInCart($event)"
             (removeFromCart)="removeItemFromAddedEquipment($event)"
           ></app-added-equipment-card>
-          <div class="add-button">
+          </ng-template>
+
+          <div class="action-wrapper">
             <button mat-raised-button (click)="borrowItems()">
               Borrow Items
             </button>

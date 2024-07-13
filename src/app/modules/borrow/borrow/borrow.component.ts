@@ -13,10 +13,9 @@ import { EquipmentService } from 'src/app/services/equipment.service';
   styleUrls: ['./borrow.component.css'],
 })
 export class BorrowComponent implements OnInit {
-  
   addedEquipment: Item[] = [];
   isFetching: boolean = false;
-  
+
   noItems: boolean = false;
 
   greetings: string = 'CPE';
@@ -52,8 +51,14 @@ export class BorrowComponent implements OnInit {
     location: '',
   };
   currentUserRole: any;
-  constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private authService: AuthService, private router: Router, 
-    private changeDetector: ChangeDetectorRef,private borrowedItemsService: BorrowedItemsService) {}
+  constructor(
+    private equipmentService: EquipmentService,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router,
+    private changeDetector: ChangeDetectorRef,
+    private borrowedItemsService: BorrowedItemsService
+  ) {}
 
   ngOnInit(): void {
     const rolesString = localStorage.getItem('roles');
@@ -61,7 +66,7 @@ export class BorrowComponent implements OnInit {
     this.currentUserRole = rolesArray.join(', ');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
-      console.log('QUEUE LOOK: ', this.equipmentlist)
+      console.log('QUEUE LOOK: ', this.equipmentlist);
     });
   }
 
@@ -82,9 +87,9 @@ export class BorrowComponent implements OnInit {
   categoryClicked() {
     this.openedCategory = !this.openedCategory;
   }
-  
+
   toggleItemInCart(item: Item) {
-    const index = this.addedEquipment.findIndex(e => e._id === item._id);
+    const index = this.addedEquipment.findIndex((e) => e._id === item._id);
     if (index !== -1) {
       this.addedEquipment.splice(index, 1);
     } else {
@@ -92,31 +97,30 @@ export class BorrowComponent implements OnInit {
       this.addedEquipment.push(newItem);
     }
   }
-  
+
   addItemToAddedEquipment(item: Item) {
-    const existingItemIndex = this.addedEquipment.findIndex(e => e._id === item._id);
-  
+    const existingItemIndex = this.addedEquipment.findIndex((e) => e._id === item._id);
+
     if (existingItemIndex !== -1) {
-      return
+      return;
     } else {
       this.addedEquipment.push(item);
     }
   }
 
   removeItemFromAddedEquipment(item: Item) {
-    const index = this.addedEquipment.findIndex(e => e._id === item._id);
+    const index = this.addedEquipment.findIndex((e) => e._id === item._id);
     if (index !== -1) {
       this.addedEquipment.splice(index, 1);
     }
   }
-  
+
   updateItemQuantityInAddedEquipment({ item, quantity }: { item: Item; quantity: number }) {
     const index = this.addedEquipment.indexOf(item);
     if (index > -1) {
       this.addedEquipment[index].quantity = quantity;
     }
   }
-  
 
   formatDate(date: Date): string {
     const day = date.getDate().toString().padStart(2, '0');
@@ -126,25 +130,25 @@ export class BorrowComponent implements OnInit {
   }
 
   filterItemsBySearchWord(items: any[], searchWord: string, dateSelected: string): any[] {
-  console.log("SEARCH WORD", dateSelected);
+    console.log('SEARCH WORD', dateSelected);
 
-    let filteredItems = items.filter(item => {
+    let filteredItems = items.filter((item) => {
       const searchFields = ['name'];
-      return searchFields.some(field => {
+      return searchFields.some((field) => {
         return item[field] && item[field].toLowerCase().includes(searchWord.toLowerCase());
       });
     });
-  
+
     if (dateSelected) {
       const dateFields = ['dateAcquired'];
-      filteredItems = filteredItems.filter(item => {
-        return dateFields.some(field => {
+      filteredItems = filteredItems.filter((item) => {
+        return dateFields.some((field) => {
           return item[field] && item[field].toLowerCase().includes(dateSelected.toLowerCase());
         });
       });
     }
-    
-  return filteredItems;
+
+    return filteredItems;
   }
 
   // getEquipmentList() {
@@ -185,7 +189,7 @@ export class BorrowComponent implements OnInit {
       this.isFetching = false;
       this.noItems = true;
       this.equipmentlist = resp.data;
-      console.log(this.equipmentlist)
+      console.log(this.equipmentlist);
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
     });
@@ -194,7 +198,7 @@ export class BorrowComponent implements OnInit {
     this.equipmentlist.sort((a: any, b: any) => {
       const nameA = a.name ? a.name.toUpperCase() : '';
       const nameB = b.name ? b.name.toUpperCase() : '';
-  
+
       if (order === 'asc') {
         return nameA.localeCompare(nameB);
       } else {
@@ -209,15 +213,33 @@ export class BorrowComponent implements OnInit {
       queryParams: {
         [filter]: value,
       },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
     this.router.navigate(['/borrow'], navigationExtras);
   }
   borrowItems() {
-    this.addedEquipment.forEach(item => {
-      this.borrowedItemsService.addBorrowedItem(item);
+    this.isFetching = true;
+    let body = {
+      itemborrowed: this.addedEquipment.map((eq) => {
+        return {
+          equipment: eq._id,
+          quantity: eq.quantity,
+          condition: eq.remarks,
+        };
+      }),
+      borrower: '6688ea94bd322b0172d2e075',
+    };
+    this.borrowedItemsService.createBorrowItems(body).subscribe({
+      next: (resp) => {
+        console.log(resp);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.isFetching = false;
+      },
     });
-    this.addedEquipment = [];
   }
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
@@ -233,5 +255,4 @@ export class BorrowComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-
 }
