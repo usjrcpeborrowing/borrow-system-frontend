@@ -1,13 +1,23 @@
 <mat-card appearance="outlined">
     <mat-card-content class="panel-description">
-        <div mat-card-title class="detail-value">{{ user.borrower }}</div>
-        <div mat-card-title class="detail-value">{{ user.dateborrowed | date: 'mediumDate' }}</div>
+        <div>
+            <div mat-card-title class="detail-name">{{ user.borrower }}</div>
+        </div>
+
+        <div mat-card-title class="detail-info">    
+            <div class="borrowed-items-class">
+                Borrowed Items
+            </div>
+            <div class="detail-date">{{ user.dateborrowed | date: 'mediumDate' }}</div>
+        </div>
+        <div class="hline"></div>
         <div class="item-container">
             <div *ngFor="let item of items; let i = index" [class.last-item]="i === items.length - 1">
                 <div class="item-row">
-                    <p>Equipment ID: {{ item.equipment._id }}</p>
-                    <p>Quantity: {{ item.quantity }}</p>
+                    <div class="detail-value">Equipment ID: {{ item.equipment._id }}</div>
+                    <div class="detail-value">Quantity: {{ item.quantity }}</div>
                     <div class="detail-value">Condition: {{ item.condition }}</div>
+                    <div class="detail-value">Status: {{ item.status }}</div>
                 </div>
             </div>
         </div>
