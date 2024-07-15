@@ -1,35 +1,33 @@
-
 <mat-toolbar class="header">
-    <img src="/assets/USJR1.png" class="logo">
-<div class="header-content">
+  <img src="/assets/USJR1.png" class="logo" />
+  <div class="header-content">
     <div class="title-text">University of San Jose - Recoletos</div>
     <div class="sub-text">Laboratory Borrowing System</div>
-</div>
+  </div>
 
-<span>
+  <span>
     <div class="button-header">
-        <a href="" (click)="dashboard($event)">Dashboard</a>
-        <a href="" (click)="inventory($event)">Inventory</a>
-        <a href="" (click)="history($event)">History</a>
+      <a href="" (click)="dashboard($event)">Dashboard</a>
+      <a href="" (click)="inventory($event)">Inventory</a>
+      <a href="" (click)="history($event)">History</a>
     </div>
-</span>
-<div class="spacer"></div>
-<span>
+  </span>
+  <div class="spacer"></div>
+  <span>
     <div class="button-header-profile">
-        <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-            <mat-icon>notifications</mat-icon> <!-- Use 'notifications' for a generic notifications icon -->
-        </button>
-        <mat-menu #notificationMenu="matMenu">
-            <div class="not-panel">
-            <h3>Notification</h3>
-        </div>
-        </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
-            <span>Hello, {{ this.currentUser.firstName }}</span>
-        </button>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="logout($event)">Logout</button>
-        </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+        <mat-icon>notifications</mat-icon>
+        <!-- Use 'notifications' for a generic notifications icon -->
+      </button>
+      <mat-menu #notificationMenu="matMenu">
+        <app-notification></app-notification>
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="profileName">
+        <span>Hello, {{ this.currentUser.firstName }}</span>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout($event)">Logout</button>
+      </mat-menu>
     </div>
-</span>
+  </span>
 </mat-toolbar>

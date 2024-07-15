@@ -7,6 +7,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HeaderReadsRoutingModule } from './header-reads-routing.module';
 import { HeaderReadsComponent } from './header-reads/header-reads.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     HeaderReadsComponent
@@ -17,7 +18,8 @@ import { HeaderReadsComponent } from './header-reads/header-reads.component';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    SharedModule
   ],
   exports: [
     HeaderReadsComponent
