@@ -6,10 +6,15 @@ import { io, Socket } from 'socket.io-client';
   providedIn: 'root',
 })
 export class SocketioService {
+  userId = JSON.parse(localStorage.getItem('user') as string)?._id as string;
   socket: Socket;
   readonly uri: string = 'ws://localhost:3000';
   constructor() {
-    this.socket = io(this.uri);
+    this.socket = io(this.uri, {
+      query: {
+        userId: this.userId
+      }
+    });
   }
 
   listen(eventName: string) {
