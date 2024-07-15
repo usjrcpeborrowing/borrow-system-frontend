@@ -10,6 +10,7 @@ export class BorrowedListComponent implements OnInit {
   @Input() items: any[] = [];
   borrowedItems: any[] = [];
   
+  openedCategory: boolean = false;
   constructor(private borrowListService: BorrowedItemsService) { }
   
   ngOnInit(): void {
@@ -25,5 +26,9 @@ export class BorrowedListComponent implements OnInit {
       }, error => {
         console.error('Failed to load borrowed items:', error);
       });
+  }
+  
+  categoryClicked() {
+    this.openedCategory = !this.openedCategory;
   }
 }

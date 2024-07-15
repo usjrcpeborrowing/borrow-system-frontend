@@ -29,6 +29,8 @@ export class InventoryComponent implements OnInit{
     location: '',
   };
   equipmentlist: any[] = [];
+  
+  openedCategory: boolean = false;
   isFetching: boolean = false;
   sortUsed: 'asc' | 'desc' = 'asc';
   currentUserRole: any;
@@ -113,5 +115,9 @@ export class InventoryComponent implements OnInit{
         return nameB.localeCompare(nameA);
       }
     });
+  }
+  
+  categoryClicked() {
+    this.openedCategory = !this.openedCategory;
   }
 }

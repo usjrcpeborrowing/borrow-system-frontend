@@ -15,9 +15,27 @@
   <app-header></app-header>
 </ng-template>
 
+
+<div class="page-title">
+  <div
+  class="view-category-container clickable"
+  [class.cart-openside]="openedCategory"
+  (click)="categoryClicked()"
+  >
+  <mat-icon>menu</mat-icon>
+  </div>
+  
+  <div class="title-page">Inventory</div>
+  
+</div>
+
+<div class="hline"></div>
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened class="custom-drawer">
-    <h1 class="page-title">Inventory</h1>
+  <!-- <mat-drawer mode="side" opened class="custom-drawer">
+  </mat-drawer> -->
+  
+  <mat-drawer mode="side" [opened]="openedCategory" position="start">
+    
     <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
   </mat-drawer>
   <mat-drawer-content class="custom-drawer-itmes">
