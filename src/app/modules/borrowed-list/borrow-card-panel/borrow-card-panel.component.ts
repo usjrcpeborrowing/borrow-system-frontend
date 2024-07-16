@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-borrow-card-panel',
   templateUrl: './borrow-card-panel.component.html',
@@ -7,8 +8,37 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
   @Input() user: any;
-  constructor() {}
+
+  selectAll = false;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    // Initialize the selected property for each item
+    setTimeout(() => {
+      this.items.forEach(item => {
+        item.selected = false;
+      });
+      this.cdr.detectChanges();
+    }, 0);
+  }
+
+  toggleSelectAll(event: any): void {
+    this.selectAll = event.checked;
+    this.items.forEach(item => {
+      item.selected = this.selectAll;
+    });
+    this.cdr.detectChanges();
+  }
+
+  onItemChange(item: any): void {
+    // If any item is unchecked, uncheck the selectAll checkbox
+    if (!item.selected) {
+      this.selectAll = false;
+    } else {
+      // If all items are checked, check the selectAll checkbox
+      this.selectAll = this.items.every(i => i.selected);
+    }
+    this.cdr.detectChanges();
   }
 }

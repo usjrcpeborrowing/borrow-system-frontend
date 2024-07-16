@@ -36,3 +36,16 @@ body {
       align-items: center !important;
   }
 }
+.mat-mdc-checkbox.mat-accent {
+  --mdc-checkbox-selected-checkmark-color: #fff;
+--mdc-checkbox-selected-focus-icon-color: #50c063;
+--mdc-checkbox-selected-hover-icon-color: #49b85d;
+--mdc-checkbox-selected-icon-color: #58ae39;
+--mdc-checkbox-selected-pressed-icon-color: #41bb51;
+--mdc-checkbox-unselected-focus-icon-color: #212121;
+--mdc-checkbox-unselected-hover-icon-color: #212121;
+--mdc-checkbox-disabled-selected-icon-color: rgba(0, 0, 0, 0.38);
+--mdc-checkbox-disabled-unselected-icon-color: rgba(0, 0, 0, 0.38);
+--mdc-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+--mdc-checkbox-unselected-pressed-icon-color: rgba(0, 0, 0, 0.54);
+}

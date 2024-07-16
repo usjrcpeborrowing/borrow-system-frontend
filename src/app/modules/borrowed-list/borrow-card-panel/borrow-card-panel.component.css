@@ -20,6 +20,42 @@ mat-card-content p {
     align-items: center;
     margin-bottom: 10px;
 }
+
+.detail-quantity {
+    
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 10%;
+}
+
+.detail-select {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.detail-equipment {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 50%;
+}
+
+.detail-condition {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 25%;
+}
+
+.detail-status {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 13%;
+}
+
 .detail-value,
 .detail-date {
     margin-right: 10px;
@@ -31,8 +67,9 @@ mat-card-content p {
 }
 
 .item-row {
+    
+    position: relative;
     display: flex;
-    justify-content: space-between;
     margin-bottom: 10px;
 }
 
@@ -55,4 +92,28 @@ mat-card-content p {
     width: 100%;
     display: inline-block;
     vertical-align: middle;
+}
+
+
+.report-button .mat-mdc-raised-button.mat-unthemed {
+    display: flex;
+    max-width: 100px;
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
+.spacer {
+    width: 95%;
+}
+
+.button-content{
+    margin-top: 20px;
+    display: flex;
+}
+.checkbox-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
 }

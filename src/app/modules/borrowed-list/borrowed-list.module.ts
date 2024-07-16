@@ -4,9 +4,10 @@ import { NgModule } from '@angular/core';
 import { BorrowedListRoutingModule } from './borrowed-list-routing.module';
 import { BorrowedListComponent } from './borrowed-list/borrowed-list.component';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
@@ -30,7 +31,9 @@ import { BorrowCategoryComponent } from './borrow-category/borrow-category.compo
     MatFormFieldModule,
     ReactiveFormsModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatCheckboxModule,
+    FormsModule
   ]
 })
 export class BorrowedListModule { }

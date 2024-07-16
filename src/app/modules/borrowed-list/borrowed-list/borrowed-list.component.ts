@@ -31,4 +31,6 @@ export class BorrowedListComponent implements OnInit {
   categoryClicked() {
     this.openedCategory = !this.openedCategory;
   }
+
+  
 }

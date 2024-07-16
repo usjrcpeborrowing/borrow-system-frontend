@@ -38,6 +38,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'student-borrowed-list',
+    loadChildren: () => import('./modules/student-borrowed-list/student-borrowed-list.module').then((m) => m.StudentBorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['student', 'reads'],
+    },
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],

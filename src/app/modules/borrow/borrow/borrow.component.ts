@@ -218,6 +218,11 @@ export class BorrowComponent implements OnInit {
     this.router.navigate(['/borrow'], navigationExtras);
   }
   borrowItems() {
+    if (this.addedEquipment.length === 0) {
+      alert("Cart is Empty");
+      return;
+    }
+
     this.isFetching = true;
     let body = {
       itemborrowed: this.addedEquipment.map((eq) => {
@@ -241,6 +246,7 @@ export class BorrowComponent implements OnInit {
       },
     });
   }
+
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
     console.log(searchWord);
