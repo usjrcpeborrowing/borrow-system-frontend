@@ -219,7 +219,7 @@ export class BorrowComponent implements OnInit {
   }
   borrowItems() {
     if (this.addedEquipment.length === 0) {
-      alert("Cart is Empty");
+      alert('Cart is Empty');
       return;
     }
 
@@ -233,6 +233,8 @@ export class BorrowComponent implements OnInit {
         };
       }),
       borrower: '6688ea94bd322b0172d2e075',
+      instructor: '6672ec80ae1c4c85fa2304e4',
+      className: 'Logic Circuits',
     };
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {

@@ -34,7 +34,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/borrowed-list/borrowed-list.module').then((m) => m.BorrowedListModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['reads'],
+      roles: ['reads', 'oic', 'faculty'],
     },
   },
   {
