@@ -14,6 +14,9 @@ export class DashboardReedsComponent implements OnInit{
   ngOnInit(): void {
     
   }
+  directToBorrow(): void {
+    this.router.navigate(['/borrow']);
+  }
   directToInventory(): void {
     this.router.navigate(['/inventory']);
   }

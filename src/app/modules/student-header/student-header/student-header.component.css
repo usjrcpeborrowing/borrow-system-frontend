@@ -1,35 +1,44 @@
+.header-menu {
+    display: flex;
+    align-items: center;
+}
 
-.header{
-    height: 10%;
+.header {
+height: 10%;
     color: white;
     background-color: rgb(62, 112, 62);
     width: 100%;
 }
-.logo{
+
+.logo {
     max-width: 4%;
 }
-.header-content{
+
+.header-content {
     margin-right: 150px;
     line-height: 1;
 }
+
 .sub-text {
     font-size: 12px;
 }
 
-.button-header{
+.button-header {
     display: flex;
     align-items: center;
 }
-a{
+
+a {
     position: relative;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     letter-spacing: 0.5px;
-    margin-right: 20px ;
+    margin-right: 20px;
     color: white;
 }
-a::after{
+
+a::after {
     content: "";
     position: absolute;
     background-color: rgb(168, 173, 169);
@@ -39,34 +48,131 @@ a::after{
     bottom: -1px;
     transition: 0.2s;
 }
-a:hover::after{
+
+a:hover::after {
     width: 100%;
-}
+    }
+
 .button-header-profile {
-    background-color: rgb(62, 112, 62); ;
+    background-color: rgb(62, 112, 62);
     display: flex;
     align-items: center;
+    position: absolute;
+    right: 0px;
+    margin-right: 2%;
 }
-.mat-mdc-unelevated-button.mat-unthemed{
-    background-color: rgb(62, 112, 62); 
+
+.mat-mdc-unelevated-button.mat-unthemed {
+    background-color: rgb(62, 112, 62);
     color: white;
 }
+
 .button-header-profile button {
     display: flex;
     align-items: center;
 }
 
-.profileName{
+.profileName {
     width: 10%;
 }
+.header-profileName{
+    width: 100%;
+}
+
 .spacer {
     flex-grow: 1;
     min-height: 1em;
 }
 
-
-.not-panel{
+.not-panel {
     padding: 10px;
     width: 15vw;
+}
 
+.menu-icon {
+    display: none;
+    position: absolute;
+    right: 5%;
+}
+
+.close-icon {
+    display: none;
+    position: absolute;
+    right: 5%;
+}
+
+@media screen and (max-width: 850px) {
+    .logo {
+        max-width: 18%;
+    }
+
+    .title-text,
+    .sub-text {
+        font-size: 0px;
+    }
+
+    .button-header {
+        display: none;
+    }
+    .button-header-profile{
+        margin-right: 20%;
+    }
+    .profileName-header{
+        display:none;
+    }
+    .menu-icon {
+        display: block;
+    }
+
+    .close-icon {
+        display: block;
+    }
+
+    .example-sidenav {
+        width: 250px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: rgb(62, 112, 62);
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .example-sidenav.open {
+        transform: translateX(0%);
+    }
+
+    .sidenav-header,
+    .sidenav-menu {
+        padding: 16px;
+    }
+
+    .sidenav-header img {
+        max-width: 50%;
+    }
+
+    .sidenav-title-text {
+        margin-left: 16px;
+        font-size: 15px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .sidenav-menu a {
+        display: block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #ffffff;
+        transition: background-color 0.3s;
+    }
+
+    .sidenav-menu a:hover {
+        background-color: #7ecf99;
+    }
+
+    .example-sidenav.closed {
+        transform: translateX(100%);
+    }
 }

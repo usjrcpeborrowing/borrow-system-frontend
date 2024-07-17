@@ -19,6 +19,14 @@
   </div>
   <h1 class="title-page">Browse Items</h1>
   <div class="hline"></div>
+  
+  <div
+    class="view-cart-container clickable"
+    [class.cart-openside]="openedCart"
+    (click)="cartClicked()"
+  >
+    <mat-icon>inbox</mat-icon>
+  </div>
 </div>
 <div class="normal-bar"></div>
 <div class="page-container">
@@ -96,11 +104,4 @@
   </div>
 
   <!-- floating shopping cart icon -->
-  <div
-    class="view-cart-container clickable"
-    [class.cart-openside]="openedCart"
-    (click)="cartClicked()"
-  >
-    <mat-icon>inbox</mat-icon>
-  </div>
 </div>

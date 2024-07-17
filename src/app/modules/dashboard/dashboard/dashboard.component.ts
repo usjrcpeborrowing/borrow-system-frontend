@@ -21,6 +21,10 @@ export class DashboardComponent implements OnInit{
     this.router.navigate(['/borrow']);
   }
   
+  directToBorrowRequest(): void {
+    this.router.navigate(['/student-borrowed-list']);
+  }
+  
   directToHistory(): void {
     this.router.navigate(['/history/student']);
   }
