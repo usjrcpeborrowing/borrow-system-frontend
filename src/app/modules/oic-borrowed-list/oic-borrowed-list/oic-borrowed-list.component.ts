@@ -1,13 +1,12 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
-
 @Component({
-  selector: 'app-student-borrowed-list',
-  templateUrl: './student-borrowed-list.component.html',
-  styleUrls: ['./student-borrowed-list.component.css']
+  selector: 'app-oic-borrowed-list',
+  templateUrl: './oic-borrowed-list.component.html',
+  styleUrls: ['./oic-borrowed-list.component.css']
 })
-export class StudentBorrowedListComponent implements OnInit {
+export class OicBorrowedListComponent implements OnInit {
   
   @Input() items: any[] = [];
   borrowedItems: any[] = [];

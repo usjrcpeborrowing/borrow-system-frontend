@@ -17,9 +17,12 @@
   >
     <mat-icon>menu</mat-icon>
   </div>
-  <h1 class="title-page">Browse Items</h1>
-  <div class="hline"></div>
-  
+  <h1 class="title-page">Browse Items </h1>
+  <h1 class="title-page-line">| </h1>
+  <div class="class-detail">
+    <p class="class-name">Class: {{ this.className }}</p>
+    <p>Instructor: {{ this.instructor }}</p>
+  </div>
   <div
     class="view-cart-container clickable"
     [class.cart-openside]="openedCart"
@@ -28,7 +31,7 @@
     <mat-icon>inbox</mat-icon>
   </div>
 </div>
-<div class="normal-bar"></div>
+<div class="hline"></div>
 <div class="page-container">
   <!-- search filters -->
 
@@ -57,6 +60,11 @@
       </mat-drawer-content>
 
       <mat-drawer mode="side" [opened]="openedCategory" position="start">
+        
+        <div class="class-detail-category">
+          <p class="class-name">Class: {{ this.className }}</p>
+          <p>Instructor: {{ this.instructor }}</p>
+        </div>
         <h1>Search Items</h1>
         <div class="search-filter-wrapper">
           <mat-form-field floatLabel="always">

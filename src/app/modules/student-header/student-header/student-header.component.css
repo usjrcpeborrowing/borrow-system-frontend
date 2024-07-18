@@ -101,7 +101,7 @@ a:hover::after {
     right: 5%;
 }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1200px) {
     .logo {
         max-width: 18%;
     }

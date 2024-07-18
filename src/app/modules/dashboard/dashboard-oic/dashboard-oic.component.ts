@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
 })
 export class DashboardOicComponent implements OnInit{
   showInventoryComponent: boolean = false;
-  showReportsComponent: boolean = false;
-  showContentTabs: boolean = true;
+  showReportsComponent: boolean = true;
+  showContentTabs: boolean = false;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -38,9 +38,7 @@ export class DashboardOicComponent implements OnInit{
   }
 
   showStudentRequests(): void {
-    this.showReportsComponent = false;
-    this.showContentTabs = true;
-    this.showInventoryComponent  = false;
+    this.router.navigate(['/oic-borrowed-list']);
   }
   showInventoryLevel(): void {
     this.showReportsComponent = false;

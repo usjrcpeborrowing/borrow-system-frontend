@@ -1,11 +1,12 @@
 
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+
 @Component({
-  selector: 'app-student-borrow-card-panel',
-  templateUrl: './student-borrow-card-panel.component.html',
-  styleUrls: ['./student-borrow-card-panel.component.css']
+  selector: 'app-oic-borrow-card-panel',
+  templateUrl: './oic-borrow-card-panel.component.html',
+  styleUrls: ['./oic-borrow-card-panel.component.css']
 })
-export class StudentBorrowCardPanelComponent implements OnInit {
+export class OicBorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
   @Input() user: any;
 
@@ -39,4 +40,3 @@ export class StudentBorrowCardPanelComponent implements OnInit {
     this.cdr.detectChanges();
   }
 }
-

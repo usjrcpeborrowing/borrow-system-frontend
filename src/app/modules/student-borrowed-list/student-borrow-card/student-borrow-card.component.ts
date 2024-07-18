@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-student-borrow-card',
@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./student-borrow-card.component.css']
 })
 export class StudentBorrowCardComponent {
-
+  
+  @Input() items: any[] = [];
+  
+  
+  ngOnInit(): void {
+  }
 }

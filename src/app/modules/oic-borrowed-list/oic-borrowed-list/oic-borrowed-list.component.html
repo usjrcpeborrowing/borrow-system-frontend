@@ -1,4 +1,4 @@
-<app-student-header></app-student-header>
+<app-header-oic></app-header-oic>
 
 <div class="page-title">
     <div
@@ -39,9 +39,9 @@
       </mat-form-field>
     </div>
 
-    <app-student-borrow-category></app-student-borrow-category>
+    <app-oic-borrow-category></app-oic-borrow-category>
   </mat-drawer>
-<mat-drawer-content class="custom-drawer-itmes">
-    <app-student-borrow-card [items]="borrowedItems"></app-student-borrow-card>
+<mat-drawer-content class="x`custom-drawer-itmes">
+    <app-oic-borrow-card [items]="borrowedItems"></app-oic-borrow-card>
 </mat-drawer-content>
 </mat-drawer-container>

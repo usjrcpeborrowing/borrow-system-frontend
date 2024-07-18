@@ -46,6 +46,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'oic-borrowed-list',
+    loadChildren: () => import('./modules/oic-borrowed-list/oic-borrowed-list.module').then((m) => m.OicBorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['oic'],
+    },
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],

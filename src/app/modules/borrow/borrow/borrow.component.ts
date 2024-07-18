@@ -32,6 +32,11 @@ export class BorrowComponent implements OnInit {
   sortUsed: 'asc' | 'desc' = 'asc';
   dateSelected = new FormControl('');
 
+  // Static Data Presentation Purposes
+  instructor: string = 'John ReadsLastName'
+  className: string = 'Logic Circuits'
+  //
+
   pagination: Pagination = {
     length: 0,
     page: 1,
@@ -233,8 +238,8 @@ export class BorrowComponent implements OnInit {
         };
       }),
       borrower: '6688ea94bd322b0172d2e075',
-      instructor: '6672ec80ae1c4c85fa2304e4',
-      className: 'Logic Circuits',
+      instructor: this.instructor,
+      className: this.className,
     };
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
