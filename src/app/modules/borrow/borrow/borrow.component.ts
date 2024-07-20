@@ -82,6 +82,11 @@ export class BorrowComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     return currentUser ? currentUser.role === 'faculty' : false;
   }
+  
+  isReads(): boolean {
+    const currentUser = this.authService.getCurrentUser();
+    return currentUser ? currentUser.role === 'reads' : false;
+  }
   searchProduct(event: any) {
     console.log(event);
   }
