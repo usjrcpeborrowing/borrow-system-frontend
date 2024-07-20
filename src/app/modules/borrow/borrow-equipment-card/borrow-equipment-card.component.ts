@@ -23,7 +23,6 @@ export class BorrowEquipmentCardComponent implements OnInit {
   ngOnInit(): void {
     const midsizeurl = this.equipmentlist?.images?.midSizeUrl?.length ? this.equipmentlist?.images?.midSizeUrl : '';
     const id: string = midsizeurl.substring(midsizeurl.lastIndexOf('/d/') + 3, midsizeurl.lastIndexOf('/view'));
-    console.log(id);
     this.displayImage = `https://drive.google.com/thumbnail?id=${id}&&sz=w1000`;
   }
 

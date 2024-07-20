@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -8,8 +8,9 @@ import { environment } from 'src/environments/environment.development';
 })
 export class BorrowedItemsService {
   private borrowedItems = new BehaviorSubject<any[]>([]);
-  currentBorrowedItems = this.borrowedItems.asObservable();
 
+  currentBorrowedItems = this.borrowedItems.asObservable();
+  changeBorrowStatus: Subject<any> = new Subject<any>();
   token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {}
@@ -31,10 +32,15 @@ export class BorrowedItemsService {
   }
 
   createBorrowItems(borrowedItems: any) {
-    return this.http.post<any>(environment.API_URL + '/api/borroweditems', borrowedItems, { headers: { Authorization: this.token as string } }).pipe(
-      map((response) => response.data),
-      catchError(this.handleError)
-    );
+    return this.http.post<any>(environment.API_URL + '/api/borroweditems', borrowedItems, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+  }
+
+  updateBorrowedItemStatus(body: any, id: string) {
+    return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+  }
+
+  onChangeBorrowStatus() {
+    return this.changeBorrowStatus.asObservable();
   }
 
   handleError(err: HttpErrorResponse) {

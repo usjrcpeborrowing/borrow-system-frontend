@@ -10,6 +10,7 @@ import { OicBorrowedListRoutingModule } from './oic-borrowed-list-routing.module
 import { OicBorrowedListComponent } from './oic-borrowed-list/oic-borrowed-list.component';
 
 import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     OicBorrowedListComponent,
@@ -23,7 +24,8 @@ import { MaterialModule } from '../material.module';
     MaterialModule,
     HeaderOicModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class OicBorrowedListModule { }

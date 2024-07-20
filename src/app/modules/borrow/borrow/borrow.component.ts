@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Item } from 'src/app/models/Items';
@@ -7,6 +8,7 @@ import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 @Component({
   selector: 'app-borrow',
   templateUrl: './borrow.component.html',
@@ -33,8 +35,8 @@ export class BorrowComponent implements OnInit {
   dateSelected = new FormControl('');
 
   // Static Data Presentation Purposes
-  instructor: string = 'John ReadsLastName'
-  className: string = 'Logic Circuits'
+  instructor: string = 'John ReadsLastName';
+  className: string = 'Logic Circuits';
   //
 
   pagination: Pagination = {
@@ -61,8 +63,8 @@ export class BorrowComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
-    private changeDetector: ChangeDetectorRef,
-    private borrowedItemsService: BorrowedItemsService
+    private borrowedItemsService: BorrowedItemsService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -71,7 +73,6 @@ export class BorrowComponent implements OnInit {
     this.currentUserRole = rolesArray.join(', ');
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
-      console.log('QUEUE LOOK: ', this.equipmentlist);
     });
   }
 
@@ -238,19 +239,43 @@ export class BorrowComponent implements OnInit {
         };
       }),
       borrower: '6688ea94bd322b0172d2e075',
-      instructor: this.instructor,
+      instructor: "669b1deb81797fce3f049c53",
       className: this.className,
     };
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
-        console.log(resp);
+        console.log(resp)
+        this.openSnackBar(resp.message, 'OK');
       },
       error: (err) => {
-        console.log(err);
+        console.log('err fromr', err);
       },
       complete: () => {
-        this.isFetching = false;
+        this.isFetching= false;
       },
+    });
+  }
+
+  openSnackBar(message: string, action: string, isError: boolean = false): void {
+    let config: MatSnackBarConfig = {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    };
+
+    if (isError) {
+      config.panelClass = ['red-snackbar'];
+    } else {
+      config.panelClass = ['green-snackbar'];
+    }
+
+    this._snackBar.openFromComponent(SnackbarComponent, {
+      ...config,
+      data: {
+        error: isError,
+        message: message,
+      },
+      duration: 3000,
     });
   }
 
