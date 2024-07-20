@@ -1,4 +1,7 @@
-<app-header-reads></app-header-reads>
+
+<div class="header">
+    <app-header-reads></app-header-reads>
+</div>
 <h1 class="page-title">Dashboard <div class="hline"></div></h1>
 <div class="dashboard-content">
     <div class="menu-panel">
@@ -30,6 +33,48 @@
             
         </div>
         
+    </div>
+    
+    <div class="menu-panel-mobile">
+        <div class="buttons">
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToBorrow()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Borrow Items
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button (click)="directToInventory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Inventory List
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showStudentRequests()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
+                    Student Requests
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Item Details
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showReports()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">report</mat-icon>
+                    Reports
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button (click)="directToHistory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">history</mat-icon>
+                    Requests History
+                    </div>
+                </button>
+            
+        </div>
     </div>
     <div class="contents">
         <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>

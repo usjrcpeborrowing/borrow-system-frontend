@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-
 @Component({
   selector: 'app-header-reads',
   templateUrl: './header-reads.component.html',
   styleUrls: ['./header-reads.component.css']
 })
 export class HeaderReadsComponent implements OnInit{
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   currentUser: any;
+  
+  isSidebarOpen = false;
 
   constructor(private authService: AuthService, private router: Router,) { }
 
@@ -17,6 +20,9 @@ export class HeaderReadsComponent implements OnInit{
     // if (!this.currentUser || this.currentUser.role !== 'reads') {
     //   this.router.navigate(['/']);
     // }
+  }
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
   logout(event: Event): void {
     event.preventDefault();
@@ -40,7 +46,7 @@ export class HeaderReadsComponent implements OnInit{
   }
   requests(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/dashboard/reads']);
+    this.router.navigate(['/borrowed-list']);
   }
   reports(event: Event): void {
     event.preventDefault();

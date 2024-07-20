@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit{
   }
   inventory(event: Event): void {
     event.preventDefault();
+    
     this.router.navigate(['/borrow']);
   }
   history(event: Event): void {

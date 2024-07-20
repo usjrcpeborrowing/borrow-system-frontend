@@ -4,10 +4,11 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { SharedModule } from '../shared/shared.module';
 import { HeaderReadsRoutingModule } from './header-reads-routing.module';
 import { HeaderReadsComponent } from './header-reads/header-reads.component';
-import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     HeaderReadsComponent
@@ -19,7 +20,8 @@ import { SharedModule } from '../shared/shared.module';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    SharedModule
+    SharedModule,
+    MatSidenavModule
   ],
   exports: [
     HeaderReadsComponent
