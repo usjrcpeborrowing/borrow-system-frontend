@@ -33,7 +33,8 @@ import { BorrowCategoryComponent } from './borrow-category/borrow-category.compo
     MatSelectModule,
     MatCardModule,
     MatCheckboxModule,
-    FormsModule
+    FormsModule,
+    MaterialModule
   ]
 })
 export class BorrowedListModule { }

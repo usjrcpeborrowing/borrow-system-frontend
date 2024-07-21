@@ -1,5 +1,6 @@
 
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 @Component({
   selector: 'app-student-borrow-card-panel',
   templateUrl: './student-borrow-card-panel.component.html',
@@ -7,11 +8,12 @@ import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 })
 export class StudentBorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
-  @Input() user: any;
+  @Input() data: any;
 
+  status_return: string = 'pending_return';
   selectAll = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -37,6 +39,21 @@ export class StudentBorrowCardPanelComponent implements OnInit {
       this.selectAll = this.items.every(i => i.selected);
     }
     this.cdr.detectChanges();
+  }
+
+  approvedItems(status: string) {
+    const selected = this.items
+      .filter((item) => item.selected)
+      .map((x) => {
+        return {
+          equipment: x.equipment._id,
+          quantity: x.quantity,
+          condition: x.condition,
+          status: status,
+        };
+      });
+
+    this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: this.status_return });
   }
 }
 

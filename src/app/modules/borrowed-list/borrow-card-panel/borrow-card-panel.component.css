@@ -2,6 +2,13 @@ mat-card-content p {
     margin-bottom: 0.2em;
 }
 
+.action-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+}
 
 .detail-name {
     display: inline-flex;
@@ -95,11 +102,7 @@ mat-card-content p {
 }
 
 
-.report-button .mat-mdc-raised-button.mat-unthemed {
-    display: flex;
-    max-width: 100px;
-    margin-top: 10px;
-    margin-right: 20px;
+.report-button.mat-mdc-raised-button.mat-unthemed {
     background-color: rgb(62, 112, 62);
     color: white;
 }

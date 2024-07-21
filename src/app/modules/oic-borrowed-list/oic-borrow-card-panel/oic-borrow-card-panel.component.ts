@@ -53,6 +53,6 @@ export class OicBorrowCardPanelComponent implements OnInit {
         };
       });
 
-    this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: 'approved' });
+    this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: this.status_approved });
   }
 }

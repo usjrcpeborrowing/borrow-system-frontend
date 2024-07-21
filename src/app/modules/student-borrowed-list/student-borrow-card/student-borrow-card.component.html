@@ -4,7 +4,7 @@
   <div class="table-content">
       <ng-container matColumnDef="itemPanel">
         <div *ngFor="let item of items">
-          <app-student-borrow-card-panel [user]="item" [items]="item.itemborrowed"></app-student-borrow-card-panel>
+          <app-student-borrow-card-panel [data]="item" [items]="item.itemborrowed"></app-student-borrow-card-panel>
         </div>
       </ng-container>
     <ng-template #noResults>

@@ -14,7 +14,7 @@ export class OicBorrowedListComponent implements OnInit {
 
   openedCategory: boolean = false;
 
-  constructor(private borrowListService: BorrowedItemsService, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(private borrowListService: BorrowedItemsService, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: Params) => {

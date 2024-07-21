@@ -249,7 +249,6 @@ export class BorrowComponent implements OnInit {
     };
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
-        console.log(resp)
         this.openSnackBar(resp.message, 'OK');
       },
       error: (err) => {
