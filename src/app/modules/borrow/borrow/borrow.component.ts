@@ -9,6 +9,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { UserService } from 'src/app/services/user.service';
+import { map, Observable, startWith } from 'rxjs';
+
+export interface Instructor {
+  _id: string;
+  name: string;
+}
+
 @Component({
   selector: 'app-borrow',
   templateUrl: './borrow.component.html',
@@ -36,8 +44,15 @@ export class BorrowComponent implements OnInit {
 
   // Static Data Presentation Purposes
   instructor: string = 'John ReadsLastName';
-  className: string = 'Logic Circuits';
+  className = new FormControl('');
+  keyword = new FormControl('');
+  instructorlist: any[] = [];
+  filteredInstructor!: Observable<Instructor[]>;
+  selectedInstructor:string = '';
   //
+
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions!: Observable<string[]>;
 
   pagination: Pagination = {
     length: 0,
@@ -58,19 +73,36 @@ export class BorrowComponent implements OnInit {
     location: '',
   };
   currentUserRole: any;
+  userId:string = ''
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private router: Router,
     private borrowedItemsService: BorrowedItemsService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private userService: UserService,
   ) {}
 
   ngOnInit(): void {
     const rolesString = localStorage.getItem('roles');
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
+    this.userId = this.authService.getCurrentUser()?._id as string;
+    this.userService.getDeparmentFaculty('CPE', '').subscribe({
+      next: (resp) => {
+        this.instructorlist = resp.data;
+        this.keyword.setValue('');
+      },
+    });
+
+    // setTimeout(() => {
+    this.filteredInstructor = this.keyword.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterInstructor(value || ''))
+    );
+    // }, 4000);
+
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
@@ -83,7 +115,7 @@ export class BorrowComponent implements OnInit {
     const currentUser = this.authService.getCurrentUser();
     return currentUser ? currentUser.role === 'faculty' : false;
   }
-  
+
   isReads(): boolean {
     const currentUser = this.authService.getCurrentUser();
     return currentUser ? currentUser.role === 'reads' : false;
@@ -141,8 +173,6 @@ export class BorrowComponent implements OnInit {
   }
 
   filterItemsBySearchWord(items: any[], searchWord: string, dateSelected: string): any[] {
-    console.log('SEARCH WORD', dateSelected);
-
     let filteredItems = items.filter((item) => {
       const searchFields = ['name'];
       return searchFields.some((field) => {
@@ -191,7 +221,6 @@ export class BorrowComponent implements OnInit {
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
-    console.log(this.inventoryFilter);
     this.getEquipmentList();
   }
   getEquipmentList() {
@@ -200,7 +229,6 @@ export class BorrowComponent implements OnInit {
       this.isFetching = false;
       this.noItems = true;
       this.equipmentlist = resp.data;
-      console.log(this.equipmentlist);
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
     });
@@ -228,6 +256,7 @@ export class BorrowComponent implements OnInit {
     };
     this.router.navigate(['/borrow'], navigationExtras);
   }
+
   borrowItems() {
     if (this.addedEquipment.length === 0) {
       alert('Cart is Empty');
@@ -243,19 +272,19 @@ export class BorrowComponent implements OnInit {
           condition: eq.remarks,
         };
       }),
-      borrower: '6688ea94bd322b0172d2e075',
-      instructor: "669b1deb81797fce3f049c53",
-      className: this.className,
+      borrower: this.userId,
+      instructor: this.selectedInstructor,
+      className: this.className.value,
     };
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');
       },
       error: (err) => {
-        console.log('err fromr', err);
+        this.openSnackBar(err.message, 'OK');
       },
       complete: () => {
-        this.isFetching= false;
+        this.isFetching = false;
       },
     });
   }
@@ -283,9 +312,24 @@ export class BorrowComponent implements OnInit {
     });
   }
 
+  private _filterInstructor(value: string): Instructor[] {
+    const filterValue = value.toLowerCase();
+    return this.instructorlist
+      .map((opt) => {
+        return {
+          _id: opt._id,
+          name: opt.firstName + ' ' + opt.lastName,
+        };
+      })
+      .filter((option) => option.name.toLowerCase().includes(filterValue));
+  }
+
+  displayFn(instructor: Instructor): string {
+    return instructor && instructor.name ? instructor.name : '';
+  }
+
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
-    console.log(searchWord);
     const currentQueryParams = this.activatedRoute.snapshot.queryParams;
     const newQueryParams = {
       ...currentQueryParams,

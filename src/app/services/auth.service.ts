@@ -14,6 +14,7 @@ interface User {
   department: string[];
   role: string;
   token: string;
+  _id: string
 }
 
 @Injectable({

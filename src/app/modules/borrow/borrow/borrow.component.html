@@ -22,12 +22,9 @@
   >
     <mat-icon>menu</mat-icon>
   </div>
-  <h1 class="title-page">Browse Items </h1>
-  <h1 class="title-page-line">| </h1>
-  <div class="class-detail">
-    <p class="class-name">Class: {{ this.className }}</p>
-    <p>Instructor: {{ this.instructor }}</p>
-  </div>
+  <h1 class="title-page">Browse Items</h1>
+  <h1 class="title-page-line">|</h1>
+
   <div
     class="view-cart-container clickable"
     [class.cart-openside]="openedCart"
@@ -65,11 +62,10 @@
       </mat-drawer-content>
 
       <mat-drawer mode="side" [opened]="openedCategory" position="start">
-        
-        <div class="class-detail-category">
+        <!-- <div class="class-detail-category">
           <p class="class-name">Class: {{ this.className }}</p>
           <p>Instructor: {{ this.instructor }}</p>
-        </div>
+        </div> -->
         <h1>Search Items</h1>
         <div class="search-filter-wrapper">
           <mat-form-field floatLabel="always">
@@ -99,13 +95,44 @@
           </div>
           <ng-template #display>
             <app-added-equipment-card
-            *ngFor="let equipment of addedEquipment"
-            [equipmentlist]="equipment"
-            (toggleInCart)="toggleItemInCart($event)"
-            (removeFromCart)="removeItemFromAddedEquipment($event)"
-          ></app-added-equipment-card>
+              *ngFor="let equipment of addedEquipment"
+              [equipmentlist]="equipment"
+              (toggleInCart)="toggleItemInCart($event)"
+              (removeFromCart)="removeItemFromAddedEquipment($event)"
+            ></app-added-equipment-card>
           </ng-template>
-
+          <div class="class-detail">
+            <form>
+              <mat-form-field class="major-filter">
+                <mat-label>Instructor</mat-label>
+                <input
+                  type="text"
+                  placeholder="Type the name of your instructor"
+                  matInput
+                  [formControl]="keyword"
+                  [matAutocomplete]="auto"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  [displayWith]="displayFn"
+                  (optionSelected)="
+                    selectedInstructor = $event.option.value._id
+                  "
+                >
+                  <mat-option
+                    *ngFor="let instructor of filteredInstructor | async"
+                    [value]="instructor"
+                  >
+                    {{ instructor.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Class Name</mat-label>
+                <input matInput type="text" [formControl]="className" />
+              </mat-form-field>
+            </form>
+          </div>
           <div class="action-wrapper">
             <button mat-raised-button (click)="borrowItems()">
               Borrow Items

@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-borrow-card-panel',
   templateUrl: './borrow-card-panel.component.html',
-  styleUrls: ['./borrow-card-panel.component.css']
+  styleUrls: ['./borrow-card-panel.component.css'],
 })
 export class BorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
@@ -14,13 +15,14 @@ export class BorrowCardPanelComponent implements OnInit {
   status_return: string = 'returned';
   selectAll = false;
 
-  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService) {}
+  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     // Initialize the selected property for each item
     setTimeout(() => {
-      this.items.forEach(item => {
+      this.items.forEach((item) => {
         item.selected = false;
+        item.disabled = !['approved', 'pending_return'].includes(item.status) ;
       });
       this.cdr.detectChanges();
     }, 0);
@@ -28,8 +30,8 @@ export class BorrowCardPanelComponent implements OnInit {
 
   toggleSelectAll(event: any): void {
     this.selectAll = event.checked;
-    this.items.forEach(item => {
-      item.selected = this.selectAll;
+    this.items.forEach((item) => {
+      if (!item.disabled) item.selected = this.selectAll;
     });
     this.cdr.detectChanges();
   }
@@ -40,7 +42,7 @@ export class BorrowCardPanelComponent implements OnInit {
       this.selectAll = false;
     } else {
       // If all items are checked, check the selectAll checkbox
-      this.selectAll = this.items.every(i => i.selected);
+      this.selectAll = this.items.every((i) => i.selected);
     }
     this.cdr.detectChanges();
   }
@@ -57,7 +59,11 @@ export class BorrowCardPanelComponent implements OnInit {
         };
       });
 
-    this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: this.status_released });
+    if (!selected.length) {
+      this.snackbarService.openSnackBar('No items selected', 'OK');
+    } else {
+      this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_released });
+    }
   }
 
   returnItems(status: string) {
@@ -72,6 +78,6 @@ export class BorrowCardPanelComponent implements OnInit {
         };
       });
 
-    this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: this.status_return });
+    this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_return });
   }
 }

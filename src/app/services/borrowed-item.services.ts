@@ -21,10 +21,6 @@ export class BorrowedItemsService {
   }
 
   getBorrowedList() {
-    const headers = {
-      Authorization: this.token as string,
-    };
-
     return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: { Authorization: this.token as string } }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
