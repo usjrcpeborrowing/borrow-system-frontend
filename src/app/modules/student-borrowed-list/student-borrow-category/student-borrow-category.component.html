@@ -4,30 +4,9 @@
 <div class="form-fields-container">
     
     <mat-form-field class="form-field">
-        <mat-label>Category 1</mat-label>
+        <mat-label>Borrow Status</mat-label>
         <mat-select>
-            <mat-option *ngFor="let option of options" [value]="option.value">{{option.viewValue}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-        <mat-label>Category 2</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let option of options" [value]="option.value">{{option.viewValue}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-        <mat-label>Category 3</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let option of options" [value]="option.value">{{option.viewValue}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-        <mat-label>Category 4</mat-label>
-        <mat-select>
-            <mat-option *ngFor="let option of options" [value]="option.value">{{option.viewValue}}</mat-option>
+            <mat-option *ngFor="let option of status" [value]="option.value">{{option.viewValue}}</mat-option>
         </mat-select>
     </mat-form-field>
 

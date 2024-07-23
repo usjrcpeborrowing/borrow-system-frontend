@@ -1,16 +1,16 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
+import { map, Observable, startWith } from 'rxjs';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Item } from 'src/app/models/Items';
 import { Pagination } from 'src/app/models/Pagination';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
-import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { UserService } from 'src/app/services/user.service';
-import { map, Observable, startWith } from 'rxjs';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 
 export interface Instructor {
   _id: string;
@@ -118,7 +118,7 @@ export class BorrowComponent implements OnInit {
 
   isReads(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'reads' : false;
+    return currentUser ? currentUser.role.includes('reads') && currentUser.role.includes('student') : false;
   }
   searchProduct(event: any) {
     console.log(event);

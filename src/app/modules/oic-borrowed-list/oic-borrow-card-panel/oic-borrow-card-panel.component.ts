@@ -55,4 +55,12 @@ export class OicBorrowCardPanelComponent implements OnInit {
 
     this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: this.status_approved });
   }
+  formatStatus(status: string): string {
+    return status
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
 }
+
+  

@@ -15,14 +15,17 @@ export class BorrowCardPanelComponent implements OnInit {
   status_return: string = 'returned';
   selectAll = false;
 
-  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private borrowedItemService: BorrowedItemsService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
-    // Initialize the selected property for each item
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
-        item.disabled = !['approved', 'pending_return'].includes(item.status) ;
+        item.disabled = !['approved', 'pending_return'].includes(item.status);
       });
       this.cdr.detectChanges();
     }, 0);
@@ -37,11 +40,9 @@ export class BorrowCardPanelComponent implements OnInit {
   }
 
   onItemChange(item: any): void {
-    // If any item is unchecked, uncheck the selectAll checkbox
     if (!item.selected) {
       this.selectAll = false;
     } else {
-      // If all items are checked, check the selectAll checkbox
       this.selectAll = this.items.every((i) => i.selected);
     }
     this.cdr.detectChanges();
@@ -50,34 +51,45 @@ export class BorrowCardPanelComponent implements OnInit {
   releaseItems(status: string) {
     const selected = this.items
       .filter((item) => item.selected)
-      .map((x) => {
-        return {
-          equipment: x.equipment._id,
-          quantity: x.quantity,
-          condition: x.condition,
-          status: status,
-        };
-      });
+      .map((x) => ({
+        equipment: x.equipment._id,
+        quantity: x.quantity,
+        condition: x.condition,
+        status: status,
+      }));
 
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
     } else {
-      this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_released });
+      this.borrowedItemService.changeBorrowStatus.next({
+        borrowedItemId: this.data._id,
+        items: selected,
+        status: this.status_released,
+      });
     }
   }
 
   returnItems(status: string) {
     const selected = this.items
       .filter((item) => item.selected)
-      .map((x) => {
-        return {
-          equipment: x.equipment._id,
-          quantity: x.quantity,
-          condition: x.condition,
-          status: status,
-        };
-      });
+      .map((x) => ({
+        equipment: x.equipment._id,
+        quantity: x.quantity,
+        condition: x.condition,
+        status: status,
+      }));
 
-    this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_return });
+    this.borrowedItemService.changeBorrowStatus.next({
+      borrowedItemId: this.data._id,
+      items: selected,
+      status: this.status_return,
+    });
+  }
+
+  formatStatus(status: string): string {
+    return status
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 }

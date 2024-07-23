@@ -72,6 +72,9 @@ export class AuthService {
       case 'instructor':
         this.router.navigate(['/dashboard/instructor']);
         break;
+      case 'faculty':
+          this.router.navigate(['/dashboard/faculty']);
+          break;
       case 'oic':
         this.router.navigate(['/dashboard/oic']);
         break;

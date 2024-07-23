@@ -95,7 +95,10 @@
   flex-direction: column;
   padding: 10px;
 }
-
+.major-filter{
+  width: 100%;
+  margin-bottom: -8%;
+}
 .card {
   /* flex-grow: 1; */
   /* This makes all divs the same width */

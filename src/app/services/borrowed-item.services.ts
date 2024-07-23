@@ -31,6 +31,20 @@ export class BorrowedItemsService {
     return this.http.post<any>(environment.API_URL + '/api/borroweditems', borrowedItems, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
 
+  getBorrowedItemStatuses() {
+    return this.http.get<{ data: { itemborrowed: { status: string }[] }[] }>(environment.API_URL + '/api/borroweditems', {
+      headers: { Authorization: this.token as string }
+    }).pipe(
+      map(response => {
+        // Flatten the array of statuses
+        return response.data.flatMap((item: { itemborrowed: { status: string }[] }) =>
+          item.itemborrowed.map((borrowed: { status: string }) => borrowed.status)
+        );
+      }),
+      catchError(this.handleError)
+    );
+  }
+  
   updateBorrowedItemStatus(body: any, id: string) {
     return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }

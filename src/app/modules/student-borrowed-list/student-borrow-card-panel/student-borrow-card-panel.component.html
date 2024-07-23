@@ -32,7 +32,7 @@
           <div class="detail-quantity">Qty. {{ item.quantity }}</div>
           <div class="detail-equipment">{{ item.equipment.name }}</div>
           <div class="detail-condition">{{ item.condition }}</div>
-          <div class="detail-status">{{ item.status }}</div>
+          <div class="detail-status">{{ formatStatus(item.status) }}</div>
           <mat-checkbox
             [(ngModel)]="item.selected"
             (change)="onItemChange(item)"
