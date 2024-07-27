@@ -15,17 +15,13 @@ export class BorrowCardPanelComponent implements OnInit {
   status_return: string = 'returned';
   selectAll = false;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private borrowedItemService: BorrowedItemsService,
-    private snackbarService: SnackbarService
-  ) {}
+  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
-        item.disabled = !['approved', 'pending_return'].includes(item.status);
+        item.disabled = !['approved', 'pending_return', 'rejected'].includes(item.status);
       });
       this.cdr.detectChanges();
     }, 0);
@@ -89,7 +85,7 @@ export class BorrowCardPanelComponent implements OnInit {
   formatStatus(status: string): string {
     return status
       .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 }

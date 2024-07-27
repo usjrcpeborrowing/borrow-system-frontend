@@ -1,4 +1,6 @@
-<div class="notification">
-    <button mat-menu-item (click)="directToStudentRequest($event)"> Student requested to borrow !</button>
-
+<div class="notification-wrapper">
+  <div class="notification" *ngFor="let notification of notifications" (click)="navigate()">
+    <div class="notification-type">{{ notification.type }}</div>
+    <div class="notification-message">{{ notification.message }}</div>
+  </div>
 </div>
