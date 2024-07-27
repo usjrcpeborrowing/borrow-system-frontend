@@ -22,11 +22,11 @@
       </div>
       </mat-menu>
       <div class="profileName-header">
-      <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
-          <!-- <span>Hello, {{ currentUser?.name.firstName }} {{ currentUser?.name.lastName }}</span> -->
-          <span>Hello, {{ currentUser?.firstName}}  {{ currentUser?.lastName }}</span>
-      </button>
-  </div>
+        <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
+            <!-- <span>Hello, {{ currentUser?.name.firstName }} {{ currentUser?.name.lastName }}</span> -->
+            <span>Hello, {{ currentUser?.firstName}}  {{ currentUser?.lastName }}</span>
+        </button>
+    </div>
       <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout($event)">Logout</button>
       </mat-menu>

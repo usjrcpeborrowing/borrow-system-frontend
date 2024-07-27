@@ -36,6 +36,52 @@
         
         
     </div>
+    <div class="menu-panel-mobile">
+        <div class="buttons">
+            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons"  (click)="directToInventory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Inventory List
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="showStudentRequests()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
+                    Student Requests
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="showReports()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">report</mat-icon>
+                    Recent Reports
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToItemDetails()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                        Item Details
+                        </div>
+                    </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToHistory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">history</mat-icon>
+                    Reports and History
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToAccounts()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">supervisor_account</mat-icon>
+                    Manage User Accounts
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToSettings()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">settings</mat-icon>
+                    System Settings
+                    </div>
+                </button>
+        </div>
+    </div>
     <div class="contents">
         <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>
         <app-system-reports  *ngIf="showReportsComponent"></app-system-reports>

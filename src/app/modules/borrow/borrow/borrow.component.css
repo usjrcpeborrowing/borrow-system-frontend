@@ -220,10 +220,19 @@ mat-drawer {
     display: block;
     font-size: 20px;
   }
+  .major-filter{
+    width: 100%;
+    margin-bottom: -4%;
+  }
+
 }
 
 @media screen and (max-width: 430px) {
   .title-page {
     font-size: 30px;
+  }
+  .major-filter{
+    width: 100%;
+    margin-bottom: -6%;
   }
 }
