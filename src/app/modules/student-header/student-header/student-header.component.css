@@ -174,4 +174,8 @@ a:hover::after {
     .example-sidenav.closed {
         transform: translateX(100%);
     }
+    .sidenav-button{
+        margin-bottom: 10px;
+        font-size: 25px;
+    }
 }

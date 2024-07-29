@@ -45,7 +45,7 @@ export class HeaderOicComponent implements OnInit {
   }
   requests(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/dashboard/oic']);
+    this.router.navigate(['/faculty-borrowed-list']);
   }
   reports(event: Event): void {
     event.preventDefault();
