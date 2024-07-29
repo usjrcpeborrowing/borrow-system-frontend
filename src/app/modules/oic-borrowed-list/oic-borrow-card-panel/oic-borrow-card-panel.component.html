@@ -36,6 +36,7 @@
           <mat-checkbox
             [(ngModel)]="item.selected"
             (change)="onItemChange(item)"
+            [disabled]="item.disabled"
           ></mat-checkbox>
         </div>
       </div>

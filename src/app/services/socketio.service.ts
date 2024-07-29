@@ -10,11 +10,14 @@ export class SocketioService {
   socket: Socket;
   readonly uri: string = 'ws://localhost:3000';
   constructor() {
-    this.socket = io(this.uri, {
-      query: {
-        userId: this.userId
-      }
-    });
+    this.socket = io(this.uri
+      // , 
+      // {
+      // query: {
+      //   userId: this.userId
+      // }
+    // }
+  );
   }
 
   listen(eventName: string) {

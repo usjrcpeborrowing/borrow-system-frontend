@@ -19,6 +19,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
+        item.disabled = ['approved', 'rejected'].includes(item.status);
       });
       this.cdr.detectChanges();
     }, 0);
@@ -27,7 +28,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
   toggleSelectAll(event: any): void {
     this.selectAll = event.checked;
     this.items.forEach((item) => {
-      item.selected = this.selectAll;
+      if (!item.disabled) item.selected = this.selectAll;
     });
     this.cdr.detectChanges();
   }
@@ -53,14 +54,12 @@ export class OicBorrowCardPanelComponent implements OnInit {
         };
       });
 
-    this.borrowedItemService.changeBorrowStatus.next({borrowedItemId: this.data._id, items: selected, status: this.status_approved });
+    this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_approved });
   }
   formatStatus(status: string): string {
     return status
       .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 }
-
-  

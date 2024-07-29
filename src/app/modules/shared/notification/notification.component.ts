@@ -1,24 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
-import { SocketioService } from 'src/app/services/socketio.service';
+import { NotificationInterface } from 'src/app/models/Notification';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css'],
 })
 export class NotificationComponent implements OnInit {
-  
-  currentUser: any;
-  constructor(private socketIOService: SocketioService ,private authService: AuthService, private router: Router) {}
+  @Input() notifications: NotificationInterface[] = [];
 
-  ngOnInit(): void {
-    
-    this.currentUser = this.authService.getCurrentUser();
-    this.socketIOService.listen('testevent').subscribe((resp) => console.log('socket', resp));
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {}
+
+  navigate(){
+    this.router.navigate(['faculty-borrowed-list'])
   }
-  directToStudentRequest(event: Event): void {
-      this.router.navigate(['/borrowed-list']);
-  }
-  
 }

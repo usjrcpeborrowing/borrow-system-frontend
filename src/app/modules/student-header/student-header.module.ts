@@ -9,6 +9,7 @@ import { StudentHeaderRoutingModule } from './student-header-routing.module';
 import { StudentHeaderComponent } from './student-header/student-header.component';
 
 import { MatMenuModule } from '@angular/material/menu';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    SharedModule
   ],
   exports:[
     StudentHeaderComponent
