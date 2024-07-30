@@ -1,15 +1,15 @@
+.header-menu {
+    display: flex;
+    align-items: center;
+}
+
 .header {
-    height: 10%;
+height: 10%;
     color: white;
     background-color: rgb(62, 112, 62);
-    position: fixed; /* Change position to fixed */
-    top: 0; /* Stick it to the top */
-    width: 100%; /* Make it full-width */
-    z-index: 1000; /* Increase z-index to ensure it stays on top */
+    width: 100%;
 }
-.title{
-    display: flex;
-}
+
 .logo {
     max-width: 4%;
 }
@@ -17,16 +17,10 @@
 .header-content {
     margin-right: 150px;
     line-height: 1;
-    padding-top: 15px;
 }
 
 .sub-text {
     font-size: 12px;
-}
-
-.spacer {
-    flex-grow: 1;
-    min-height: 1em;
 }
 
 .button-header {
@@ -57,4 +51,124 @@ a::after {
 
 a:hover::after {
     width: 100%;
+    }
+
+.button-header-profile {
+    background-color: rgb(62, 112, 62);
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 0px;
+    margin-right: 2%;
+}
+
+.mat-mdc-unelevated-button.mat-unthemed {
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
+.button-header-profile button {
+    display: flex;
+    align-items: center;
+}
+
+.profileName {
+    width: 10%;
+}
+.header-profileName{
+    width: 100%;
+}
+
+.spacer {
+    flex-grow: 1;
+    min-height: 1em;
+}
+
+.not-panel {
+    padding: 10px;
+    width: 15vw;
+}
+
+.menu-icon {
+    display: none;
+    position: absolute;
+    right: 5%;
+}
+
+.close-icon {
+    display: none;
+    position: absolute;
+    right: 5%;
+}
+
+@media screen and (max-width: 1200px) {
+    .logo {
+        max-width: 18%;
+    }
+
+    .title-text,
+    .sub-text {
+        font-size: 0px;
+    }
+
+    .button-header-profile{
+        margin-right: 20%;
+    }
+    .profileName-header{
+        display:none;
+    }
+    .menu-icon {
+        display: block;
+    }
+
+    .close-icon {
+        display: block;
+    }
+
+    .example-sidenav {
+        width: 250px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: rgb(62, 112, 62);
+        transform: translateX(100%);
+    }
+
+    .example-sidenav.open {
+        transform: translateX(0%);
+    }
+
+    .sidenav-header,
+    .sidenav-menu {
+        padding: 16px;
+    }
+
+    .sidenav-header img {
+        max-width: 50%;
+    }
+
+    .sidenav-title-text {
+        margin-left: 16px;
+        font-size: 15px;
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .sidenav-menu a {
+        display: block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #ffffff;
+        transition: background-color 0.3s;
+    }
+
+    .sidenav-menu a:hover {
+        background-color: #7ecf99;
+    }
+
+    .example-sidenav.closed {
+        transform: translateX(100%);
+    }
 }
