@@ -1,5 +1,89 @@
 <app-signup-header></app-signup-header>
 <body>
-    <div class="form-container">
+    <div class="signup-container">
+        <div class="panel-title">
+            <h1>Create Account</h1>
+            <div class="hline"></div>
+        </div>
+        
+        <div class="add-item">
+                    <form class="form-container">
+                        
+                <div class="first-content">
+                    
+            <div class="form-container2">
+                    <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-label>School ID</mat-label>
+                        <input matInput placeholder="School ID" [(ngModel)]="schoolId" name="schoolId">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" placeholder="Email" [(ngModel)]="email" name="email">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-label>Confirm Password</mat-label>
+                        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-label>Role</mat-label>
+                        <mat-select [(value)]="role" name="role">
+                            <mat-option value="faculty">Faculty</mat-option>
+                            <!-- Add other roles as needed -->
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-label>Department</mat-label>
+                        <mat-select [(value)]="department" name="department">
+                            <mat-option value="CPE">CPE</mat-option>
+                            <!-- Add other departments as needed -->
+                        </mat-select>
+                    </mat-form-field>
+
+
+                    </div>
+                    </div>
+                    
+
+                    <div class="second-content">
+                        
+            <div class="form-container2">
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>First Name</mat-label>
+                            <input matInput placeholder="First Name" [(ngModel)]="firstName" name="firstName">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Middle Name</mat-label>
+                            <input matInput placeholder="Middle Name" [(ngModel)]="middleName" name="middleName">
+                        </mat-form-field>
+
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Last Name</mat-label>
+                            <input matInput placeholder="Last Name" [(ngModel)]="lastName" name="lastName">
+                        </mat-form-field>
+
+                        
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Age</mat-label>
+                            <input matInput type="number" placeholder="Age" [(ngModel)]="age" name="age">
+                        </mat-form-field>
+                        <div class="spacer"></div>
+                </div>
+            </div>
+                    </form>
+                    
+        </div>
+
+        <div class="buttons">
+            <div class="edit-button">
+                <button mat-raised-button>Sign Up</button>
+            </div>
+        </div>
     </div>
 </body>

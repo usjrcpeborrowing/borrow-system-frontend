@@ -26,7 +26,7 @@
     margin-left: 15px;
     margin-top: 5px;
     float: left;
-    width: 15%;
+    width: 20%;
     
     height: 65vh;
     padding: 7px;
@@ -36,27 +36,27 @@
 .contents{
     width: 60%;
 }
-.buttons{
-    flex-direction: column;
-}
 .buttons .mat-mdc-raised-button.mat-unthemed{
-    text-align: left;
     margin-bottom: 5px;
+    color: white;
+    background: linear-gradient(to right, rgb(53, 97, 53), #73a773);
     width: 100%;
-    border-radius: 0px;
+    height: 100px;
+    border-radius: 20px;
+    padding-left: 30px;
+    font-size: 17px;
     box-shadow: none;
 }
-.data-panel{
-    margin: 10px;
-    margin-left: 15px;
-    margin-top: 80px;
-    float: left;
-    width: 15%;
-    height: 20vh;
-    padding: 7px;
-    border: 2px solid #45824a;
-    border-radius: 10px;
+.header{
+    
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
+
+.menu-panel-mobile{
+    display: none;
 }
 
 @media screen and (max-width: 1200px) {
@@ -98,19 +98,18 @@
         position: relative;
     }
     .buttons .mat-mdc-raised-button.mat-unthemed{
-        text-align: center;
+        justify-content: center !important;
         margin: 5px;
         color: white;
         background: linear-gradient(to right, rgb(53, 97, 53), #73a773);
         width: 47%;
         height: 150px;
-        padding-left: 40px;
         border-radius: 20px;
+        padding-left: 0px;
         font-size: 13px;
         box-shadow: none;
     }
     .button-text{
-        display: flex;
         flex-direction: column;
     }
     .icon-text{

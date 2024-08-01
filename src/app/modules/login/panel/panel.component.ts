@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -12,7 +12,7 @@ export class PanelComponent {
   accountId: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar) {}
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.logout();
@@ -47,5 +47,9 @@ export class PanelComponent {
         }
       },
     });
+  }
+
+  directToSignup(): void {
+    this.router.navigate(['/signup']);
   }
 }
