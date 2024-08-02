@@ -41,7 +41,7 @@ export class DashboardOicComponent implements OnInit{
     this.router.navigate(['/faculty-borrowed-list']);
   }
   showAccountRequests(): void {
-    this.router.navigate(['/faculty-borrowed-list']);
+    this.router.navigate(['/account-request']);
   }
   showInventoryLevel(): void {
     this.showReportsComponent = false;

@@ -54,6 +54,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'account-request',
+    loadChildren: () => import('./modules/account-request/account-request.module').then((m) => m.AccountRequestModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['oic', 'administrator'],
+    },
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],

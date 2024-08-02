@@ -1,1 +1,21 @@
-<p>account-request works!</p>
+<div class="header">
+    <app-header-oic></app-header-oic>
+</div>
+  <div class="page-title">
+      <!-- <div
+      class="view-category-container clickable"
+      [class.cart-openside]="openedCategory"
+      (click)="categoryClicked()"
+      >
+      <mat-icon>menu</mat-icon>
+      </div> -->
+      
+      <div class="title-page">Account Requests</div>
+  </div>
+  <mat-drawer-container class="example-container">
+  
+  <mat-drawer-content class="x`custom-drawer-itmes">
+      <app-account-request-card></app-account-request-card>
+  </mat-drawer-content>
+  </mat-drawer-container>
+  

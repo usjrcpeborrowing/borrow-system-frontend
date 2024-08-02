@@ -51,8 +51,8 @@ export class HeaderOicComponent implements OnInit {
     event.preventDefault();
     this.router.navigate(['/dashboard/oic']);
   }
-  students(event: Event): void {
+  accounts(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/manage-students']);
+    this.router.navigate(['/account-request']);
   }
 }

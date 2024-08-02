@@ -61,6 +61,10 @@ body{
     margin-top: -8%;
     width: 260px;
 }
+.first-content-form-age{
+    margin-top: -8%;
+    width: 100px;
+}
 .second-content{
     position: relative;
     display: flex;
@@ -157,9 +161,6 @@ body{
     display: flex;
     padding-left: 5%;
     padding-right: 5%;
-}
-.spacer {
-    margin-right: 75%;
 }
 
 

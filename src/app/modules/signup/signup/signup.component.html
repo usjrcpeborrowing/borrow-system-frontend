@@ -7,83 +7,84 @@
         </div>
         
         <div class="add-item">
-                    <form class="form-container">
-                        
+            <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                <div class="form-container">
                 <div class="first-content">
-                    
-            <div class="form-container2">
-                    <mat-form-field appearance="fill" class="first-content-form">
-                        <mat-label>School ID</mat-label>
-                        <input matInput placeholder="School ID" [(ngModel)]="schoolId" name="schoolId">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="first-content-form">
-                        <mat-label>Email</mat-label>
-                        <input matInput type="email" placeholder="Email" [(ngModel)]="email" name="email">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="first-content-form">
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="first-content-form">
-                        <mat-label>Confirm Password</mat-label>
-                        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" class="first-content-form">
-                        <mat-label>Role</mat-label>
-                        <mat-select [(value)]="role" name="role">
-                            <mat-option value="faculty">Faculty</mat-option>
-                            <!-- Add other roles as needed -->
-                        </mat-select>
-                    </mat-form-field>
-
-
-                    <mat-form-field appearance="fill" class="first-content-form">
-                        <mat-label>Department</mat-label>
-                        <mat-select [(value)]="department" name="department">
-                            <mat-option value="CPE">CPE</mat-option>
-                            <!-- Add other departments as needed -->
-                        </mat-select>
-                    </mat-form-field>
-
-
-                    </div>
-                    </div>
-                    
-
-                    <div class="second-content">
+                    <div class="form-container2">
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>School ID</mat-label>
+                            <input matInput placeholder="School ID" formControlName="schoolId">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Email</mat-label>
+                            <input matInput type="email" placeholder="Email" formControlName="email">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Password</mat-label>
+                            <input matInput type="password" placeholder="Password" formControlName="password">
+                            <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+                                Password is required
+                            </mat-error>
+                            <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+                                Password must be at least 12 characters long
+                            </mat-error>
+                        </mat-form-field>
                         
-            <div class="form-container2">
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Confirm Password</mat-label>
+                            <input matInput type="password" placeholder="Confirm Password" formControlName="confirmPassword">
+                            <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required')">
+                                Confirm Password is required
+                            </mat-error>
+                            <mat-error *ngIf="signupForm.errors?.['mismatch']">
+                                Passwords do not match
+                            </mat-error>
+                        </mat-form-field>
+                        
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Role</mat-label>
+                            <mat-select formControlName="role">
+                                <mat-option value="faculty">Faculty</mat-option>
+                                <!-- Add other roles as needed -->
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="first-content-form">
+                            <mat-label>Department</mat-label>
+                            <mat-select formControlName="department">
+                                <mat-option value="CPE">CPE</mat-option>
+                                <!-- Add other departments as needed -->
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="second-content">
+                    <div class="form-container2">
                         <mat-form-field appearance="fill" class="first-content-form">
                             <mat-label>First Name</mat-label>
-                            <input matInput placeholder="First Name" [(ngModel)]="firstName" name="firstName">
+                            <input matInput placeholder="First Name" formControlName="firstName">
                         </mat-form-field>
-
                         <mat-form-field appearance="fill" class="first-content-form">
-                            <mat-label>Middle Name</mat-label>
-                            <input matInput placeholder="Middle Name" [(ngModel)]="middleName" name="middleName">
+                            <mat-label>Middle Initial</mat-label>
+                            <input matInput placeholder="Middle Name" formControlName="middleName">
                         </mat-form-field>
-
                         <mat-form-field appearance="fill" class="first-content-form">
                             <mat-label>Last Name</mat-label>
-                            <input matInput placeholder="Last Name" [(ngModel)]="lastName" name="lastName">
+                            <input matInput placeholder="Last Name" formControlName="lastName">
                         </mat-form-field>
-
-                        
-                        <mat-form-field appearance="fill" class="first-content-form">
+                        <mat-form-field appearance="fill" class="first-content-form-age">
                             <mat-label>Age</mat-label>
-                            <input matInput type="number" placeholder="Age" [(ngModel)]="age" name="age">
+                            <input matInput type="number" placeholder="Age" formControlName="age">
                         </mat-form-field>
-                        <div class="spacer"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="buttons">
+                <div class="edit-button">
+                    <button mat-raised-button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
                 </div>
             </div>
-                    </form>
-                    
-        </div>
-
-        <div class="buttons">
-            <div class="edit-button">
-                <button mat-raised-button>Sign Up</button>
-            </div>
+            </form>
         </div>
     </div>
 </body>

@@ -1,0 +1,119 @@
+mat-card-content p {
+    margin-bottom: 0.2em;
+}
+
+
+.detail-name {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.detail-value {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.detail-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.detail-quantity {
+    
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 10%;
+}
+
+.detail-select {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.detail-equipment {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 50%;
+}
+
+.detail-condition {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 25%;
+}
+
+.detail-status {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    width: 13%;
+}
+
+.detail-value,
+.detail-date {
+    margin-right: 10px;
+    font-size: 15px;
+}
+.item-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-row {
+    
+    position: relative;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.last-item .item-row {
+    margin-bottom: 0;
+}
+.borrowed-items-class{
+    font-size: 16px;
+}
+
+.hline {
+    position: relative;
+    width: 100%;
+    border: none;
+    margin-top: -13px;
+}
+.hline:after {
+    content: '';
+    border-top: 1px solid rgb(46, 125, 70);
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.report-button .mat-mdc-raised-button.mat-unthemed {
+    display: flex;
+    max-width: 100px;
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: rgb(62, 112, 62);
+    color: white;
+}
+
+.spacer {
+    width: 95%;
+}
+
+.button-content{
+    margin-top: 20px;
+    display: flex;
+}
+.checkbox-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}

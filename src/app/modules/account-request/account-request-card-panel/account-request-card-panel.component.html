@@ -1,0 +1,54 @@
+<mat-card appearance="outlined">
+    <mat-card-content class="panel-description">
+      <div>
+        <div mat-card-title class="detail-name">
+          {{ data.borrower.firstName + " " + data.borrower.lastName }}
+        </div>
+        <div mat-card-title class="detail-name">
+          | ID: {{ data.borrower.schoolId }}
+        </div>
+      </div>
+  
+      <div mat-card-title class="detail-info">
+        <div class="borrowed-items-class">New Account</div>
+        <div class="detail-date">
+          {{ data.dateborrowed | date : "mediumDate" }}
+        </div>
+      </div>
+      <div class="hline"></div>
+      <div class="checkbox-container">
+        <mat-checkbox
+          [(ngModel)]="selectAll"
+          (change)="toggleSelectAll($event)"
+        ></mat-checkbox>
+      </div>
+      <div class="item-container">
+        <div
+          *ngFor="let item of items; let i = index"
+          [class.last-item]="i === items.length - 1"
+        >
+          <div class="item-row">
+            <div class="detail-quantity">Qty. {{ item.quantity }}</div>
+            <div class="detail-equipment">{{ item.equipment.name }}</div>
+            <div class="detail-condition">{{ item.condition }}</div>
+            <div class="detail-status">{{ formatStatus(item.status) }}</div>
+            <mat-checkbox
+              [(ngModel)]="item.selected"
+              (change)="onItemChange(item)"
+              [disabled]="item.disabled"
+            ></mat-checkbox>
+          </div>
+        </div>
+      </div>
+  
+      <div class="button-content">
+        <span class="spacer"></span>
+        <div class="report-button">
+          <button mat-raised-button (click)="approvedItems(status_approved)">
+            Approve
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
