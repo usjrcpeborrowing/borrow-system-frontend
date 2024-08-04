@@ -15,7 +15,6 @@ body{
     height: 100%;
     background-color: #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
-    
 }
 .spacer{
     margin-bottom: 6%;
@@ -35,7 +34,17 @@ body{
     width: 95%;
     font-weight: 700;
 }
-
+.title-page{
+    font-size: 39px;
+    line-height: 1;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 2%;
+    
+}
 .hline {
     width: 100%;
     padding-left: 10px;
@@ -58,11 +67,11 @@ body{
     width: 50%;
 }
 .first-content-form{
-    margin-top: -8%;
+    margin-top: -6%;
     width: 260px;
 }
 .first-content-form-age{
-    margin-top: -8%;
+    margin-top: -6%;
     width: 100px;
 }
 .second-content{
@@ -79,6 +88,14 @@ body{
 .panel-title{
     margin: 3%;
 }
+
+.header{
+    
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
 .header-form{
     font-size: large;
 }
@@ -169,4 +186,38 @@ body{
     z-index: 11;
     display: flex;
     align-items: center;
+}
+
+@media screen and (max-width: 1200px) {
+    .signup-container{
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: 0 0px rgba(0, 0, 0, 0.35);
+        
+    }
+    .first-content{
+        width: 90%;
+        margin: 5%;
+    }
+    .second-content{
+        width: 90%;
+        margin: 5%;
+    }
+    .first-content-form{
+        margin-top: -4%;
+        width: 100%;
+    }
+    
+    .first-content-form-age{
+        margin-top: -4%;
+        width: 50%;
+        margin-bottom: -5%;
+    }
+    .form-container{
+        display:block;
+    }
+    .edit-button{
+        margin-bottom: 10%;
+    }
 }
