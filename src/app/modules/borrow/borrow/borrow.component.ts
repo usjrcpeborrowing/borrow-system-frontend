@@ -11,6 +11,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { User } from 'src/app/models/User';
 
 export interface Instructor {
   _id: string;
@@ -48,7 +49,7 @@ export class BorrowComponent implements OnInit {
   keyword = new FormControl('');
   instructorlist: any[] = [];
   filteredInstructor!: Observable<Instructor[]>;
-  selectedInstructor:string = '';
+  selectedInstructor: string = '';
   //
 
   options: string[] = ['One', 'Two', 'Three'];
@@ -73,7 +74,8 @@ export class BorrowComponent implements OnInit {
     location: '',
   };
   currentUserRole: any;
-  userId:string = ''
+  user: any;
+  userId: string = '';
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
@@ -81,15 +83,16 @@ export class BorrowComponent implements OnInit {
     private router: Router,
     private borrowedItemsService: BorrowedItemsService,
     private _snackBar: MatSnackBar,
-    private userService: UserService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     const rolesString = localStorage.getItem('roles');
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
+    this.user = this.authService.getCurrentUser();
     this.userId = this.authService.getCurrentUser()?._id as string;
-    this.userService.getDeparmentFaculty('CPE', '').subscribe({
+    this.userService.getDeparmentFaculty(this.user.department[0], '').subscribe({
       next: (resp) => {
         this.instructorlist = resp.data;
         this.keyword.setValue('');
@@ -262,6 +265,16 @@ export class BorrowComponent implements OnInit {
       alert('Cart is Empty');
       return;
     }
+
+    console.log(
+      this.addedEquipment.map((eq) => {
+        return {
+          equipment: eq._id,
+          quantity: eq.quantity,
+          condition: eq.remarks,
+        };
+      })
+    );
 
     this.isFetching = true;
     let body = {

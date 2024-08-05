@@ -29,9 +29,9 @@ export class BorrowEquipmentCardComponent implements OnInit {
   addEquipment() {
     // this.equipmentService.productSubject.next(this.equipment);
 
-    if (!this.item.inventorytype || this.item.inventorytype === 'nonInventory') {
-      this.item.quantity = 1;
-    }
+    // if (!this.item.inventorytype || this.item.inventorytype === 'nonInventory') {
+    //   this.item.quantity = 1;
+    // }
     this.addToCart.emit(this.equipmentlist);
     this._snackbar.open('Item Added Successful', '', {
       horizontalPosition: 'center',

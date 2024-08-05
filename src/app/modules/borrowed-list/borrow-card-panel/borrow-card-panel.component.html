@@ -29,9 +29,27 @@
         [class.last-item]="i === items.length - 1"
       >
         <div class="item-row">
-          <div class="detail-quantity">Qty. {{ item.quantity }}</div>
+          <div class="detail-quantity">{{ item.quantity }}</div>
           <div class="detail-equipment">{{ item.equipment.name }}</div>
-          <div class="detail-condition">{{ item.condition }}</div>
+          <div class="detail-condition">
+            <mat-form-field>
+              <mat-select
+                [(ngModel)]="item.condition"
+                (selectionChange)="onItemStatusChange(item.condition)"
+              >
+                <mat-option
+                  *ngFor="let status of equipmentStatus"
+                  [value]="status"
+                >
+                  {{ status }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Remarks</mat-label>
+              <input matInput [(ngModel)]="item.remarks" />
+            </mat-form-field>
+          </div>
           <div class="detail-status">{{ formatStatus(item.status) }}</div>
           <mat-checkbox
             [(ngModel)]="item.selected"
@@ -43,7 +61,11 @@
     </div>
 
     <div class="action-wrapper">
-      <button class="report-button" mat-raised-button (click)="releaseItems(status_released)">
+      <button
+        class="report-button"
+        mat-raised-button
+        (click)="releaseItems(status_released)"
+      >
         Release
       </button>
       <button mat-raised-button (click)="returnItems(status_return)">

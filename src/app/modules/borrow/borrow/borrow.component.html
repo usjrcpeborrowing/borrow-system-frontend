@@ -16,7 +16,6 @@
   </ng-template>
 </ng-template>
 
-
 <div class="page-title">
   <div
     class="view-category-container clickable"
@@ -97,12 +96,14 @@
             <mat-spinner></mat-spinner>
           </div>
           <ng-template #display>
-            <app-added-equipment-card
-              *ngFor="let equipment of addedEquipment"
-              [equipmentlist]="equipment"
-              (toggleInCart)="toggleItemInCart($event)"
-              (removeFromCart)="removeItemFromAddedEquipment($event)"
-            ></app-added-equipment-card>
+            <div class="borrowed-items-wrapper">
+              <app-added-equipment-card
+                *ngFor="let equipment of addedEquipment"
+                [equipment]="equipment"
+                (toggleInCart)="toggleItemInCart($event)"
+                (removeFromCart)="removeItemFromAddedEquipment($event)"
+              ></app-added-equipment-card>
+            </div>
           </ng-template>
           <div class="class-detail">
             <form>
@@ -130,7 +131,7 @@
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
-              <mat-form-field  class="major-filter">
+              <mat-form-field class="major-filter">
                 <mat-label>Class Name</mat-label>
                 <input matInput type="text" [formControl]="className" />
               </mat-form-field>

@@ -58,7 +58,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/account-request/account-request.module').then((m) => m.AccountRequestModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['oic', 'administrator'],
+      roles: ['oic', 'administrator', 'faculty'],
     },
   },
   {

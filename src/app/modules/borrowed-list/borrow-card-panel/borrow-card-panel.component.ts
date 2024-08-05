@@ -1,19 +1,22 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-
+import { Constants } from 'src/app/models/Constant';
 @Component({
   selector: 'app-borrow-card-panel',
   templateUrl: './borrow-card-panel.component.html',
   styleUrls: ['./borrow-card-panel.component.css'],
 })
-export class BorrowCardPanelComponent implements OnInit {
+export class BorrowCardPanelComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];
   @Input() data: any;
 
+  equipmentStatus = Constants.equipmentStatus;
+  selectedStatus = '';
   status_released: string = 'released';
   status_return: string = 'returned';
   selectAll = false;
+  remarks: string = 'haha';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
@@ -22,10 +25,13 @@ export class BorrowCardPanelComponent implements OnInit {
       this.items.forEach((item) => {
         item.selected = false;
         item.disabled = !['approved', 'pending_return', 'rejected'].includes(item.status);
+        console.log('remarrrsss', item.remarks);
       });
       this.cdr.detectChanges();
     }, 0);
   }
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   toggleSelectAll(event: any): void {
     this.selectAll = event.checked;
@@ -44,6 +50,10 @@ export class BorrowCardPanelComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  onItemStatusChange(index: any) {
+    console.log(index);
+  }
+
   releaseItems(status: string) {
     const selected = this.items
       .filter((item) => item.selected)
@@ -52,8 +62,10 @@ export class BorrowCardPanelComponent implements OnInit {
         quantity: x.quantity,
         condition: x.condition,
         status: status,
+        remarks: x.remarks,
       }));
 
+    console.log(selected);
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
     } else {
@@ -73,7 +85,10 @@ export class BorrowCardPanelComponent implements OnInit {
         quantity: x.quantity,
         condition: x.condition,
         status: status,
+        remarks: x.remarks,
       }));
+
+    console.log(this.items);
 
     this.borrowedItemService.changeBorrowStatus.next({
       borrowedItemId: this.data._id,
