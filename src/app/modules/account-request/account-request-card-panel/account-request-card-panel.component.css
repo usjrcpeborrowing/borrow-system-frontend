@@ -21,12 +21,12 @@ mat-card-content p {
     margin-bottom: 10px;
 }
 
-.detail-quantity {
+.detail-id {
     
     position: relative;
     display: inline-flex;
     align-items: center;
-    width: 10%;
+    width: 20%;
 }
 
 .detail-select {
@@ -35,26 +35,13 @@ mat-card-content p {
     align-items: center;
 }
 
-.detail-equipment {
+.detail-name {
     position: relative;
     display: inline-flex;
     align-items: center;
-    width: 50%;
+    width: 100%;
 }
 
-.detail-condition {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 25%;
-}
-
-.detail-status {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 13%;
-}
 
 .detail-value,
 .detail-date {
@@ -77,7 +64,7 @@ mat-card-content p {
     margin-bottom: 0;
 }
 .borrowed-items-class{
-    font-size: 16px;
+    font-size: 24px;
 }
 
 .hline {
@@ -116,4 +103,13 @@ mat-card-content p {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 10px;
+}
+
+@media screen and (max-width: 1200px) {
+    .item-container{
+        font-size: 12px;
+    }
+    .detail-id {
+        width: 34%;
+    }
 }

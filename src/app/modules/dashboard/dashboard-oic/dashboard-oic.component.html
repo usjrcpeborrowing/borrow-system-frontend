@@ -1,4 +1,6 @@
+<div class="header">
 <app-header-oic></app-header-oic>
+</div>
 <h1 class="page-title">Dashboard <div class="hline"></div></h1>
 <div class="dashboard-content">
     
@@ -34,7 +36,53 @@
                     </button>
         </div>
         
-        
+    </div>
+    <div class="menu-panel-mobile">
+        <div class="buttons">
+                
+        <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToInventory()">
+            <div class="button-text">
+                <mat-icon class="icon-text">inbox</mat-icon>
+                Inventory
+                </div>
+            </button>
+                <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToItemDetails()">
+                    <div class="button-text">
+                        <mat-icon class="icon-text">inbox</mat-icon>
+                        Item Details
+                        </div>
+                    </button>
+            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons" (click)="showStudentRequests()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
+                    Item Requests
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons" (click)="showAccountRequests()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
+                    Account Requests
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="showReports()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">report</mat-icon>
+                        Reports
+                        </div>
+                    </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToHistory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">history</mat-icon>
+                    History
+                    </div>
+                </button>
+                <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToManageStudents()">
+                    <div class="button-text">
+                        <mat-icon class="icon-text">supervisor_account</mat-icon>
+                        Manage Students
+                        </div>
+                    </button>
+        </div>
     </div>
     <div class="contents">
         <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>
