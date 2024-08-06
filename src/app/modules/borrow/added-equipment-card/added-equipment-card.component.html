@@ -11,18 +11,18 @@
 
   <div class="item-name">{{ equipment.name }}</div>
   <div class="item-qty">
-    <span>{{ equipment.quantity }}</span>
+    <span>{{ quantity }}</span>
     <button
       mat-icon-button
       (click)="decreaseQuantity()"
-      [disabled]="equipment.quantity == 1"
+      [disabled]="length == 1"
     >
       <mat-icon>remove</mat-icon>
     </button>
     <button
       mat-icon-button
       (click)="increaseQuantity()"
-      [disabled]="equipment.quantity == 1"
+      [disabled]="length == 1"
     >
       <mat-icon>add</mat-icon>
     </button>

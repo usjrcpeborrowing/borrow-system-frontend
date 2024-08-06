@@ -72,28 +72,11 @@ export class EquipmentService {
     return this.http.get(environment.API_URL + '/api/equipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
 
-  // getItems(pagination: Pagination, filters: any): Observable<any> {
-
-  //   console.log('Fetching items with params:', pagination, filters);
-  //   let params = new HttpParams()
-  //     .set('page', pagination.page.toString())
-  //     .set('limit', pagination.limit.toString());
-
-  //   if (filters) {
-  //     Object.keys(filters).forEach(key => {
-  //       if (filters[key]) {
-  //         params = params.set(key, filters[key]);
-  //       }
-  //     });
-  //   }
-
-  //   return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(
-  //     map(response => {
-  //       return response;
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-  // }
+  getAvailableEquipment(pagination: Pagination, filters: InventoryFilter): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('department', filters.department);
+    return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+  }
 
   searchEquipment(searchTerm: string, filters: any): Observable<any> {
     let params = new HttpParams().set('search', searchTerm);

@@ -44,7 +44,10 @@
 .text-wrapper .brand {
   font-size: 13px;
   color: #3d3b3b;
-  padding-left: 10px;
+  padding: 0 5%;
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .action-wrapper {

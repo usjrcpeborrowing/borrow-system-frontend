@@ -9,12 +9,16 @@
   </div>
   <div class="text-wrapper">
     <div class="item-name">{{ equipmentlist.name }}</div>
-    <div class="brand">{{ equipmentlist.brand }}</div>
+    <div class="brand">
+      <span>{{ equipmentlist.brand }}</span>
+      <span>Qty: {{ equipmentlist.quantity }}</span>
+    </div>
   </div>
   <div class="action-wrapper">
-    
     <div class="detail-button">
-      <button mat-flat-button  mat-raised-button (click)="viewItemDetails()">DETAIL</button>
+      <button mat-flat-button mat-raised-button (click)="viewItemDetails()">
+        DETAIL
+      </button>
     </div>
     <div class="add-button">
       <button mat-flat-button (click)="addEquipment()">ADD</button>

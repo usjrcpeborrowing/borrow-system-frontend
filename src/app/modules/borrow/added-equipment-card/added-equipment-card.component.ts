@@ -11,10 +11,11 @@ export class AddedEquipmentCardComponent implements OnChanges {
   @Output() removeFromCart = new EventEmitter<Item>();
   @Output() updateQuantity = new EventEmitter<{ item: Item; quantity: number }>();
   @Output() toggleInCart = new EventEmitter<Item>();
-  quantity: number = 0;
+  quantity: number = 1;
+  length: number = 0;
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (this.equipment.quantity) this.quantity = this.equipment.quantity;
+    if (this.equipment.quantity) this.length = this.equipment.quantity;
   }
 
   removeItem() {
@@ -22,16 +23,19 @@ export class AddedEquipmentCardComponent implements OnChanges {
   }
 
   increaseQuantity() {
-    if (this.equipment.quantity < this.quantity) {
-      this.equipment.quantity++;
-      this.updateQuantity.emit({ item: this.equipment, quantity: this.equipment.quantity });
+    if (this.quantity < this.length) {
+      this.quantity++;
+      if (this.length > this.equipment.quantity) this.equipment.quantity++;
+      this.updateQuantity.emit({ item: this.equipment, quantity: this.quantity });
     }
   }
 
   decreaseQuantity() {
-    if (this.equipment.quantity > 1) {
+    if (this.quantity > 1) {
+      this.quantity--;
       this.equipment.quantity--;
-      this.updateQuantity.emit({ item: this.equipment, quantity: this.equipment.quantity });
+
+      this.updateQuantity.emit({ item: this.equipment, quantity: this.quantity });
     }
   }
 

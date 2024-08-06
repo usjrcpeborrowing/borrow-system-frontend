@@ -228,7 +228,7 @@ export class BorrowComponent implements OnInit {
   }
   getEquipmentList() {
     this.isFetching = true;
-    this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
+    this.equipmentService.getAvailableEquipment(this.pagination, this.inventoryFilter).subscribe((resp) => {
       this.isFetching = false;
       this.noItems = true;
       this.equipmentlist = resp.data;
@@ -276,7 +276,7 @@ export class BorrowComponent implements OnInit {
       })
     );
 
-    this.isFetching = true;
+    // this.isFetching = true;
     let body = {
       itemborrowed: this.addedEquipment.map((eq) => {
         return {
@@ -289,6 +289,8 @@ export class BorrowComponent implements OnInit {
       instructor: this.selectedInstructor,
       className: this.className.value,
     };
+
+    console.log(body)
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');

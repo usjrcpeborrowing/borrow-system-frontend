@@ -11,6 +11,23 @@ export class HeaderOicComponent implements OnInit {
   currentUser: any;
   notification_count: number = 0;
   notification_messages: string[] = [];
+  navigations = {
+    oic: [
+      {
+        name: 'dashboard',
+        url: '/dashboard/oic',
+      },
+      {
+        name: 'inventory',
+        url: '/inventory',
+      },
+      {
+        name: 'history',
+        url: '/history/oic',
+      },
+    ],
+  };
+
   constructor(private authService: AuthService, private router: Router, private socketIOService: SocketioService) {}
 
   ngOnInit(): void {

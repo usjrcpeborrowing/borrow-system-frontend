@@ -6,10 +6,8 @@
   </div>
 
     <div class="button-header">
-      <a href="" (click)="dashboard($event)">Dashboard</a>
-      <a href="" (click)="inventory($event)">Inventory</a>
-      <a href="" (click)="requests($event)">Requests</a>
-      <a href="" (click)="accounts($event)">Accounts</a>
+      <a *ngFor="let nav of navigations.oic" [routerLink]="nav.url">{{nav.name}}</a>
+      
     </div>
     <div class="spacer"></div>
     <div class="button-header-profile">
