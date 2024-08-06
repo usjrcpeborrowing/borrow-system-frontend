@@ -59,11 +59,11 @@ body {
   border-bottom-color: var(--mdc-theme-primary, rgb(62, 112, 62));
 }
 
-.mdc-text-field {
+.mdc-text-fields {
   border-top-left-radius: var(--mdc-shape-small, 0px);
   border-top-right-radius: var(--mdc-shape-small, 0px);
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
   display: inline-flex;
   align-items: baseline;
   padding: 0 16px;
