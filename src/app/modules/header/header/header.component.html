@@ -1,35 +1,63 @@
-
 <mat-toolbar class="header">
-    <img src="/assets/USJR1.png" class="logo">
-<div class="header-content">
-    <div class="title-text">University of San Jose - Recoletos</div>
-    <div class="sub-text">Laboratory Borrowing System</div>
-</div>
-
-<span>
-    <div class="button-header">
-        <a href="" (click)="dashboard($event)">Dashboard</a>
-        <a href="" (click)="inventory($event)">Browse Items</a>
-        <a href="" (click)="history($event)">History</a>
+    <img src="/assets/USJR1.png" class="logo" />
+    <div class="header-content">
+      <div class="title-text">University of San Jose - Recoletos</div>
+      <div class="sub-text">Laboratory Borrowing System</div>
     </div>
-</span>
-<div class="spacer"></div>
-<span>
-    <div class="button-header-profile">
-        <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
-            <mat-icon>notifications</mat-icon>
+  
+      
+        <div class="spacer1" *ngIf="currentNavigations.length === 0"></div>
+        <div class="button-header" *ngIf="currentNavigations.length > 0">
+            <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url">{{ nav.name }}</a>
+        </div>
+      <div class="spacer"></div>
+      <div class="button-header-profile" >
+        <button mat-icon-button [matMenuTriggerFor]="notificationMenu"  *ngIf="currentNavigations.length > 0">
+            <mat-icon>notifications</mat-icon> <!-- Use 'notifications' for a generic notifications icon -->
         </button>
-        <mat-menu #notificationMenu="matMenu">
+        <mat-menu #notificationMenu="matMenu" >
             <div class="not-panel">
             <h3>Notification</h3>
         </div>
         </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName">
-            <span>Hello, {{ this.currentUser.firstName }}</span>
-        </button>
+        <div class="profileName-header">
+          <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName"  *ngIf="currentNavigations.length > 0">
+              <!-- <span>Hello, {{ currentUser?.name.firstName }} {{ currentUser?.name.lastName }}</span> -->
+              <span>Hello, {{ currentUser?.firstName}}  {{ currentUser?.lastName }}</span>
+          </button>
+      </div>
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="logout($event)">Logout</button>
         </mat-menu>
     </div>
-</span>
-</mat-toolbar>
+    <button mat-icon-button class="menu-icon" (click)="sidenav.toggle()" *ngIf="currentNavigations.length > 0">
+      <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="button-header" *ngIf="currentNavigations.length === 0">
+    <a [routerLink]="'/login'">Login</a>
+</div>
+  </mat-toolbar>
+  
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav class="example-sidenav" mode="side">
+        <button mat-icon-button class="close-icon" (click)="sidenav.toggle()">
+            <mat-icon>close</mat-icon>
+        </button>
+        <div class="sidenav-header">
+            <img src="/assets/USJR1.png" class="sidenav-logo">
+            
+            <div class="sidenav-title-text">
+                    <button mat-icon-button [matMenuTriggerFor]="menu"  class="header-profileName">
+                    <!-- <span>Hello, {{ currentUser?.name.firstName }} {{ currentUser?.name.lastName }}</span> -->
+                    <span>Hello, {{ currentUser?.firstName}}  {{ currentUser?.lastName }}</span>
+                </button>
+            </div>
+        </div>
+        <div class="sidenav-menu">
+            <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url">{{ nav.name }}</a>
+        </div>
+    </mat-sidenav>
+  
+  </mat-sidenav-container>
+  
