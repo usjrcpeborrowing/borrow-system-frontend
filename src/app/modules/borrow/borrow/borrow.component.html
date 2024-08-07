@@ -1,20 +1,3 @@
-<ng-container *ngIf="isFaculty(); else headerReads">
-  <div class="header">
-    <app-header></app-header>
-  </div>
-</ng-container>
-<ng-template #headerReads>
-  <ng-container *ngIf="isReads(); else studentHeader">
-    <div class="header">
-      <app-header-reads></app-header-reads>
-    </div>
-  </ng-container>
-  <ng-template #studentHeader>
-    <div class="header">
-      <app-student-header></app-student-header>
-    </div>
-  </ng-template>
-</ng-template>
 
 <div class="page-title">
   <div

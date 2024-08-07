@@ -1,19 +1,4 @@
-<ng-container *ngIf="isAdmin(); else readsHeader">
-  <app-admin-header></app-admin-header>
-</ng-container>
-<ng-template #readsHeader>
-  <ng-container *ngIf="isReads(); else oicHeader">
-    <app-header-reads></app-header-reads>
-  </ng-container>
-</ng-template>
-<ng-template #oicHeader>
-  <ng-container *ngIf="isOic(); else regularHeader">
-    <app-header-oic></app-header-oic>
-  </ng-container>
-</ng-template>
-<ng-template #regularHeader>
-  <app-header></app-header>
-</ng-template>
+
 
 <div>
   <h1 class="page-title">
