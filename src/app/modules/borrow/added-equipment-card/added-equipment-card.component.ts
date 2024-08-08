@@ -25,17 +25,17 @@ export class AddedEquipmentCardComponent implements OnChanges {
   increaseQuantity() {
     if (this.quantity < this.length) {
       this.quantity++;
-      if (this.length > this.equipment.quantity) this.equipment.quantity++;
-      this.updateQuantity.emit({ item: this.equipment, quantity: this.quantity });
+      this.equipment.quantity = this.quantity;
+      // if (this.length > this.equipment.quantity) this.equipment.quantity++;
+      // this.updateQuantity.emit({ item: this.equipment, quantity: this.quantity });
     }
   }
 
   decreaseQuantity() {
     if (this.quantity > 1) {
       this.quantity--;
-      this.equipment.quantity--;
-
-      this.updateQuantity.emit({ item: this.equipment, quantity: this.quantity });
+      this.equipment.quantity = this.quantity;
+      // this.updateQuantity.emit({ item: this.equipment, quantity: this.quantity });
     }
   }
 
