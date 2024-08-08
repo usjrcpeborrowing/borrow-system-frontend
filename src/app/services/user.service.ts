@@ -24,12 +24,19 @@ export class UserService {
       Authorization: this.token as string,
     };
 
-    return this.http.post<any>(environment.API_URL + '/api/users', user).pipe(
+    return this.http.post<any>(environment.API_URL + '/api/signup', user).pipe(
       tap((data) => console.log('User added:', data)),
       catchError(this.handleError)
     );
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));
+  }
+  getUsers(): Observable<any> {
+    
+    return this.http.get<any>(environment.API_URL + '/api/users', {
+      headers: { Authorization: this.token as string },
+    })
+    .pipe(catchError(this.handleError));
   }
 }

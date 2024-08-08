@@ -3,8 +3,11 @@
 <div class="scrollable-panel">
   <div class="table-content">
       <ng-container matColumnDef="itemPanel">
+        <div *ngFor="let user of users">
+          <app-account-request-card-panel [data]="user"></app-account-request-card-panel>
+        </div>
         <div>
-          <app-account-request-card-panel></app-account-request-card-panel>
+          
         </div>
       </ng-container>
     <ng-template #noResults>

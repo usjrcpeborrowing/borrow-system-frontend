@@ -247,7 +247,11 @@ export class EquipmentService {
   }
 
   getUsers(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/users').pipe(catchError(this.handleError));
+    
+    return this.http.get<any>(environment.API_URL + '/api/users', {
+      headers: { Authorization: this.token as string },
+    })
+    .pipe(catchError(this.handleError));
   }
   getUserTypes(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/usertypes').pipe(catchError(this.handleError));
