@@ -42,7 +42,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/student-borrowed-list/student-borrowed-list.module').then((m) => m.StudentBorrowedListModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['student', 'reads'],
+      roles: ['student', 'reads', 'faculty'],
     },
   },
   {

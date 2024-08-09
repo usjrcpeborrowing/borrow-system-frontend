@@ -36,6 +36,7 @@
               <mat-select
                 [(ngModel)]="item.condition"
                 (selectionChange)="onItemStatusChange(item.condition)"
+                [disabled]="item.disabled"
               >
                 <mat-option
                   *ngFor="let status of equipmentStatus"
@@ -47,7 +48,11 @@
             </mat-form-field>
             <mat-form-field>
               <mat-label>Remarks</mat-label>
-              <input matInput [(ngModel)]="item.remarks" />
+              <input
+                matInput
+                [(ngModel)]="item.remarks"
+                [disabled]="item.disabled"
+              />
             </mat-form-field>
           </div>
           <div class="detail-status">{{ formatStatus(item.status) }}</div>

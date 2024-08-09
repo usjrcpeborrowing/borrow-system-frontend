@@ -19,7 +19,8 @@ export class OicBorrowCardPanelComponent implements OnInit {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
-        item.disabled = ['approved', 'rejected'].includes(item.status);
+        // item.disabled = ['approved', 'rejected'].includes(item.status);
+        item.disabled = item.status !== 'pending_approval'
       });
       this.cdr.detectChanges();
     }, 0);

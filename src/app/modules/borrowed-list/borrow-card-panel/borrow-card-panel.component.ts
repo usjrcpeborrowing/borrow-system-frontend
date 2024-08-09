@@ -24,7 +24,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
-        item.disabled = !['approved', 'pending_return', 'rejected'].includes(item.status);
+        item.disabled = !['approved', 'pending_return'].includes(item.status);
         console.log('remarrrsss', item.remarks);
       });
       this.cdr.detectChanges();
