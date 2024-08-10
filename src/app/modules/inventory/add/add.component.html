@@ -80,11 +80,23 @@
             <mat-label>Serial No.</mat-label>
             <input matInput formControlName="serialNo" autocomplete="off" />
           </mat-form-field>
+          <mat-form-field class="serialNo" floatLabel="always">
+            <mat-label>Model No.</mat-label>
+            <input matInput formControlName="modelNo" autocomplete="off" />
+          </mat-form-field>
+          <mat-form-field class="serialNo" floatLabel="always">
+            <mat-label>Quantity</mat-label>
+            <input matInput formControlName="quantity" autocomplete="off" />
+          </mat-form-field>
+          <mat-form-field class="serialNo" floatLabel="always">
+            <mat-label>Unit</mat-label>
+            <input matInput formControlName="unit" autocomplete="off" />
+          </mat-form-field>
           <mat-form-field class="addMatter" floatLabel="always">
             <mat-label>Matter Type</mat-label>
             <mat-select formControlName="matter">
-              <mat-option *ngFor="let matter of matters" [value]="matter.value">
-                {{ matter.viewValue }}
+              <mat-option *ngFor="let matter of matters" [value]="matter">
+                {{ matter }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -93,9 +105,9 @@
             <mat-select formControlName="inventorytype">
               <mat-option
                 *ngFor="let inventorytype of inventorytypes"
-                [value]="inventorytype.value"
+                [value]="inventorytype"
               >
-                {{ inventorytype.viewValue }}
+                {{ inventorytype }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -110,10 +122,10 @@
         <h1 class="header-form">Item Status</h1>
         <div class="form-container">
           <mat-form-field class="addRemarks" floatLabel="always">
-            <mat-label>Remarks</mat-label>
-            <mat-select formControlName="remarks">
-              <mat-option *ngFor="let remark of remarks" [value]="remark.value">
-                {{ remark.viewValue }}
+            <mat-label>Condition</mat-label>
+            <mat-select formControlName="condition">
+              <mat-option *ngFor="let remark of remarks" [value]="remark">
+                {{ remark }}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -155,6 +167,9 @@
               readonly
             />
           </mat-form-field>
+          <mat-checkbox formControlName="isborrow"
+            >Can be borrowed</mat-checkbox
+          >
         </div>
       </div>
       <div class="first-content">
@@ -165,7 +180,7 @@
                 <input type="text" placeholder="Enter Google Drive Image Link" (blur)="loadImageFromGoogleDrive($event)">
             </div> -->
         <div class="add-image">
-          <input type="file" (change)="loadImageFromFile($event)" />
+          <input type="file" (change)="loadImageFromFile($event)"  disabled/>
         </div>
       </div>
       <div class="add-button">

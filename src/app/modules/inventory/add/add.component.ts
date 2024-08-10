@@ -8,8 +8,8 @@ import { Item } from 'src/app/models/Items';
 import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
-
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { Constants } from 'src/app/models/Constant';
 interface Matter {
   value: string;
   viewValue: string;
@@ -65,20 +65,15 @@ export class AddComponent implements OnInit {
   filteredLocation!: Observable<string[]>;
   brands: string[] = [];
   transactiontype: string = '';
-  matters: Matter[] = [
-    { value: 'Solid', viewValue: 'Solid' },
-    { value: 'Liquid', viewValue: 'Liquid' },
-  ];
-
-  remarks: Remark[] = [
-    { value: 'Functional', viewValue: 'Functional' },
-    { value: 'Defective', viewValue: 'Defective' },
-    { value: 'Turnover', viewValue: 'Turnover' },
-  ];
-  inventorytypes: InventoryType[] = [
-    { value: 'Inventory', viewValue: 'Inventory' },
-    { value: 'Non-inventory', viewValue: 'Non-inventory' },
-  ];
+  matters: string[] = Constants.equipmentMatterType;
+  currentUser: any;
+  // remarks: Remark[] = [
+  //   { value: 'Functional', viewValue: 'Functional' },
+  //   { value: 'Defective', viewValue: 'Defective' },
+  //   { value: 'Turnover', viewValue: 'Turnover' },
+  // ];
+  remarks: string[] = Constants.equipmentStatus;
+  inventorytypes: string[] = Constants.equipmentInventoryType;
 
   addItemForm: FormGroup;
   constructor(
@@ -94,22 +89,25 @@ export class AddComponent implements OnInit {
       equipmentType: ['', Validators.required],
       brand: ['', Validators.required],
       matter: ['', Validators.required],
-      serialNo: ['', Validators.required],
+      serialNo: [''],
+      modelNo: ['', Validators.required],
       inventorytype: ['', Validators.required],
       color: ['', Validators.required],
-      remarks: ['', Validators.required],
+      condition: ['', Validators.required],
       checkedBy: ['', Validators.required],
       location: ['', Validators.required],
       department: ['', Validators.required],
-      quantity: [1, Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      unit: ['', Validators.required],
+      isborrow: [true, Validators.required],
     });
   }
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    this.userDepartment = currentUser?.department.shift();
-    this.checkedBy = `${currentUser?.firstName} ${currentUser?.lastName}`;
-    this.userType = currentUser?.role;
+    this.currentUser = this.authService.getCurrentUser();
+    this.userDepartment = this.currentUser?.department[0];
+    this.checkedBy = `${this.currentUser?.firstName} ${this.currentUser?.lastName}`;
+    this.userType = this.currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
     this.loadLocationList();
@@ -186,11 +184,11 @@ export class AddComponent implements OnInit {
       this.isloading = true;
 
       const itemData = this.addItemForm.value;
-      if (this.imageUrl) {
-        itemData.images = { Url: this.imageUrl };
-      } else {
-        itemData.images = { Url: '' };
-      }
+      // if (this.imageUrl) {
+      //   itemData.images = { Url: this.imageUrl };
+      // } else {
+      //   itemData.images = { Url: '' };
+      // }
       // this.equipmentService.addEquipment(itemData).subscribe(
       //   (resp) => {
       //     if (resp.success) {
@@ -256,9 +254,9 @@ export class AddComponent implements OnInit {
         error: (err: any) => {
           this.openSnackBar(err.message, 'Close', true);
         },
-        complete: ()=> {
+        complete: () => {
           this.isloading = false;
-        }
+        },
       });
 
       const equipmentTypeData = { name: itemData.equipmentType };
@@ -284,7 +282,7 @@ export class AddComponent implements OnInit {
     );
   }
   loadEquipmentTypes(): void {
-    this.equipmentService.getEquipmentTypes().subscribe(
+    this.equipmentService.getEquipmentTypes(this.currentUser.department).subscribe(
       (response) => {
         this.equipmenttypes = response.data;
         console.log('Equipment types loaded:', this.equipmenttypes);
@@ -296,7 +294,7 @@ export class AddComponent implements OnInit {
   }
 
   loadBrandList(): void {
-    this.equipmentService.getBrandList().subscribe(
+    this.equipmentService.getBrandList(this.currentUser.department).subscribe(
       (response) => {
         this.brands = response.data;
       },
@@ -306,7 +304,7 @@ export class AddComponent implements OnInit {
     );
   }
   loadLocationList(): void {
-    this.equipmentService.getLocationList().subscribe(
+    this.equipmentService.getLocationList(this.currentUser.department).subscribe(
       (response) => {
         this.location = response.data;
       },

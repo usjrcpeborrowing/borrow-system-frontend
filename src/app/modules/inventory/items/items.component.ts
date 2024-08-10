@@ -42,7 +42,6 @@ export class ItemsComponent implements OnInit, OnChanges {
     };
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log({equipmentlistlenght: this.equipmentlist?.length})
   }
 
   ngOnInit(): void {
@@ -89,7 +88,6 @@ export class ItemsComponent implements OnInit, OnChanges {
 
   searchItem(event: Event): void {
     const searchWord = this.searchedWord.value ? this.searchedWord.value : '';
-    console.log(searchWord);
     const currentQueryParams = this.activatedRoute.snapshot.queryParams;
     const newQueryParams = {
       ...currentQueryParams,
@@ -155,7 +153,6 @@ export class ItemsComponent implements OnInit, OnChanges {
   }
 
   download() {
-    console.log('donwload')
     var currentDate = new Date();
     // var departmentReportType = localStorage.getItem('department'); // replace with the actual department report type
     var user = localStorage.getItem('currentuser');

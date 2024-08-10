@@ -168,17 +168,29 @@ export class EquipmentService {
 
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
-  getEquipmentTypes(): Observable<any> {
+  getEquipmentTypes(departments: string[]): Observable<any> {
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getequipmenttype', {
         headers: { Authorization: this.token as string },
+        params,
       })
       .pipe(catchError(this.handleError));
   }
-  getBrandList(): Observable<any> {
+  getBrandList(departments: string[]): Observable<any> {
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getbrandlist', {
         headers: { Authorization: this.token as string },
+        params,
       })
       .pipe(catchError(this.handleError));
   }
@@ -247,11 +259,11 @@ export class EquipmentService {
   }
 
   getUsers(): Observable<any> {
-    
-    return this.http.get<any>(environment.API_URL + '/api/users', {
-      headers: { Authorization: this.token as string },
-    })
-    .pipe(catchError(this.handleError));
+    return this.http
+      .get<any>(environment.API_URL + '/api/users', {
+        headers: { Authorization: this.token as string },
+      })
+      .pipe(catchError(this.handleError));
   }
   getUserTypes(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/usertypes').pipe(catchError(this.handleError));
@@ -259,11 +271,16 @@ export class EquipmentService {
   getDepartment(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));
   }
-  getLocationList(): Observable<any> {
+  getLocationList(departments: string[]): Observable<any> {
     const headers = {
       Authorization: this.token as string,
     };
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist', { headers }).pipe(catchError(this.handleError));
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist', { headers, params }).pipe(catchError(this.handleError));
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));

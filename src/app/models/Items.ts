@@ -20,6 +20,7 @@ export interface Item {
         Url: string,
     };
     remarks: string;
+    condition: string;
     tags: boolean;
     checkedBy: string;
     department: string;
