@@ -60,7 +60,7 @@
               placeholder="Type Here"
               autocomplete="off"
               [formControl]="searchedWord"
-              (keyup.enter)="searchItem($event)"
+              (keyup)="searchItem($event)"
             />
             <mat-icon matSuffix (click)="searchProduct($event)"
               >search</mat-icon

@@ -108,6 +108,7 @@ export class AddComponent implements OnInit {
     this.userDepartment = this.currentUser?.department[0];
     this.checkedBy = `${this.currentUser?.firstName} ${this.currentUser?.lastName}`;
     this.userType = this.currentUser?.role;
+    this.addItemForm.get('checkedBy')?.setValue(this.currentUser._id);
     this.loadEquipmentTypes();
     this.loadBrandList();
     this.loadLocationList();

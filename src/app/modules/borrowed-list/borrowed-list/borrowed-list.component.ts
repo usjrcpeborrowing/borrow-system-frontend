@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
+import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 @Component({
@@ -11,7 +12,12 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class BorrowedListComponent implements OnInit {
   @Input() items: any[] = [];
   borrowedItems: any[] = [];
-
+  borrowedItemFilter: BorrowedItemFilter = {
+    status: '',
+    instructor: '',
+    borrower: '',
+    search: ''
+  };
   openedCategory: boolean = false;
   constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService) {}
 
@@ -21,7 +27,7 @@ export class BorrowedListComponent implements OnInit {
     });
     this.borrowListService.onChangeBorrowStatus().subscribe({
       next: (resp) => {
-        console.log(resp)
+        console.log(resp);
         if (resp.status == 'released' || resp.status == 'returned') {
           this.updateBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
@@ -30,7 +36,7 @@ export class BorrowedListComponent implements OnInit {
   }
 
   fetchBorrowedItems(): void {
-    this.borrowListService.getBorrowedList().subscribe(
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe(
       (data) => {
         this.borrowedItems = data;
         console.log(data);

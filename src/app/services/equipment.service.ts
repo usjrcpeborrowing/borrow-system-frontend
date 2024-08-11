@@ -73,8 +73,19 @@ export class EquipmentService {
   }
 
   getAvailableEquipment(pagination: Pagination, filters: InventoryFilter): Observable<any> {
-    let params = new HttpParams();
-    params = params.append('department', filters.department);
+    let params = new HttpParams({
+      fromObject: {
+        page: pagination.page,
+        limit: pagination.limit,
+        department: filters.department,
+        brand: filters.brand,
+        matter: filters.mattertype,
+        inventory: filters.inventorytype,
+        equipmenttype: filters.equipmenttype,
+        location: filters.location,
+        search: filters.name,
+      },
+    });
     return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
 

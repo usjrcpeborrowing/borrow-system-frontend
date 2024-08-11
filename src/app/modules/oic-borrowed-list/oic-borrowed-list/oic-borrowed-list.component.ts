@@ -3,6 +3,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 @Component({
   selector: 'app-oic-borrowed-list',
   templateUrl: './oic-borrowed-list.component.html',
@@ -11,7 +12,12 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 export class OicBorrowedListComponent implements OnInit {
   @Input() items: any[] = [];
   borrowedItems: any[] = [];
-
+  borrowedItemFilter: BorrowedItemFilter = {
+    status: '',
+    instructor: '',
+    borrower: '',
+    search: '',
+  };
   openedCategory: boolean = false;
 
   constructor(private borrowListService: BorrowedItemsService, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute) {}
@@ -26,12 +32,11 @@ export class OicBorrowedListComponent implements OnInit {
           this.approveBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
       },
-     
     });
   }
 
   fetchBorrowedItems(): void {
-    this.borrowListService.getBorrowedList().subscribe(
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe(
       (data) => {
         this.borrowedItems = data;
         console.log(data);
@@ -48,17 +53,17 @@ export class OicBorrowedListComponent implements OnInit {
 
   approveBorrowedItems(items: any[], status: string, id: string) {
     const body = {
-      items, 
+      items,
       status,
     };
     this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');
       },
-      complete: ()=> {
-        console.log('complete')
-        this.fetchBorrowedItems()
-      }
+      complete: () => {
+        console.log('complete');
+        this.fetchBorrowedItems();
+      },
     });
   }
 

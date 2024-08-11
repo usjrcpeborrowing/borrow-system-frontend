@@ -12,6 +12,13 @@ export class PanelComponent {
   accountId: string = '';
   password: string = '';
 
+  snackbarconfig: MatSnackBarConfig = {
+    duration: 3000,
+    verticalPosition: 'top',
+    horizontalPosition: 'center',
+    panelClass: ['red-snackbar'],
+  };
+
   constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
 
   ngOnInit(): void {
@@ -29,15 +36,8 @@ export class PanelComponent {
 
           this.authService.navigateToDashboard(resp?.data?.role[0]);
         } else {
-          let config: MatSnackBarConfig = {
-            duration: 3000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-            panelClass: ['red-snackbar'],
-          };
-
           this._snackBar.openFromComponent(SnackbarComponent, {
-            ...config,
+            ...this.snackbarconfig,
             data: {
               error: true,
               message: resp.message,
@@ -45,6 +45,16 @@ export class PanelComponent {
             duration: 3000,
           });
         }
+      },
+      error: (err) => {
+        this._snackBar.openFromComponent(SnackbarComponent, {
+          ...this.snackbarconfig,
+          data: {
+            error: true,
+            message: err.message,
+          },
+          duration: 3000,
+        });
       },
     });
   }

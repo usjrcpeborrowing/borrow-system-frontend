@@ -9,6 +9,8 @@ import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { Constants } from 'src/app/models/Constant';
+
 @Component({
   selector: 'app-item-dialog',
   templateUrl: './item-dialog.component.html',
@@ -21,6 +23,7 @@ export class ItemDialogComponent implements OnInit {
 
   equipmenttypes: string[] = [];
   brands: string[] = [];
+  equipmentStatus: string[] = Constants.equipmentStatus;
 
   isloading: boolean = false;
   transactiontype: string = '';

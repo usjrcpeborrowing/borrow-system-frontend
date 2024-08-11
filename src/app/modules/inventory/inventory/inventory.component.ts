@@ -91,7 +91,7 @@ export class InventoryComponent implements OnInit {
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     this.inventoryFilter.description = params['description'] ? params['description'] : '';
     this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
-    this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department.pop();
+    this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';

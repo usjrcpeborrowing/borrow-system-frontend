@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { BorrowedItemFilter } from '../models/BorrowedItemFilter';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,15 @@ export class BorrowedItemsService {
     this.borrowedItems.next([...currentItems, item]);
   }
 
-  getBorrowedList() {
-    return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: { Authorization: this.token as string } }).pipe(
+  getBorrowedList(filter: BorrowedItemFilter) {
+    let params = new HttpParams({
+      fromObject: {
+        status: filter.status,
+        borrower: filter.borrower,
+        instructor: filter.instructor,
+      },
+    });
+    return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: { Authorization: this.token as string }, params }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
@@ -32,19 +40,19 @@ export class BorrowedItemsService {
   }
 
   getBorrowedItemStatuses() {
-    return this.http.get<{ data: { itemborrowed: { status: string }[] }[] }>(environment.API_URL + '/api/borroweditems', {
-      headers: { Authorization: this.token as string }
-    }).pipe(
-      map(response => {
-        // Flatten the array of statuses
-        return response.data.flatMap((item: { itemborrowed: { status: string }[] }) =>
-          item.itemborrowed.map((borrowed: { status: string }) => borrowed.status)
-        );
-      }),
-      catchError(this.handleError)
-    );
+    return this.http
+      .get<{ data: { itemborrowed: { status: string }[] }[] }>(environment.API_URL + '/api/borroweditems', {
+        headers: { Authorization: this.token as string },
+      })
+      .pipe(
+        map((response) => {
+          // Flatten the array of statuses
+          return response.data.flatMap((item: { itemborrowed: { status: string }[] }) => item.itemborrowed.map((borrowed: { status: string }) => borrowed.status));
+        }),
+        catchError(this.handleError)
+      );
   }
-  
+
   updateBorrowedItemStatus(body: any, id: string) {
     return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }

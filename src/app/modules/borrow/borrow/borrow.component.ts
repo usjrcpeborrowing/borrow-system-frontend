@@ -74,6 +74,7 @@ export class BorrowComponent implements OnInit {
     location: '',
   };
   currentUserRole: any;
+  currentUser: any;
   user: any;
   userId: string = '';
   constructor(
@@ -87,6 +88,7 @@ export class BorrowComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
     const rolesString = localStorage.getItem('roles');
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
@@ -219,7 +221,7 @@ export class BorrowComponent implements OnInit {
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     this.inventoryFilter.description = params['description'] ? params['description'] : '';
     this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
-    this.inventoryFilter.department = params['department'] ? params['department'] : '';
+    this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
@@ -11,6 +12,12 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class StudentBorrowedListComponent implements OnInit {
   @Input() items: any[] = [];
   borrowedItems: any[] = [];
+  borrowedItemFilter: BorrowedItemFilter = {
+    status: '',
+    instructor: '',
+    borrower: '',
+    search:''
+  };
 
   openedCategory: boolean = false;
   constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService) {}
@@ -21,7 +28,7 @@ export class StudentBorrowedListComponent implements OnInit {
     });
     this.borrowListService.onChangeBorrowStatus().subscribe({
       next: (resp) => {
-        console.log(resp)
+        console.log(resp);
         if (resp.status == 'pending_return') {
           this.returnBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
@@ -30,7 +37,7 @@ export class StudentBorrowedListComponent implements OnInit {
   }
 
   fetchBorrowedItems(): void {
-    this.borrowListService.getBorrowedList().subscribe(
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe(
       (data) => {
         this.borrowedItems = data;
         console.log(data);
