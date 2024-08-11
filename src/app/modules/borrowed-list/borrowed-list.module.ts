@@ -14,11 +14,10 @@ import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { MaterialModule } from '../material.module';
 import { BorrowCardPanelComponent } from './borrow-card-panel/borrow-card-panel.component';
 import { BorrowCardComponent } from './borrow-card/borrow-card.component';
-import { BorrowCategoryComponent } from './borrow-category/borrow-category.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     BorrowedListComponent,
-    BorrowCategoryComponent,
     BorrowCardComponent,
     BorrowCardPanelComponent
   ],
@@ -34,7 +33,8 @@ import { BorrowCategoryComponent } from './borrow-category/borrow-category.compo
     MatCardModule,
     MatCheckboxModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class BorrowedListModule { }

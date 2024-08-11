@@ -1,0 +1,15 @@
+<div class="panel-name">Category</div>
+<div class="form-fields-container">
+  <mat-form-field class="form-field">
+    <mat-label>Borrow Status</mat-label>
+    <mat-select (selectionChange)="navigate($event)">
+      <mat-option *ngFor="let status of borrowstatus" [value]="status">
+        {{ status }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="edit-button">
+    <button mat-raised-button>Reset Filter</button>
+  </div>
+</div>

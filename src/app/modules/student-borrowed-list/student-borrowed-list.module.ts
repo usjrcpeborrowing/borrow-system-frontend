@@ -11,13 +11,12 @@ import { MaterialModule } from '../material.module';
 import { StudentHeaderModule } from '../student-header/student-header.module';
 import { StudentBorrowCardPanelComponent } from './student-borrow-card-panel/student-borrow-card-panel.component';
 import { StudentBorrowCardComponent } from './student-borrow-card/student-borrow-card.component';
-import { StudentBorrowCategoryComponent } from './student-borrow-category/student-borrow-category.component';
 import { StudentBorrowedListRoutingModule } from './student-borrowed-list-routing.module';
 import { StudentBorrowedListComponent } from './student-borrowed-list/student-borrowed-list.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     StudentBorrowedListComponent,
-    StudentBorrowCategoryComponent,
     StudentBorrowCardPanelComponent,
     StudentBorrowCardComponent
   ],
@@ -32,7 +31,8 @@ import { StudentBorrowedListComponent } from './student-borrowed-list/student-bo
     MaterialModule,
     HeaderReadsModule,
     MatSelectModule,
-    StudentHeaderModule
+    StudentHeaderModule,
+    SharedModule
   ]
 })
 export class StudentBorrowedListModule { }
