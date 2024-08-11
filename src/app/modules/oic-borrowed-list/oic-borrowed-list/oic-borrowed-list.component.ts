@@ -4,6 +4,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-oic-borrowed-list',
   templateUrl: './oic-borrowed-list.component.html',
@@ -19,10 +20,11 @@ export class OicBorrowedListComponent implements OnInit {
     search: '',
   };
   openedCategory: boolean = false;
-
-  constructor(private borrowListService: BorrowedItemsService, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute) {}
+  currentUser: any;
+  constructor(private borrowListService: BorrowedItemsService, private _snackBar: MatSnackBar, private activatedRoute: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
@@ -91,6 +93,11 @@ export class OicBorrowedListComponent implements OnInit {
   }
 
   queryParamsHandling(params: Params) {
+    this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
+    this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
+    this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : this.currentUser._id;
+    this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
+
     this.fetchBorrowedItems();
   }
 }
