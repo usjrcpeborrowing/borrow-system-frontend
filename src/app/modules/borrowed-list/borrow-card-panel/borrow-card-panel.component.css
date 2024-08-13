@@ -144,3 +144,31 @@ mat-card-content p {
 ::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent;
 }
+
+
+@media screen and (max-width: 600px) {
+  .item-row{
+    font-size: 10px;
+  }
+  .detail-quantity{
+    margin-right: 10px;
+  }
+  .detail-equipment{
+    width: 15%;
+  }
+  .item-container{
+    margin-left: -5%;
+    margin-right: -5%;
+  }
+  .detail-condition {
+    display: flex;
+    margin-left: -5%;
+    flex-direction: column;
+  }
+  .detail-status{
+    margin-left: -30px;
+  }
+  .form-condition{
+    width: 80%;
+  }
+}

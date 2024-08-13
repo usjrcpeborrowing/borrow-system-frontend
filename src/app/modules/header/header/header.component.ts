@@ -32,6 +32,12 @@ export class HeaderComponent implements OnInit {
       { name: 'Accounts', url: '/account-request' },
       { name: 'History', url: '/history/oic' },
     ],
+    reads: [
+      { name: 'Dashboard', url: '/dashboard/reads' },
+      { name: 'Inventory', url: '/inventory' },
+      { name: 'Requests', url: '/borrowed-list' },
+      { name: 'History', url: '/history/reads' },
+    ],
     faculty: [
       { name: 'Dashboard', url: '/dashboard/faculty' },
       { name: 'Browse Items', url: '/borrow' },
@@ -65,13 +71,19 @@ export class HeaderComponent implements OnInit {
   }
 
   updateNavigations(): void {
-    const role = this.currentUser?.role;
-    if (role && this.navigations[role]) {
-      this.currentNavigations = this.navigations[role];
+    const user = this.authService.getCurrentUser();
+    if (user && Array.isArray(user.role) && user.role.length > 0) {
+      const primaryRole = user.role[0];
+      if (this.navigations[primaryRole]) {
+        this.currentNavigations = this.navigations[primaryRole];
+      } else {
+        this.currentNavigations = [];
+      }
     } else {
       this.currentNavigations = [];
     }
   }
+  
 
   logout(event: Event): void {
     event.preventDefault();

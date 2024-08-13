@@ -84,3 +84,40 @@
 .text-bold{
     font-weight: bold;
 }
+
+
+@media screen and (max-width: 600px) {
+    .panel-description{
+        font-size: 10px;
+    }
+    .detail-container {
+        width: 8%;
+        margin-right: 5%;
+    }
+
+    .detail-container-equipment{
+        width: 2%;
+        margin-right: 5%;
+    }
+    .detail-container-brand{
+        width: 2%;
+        margin-right: 5%;
+    }
+    .detail-container-desc{
+        width: 2%;
+        margin-right: 5%;
+    }
+    .detail-container-status{
+        width: 2%;
+        margin-right: 5%;
+    }
+    .detail-container-quantity{
+        width: 2%;
+    }
+    .detail-container
+    .detail-label {
+        font-weight: bold;
+        margin-right: 5px;
+    }
+
+}

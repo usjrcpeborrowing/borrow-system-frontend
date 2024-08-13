@@ -29,10 +29,10 @@
         [class.last-item]="i === items.length - 1"
       >
         <div class="item-row">
-          <div class="detail-quantity">{{ item.quantity }}</div>
+          <div class="detail-quantity">Qty. {{ item.quantity }}</div>
           <div class="detail-equipment">{{ item.equipment.name }}</div>
           <div class="detail-condition">
-            <mat-form-field>
+            <mat-form-field class="form-condition">
               <mat-select
                 [(ngModel)]="item.condition"
                 (selectionChange)="onItemStatusChange(item.condition)"
@@ -46,7 +46,7 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field>
+            <mat-form-field class="form-condition">
               <mat-label>Remarks</mat-label>
               <input
                 matInput
