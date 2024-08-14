@@ -7,13 +7,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
+import { HeaderModule } from '../header/header.module';
 import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared/shared.module';
 import { StudentHeaderModule } from '../student-header/student-header.module';
 import { StudentBorrowCardPanelComponent } from './student-borrow-card-panel/student-borrow-card-panel.component';
 import { StudentBorrowCardComponent } from './student-borrow-card/student-borrow-card.component';
 import { StudentBorrowedListRoutingModule } from './student-borrowed-list-routing.module';
 import { StudentBorrowedListComponent } from './student-borrowed-list/student-borrowed-list.component';
-import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     StudentBorrowedListComponent,
@@ -27,6 +28,7 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    HeaderModule,
     MatFormFieldModule,
     MaterialModule,
     HeaderReadsModule,

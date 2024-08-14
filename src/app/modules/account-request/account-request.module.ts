@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderOicModule } from '../header-oic/header-oic.module';
+import { HeaderModule } from '../header/header.module';
 import { MaterialModule } from '../material.module';
 import { AccountRequestCardPanelComponent } from './account-request-card-panel/account-request-card-panel.component';
 import { AccountRequestCardComponent } from './account-request-card/account-request-card.component';
@@ -20,7 +21,8 @@ import { AccountRequestComponent } from './account-request/account-request.compo
     HeaderOicModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeaderModule
   ]
 })
 export class AccountRequestModule { }

@@ -21,19 +21,6 @@ interface User {
   providedIn: 'root',
 })
 export class AuthService {
-  private static adminAccountId = 'admin';
-  private static adminPassword = 'admin123';
-  private static oicAccountId = 'oic';
-  private static oicPassword = 'oic123';
-  private static readsAccountId = 'reads';
-  private static readsPassword = 'reads123';
-  private static readscpeAccountId = 'readscpe';
-  private static readscpePassword = 'readscpe123';
-  private static instructorAccountId = 'instructor';
-  private static instructorPassword = 'instructor123';
-  private static studentAccountId = 'student';
-  private static studenPasswrd = 'student123';
-  // add more accounts
   constructor(private router: Router, private equipmentService: EquipmentService, private http: HttpClient) {}
 
   login(accountId: string, password: string): Observable<Object> {

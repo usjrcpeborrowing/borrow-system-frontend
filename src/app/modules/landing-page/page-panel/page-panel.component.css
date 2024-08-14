@@ -9,21 +9,26 @@
     
     position: absolute;
     top: 50%;
-    left: 30%;
+    left: 40%;
     transform: translate(-50%, -50%);
 }
+
 .text-content {
     text-align: left;
+    
 }
 .header1{
     line-height: 0.9;
-    font-size: 7vh;
-    font-weight: 600;
+    font-size: 80px;
+    font-weight: 400;
+    width: 65%;
     font-family: "Playfair Display", serif;
 }
 .header2{
     font-weight: 550;
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    margin-top: 25px;
+    font-family: "Inter", sans-serif;
+    color: rgb(52, 52, 52);
     font-size: 3vh;
     line-height: 2;
 }
@@ -34,18 +39,38 @@
 .borrow-button .mat-mdc-raised-button.mat-unthemed{
     margin-top: 30px;
     background-color: rgb(62, 112, 62);
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
     color: white;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 800px) {
     
-    
+
+    .header1{
+        line-height: 0.9;
+        font-size: 7vh;
+        font-weight: 400;
+        font-family: "Playfair Display", serif;
+        align-items: center;
+        display: flex;
+        width: 100%;
+    }
+    .header2{
+        font-weight: 550;
+        font-family: "Inter", sans-serif;
+        font-size: 3vh;
+        line-height: 1;
+    }
+
         .content{
             
             position: absolute;
             top: 50%;
             left: 50%;
             width: 80%;
+            margin-top: 50px;
             transform: translate(-50%, -50%);
         }
     .text-content {
@@ -60,6 +85,7 @@
 
         position: fixed;
         margin-top: 100px;
+        width: 100%;
         background-color: rgb(62, 112, 62);
         color: white;
     }

@@ -8,6 +8,7 @@ import { OicBorrowCardComponent } from './oic-borrow-card/oic-borrow-card.compon
 import { OicBorrowedListRoutingModule } from './oic-borrowed-list-routing.module';
 import { OicBorrowedListComponent } from './oic-borrowed-list/oic-borrowed-list.component';
 
+import { HeaderModule } from '../header/header.module';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
 @NgModule({
@@ -20,6 +21,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     OicBorrowedListRoutingModule,
     MaterialModule,
+    HeaderModule,
     HeaderOicModule,
     ReactiveFormsModule,
     FormsModule,

@@ -148,3 +148,21 @@
   justify-content: center;
   align-items: center;
 }
+
+  @media screen and (max-width: 800px) {
+    .table-header .header-name{
+      padding: 12px;
+      font-size: 20px;
+    }
+  .table-header .header-serial,
+  .table-header .header-equipment,
+  .table-header .header-brand,
+  .table-header .header-desc,
+  .table-header .header-status,
+  .table-header .header-quantity {
+    display: none;
+  }
+  .spacer{
+    margin-right: 10%;
+  }
+}

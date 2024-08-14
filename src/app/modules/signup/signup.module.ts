@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { HeaderModule } from '../header/header.module';
 import { MaterialModule } from '../material.module';
 import { SignupHeaderComponent } from './signup-header/signup-header.component';
 import { SignupRoutingModule } from './signup-routing.module';
@@ -20,6 +21,7 @@ import { SignupComponent } from './signup/signup.component';
     ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
+    HeaderModule,
     MatToolbarModule,
     FormsModule,
     MaterialModule

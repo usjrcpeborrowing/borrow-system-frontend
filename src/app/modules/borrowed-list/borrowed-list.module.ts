@@ -11,10 +11,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
+import { HeaderModule } from '../header/header.module';
 import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared/shared.module';
 import { BorrowCardPanelComponent } from './borrow-card-panel/borrow-card-panel.component';
 import { BorrowCardComponent } from './borrow-card/borrow-card.component';
-import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     BorrowedListComponent,
@@ -27,6 +28,7 @@ import { SharedModule } from '../shared/shared.module';
     MaterialModule,
     HeaderReadsModule,
     MatButtonModule,
+    HeaderModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatSelectModule,
