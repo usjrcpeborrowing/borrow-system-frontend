@@ -102,20 +102,22 @@
         position: relative;
     }
     .buttons .mat-mdc-raised-button.mat-unthemed{
-        text-align: center;
         margin: 5px;
         color: white;
         background: linear-gradient(to right, rgb(53, 97, 53), #73a773);
-        width: 46%;
+        width: 46.5%;
         height: 150px;
         padding-left: 40px;
         border-radius: 20px;
         font-size: 13px;
         box-shadow: none;
+        
     }
     .button-text{
+        width: 100%;
         display: flex;
         position: relative;
+        align-items: center;
         flex-direction: column;
     }
     .icon-text{

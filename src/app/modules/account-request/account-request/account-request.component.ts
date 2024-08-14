@@ -1,6 +1,7 @@
 
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { User } from 'src/app/models/User';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
@@ -24,7 +25,8 @@ export class AccountRequestComponent implements OnInit {
     this.userService.getUsers().subscribe(
       (response) => {
         if (response && Array.isArray(response.data)) {
-          this.users = response.data;
+          const inactivatedUsers = response.data.filter((user: User) => !user.activated); // Filter user list with inactivated users
+          this.users = inactivatedUsers;
         } else {
           console.error('Data is not an array:', response);
           this.users = [];
@@ -35,6 +37,8 @@ export class AccountRequestComponent implements OnInit {
       }
     );
   }
+  
+  
   
 
 
