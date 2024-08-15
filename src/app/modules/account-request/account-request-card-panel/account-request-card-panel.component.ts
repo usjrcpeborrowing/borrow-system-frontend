@@ -1,12 +1,12 @@
-
-
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
-import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
+import { Component, Input, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-account-request-card-panel',
   templateUrl: './account-request-card-panel.component.html',
-  styleUrls: ['./account-request-card-panel.component.css']
+  styleUrls: ['./account-request-card-panel.component.css'],
 })
 export class AccountRequestCardPanelComponent implements OnInit {
   @Input() users: any[] = [];
@@ -15,11 +15,9 @@ export class AccountRequestCardPanelComponent implements OnInit {
   status_approved: string = 'approved';
   selectAll = false;
 
-  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService) {}
+  constructor(private userService: UserService, private snackbarService: SnackbarService) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   formatStatus(status: string): string {
     return status
@@ -28,6 +26,17 @@ export class AccountRequestCardPanelComponent implements OnInit {
       .join(' ');
   }
 
-
-
+  approveUser(userId: string) {
+    this.userService.activateUser(userId).subscribe({
+      next: (resp) => {
+        this.snackbarService.openSnackBar(resp.message, 'OK', false);
+      },
+      error: (err) => {
+        this.snackbarService.openSnackBar(err.message, 'OK', true);
+      },
+      complete: () => {
+        this.userService.activateUserSubject.next('')
+      },
+    });
+  }
 }

@@ -1,52 +1,50 @@
 <mat-card appearance="outlined">
-    <mat-card-content class="panel-description">
-      <div mat-card-title class="detail-info">
-        <div class="borrowed-items-class">New Account</div>
-        <div class="detail-date">
-          Data ID: {{ data._id }}
+  <mat-card-content class="panel-description">
+    <div mat-card-title class="detail-info">
+      <div class="borrowed-items-class">New Account</div>
+      <div class="detail-date">Data ID: {{ data._id }}</div>
+    </div>
+    <div class="hline"></div>
+    <div class="item-container">
+      <div>
+        <div class="item-row">
+          <div class="detail-id">Student ID:</div>
+          <div class="detail-name">| {{ data.schoolId }}</div>
         </div>
-      </div>
-      <div class="hline"></div>
-      <div class="item-container">
-        <div>
-          <div class="item-row">
-            <div class="detail-id">Student ID:</div>
-            <div class="detail-name">| {{ data.schoolId}}</div>
-          </div>
-          <div class="item-row">
-            <div class="detail-id">Name: </div>
-            <div class="detail-name">| {{ data.lastName}}, {{ data.firstName}} {{ data.middleName}} </div>
-          </div>
-          
-          <div class="item-row">
-            <div class="detail-id">Role: </div>
-            <div class="detail-name">| {{ data.role}}</div>
-          </div>
-          
-          <div class="item-row">
-            <div class="detail-id">Department: </div>
-            <div class="detail-name">| {{ data.department}}</div>
-          </div>
-          
-          <div class="item-row">
-            <div class="detail-id">Email: </div>
-            <div class="detail-name">| {{ data.email}}</div>
-          </div>
-          
-          <div class="item-row">
-            <div class="detail-id">Activated: </div>
-            <div class="detail-name">| {{ data.activated }}</div>
+        <div class="item-row">
+          <div class="detail-id">Name:</div>
+          <div class="detail-name">
+            | {{ data.lastName }}, {{ data.firstName }} {{ data.middleName }}
           </div>
         </div>
-      </div>
-  
-      <div class="button-content">
-        <span class="spacer"></span>
-        <div class="report-button">
-          <button mat-raised-button>
-            Approve
-          </button>
+
+        <div class="item-row">
+          <div class="detail-id">Role:</div>
+          <div class="detail-name">| {{ data.role }}</div>
+        </div>
+
+        <div class="item-row">
+          <div class="detail-id">Department:</div>
+          <div class="detail-name">| {{ data.department }}</div>
+        </div>
+
+        <div class="item-row">
+          <div class="detail-id">Email:</div>
+          <div class="detail-name">| {{ data.email }}</div>
+        </div>
+
+        <div class="item-row">
+          <div class="detail-id">Activated:</div>
+          <div class="detail-name">| {{ data.activated }}</div>
         </div>
       </div>
-    </mat-card-content>
-    
+    </div>
+
+    <div class="button-content">
+      <span class="spacer"></span>
+      <div class="report-button">
+        <button mat-raised-button (click)="approveUser(data._id)">Approve</button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
