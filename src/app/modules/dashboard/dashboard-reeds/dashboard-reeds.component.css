@@ -1,3 +1,5 @@
+
+
 .page-title{
     font-size: 50px;
     margin: 30px;
@@ -29,7 +31,7 @@
     float: left;
     width: 20%;
     
-    height: 65vh;
+    height: 100%;
     padding: 7px;
     border: none;
     border-right: 1px solid #45824a;
