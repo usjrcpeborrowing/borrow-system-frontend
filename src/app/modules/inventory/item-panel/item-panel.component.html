@@ -24,23 +24,34 @@
                         <div class="detail-value">{{ item.inventorytype }}</div>
                     </div>
                     <div class="detail-container-status">
-                        <div class="detail-value">{{ item.remarks }}</div>
+                        <div class="detail-value">{{ item.condition }}</div>
                     </div>
                     <div class="detail-container-quantity">
                         <div class="detail-value">{{ item.quantity }}</div>
                     </div>
                 </mat-panel-description>
                 
+                
             </mat-expansion-panel-header>
             <div class="expanded-description">
-                
-                <img
+                <div class="item-image">
+                    
+                    <img
                     class="fit-image"
                     [src]="item.images.thumbnailUrl ? item.images.thumbnailUrl : defaultImage"
                     alt=""
                     />
                 </div>
-
+                
+                <div class="description-mobile" >
+                    <div class="mobile-value"><h1 class="header-desc">Serial No. </h1>{{ item.serialNo }}</div>
+                    <div class="mobile-value"><h1 class="header-desc">Equipment Type: </h1> {{ item.equipmentType}}</div>
+                    <div class="mobile-value"><h1 class="header-desc">Brand: </h1>{{ item.brand }}</div>
+                    <div class="mobile-value"><h1 class="header-desc">Inventory Type: </h1>{{ item.inventorytype }}</div>
+                    <div class="mobile-value"><h1 class="header-desc">Condition: </h1>{{ item.condition }}</div>
+                    <div class="mobile-value"><h1 class="header-desc">Quantity: </h1>{{ item.quantity }}</div>
+                </div>
+                </div>
                 <div class="edit-button" *ngIf="isFaculty(); else facultyUser">
                     <button mat-raised-button (click)="viewItemDetails()">View</button>
                 </div>

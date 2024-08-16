@@ -30,6 +30,38 @@ const routes: Routes = [
     },
   },
   {
+    path: 'borrowed-list',
+    loadChildren: () => import('./modules/borrowed-list/borrowed-list.module').then((m) => m.BorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['reads', 'oic', 'faculty'],
+    },
+  },
+  {
+    path: 'student-borrowed-list',
+    loadChildren: () => import('./modules/student-borrowed-list/student-borrowed-list.module').then((m) => m.StudentBorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['student', 'reads', 'faculty'],
+    },
+  },
+  {
+    path: 'faculty-borrowed-list',
+    loadChildren: () => import('./modules/oic-borrowed-list/oic-borrowed-list.module').then((m) => m.OicBorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['oic', 'faculty'],
+    },
+  },
+  {
+    path: 'account-request',
+    loadChildren: () => import('./modules/account-request/account-request.module').then((m) => m.AccountRequestModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['oic', 'administrator', 'faculty'],
+    },
+  },
+  {
     path: 'inventory',
     loadChildren: () => import('./modules/inventory/inventory.module').then((m) => m.InventoryModule),
     canActivate: [AuthGuard],

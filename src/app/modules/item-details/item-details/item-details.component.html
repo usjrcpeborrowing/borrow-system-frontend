@@ -1,19 +1,6 @@
-<ng-container *ngIf="isAdmin(); else readsHeader">
-  <app-admin-header></app-admin-header>
-</ng-container>
-<ng-template #readsHeader>
-  <ng-container *ngIf="isReads(); else oicHeader">
-    <app-header-reads></app-header-reads>
-  </ng-container>
-</ng-template>
-<ng-template #oicHeader>
-  <ng-container *ngIf="isOic(); else regularHeader">
-    <app-header-oic></app-header-oic>
-  </ng-container>
-</ng-template>
-<ng-template #regularHeader>
+<div class="header">
   <app-header></app-header>
-</ng-template>
+</div>
 
 <div>
   <h1 class="page-title">
@@ -164,23 +151,23 @@
           </ng-container>
 
           <ng-container matColumnDef="remarks">
-            <th mat-header-cell *matHeaderCellDef>Remarks</th>
+            <th mat-header-cell *matHeaderCellDef>Condition</th>
             <td
               mat-cell
               *matCellDef="let item"
               [matMenuTriggerFor]="remarks"
               [class.revised-defective]="
-                item.remarks == 'Defective' && item?.revision?.length
+                item.condition == 'defective' && item?.revision?.length
               "
             >
-              {{ item.remarks }}
+              {{ item.condition }}
               <mat-menu #remarks="matMenu">
                 <div
                   class="revision-wrapper"
-                  [class.nodisp]="!isFieldRevised('remarks', item?.revision)"
+                  [class.nodisp]="!isFieldRevised('condition', item?.revision)"
                 >
                   <div *ngFor="let rev of item?.revision">
-                    <p *ngIf="rev.field == 'remarks'">
+                    <p *ngIf="rev.field == 'condition'">
                       {{ rev.oldValue }} - {{ rev.newValue }} -
                       {{ rev.timeStamp | date : "mediumDate" }}
                     </p>

@@ -1,8 +1,15 @@
-<app-header-reads></app-header-reads>
+<html>
+<div class="header">
+    <app-header></app-header>
+</div>
 <h1 class="page-title">Dashboard <div class="hline"></div></h1>
 <div class="dashboard-content">
     <div class="menu-panel">
         <div class="buttons">
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToBorrow()">
+                <mat-icon>inbox</mat-icon>
+                    Borrow Items
+                </button>
             <button style=" justify-content: flex-start;" mat-raised-button (click)="directToInventory()">
                 <mat-icon>inbox</mat-icon>
                     Inventory List
@@ -11,14 +18,14 @@
                 <mat-icon>assignment</mat-icon>
                     Student Requests
                 </button>
-                <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
-                    <mat-icon>inbox</mat-icon>
-                        Item Details
-                    </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
+                <mat-icon>inbox</mat-icon>
+                    Item Details
+                </button>
             <button style=" justify-content: flex-start;" mat-raised-button  (click)="showReports()">
                 <mat-icon>report</mat-icon>
-                        Reports
-                    </button>
+                    Reports
+                </button>
             <button style=" justify-content: flex-start;" mat-raised-button (click)="directToHistory()">
                 <mat-icon>history</mat-icon>
                     Requests History
@@ -27,9 +34,52 @@
         </div>
         
     </div>
+    
+    <div class="menu-panel-mobile">
+        <div class="buttons">
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToBorrow()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Borrow Items
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button (click)="directToInventory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Inventory List
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showStudentRequests()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
+                    Student Requests
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Item Details
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showReports()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">report</mat-icon>
+                    Reports
+                    </div>
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button (click)="directToHistory()">
+                <div class="button-text">
+                    <mat-icon class="icon-text">history</mat-icon>
+                    Requests History
+                    </div>
+                </button>
+            
+        </div>
+    </div>
     <div class="contents">
         <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>
         <app-system-reports *ngIf="showReportsComponent"></app-system-reports>
     </div>
 
 </div>
+</html>

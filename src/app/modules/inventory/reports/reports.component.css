@@ -68,12 +68,10 @@
 
 .second-content{
     position: relative;
-    margin-left: 5%;
-    width: 50%;
+    width: 100%;
 }
 .form-container{
     position: relative;
-    margin: 2%;
     width: 100%;
 }
 
@@ -84,9 +82,17 @@
     margin-bottom: -20px;
 }
 
+.year-form{
+    display: flex;
+}
 .action-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
+}
+
+.submit-button .mat-mdc-raised-button.mat-unthemed {
+    background-color: rgb(62, 112, 62);
+    color: white;
 }

@@ -17,9 +17,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HeaderModule } from '../header/header.module';
 import { LoginHeaderModule } from '../login-header/login-header.module';
 import { PanelComponent } from './panel/panel.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatSidenavModule,
     MatFormFieldModule,
+    HeaderModule,
     MatSelectModule,
     MatInputModule,
     FormsModule,

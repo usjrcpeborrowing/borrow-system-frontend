@@ -14,6 +14,9 @@ export class DashboardReedsComponent implements OnInit{
   ngOnInit(): void {
     
   }
+  directToBorrow(): void {
+    this.router.navigate(['/borrow']);
+  }
   directToInventory(): void {
     this.router.navigate(['/inventory']);
   }
@@ -33,7 +36,6 @@ export class DashboardReedsComponent implements OnInit{
   }
 
   showStudentRequests(): void {
-    this.showReportsComponent = false;
-    this.showContentTabs = true;
+    this.router.navigate(['/borrowed-list']);
   }
 }

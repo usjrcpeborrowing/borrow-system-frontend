@@ -17,6 +17,8 @@
                   readonly
                 />
               </mat-form-field>
+              
+              <div class="year-form">
               <mat-form-field class="formName">
                 <mat-label>School Year</mat-label>
                 <mat-select
@@ -38,6 +40,7 @@
                   }}</mat-option>
                 </mat-select>
               </mat-form-field>
+            </div>
               <mat-form-field floatLabel="always" class="formName">
                 <mat-label>Issued By:</mat-label>
                 <input matInput formControlName="issuer" readonly />
@@ -48,13 +51,17 @@
       </div>
     </div>
     <div class="action-wrapper">
+      <div 
+      class="submit-button">
       <button
+      
         mat-raised-button
         [disabled]="isloading"
         type="submit"
       >
         Issue
       </button>
+    </div>
       <button
         class="close-button"
         mat-raised-button

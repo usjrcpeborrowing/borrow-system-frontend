@@ -2,14 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Pagination } from 'src/app/models/Pagination';
+import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
-  styleUrls: ['./inventory.component.css']
+  styleUrls: ['./inventory.component.css'],
 })
-export class InventoryComponent implements OnInit{
+export class InventoryComponent implements OnInit {
   pagination: Pagination = {
     length: 0,
     page: 1,
@@ -29,30 +30,35 @@ export class InventoryComponent implements OnInit{
     location: '',
   };
   equipmentlist: any[] = [];
+
+  openedCategory: boolean = false;
   isFetching: boolean = false;
   sortUsed: 'asc' | 'desc' = 'asc';
+  currentUser: any;
   currentUserRole: any;
   isloading: boolean = false;
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) { }
+  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
     const rolesString = localStorage.getItem('roles');
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
+    this.currentUser = this.authService.getCurrentUser();
+    this.equipmentService.onAddEquipment().subscribe(resp=> this.getEquipmentList())
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
   }
   isAdmin(): boolean {
-    return this.currentUserRole.includes("administrator");
+    return this.currentUserRole.includes('administrator');
   }
   isReads(): boolean {
-    return this.currentUserRole.includes("reads");
+    return this.currentUserRole.includes('reads');
   }
   isOic(): boolean {
-    return this.currentUserRole.includes("oic");
+    return this.currentUserRole.includes('oic');
   }
-  
+
   onFilterSelect(event: any) {
     let filter = event.filtername;
     let value = event.value;
@@ -60,11 +66,11 @@ export class InventoryComponent implements OnInit{
       queryParams: {
         [filter]: value,
       },
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     };
     this.router.navigate(['/inventory'], navigationExtras);
   }
-  
+
   private isAllowedRole(role: string): boolean {
     const allowedRoles = ['Admin', 'Instructor', 'reads', 'oic', 'faculty'];
     return allowedRoles.includes(role);
@@ -72,7 +78,6 @@ export class InventoryComponent implements OnInit{
   getEquipmentList() {
     this.isloading = true;
     this.equipmentService.getItems(this.pagination, this.inventoryFilter).subscribe((resp) => {
-      
       this.isloading = false;
       this.equipmentlist = resp.data;
       this.pagination.length = resp.total;
@@ -87,12 +92,11 @@ export class InventoryComponent implements OnInit{
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     this.inventoryFilter.description = params['description'] ? params['description'] : '';
     this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
-    this.inventoryFilter.department = params['department'] ? params['department'] : '';
+    this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
-    console.log(this.inventoryFilter);
     this.getEquipmentList();
   }
   onPageChange(pagination: Pagination): void {
@@ -106,12 +110,16 @@ export class InventoryComponent implements OnInit{
     this.equipmentlist.sort((a: any, b: any) => {
       const nameA = a.name ? a.name.toUpperCase() : '';
       const nameB = b.name ? b.name.toUpperCase() : '';
-  
+
       if (order === 'asc') {
         return nameA.localeCompare(nameB);
       } else {
         return nameB.localeCompare(nameA);
       }
     });
+  }
+
+  categoryClicked() {
+    this.openedCategory = !this.openedCategory;
   }
 }

@@ -14,25 +14,13 @@ interface User {
   department: string[];
   role: string;
   token: string;
+  _id: string
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private static adminAccountId = 'admin';
-  private static adminPassword = 'admin123';
-  private static oicAccountId = 'oic';
-  private static oicPassword = 'oic123';
-  private static readsAccountId = 'reads';
-  private static readsPassword = 'reads123';
-  private static readscpeAccountId = 'readscpe';
-  private static readscpePassword = 'readscpe123';
-  private static instructorAccountId = 'instructor';
-  private static instructorPassword = 'instructor123';
-  private static studentAccountId = 'student';
-  private static studenPasswrd = 'student123';
-  // add more accounts
   constructor(private router: Router, private equipmentService: EquipmentService, private http: HttpClient) {}
 
   login(accountId: string, password: string): Observable<Object> {
@@ -71,6 +59,9 @@ export class AuthService {
       case 'instructor':
         this.router.navigate(['/dashboard/instructor']);
         break;
+      case 'faculty':
+          this.router.navigate(['/dashboard/faculty']);
+          break;
       case 'oic':
         this.router.navigate(['/dashboard/oic']);
         break;
@@ -84,7 +75,10 @@ export class AuthService {
   }
 
   hasAnyRoles(allowedRoles: string[], userRoles: string[]) {
-    return allowedRoles.some((allowedrole) => userRoles.some((userrole) => userrole == allowedrole));
+    // return allowedRoles.some((allowedrole) => userRoles.some((userrole) => userrole == allowedrole));
+    console.log('has any roles', allowedRoles.some((allowedrole) => userRoles.includes(allowedrole)))
+    return allowedRoles.some((allowedrole) => userRoles.includes(allowedrole));
+
   }
 
   getCurrentUser(): User | null {
@@ -101,6 +95,6 @@ export class AuthService {
   }
 
   handleError(err: HttpErrorResponse) {
-    return throwError(() => new Error(err.message));
+    return throwError(() => new Error(err.error.message));
   }
 }

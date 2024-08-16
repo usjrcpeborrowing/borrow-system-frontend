@@ -8,35 +8,10 @@ import { Item } from 'src/app/models/Items';
 import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
-
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-interface Matter {
-  value: string;
-  viewValue: string;
-}
+import { Constants } from 'src/app/models/Constant';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
-interface Status {
-  value: string;
-  viewValue: string;
-}
-
-interface Remark {
-  value: string;
-  viewValue: string;
-}
-interface InventoryType {
-  value: string;
-  viewValue: string;
-}
-
-interface Department {
-  value: string;
-  viewValue: string;
-}
-
-interface Equipment {
-  name: string;
-}
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -51,7 +26,7 @@ export class AddComponent implements OnInit {
   brandControl = new FormControl();
   filteredBrands!: Observable<string[]>;
 
-  isFetching: boolean = false;
+  isFetching: boolean = true;
   imageUrl: string | null = null;
   googleDriveLink: string = '';
 
@@ -65,20 +40,15 @@ export class AddComponent implements OnInit {
   filteredLocation!: Observable<string[]>;
   brands: string[] = [];
   transactiontype: string = '';
-  matters: Matter[] = [
-    { value: 'Solid', viewValue: 'Solid' },
-    { value: 'Liquid', viewValue: 'Liquid' },
-  ];
-
-  remarks: Remark[] = [
-    { value: 'Functional', viewValue: 'Functional' },
-    { value: 'Defective', viewValue: 'Defective' },
-    { value: 'Turnover', viewValue: 'Turnover' },
-  ];
-  inventorytypes: InventoryType[] = [
-    { value: 'Inventory', viewValue: 'Inventory' },
-    { value: 'Non-inventory', viewValue: 'Non-inventory' },
-  ];
+  matters: string[] = Constants.equipmentMatterType;
+  currentUser: any;
+  // remarks: Remark[] = [
+  //   { value: 'Functional', viewValue: 'Functional' },
+  //   { value: 'Defective', viewValue: 'Defective' },
+  //   { value: 'Turnover', viewValue: 'Turnover' },
+  // ];
+  remarks: string[] = Constants.equipmentStatus;
+  inventorytypes: string[] = Constants.equipmentInventoryType;
 
   addItemForm: FormGroup;
   constructor(
@@ -87,29 +57,34 @@ export class AddComponent implements OnInit {
     private equipmentService: EquipmentService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: Item,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private snackbarService: SnackbarService
   ) {
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
       equipmentType: ['', Validators.required],
       brand: ['', Validators.required],
       matter: ['', Validators.required],
-      serialNo: ['', Validators.required],
+      serialNo: [''],
+      modelNo: ['', Validators.required],
       inventorytype: ['', Validators.required],
       color: ['', Validators.required],
-      remarks: ['', Validators.required],
+      condition: ['', Validators.required],
       checkedBy: ['', Validators.required],
       location: ['', Validators.required],
       department: ['', Validators.required],
-      quantity: [1, Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+      unit: ['', Validators.required],
+      isborrow: [true, Validators.required],
     });
   }
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    this.userDepartment = currentUser?.department.shift();
-    this.checkedBy = `${currentUser?.firstName} ${currentUser?.lastName}`;
-    this.userType = currentUser?.role;
+    this.currentUser = this.authService.getCurrentUser();
+    this.userDepartment = this.currentUser?.department[0];
+    this.checkedBy = `${this.currentUser?.firstName} ${this.currentUser?.lastName}`;
+    this.userType = this.currentUser?.role;
+    this.addItemForm.get('checkedBy')?.setValue(this.currentUser._id);
     this.loadEquipmentTypes();
     this.loadBrandList();
     this.loadLocationList();
@@ -184,53 +159,11 @@ export class AddComponent implements OnInit {
 
     if (this.addItemForm.valid) {
       this.isloading = true;
-
       const itemData = this.addItemForm.value;
-      if (this.imageUrl) {
-        itemData.images = { Url: this.imageUrl };
-      } else {
-        itemData.images = { Url: '' };
-      }
-      // this.equipmentService.addEquipment(itemData).subscribe(
-      //   (resp) => {
-      //     if (resp.success) {
-      //       this.isloading = false;
-      //       console.log('Item created successfully:', resp);
-
-      //       this.transactiontype = 'add';
-      //       const itemID = resp.data._id;
-
-      //       const transaction: Transaction = {
-      //         transactionType: this.transactiontype,
-      //         user: this.checkedBy,
-      //         role: this.userType,
-      //         department: itemData.department,
-      //         location: itemData.location,
-      //         revision: [],
-      //         equipmentId: itemID,
-      //         timeStamp: new Date(),
-      //       };
-
-      //       this.openSnackBar('Item added successfully!', 'Close', false);
-      //       console.log('ITEM COOOOOOOOODE', itemID);
-      //       this.addTransactionItem(transaction);
-      //       this.dialogRef.close();
-      //     } else {
-      //       console.log('error creating equipment', resp);
-      //     }
-      //   },
-      //   (error) => {
-      //     this.openSnackBar('Item added failed!', 'Close', true);
-      //     console.error('Error creating item:', error);
-      //   }
-      // );
-
       this.equipmentService.addEquipment(itemData).subscribe({
         next: (resp) => {
+          this.snackbarService.openSnackBar(resp.message, 'close');
           if (resp.success) {
-            this.isloading = false;
-            console.log('Item created successfully:', resp);
-
             this.transactiontype = 'add';
             const itemID = resp.data._id;
 
@@ -245,31 +178,19 @@ export class AddComponent implements OnInit {
               timeStamp: new Date(),
             };
 
-            this.openSnackBar('Item added successfully!', 'Close', false);
-            console.log('ITEM COOOOOOOOODE', itemID);
             this.addTransactionItem(transaction);
-            this.dialogRef.close();
-          } else {
-            this.openSnackBar(resp.message, 'Close', true);
           }
         },
         error: (err: any) => {
-          this.openSnackBar(err.message, 'Close', true);
+          this.snackbarService.openSnackBar(err.message, 'Close', true);
         },
-        complete: ()=> {
+        complete: () => {
           this.isloading = false;
-        }
-      });
-
-      const equipmentTypeData = { name: itemData.equipmentType };
-      this.equipmentService.addEquipmentType(equipmentTypeData).subscribe(
-        (response) => {
-          console.log('Equipment type added successfully:', response);
+          this.dialogRef.close();
         },
-        (error) => {
-          console.error('Error adding equipment type:', error);
-        }
-      );
+      });
+    } else {
+      this.snackbarService.openSnackBar('Invalid Form', 'close', true);
     }
   }
 
@@ -284,58 +205,32 @@ export class AddComponent implements OnInit {
     );
   }
   loadEquipmentTypes(): void {
-    this.equipmentService.getEquipmentTypes().subscribe(
-      (response) => {
-        this.equipmenttypes = response.data;
-        console.log('Equipment types loaded:', this.equipmenttypes);
+    this.equipmentService.getEquipmentTypes(this.currentUser.department).subscribe({
+      next: (resp) => {
+        this.equipmenttypes = resp.data;
+        this.addItemForm.get('equipmentType')?.setValue('');
       },
-      (error) => {
-        console.error('Error fetching equipment types:', error);
-      }
-    );
+    });
   }
 
   loadBrandList(): void {
-    this.equipmentService.getBrandList().subscribe(
-      (response) => {
-        this.brands = response.data;
+    this.equipmentService.getBrandList(this.currentUser.department).subscribe({
+      next: (resp) => {
+        this.brands = resp.data;
+        this.addItemForm.get('brand')?.setValue('');
       },
-      (error) => {
-        console.error('Error fetching brand list:', error);
-      }
-    );
-  }
-  loadLocationList(): void {
-    this.equipmentService.getLocationList().subscribe(
-      (response) => {
-        this.location = response.data;
-      },
-      (error) => {
-        console.error('Error fetching brand list:', error);
-      }
-    );
-  }
-
-  openSnackBar(message: string, action: string, isError: boolean = false): void {
-    let config: MatSnackBarConfig = {
-      duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
-    };
-
-    if (isError) {
-      config.panelClass = ['red-snackbar'];
-    } else {
-      config.panelClass = ['green-snackbar'];
-    }
-
-    this._snackBar.openFromComponent(SnackbarComponent, {
-      ...config,
-      data: {
-        error: isError,
-        message: message,
-      },
-      duration: 3000,
     });
   }
+  loadLocationList(): void {
+    this.equipmentService.getLocationList(this.currentUser.department).subscribe(
+      {
+        next: (resp) => {
+          this.location = resp.data;
+          this.addItemForm.get('location')?.setValue('');
+        },
+      }
+    );
+  }
+
+  
 }

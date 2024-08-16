@@ -4,10 +4,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSelectChange } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 import { InventoryReportService } from 'src/app/services/inventory-report.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',

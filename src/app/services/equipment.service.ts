@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, map, tap, throwError } from 'rxjs';
 import { Pagination } from 'src/app/models/Pagination';
 import { environment } from 'src/environments/environment.development';
 import { InventoryFilter } from '../models/InventoryFilter';
@@ -12,7 +12,7 @@ import { Transaction } from '../models/Transaction';
 })
 export class EquipmentService {
   token = localStorage.getItem('token');
-
+  addEquipmentSubject: Subject<string> = new Subject<string>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -72,28 +72,22 @@ export class EquipmentService {
     return this.http.get(environment.API_URL + '/api/equipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
 
-  // getItems(pagination: Pagination, filters: any): Observable<any> {
-
-  //   console.log('Fetching items with params:', pagination, filters);
-  //   let params = new HttpParams()
-  //     .set('page', pagination.page.toString())
-  //     .set('limit', pagination.limit.toString());
-
-  //   if (filters) {
-  //     Object.keys(filters).forEach(key => {
-  //       if (filters[key]) {
-  //         params = params.set(key, filters[key]);
-  //       }
-  //     });
-  //   }
-
-  //   return this.http.get(environment.API_URL + '/api/equipment', { params }).pipe(
-  //     map(response => {
-  //       return response;
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-  // }
+  getAvailableEquipment(pagination: Pagination, filters: InventoryFilter): Observable<any> {
+    let params = new HttpParams({
+      fromObject: {
+        page: pagination.page,
+        limit: pagination.limit,
+        department: filters.department,
+        brand: filters.brand,
+        matter: filters.mattertype,
+        inventory: filters.inventorytype,
+        equipmenttype: filters.equipmenttype,
+        location: filters.location,
+        search: filters.name,
+      },
+    });
+    return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+  }
 
   searchEquipment(searchTerm: string, filters: any): Observable<any> {
     let params = new HttpParams().set('search', searchTerm);
@@ -124,7 +118,7 @@ export class EquipmentService {
     };
 
     return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers }).pipe(
-      tap((data) => console.log('Equipment added:', data, { headers })),
+      // tap((data) => console.log('Equipment added:', data, { headers })),
       catchError(this.handleError)
     );
   }
@@ -185,17 +179,29 @@ export class EquipmentService {
 
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
-  getEquipmentTypes(): Observable<any> {
+  getEquipmentTypes(departments: string[]): Observable<any> {
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getequipmenttype', {
         headers: { Authorization: this.token as string },
+        params,
       })
       .pipe(catchError(this.handleError));
   }
-  getBrandList(): Observable<any> {
+  getBrandList(departments: string[]): Observable<any> {
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getbrandlist', {
         headers: { Authorization: this.token as string },
+        params,
       })
       .pipe(catchError(this.handleError));
   }
@@ -264,7 +270,11 @@ export class EquipmentService {
   }
 
   getUsers(): Observable<any> {
-    return this.http.get<any>(environment.API_URL + '/api/users').pipe(catchError(this.handleError));
+    return this.http
+      .get<any>(environment.API_URL + '/api/users', {
+        headers: { Authorization: this.token as string },
+      })
+      .pipe(catchError(this.handleError));
   }
   getUserTypes(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/usertypes').pipe(catchError(this.handleError));
@@ -272,11 +282,20 @@ export class EquipmentService {
   getDepartment(): Observable<any> {
     return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));
   }
-  getLocationList(): Observable<any> {
+  getLocationList(departments: string[]): Observable<any> {
     const headers = {
       Authorization: this.token as string,
     };
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist', { headers }).pipe(catchError(this.handleError));
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist', { headers, params }).pipe(catchError(this.handleError));
+  }
+
+  onAddEquipment(): Observable<string> {
+    return this.addEquipmentSubject.asObservable();
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));

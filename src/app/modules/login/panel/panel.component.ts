@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-
 @Component({
   selector: 'app-panel',
   templateUrl: './panel.component.html',
@@ -12,7 +12,14 @@ export class PanelComponent {
   accountId: string = '';
   password: string = '';
 
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar) {}
+  snackbarconfig: MatSnackBarConfig = {
+    duration: 3000,
+    verticalPosition: 'top',
+    horizontalPosition: 'center',
+    panelClass: ['red-snackbar'],
+  };
+
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.logout();
@@ -29,15 +36,8 @@ export class PanelComponent {
 
           this.authService.navigateToDashboard(resp?.data?.role[0]);
         } else {
-          let config: MatSnackBarConfig = {
-            duration: 3000,
-            verticalPosition: 'top',
-            horizontalPosition: 'center',
-            panelClass: ['red-snackbar'],
-          };
-
           this._snackBar.openFromComponent(SnackbarComponent, {
-            ...config,
+            ...this.snackbarconfig,
             data: {
               error: true,
               message: resp.message,
@@ -46,6 +46,20 @@ export class PanelComponent {
           });
         }
       },
+      error: (err) => {
+        this._snackBar.openFromComponent(SnackbarComponent, {
+          ...this.snackbarconfig,
+          data: {
+            error: true,
+            message: err.message,
+          },
+          duration: 3000,
+        });
+      },
     });
+  }
+
+  directToSignup(): void {
+    this.router.navigate(['/signup']);
   }
 }

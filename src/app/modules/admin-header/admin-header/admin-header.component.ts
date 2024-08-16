@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 @Component({
@@ -6,7 +7,8 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './admin-header.component.html',
   styleUrls: ['./admin-header.component.css']
 })
-export class AdminHeaderComponent {
+export class AdminHeaderComponent implements OnInit{
+  @ViewChild('sidenav') sidenav!: MatSidenav;
   currentUser: any;
   firstName: any;
   lastName: any;
@@ -15,8 +17,6 @@ export class AdminHeaderComponent {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     
-    this.firstName = localStorage.getItem('firstName');
-    this.lastName = localStorage.getItem('lastName');
     // if (!this.currentUser || this.currentUser.role !== 'Admin') {
     //   this.router.navigate(['/']);
     // }

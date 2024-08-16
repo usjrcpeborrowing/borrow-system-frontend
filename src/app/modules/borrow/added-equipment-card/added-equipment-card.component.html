@@ -1,12 +1,35 @@
 <mat-card class="added-equipment">
-  <img class="fit-image" [src]="equipmentlist.images.thumbnailUrl ? equipmentlist.images.thumbnailUrl : '../../../../assets/equipment_default_image_thumbnail.png'" alt="" />
-  <div class="item-name">{{ equipmentlist.name }}</div>
+  <img
+    class="fit-image"
+    [src]="
+      equipment.images.thumbnailUrl
+        ? equipment.images.thumbnailUrl
+        : '../../../../assets/equipment_default_image_thumbnail.png'
+    "
+    alt=""
+  />
+
+  <div class="item-name">{{ equipment.name }}</div>
   <div class="item-qty">
+    <span>{{ quantity }}</span>
+    <button
+      mat-icon-button
+      (click)="decreaseQuantity()"
+      [disabled]="length == 1"
+    >
+      <mat-icon>remove</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="increaseQuantity()"
+      [disabled]="length == 1"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
   </div>
   <div class="circle">
     <button mat-icon-button (click)="removeItem()">
       <mat-icon>close</mat-icon>
     </button>
   </div>
-
 </mat-card>

@@ -8,9 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { HeaderReadsModule } from "../header-reads/header-reads.module";
 import { HeaderModule } from '../header/header.module';
 import { InventoryModule } from '../inventory/inventory.module';
 import { MaterialModule } from '../material.module';
+import { SharedModule } from '../shared/shared.module';
 import { StudentHeaderModule } from '../student-header/student-header.module';
 import { AddedEquipmentCardComponent } from './added-equipment-card/added-equipment-card.component';
 import { BorrowEquipmentCardComponent } from './borrow-equipment-card/borrow-equipment-card.component';
@@ -27,7 +29,8 @@ import { EquipmentDetailComponent } from './equipment-detail/equipment-detail.co
     HeaderModule,
     StudentHeaderModule,
     InventoryModule,
-    MatProgressSpinnerModule, ScrollingModule],
+    SharedModule,
+    MatProgressSpinnerModule, ScrollingModule, HeaderReadsModule],
   exports: [BorrowComponent, BorrowEquipmentCardComponent, AddedEquipmentCardComponent,]
 })
 export class BorrowModule { }

@@ -34,6 +34,7 @@ import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
 import { ReportsComponent } from './reports/reports.component';
 import { SharedModule } from '../shared/shared.module';
+import { MaterialModule } from '../material.module';
 @NgModule({
   declarations: [
     InventoryComponent,
@@ -72,7 +73,8 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MatChipsModule,
     MatIconModule,
-    SharedModule
+    SharedModule,
+    MaterialModule
   ],
   exports:[
     CategoryComponent,

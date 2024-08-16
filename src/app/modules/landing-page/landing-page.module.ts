@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { HeaderModule } from '../header/header.module';
 import { PagePanelComponent } from './page-panel/page-panel.component';
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { PagePanelComponent } from './page-panel/page-panel.component';
     LoginHeaderModule,
     MatButtonModule,
     MatChipsModule,
+    HeaderModule,
     MatInputModule,
     MatIconModule
   ],

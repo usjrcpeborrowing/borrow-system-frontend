@@ -5,6 +5,8 @@ import { ThemePalette } from '@angular/material/core';
 import { DateRange, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 import { DepartmentService } from 'src/app/services/department.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
 interface Equipment {
@@ -72,7 +74,6 @@ interface Filters {
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit {
-  
   equipments: Equipment[] = [];
   brands: string[] = [];
   matters: string[] = [];
@@ -85,21 +86,21 @@ export class CategoryComponent implements OnInit {
   selectedEquipment: Equipment | null = null;
   startDate: Date | null = null;
   endDate: Date | null = null;
-  
+
   selectedBrands: Equipment | null = null;
   selectedMatter: Equipment | null = null;
   selectedInventoryType: Equipment | null = null;
   selectedStatus: Equipment | null = null;
   selectedRemarks: Equipment | null = null;
   selectedDepartment: Equipment | null = null;
-  
+
   selectedLocation: Equipment | null = null;
   selectedSort: string | null = null;
   selectedDateAcquired: Date | null = null;
-  
+
   sortSelecteds: SelectedSort[] = [
-    { name: 'Name (A-Z)', color: undefined , value: 'asc', isSelected: false},
-    { name: 'Name (Z-A)', color: undefined , value: 'desc', isSelected: false},
+    { name: 'Name (A-Z)', color: undefined, value: 'asc', isSelected: false },
+    { name: 'Name (Z-A)', color: undefined, value: 'desc', isSelected: false },
   ];
   selectedChipOptions: string[] = [];
   dateRange = new FormGroup({
@@ -107,20 +108,23 @@ export class CategoryComponent implements OnInit {
     end: new FormControl<Date | null>(null),
   });
   filterForm: FormGroup;
+  currentUser: any;
   @Output() selectedCategories: EventEmitter<any> = new EventEmitter();
   constructor(
-    private location: Location ,
+    private location: Location,
     private equipmentService: EquipmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private departmentService: DepartmentService,
-    private fb: FormBuilder
-    ) {
-      this.filterForm = this.fb.group({
-      equipmenttype: new FormControl('')
-    })
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
+    this.filterForm = this.fb.group({
+      equipmenttype: new FormControl(''),
+    });
   }
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
     this.loadBrandList();
     this.loadEquipmentTypes();
     this.loadMatterList();
@@ -128,22 +132,20 @@ export class CategoryComponent implements OnInit {
     this.getItemStatusList();
     this.getDepartmentList();
     this.getLocationList();
-    this.dateRange.valueChanges.subscribe(value => {
-      console.log('Date range changed:', value);
+    this.dateRange.valueChanges.subscribe((value) => {
       const start = value.start?.toISOString().split('T')[0];
       let end = value.end?.toISOString().split('T')[0];
       if (!end) {
         end = '';
       }
       const dateRangeString = end ? `${start}|${end}` : start;
-      console.log(dateRangeString)
       this.selectedCategories.emit({ filtername: 'dateAcquired', value: dateRangeString });
     });
   }
-  
-  
+
   loadEquipmentTypes(): void {
-    this.equipmentService.getEquipmentTypes().subscribe(
+    console.log('dept', this.currentUser.department)
+    this.equipmentService.getEquipmentTypes(this.currentUser.department).subscribe(
       (response) => {
         this.equipmenttypes = response.data;
       },
@@ -154,12 +156,11 @@ export class CategoryComponent implements OnInit {
   }
 
   loadBrandList(): void {
-    this.equipmentService.getBrandList().subscribe(
+    this.equipmentService.getBrandList(this.currentUser.department).subscribe(
       {
-        next: (resp)=> {
-          console.log({resp});
+        next: (resp) => {
           this.brands = resp.data;
-        }
+        },
       }
       // (response) => {
       //   this.brands = response.data;
@@ -174,6 +175,7 @@ export class CategoryComponent implements OnInit {
     this.equipmentService.getMatterList().subscribe(
       (response) => {
         this.matters = response.data;
+        this.selectedDepartment = this.currentUser.department.pop();
       },
       (error) => {
         console.error('Error fetching brand list:', error);
@@ -184,7 +186,6 @@ export class CategoryComponent implements OnInit {
   getInventoryTypeList(): void {
     this.equipmentService.getInventoryTypeList().subscribe(
       (response) => {
-        console.log('test test')
         this.inventorytypes = response.data;
       },
       (error) => {
@@ -215,10 +216,9 @@ export class CategoryComponent implements OnInit {
     );
   }
   getLocationList(): void {
-    this.equipmentService.getLocationList().subscribe(
+    this.equipmentService.getLocationList(this.currentUser.department).subscribe(
       (response) => {
         this.locations = response.data;
-        console.log(this.locations)
       },
       (error) => {
         console.error('Error fetching brand list:', error);
@@ -226,12 +226,11 @@ export class CategoryComponent implements OnInit {
     );
   }
   onSelectChanged(filtername: string, event: MatSelectChange | string) {
-
     let value: string;
     if (typeof event === 'string') {
-        value = event;
+      value = event;
     } else {
-        value = event.value;
+      value = event.value;
     }
 
     this.selectedCategories.emit({ filtername, value });
@@ -240,31 +239,25 @@ export class CategoryComponent implements OnInit {
     const date = event.value;
     this.startDate = date;
     const start = date?.toISOString().split('T')[0];
-    console.log(start)
     this.selectedCategories.emit({ filtername: 'dateAcquired', value: start });
   }
   onDateEndChange(event: MatDatepickerInputEvent<Date>, type: 'startDate' | 'endDate'): void {
     const date = event.value;
-      this.endDate = date;
-      const end = this.endDate?.toISOString().split('T')[0];
-      console.log(end)
-    
+    this.endDate = date;
+    const end = this.endDate?.toISOString().split('T')[0];
+
     this.selectedCategories.emit({ filtername: 'enddate', value: end });
   }
   onDateRangeChanged(event: MatDatepickerInputEvent<DateRange<Date>>): void {
     const range = event.value;
     if (range) {
-        const start = range.start?.toISOString().split('T')[0];
-        const end = range.end?.toISOString().split('T')[0];
-        console.log(start, end);
-        this.selectedCategories.emit({ filtername: 'dateAcquired', value: { start, end } });
+      const start = range.start?.toISOString().split('T')[0];
+      const end = range.end?.toISOString().split('T')[0];
+      this.selectedCategories.emit({ filtername: 'dateAcquired', value: { start, end } });
     }
-}
+  }
 
-  
-  
   resetFilters(): void {
-    console.log('Resetting filters...');
     this.selectedEquipment = null;
     this.selectedBrands = null;
     this.selectedMatter = null;
@@ -276,43 +269,44 @@ export class CategoryComponent implements OnInit {
     this.selectedLocation = null;
     this.dateRange.reset({
       start: null,
-      end: null
-  });
-      const queryParams: Params = {};
-      queryParams['equipmenttype'] = '';
-      queryParams['brand'] = '';
-      queryParams['mattertype'] = '';
-      queryParams['description'] = '';
-      queryParams['inventorytype'] = '';
-      queryParams['remarks'] = '';
-      queryParams['department'] = '';
-      queryParams['dateAcquired'] = '';
-      queryParams['location'] = '';
-      queryParams['status'] = '';
-      queryParams['sort'] = '';
-      queryParams['search'] = '';
-      this.router.navigate([], {
-        relativeTo: this.activatedRoute,
-        queryParams,
-        queryParamsHandling: 'merge',
-      });
-    }
-    
+      end: null,
+    });
+    const queryParams: Params = {};
+    queryParams['search'] = '';
+    queryParams['equipmenttype'] = '';
+    queryParams['brand'] = '';
+    queryParams['mattertype'] = '';
+    queryParams['description'] = '';
+    queryParams['inventorytype'] = '';
+    queryParams['remarks'] = '';
+    queryParams['department'] = '';
+    queryParams['dateAcquired'] = '';
+    queryParams['location'] = '';
+    queryParams['status'] = '';
+    queryParams['sort'] = '';
+    queryParams['search'] = '';
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
+
   // handleQueryParams(params: Params): void {
-    
+
   //   this.equipments.forEach((equipment) => {
   //     equipment.isSelected = params['equipmentType'] === equipment.value;
   //     console.log(equipment.isSelected);
   //   });
-  
+
   //   this.brands.forEach((brand) => {
   //     brand.isSelected = params['brand'] === brand.value;
   //   });
-  
+
   //   this.matters.forEach((matter) => {
   //     matter.isSelected = params['matter'] === matter.value;
   //   });
-  
+
   //   this.descriptions.forEach((description) => {
   //     description.isSelected = params['description'] === description.value;
   //   });
@@ -326,17 +320,16 @@ export class CategoryComponent implements OnInit {
   //   this.remarks.forEach((remark) => {
   //     remark.isSelected = params['remarks'] === remark.value;
   //   });
-  
+
   //   this.departments.forEach((department) => {
   //     department.isSelected = params['department'] === department.value;
   //   });
   //   this.sortSelecteds.forEach((sortSelected) => {
   //     sortSelected.isSelected = params['sort'] === sortSelected.value;
   //   });
-    
+
   //   this.emitSelectedCategories();
   // }
-  
 
   // updateQueryParams(category: string, value: string): void {
   //   const queryParams: Params = {};
@@ -363,5 +356,4 @@ export class CategoryComponent implements OnInit {
   //   };
   //   this.selectedCategories.emit(selectedCategories);
   // }
-
 }

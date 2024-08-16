@@ -9,6 +9,8 @@ import { Transaction } from 'src/app/models/Transaction';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { Constants } from 'src/app/models/Constant';
+
 @Component({
   selector: 'app-item-dialog',
   templateUrl: './item-dialog.component.html',
@@ -21,6 +23,7 @@ export class ItemDialogComponent implements OnInit {
 
   equipmenttypes: string[] = [];
   brands: string[] = [];
+  equipmentStatus: string[] = Constants.equipmentStatus;
 
   isloading: boolean = false;
   transactiontype: string = '';
@@ -33,15 +36,16 @@ export class ItemDialogComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   isEditingImage = false;
   current_data: any;
+  currentUser: any;
   constructor(public dialogRef: MatDialogRef<ItemDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Item, private equipmentService: EquipmentService, 
   private _snackBar: MatSnackBar, private authService: AuthService) {
     this.current_data = { ...data };
   }
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    this.checkedBy = `${currentUser?.firstName} ${currentUser?.lastName}`;
-    this.userType = currentUser?.role;
+    this.currentUser = this.authService.getCurrentUser();
+    this.checkedBy = `${this.currentUser?.firstName} ${this.currentUser?.lastName}`;
+    this.userType = this.currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
     if (!this.data.images || typeof this.data.images !== 'object') {
@@ -108,7 +112,7 @@ export class ItemDialogComponent implements OnInit {
   }
 
   loadEquipmentTypes(): void {
-    this.equipmentService.getEquipmentTypes().subscribe(
+    this.equipmentService.getEquipmentTypes(this.currentUser.department).subscribe(
       (response) => {
         this.equipmenttypes = response.data;
         console.log('Equipment types loaded:', this.equipmenttypes);
@@ -120,7 +124,7 @@ export class ItemDialogComponent implements OnInit {
   }
 
   loadBrandList(): void {
-    this.equipmentService.getBrandList().subscribe(
+    this.equipmentService.getBrandList(this.currentUser.department).subscribe(
       (response) => {
         this.brands = response.data;
       },

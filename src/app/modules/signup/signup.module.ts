@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { HeaderModule } from '../header/header.module';
+import { MaterialModule } from '../material.module';
+import { SignupHeaderComponent } from './signup-header/signup-header.component';
 import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup/signup.component';
-import { SignupHeaderComponent } from './signup-header/signup-header.component';
-
-
 @NgModule({
   declarations: [
     SignupComponent,
@@ -17,9 +18,13 @@ import { SignupHeaderComponent } from './signup-header/signup-header.component';
   imports: [
     CommonModule,
     SignupRoutingModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatIconModule,
-    MatToolbarModule
+    HeaderModule,
+    MatToolbarModule,
+    FormsModule,
+    MaterialModule
   ]
 })
 export class SignupModule { }
