@@ -44,6 +44,7 @@ export class InventoryComponent implements OnInit {
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
     this.currentUser = this.authService.getCurrentUser();
+    this.equipmentService.onAddEquipment().subscribe(resp=> this.getEquipmentList())
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });

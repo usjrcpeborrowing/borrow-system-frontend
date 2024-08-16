@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
+import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
@@ -16,13 +17,14 @@ export class StudentBorrowedListComponent implements OnInit {
     status: '',
     instructor: '',
     borrower: '',
-    search:''
+    search: '',
   };
-
+  currentUser: any;
   openedCategory: boolean = false;
-  constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService) {}
+  constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.currentUser = this.authService.getCurrentUser();
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
@@ -57,6 +59,7 @@ export class StudentBorrowedListComponent implements OnInit {
       items,
       status,
     };
+
     this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
       next: (resp) => {
         this.snackbarService.openSnackBar(resp.message, 'OK');
@@ -69,7 +72,7 @@ export class StudentBorrowedListComponent implements OnInit {
 
   queryParamsHandling(params: Params) {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
-    this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
+    this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : this.currentUser._id;
     this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : '';
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
 

@@ -59,6 +59,12 @@ export class BorrowedListComponent implements OnInit {
       items,
       status,
     };
+    // console.log({ body });
+    // console.log(this.borrowedItems);
+
+    
+    // const changed_status_items = this.borrowedItems.filter((x) => x._id == id).itemborrowed.filter((item: any) => body.items.some((x) => x.equipment._id == item.equipment));
+    // console.log(changed_status_items);
     this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
       next: (resp) => {
         this.snackbarService.openSnackBar(resp.message, 'OK');

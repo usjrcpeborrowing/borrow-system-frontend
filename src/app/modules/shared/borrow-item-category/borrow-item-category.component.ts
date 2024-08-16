@@ -21,7 +21,7 @@ export class BorrowItemCategoryComponent {
       },
       queryParamsHandling: 'merge',
     };
-
-    this.router.navigate(['/faculty-borrowed-list'], navigationExtras);
+    console.log(this.router.url.split('?')[0]);
+    this.router.navigate([this.router.url.split('?')[0]], navigationExtras);
   }
 }

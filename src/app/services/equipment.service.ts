@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, map, tap, throwError } from 'rxjs';
 import { Pagination } from 'src/app/models/Pagination';
 import { environment } from 'src/environments/environment.development';
 import { InventoryFilter } from '../models/InventoryFilter';
@@ -12,7 +12,7 @@ import { Transaction } from '../models/Transaction';
 })
 export class EquipmentService {
   token = localStorage.getItem('token');
-
+  addEquipmentSubject: Subject<string> = new Subject<string>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -118,7 +118,7 @@ export class EquipmentService {
     };
 
     return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers }).pipe(
-      tap((data) => console.log('Equipment added:', data, { headers })),
+      // tap((data) => console.log('Equipment added:', data, { headers })),
       catchError(this.handleError)
     );
   }
@@ -292,6 +292,10 @@ export class EquipmentService {
       },
     });
     return this.http.get<any>(environment.API_URL + '/api/equipment/getlocationlist', { headers, params }).pipe(catchError(this.handleError));
+  }
+
+  onAddEquipment(): Observable<string> {
+    return this.addEquipmentSubject.asObservable();
   }
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));

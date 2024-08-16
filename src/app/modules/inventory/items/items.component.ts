@@ -33,7 +33,14 @@ export class ItemsComponent implements OnInit, OnChanges {
   usertype: any = '';
   fullName: any = '';
   userDepartment: any = '';
-  constructor(private reportDownloadService: ReportDownloadService, private authService: AuthService, private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private router: Router, public dialog: MatDialog) {
+  constructor(
+    private reportDownloadService: ReportDownloadService,
+    private authService: AuthService,
+    private equipmentService: EquipmentService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    public dialog: MatDialog
+  ) {
     this.pagination = {
       length: 0,
       page: 1,
@@ -41,15 +48,13 @@ export class ItemsComponent implements OnInit, OnChanges {
       pageSizeOption: [5, 10, 25, 50],
     };
   }
-  ngOnChanges(changes: SimpleChanges): void {
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     // this.activatedRoute.queryParams.subscribe((params) =>
     //   this.queryParamsHandler(params)
     // );
     // const currentUser = this.authService.getCurrentUser();
-
     // if (!currentUser || !this.isAllowedRole(currentUser.role)) {
     //   this.router.navigate(['/']);
     // }
@@ -58,7 +63,6 @@ export class ItemsComponent implements OnInit, OnChanges {
     // // this.usertype = localStorage.getItem('currentUser.role');
     // this.usertype = currentUser?.role;
     // localStorage.setItem('currentUser.department', JSON.stringify(currentUser?.department));
-
     // this.userDepartment = currentUser?.department;
     // this.userDepartment = localStorage.getItem('currentUser.department');
   }
@@ -119,10 +123,12 @@ export class ItemsComponent implements OnInit, OnChanges {
   // }
 
   addItem(): void {
-    this.dialog.open(AddComponent, {
+    const dialog = this.dialog.open(AddComponent, {
       height: '73vh',
       width: '55vw',
     });
+
+    dialog.afterClosed().subscribe((resp) => this.equipmentService.addEquipmentSubject.next(''));
   }
   reportItems() {
     this.dialog.open(ReportsComponent, {
@@ -185,7 +191,11 @@ export class ItemsComponent implements OnInit, OnChanges {
     //   console.log("TEST ", this.filter.equipmenttype);
     // }
 
-    var fileName = '' + `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`;
+    var fileName =
+      '' +
+      `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${
+        currentDate.getMonth() + 1
+      }-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`;
     let props = {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       returnJsPDFDocObject: true,
@@ -264,7 +274,11 @@ export class ItemsComponent implements OnInit, OnChanges {
         invDesc: '',
       },
       footer: {
-        text: '' + `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`,
+        text:
+          '' +
+          `USJR_${departmentReportType}_${location}_${currentDate.getFullYear()}-${
+            currentDate.getMonth() + 1
+          }-${currentDate.getDate()}_${currentDate.getHours()}-${currentDate.getMinutes()}-${currentDate.getSeconds()}`,
       },
       pageEnable: true,
       pageLabel: 'Page ',
