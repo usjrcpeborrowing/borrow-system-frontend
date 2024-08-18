@@ -22,6 +22,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
         // item.disabled = ['approved', 'rejected'].includes(item.status);
         item.disabled = item.status !== 'pending_approval'
       });
+      console.log(this.items)
       this.cdr.detectChanges();
     }, 0);
   }

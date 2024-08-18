@@ -21,6 +21,10 @@ export class DashboardOicComponent implements OnInit{
   directToItemDetails(): void {
     this.router.navigate(['/item-details']);
   }
+  
+  directToInventoryRequest(): void {
+    this.router.navigate(['/inventory-equipment-request']);
+  }
   directToHistory(): void {
     this.router.navigate(['/history/oic']);
   }

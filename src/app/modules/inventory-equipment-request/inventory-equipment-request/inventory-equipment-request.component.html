@@ -1,0 +1,52 @@
+<div class="header">
+    <app-header></app-header>
+  </div>
+  
+  
+      <div class="page-title">
+          <div
+          class="view-category-container clickable"
+          [class.cart-openside]="openedCategory"
+          (click)="categoryClicked()"
+          >
+          <mat-icon>menu</mat-icon>
+          </div>
+          
+          <div class="title-page">Inventory Requests</div>
+      </div>
+  <mat-drawer-container class="example-container">
+      <mat-drawer mode="side" [opened]="openedCategory" position="start">
+          <div class="search-filter-wrapper">
+            <mat-form-field floatLabel="always">
+              <mat-label>Search</mat-label>
+              
+              <input
+                matInput
+                placeholder="Type Here"
+                autocomplete="off"
+              />
+              <!-- <input
+                matInput
+                placeholder="Type Here"
+                autocomplete="off"
+                [formControl]="searchedWord"
+                (keyup.enter)="searchItem($event)"
+              /> -->
+              
+              <mat-icon matSuffix
+                >search</mat-icon
+              >
+              <!-- <mat-icon matSuffix (click)="searchProduct($event)"
+                >search</mat-icon
+              > -->
+            </mat-form-field>
+          </div>
+  
+          <!-- <app-borrow-category></app-borrow-category> -->
+           <app-borrow-item-category></app-borrow-item-category>
+        </mat-drawer>
+      <mat-drawer-content class="custom-drawer-itmes">
+          <app-inventory-equipment-request-card [items]="borrowedItems"></app-inventory-equipment-request-card>
+      </mat-drawer-content>
+  </mat-drawer-container>
+  

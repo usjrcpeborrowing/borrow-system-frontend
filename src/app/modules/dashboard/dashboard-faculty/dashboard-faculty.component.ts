@@ -19,10 +19,20 @@ export class DashboardFacultyComponent implements OnInit{
     //   this.router.navigate(['/']);
     // }
   }
-  directToInventory(): void {
+  directToBorrow(): void {
     this.router.navigate(['/borrow']);
   }
   
+  directToInventory(): void {
+    this.router.navigate(['/inventory']);
+  }
+  directToItemDetails(): void {
+    this.router.navigate(['/item-details']);
+  }
+  
+  directToInventoryRequest(): void {
+    this.router.navigate(['/inventory-equipment-request']);
+  }
   directToBorrowRequest(): void {
     this.router.navigate(['/faculty-borrowed-list']);
   }

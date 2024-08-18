@@ -70,6 +70,13 @@ const routes: Routes = [
     },
   },
   {
+    path: 'inventory-equipment-request',
+    loadChildren: () => import('./modules/inventory-equipment-request/inventory-equipment-request.module').then((m)=>m.InventoryEquipmentRequestModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator', 'oic', 'reads', 'faculty'],
+    },},
+  {
     path: 'item-details',
     loadChildren: () => import('./modules/item-details/item-details.module').then((m) => m.ItemDetailsModule),
     canActivate: [AuthGuard],
