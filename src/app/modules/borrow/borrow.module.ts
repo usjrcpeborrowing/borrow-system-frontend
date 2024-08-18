@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HeaderReadsModule } from "../header-reads/header-reads.module";
+import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { HeaderModule } from '../header/header.module';
 import { InventoryModule } from '../inventory/inventory.module';
 import { MaterialModule } from '../material.module';
@@ -19,9 +19,15 @@ import { BorrowEquipmentCardComponent } from './borrow-equipment-card/borrow-equ
 import { BorrowRoutingModule } from './borrow-routing.module';
 import { BorrowComponent } from './borrow/borrow.component';
 import { EquipmentDetailComponent } from './equipment-detail/equipment-detail.component';
+
 @NgModule({
   declarations: [BorrowComponent, BorrowEquipmentCardComponent, AddedEquipmentCardComponent, EquipmentDetailComponent],
-  imports: [CommonModule, BorrowRoutingModule, FormsModule, ReactiveFormsModule, MaterialModule,
+  imports: [
+    CommonModule,
+    BorrowRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
@@ -30,7 +36,10 @@ import { EquipmentDetailComponent } from './equipment-detail/equipment-detail.co
     StudentHeaderModule,
     InventoryModule,
     SharedModule,
-    MatProgressSpinnerModule, ScrollingModule, HeaderReadsModule],
-  exports: [BorrowComponent, BorrowEquipmentCardComponent, AddedEquipmentCardComponent,]
+    MatProgressSpinnerModule,
+    ScrollingModule,
+    HeaderReadsModule,
+  ],
+  exports: [BorrowComponent, BorrowEquipmentCardComponent, AddedEquipmentCardComponent],
 })
-export class BorrowModule { }
+export class BorrowModule {}

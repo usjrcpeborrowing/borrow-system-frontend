@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
@@ -26,6 +26,7 @@ export interface Instructor {
 export class BorrowComponent implements OnInit {
   addedEquipment: Item[] = [];
   isFetching: boolean = false;
+  borrowForm: FormGroup;
 
   noItems: boolean = false;
 
@@ -44,7 +45,6 @@ export class BorrowComponent implements OnInit {
   dateSelected = new FormControl('');
 
   // Static Data Presentation Purposes
-  instructor: string = 'John ReadsLastName';
   className = new FormControl('');
   keyword = new FormControl('');
   instructorlist: any[] = [];
@@ -52,7 +52,7 @@ export class BorrowComponent implements OnInit {
   selectedInstructor: string = '';
   //
 
-  options: string[] = ['One', 'Two', 'Three'];
+  purpose_list = ["class_use", "research", "instructional", "others"];
   filteredOptions!: Observable<string[]>;
 
   pagination: Pagination = {
@@ -84,8 +84,18 @@ export class BorrowComponent implements OnInit {
     private router: Router,
     private borrowedItemsService: BorrowedItemsService,
     private _snackBar: MatSnackBar,
-    private userService: UserService
-  ) {}
+    private userService: UserService,
+    private fb: FormBuilder
+  ) {
+    this.borrowForm = this.fb.group({
+      className: ['', Validators.required],
+      classCode: ['', Validators.required],
+      startPeriod: ['', Validators.required],
+      endPeriod: ['', Validators.required],
+      instructor: ['', Validators.required],
+      purpose: ['', Validators.required],
+    });
+  }
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
@@ -97,12 +107,12 @@ export class BorrowComponent implements OnInit {
     this.userService.getDeparmentFaculty(this.user.department[0], '').subscribe({
       next: (resp) => {
         this.instructorlist = resp.data;
-        this.keyword.setValue('');
+        this.borrowForm.controls['instructor'].setValue('')
       },
     });
 
     // setTimeout(() => {
-    this.filteredInstructor = this.keyword.valueChanges.pipe(
+    this.filteredInstructor = this.borrowForm.controls['instructor'].valueChanges.pipe(
       startWith(''),
       map((value) => this._filterInstructor(value || ''))
     );
@@ -288,11 +298,14 @@ export class BorrowComponent implements OnInit {
         };
       }),
       borrower: this.userId,
-      instructor: this.selectedInstructor,
-      className: this.className.value,
+      purpose: this.borrowForm.controls['purpose'].value,
+      instructor: this.borrowForm.controls['instructor'].value,
+      className: this.borrowForm.controls['className'].value,
+      startPeriod: this.borrowForm.controls['startPeriod'].value,
+      endPeriod: this.borrowForm.controls['endPeriod'].value,
     };
 
-    console.log(body)
+   
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');
@@ -326,6 +339,47 @@ export class BorrowComponent implements OnInit {
         message: message,
       },
       duration: 3000,
+    });
+  }
+
+  onSubmit() {
+    if (this.addedEquipment.length === 0) {
+      this.openSnackBar("Empty borrowed items.", 'OK');
+      return;
+    }
+
+    if (this.borrowForm.invalid) {
+      this.openSnackBar("Please fill all required fields", 'OK');
+      return;
+    }
+
+    let body = {
+      itemborrowed: this.addedEquipment.map((eq) => {
+        return {
+          equipment: eq._id,
+          quantity: eq.quantity,
+          condition: eq.remarks,
+        };
+      }),
+      borrower: this.userId,
+      purpose: this.borrowForm.controls['purpose'].value,
+      instructor: this.borrowForm.controls['instructor'].value,
+      className: this.borrowForm.controls['className'].value,
+      startPeriod: this.borrowForm.controls['startPeriod'].value,
+      endPeriod: this.borrowForm.controls['endPeriod'].value,
+    };
+
+   
+    this.borrowedItemsService.createBorrowItems(body).subscribe({
+      next: (resp) => {
+        this.openSnackBar(resp.message, 'OK');
+      },
+      error: (err) => {
+        this.openSnackBar(err.message, 'OK');
+      },
+      complete: () => {
+        this.isFetching = false;
+      },
     });
   }
 
