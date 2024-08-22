@@ -5,14 +5,17 @@ import { HeaderRoutingModule } from './header-routing.module';
 import { HeaderComponent } from './header/header.component';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -21,6 +24,7 @@ import { MaterialModule } from '../material.module';
     MatIconModule,
     MatButtonModule,
     MaterialModule,
+    MatDialogModule,
     MatMenuModule,
     RouterModule
   ],

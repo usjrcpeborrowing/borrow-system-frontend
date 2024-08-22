@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { SocketioService } from 'src/app/services/socketio.service';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
+import { MatDialog } from '@angular/material/dialog';
 interface NavigationItem {
   name: string;
   url: string;
@@ -53,6 +55,7 @@ export class HeaderComponent implements OnInit {
   };
   currentNavigations: any[] = [];
   constructor(
+    public dialog: MatDialog,
     private authService: AuthService, 
     private router: Router, 
     private socketIOService: SocketioService
@@ -84,7 +87,13 @@ export class HeaderComponent implements OnInit {
     }
   }
   
-
+  changePassword(event: Event): void {
+    console.log('view');
+    this.dialog.open(ChangePasswordComponent, {
+      height: '55vh',
+      width: '30vw',
+    });
+  }
   logout(event: Event): void {
     event.preventDefault();
     this.authService.logout();
