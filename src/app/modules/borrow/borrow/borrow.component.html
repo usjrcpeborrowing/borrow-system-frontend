@@ -90,15 +90,15 @@
               ></app-added-equipment-card>
             </div>
           </ng-template>
-          <div class="class-detail">
-            <form>
+          <form [formGroup]="borrowForm" (ngSubmit)="onSubmit()">
+            <div class="class-detail">
               <mat-form-field class="major-filter">
                 <mat-label>Instructor</mat-label>
                 <input
                   type="text"
                   placeholder="Type the name of your instructor"
                   matInput
-                  [formControl]="keyword"
+                  formControlName="instructor"
                   [matAutocomplete]="auto"
                 />
                 <mat-autocomplete
@@ -117,16 +117,39 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="major-filter">
-                <mat-label>Class Name</mat-label>
-                <input matInput type="text" [formControl]="className" />
+                <mat-label>Purpose</mat-label>
+                <mat-select formControlName="purpose">
+                  <mat-option
+                    *ngFor="let purpose of purpose_list"
+                    [value]="purpose"
+                  >
+                    {{ purpose }}
+                  </mat-option>
+                  <!-- Add other departments as needed -->
+                </mat-select>
               </mat-form-field>
-            </form>
-          </div>
-          <div class="action-wrapper">
-            <button mat-raised-button (click)="borrowItems()">
-              Borrow Items
-            </button>
-          </div>
+              <mat-form-field class="major-filter">
+                <mat-label>Class Code</mat-label>
+                <input matInput type="text" formControlName="classCode" />
+              </mat-form-field>
+              <mat-form-field class="major-filter">
+                <mat-label>Class Name</mat-label>
+                <input matInput type="text" formControlName="className" />
+              </mat-form-field>
+              <mat-form-field class="major-filter">
+                <mat-label>Start Period</mat-label>
+                <input matInput type="time" formControlName="startPeriod" />
+              </mat-form-field>
+
+              <mat-form-field class="major-filter">
+                <mat-label>End Period</mat-label>
+                <input matInput type="time" formControlName="endPeriod" />
+              </mat-form-field>
+            </div>
+            <div class="action-wrapper">
+              <button mat-raised-button type="submit">Borrow Items</button>
+            </div>
+          </form>
         </div>
       </mat-drawer>
     </mat-drawer-container>
