@@ -7,11 +7,28 @@
   gap: 5px;
 }
 
+.action-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.notification-wrapper a,
+.notification-wrapper a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
 .notification {
   background: #d3d2d2;
   border-radius: 5px;
   padding: 8px;
   cursor: pointer;
+}
+
+.viewed {
+  background-color: rgb(250, 245, 238);
 }
 
 .notification-type {

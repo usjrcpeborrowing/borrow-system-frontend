@@ -244,6 +244,7 @@ export class BorrowComponent implements OnInit {
       this.isFetching = false;
       this.noItems = true;
       this.equipmentlist = resp.data;
+      console.log('equipmentsssss', resp)
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
     });

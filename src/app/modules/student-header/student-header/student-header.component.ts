@@ -55,8 +55,8 @@ export class StudentHeaderComponent implements OnInit {
 
   getNotifications() {
     this.notificationService.getNotifications(this.currentUser._id, 10).subscribe({
-      next: (resp) => {
-        this.notifications = resp;
+      next: (resp:any) => {
+        this.notifications = resp.data;
       },
       error: (err)=> {
         console.error(err.message)
