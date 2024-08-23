@@ -38,36 +38,8 @@
         >
       </button>
     </div>
-  
-      
-        <div class="spacer1" *ngIf="currentNavigations.length === 0"></div>
-        <div class="button-header" *ngIf="currentNavigations.length > 0">
-            <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url">{{ nav.name }}</a>
-        </div>
-      <div class="spacer"></div>
-      <div class="button-header-profile" >
-        <button mat-icon-button [matMenuTriggerFor]="notificationMenu"  *ngIf="currentNavigations.length > 0">
-            <mat-icon>notifications</mat-icon> <!-- Use 'notifications' for a generic notifications icon -->
-        </button>
-        <mat-menu #notificationMenu="matMenu" >
-            <div class="not-panel">
-            <h3>Notification</h3>
-        </div>
-        </mat-menu>
-        <div class="profileName-header">
-          <button mat-icon-button [matMenuTriggerFor]="menu"  class="profileName"  *ngIf="currentNavigations.length > 0">
-              <!-- <span>Hello, {{ currentUser?.name.firstName }} {{ currentUser?.name.lastName }}</span> -->
-              <span>Hello, {{ currentUser?.firstName}}  {{ currentUser?.lastName }}</span>
-          </button>
-      </div>
-        <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="changePassword($event)">Change Password</button>
-            <button mat-menu-item (click)="logout($event)">Logout</button>
-        </mat-menu>
-    </div>
-    <button mat-icon-button class="menu-icon" (click)="sidenav.toggle()" *ngIf="currentNavigations.length > 0">
-      <mat-icon>menu</mat-icon>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changePassword($event)">Change Password</button>
       <button mat-menu-item (click)="logout($event)">Logout</button>
     </mat-menu>
   </div>
@@ -79,7 +51,7 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  
+
   <div class="button-header" *ngIf="currentNavigations.length === 0">
     <a [routerLink]="'/login'">Login</a>
   </div>

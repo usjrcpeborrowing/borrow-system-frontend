@@ -33,6 +33,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatCardModule,
     MatCheckboxModule,
     FormsModule,
+    SharedModule
   ]
 })
 export class InventoryEquipmentRequestModule { }
