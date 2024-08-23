@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificationInterface } from 'src/app/models/Notification';
 import { AuthService } from 'src/app/services/auth.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { SocketioService } from 'src/app/services/socketio.service';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 
@@ -13,10 +15,12 @@ interface NavigationItem {
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
   currentUser: any;
+  notifications: NotificationInterface[] = [];
+  limit: number = 10;
   notification_count: number = 0;
   notification_messages: string[] = [];
   navigations: { [key: string]: NavigationItem[] } = {
@@ -58,7 +62,8 @@ export class HeaderComponent implements OnInit {
     public dialog: MatDialog,
     private authService: AuthService, 
     private router: Router, 
-    private socketIOService: SocketioService
+    private socketIOService: SocketioService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +73,25 @@ export class HeaderComponent implements OnInit {
     this.socketIOService.listen('notification').subscribe({
       next: (resp) => {
         this.notification_count += 1;
-        this.notification_messages.push(resp as string);
+      },
+    });
+
+    this.getNotifications();
+
+    this.notificationService.onMarkAsViewed().subscribe({
+      next: (resp) => {
+        this.getNotifications();
+      },
+    });
+  }
+
+  getNotifications() {
+    this.notificationService.getNotifications(this.currentUser._id, this.limit).subscribe({
+      next: (resp: any) => {
+        this.notifications = resp.data;
+        this.notification_count = resp.unread;
+      
+        console.log(resp);
       },
     });
   }
@@ -94,6 +117,7 @@ export class HeaderComponent implements OnInit {
       width: '30vw',
     });
   }
+
   logout(event: Event): void {
     event.preventDefault();
     this.authService.logout();

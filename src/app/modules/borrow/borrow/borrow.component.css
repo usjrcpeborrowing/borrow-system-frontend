@@ -13,10 +13,9 @@
 }
 .class-detail {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  flex-direction: column;
   gap: 10px;
-  /* padding: 10px; */
 }
 .class-name {
   margin-bottom: -1px;
@@ -96,7 +95,7 @@
   flex-direction: column;
   padding: 10px;
 }
-.major-filter{
+.major-filter {
   width: 100%;
   margin-bottom: -8%;
 }
@@ -221,11 +220,10 @@ mat-drawer {
     display: block;
     font-size: 20px;
   }
-  .major-filter{
+  .major-filter {
     width: 100%;
     margin-bottom: -4%;
   }
-
 }
 
 .borrowed-items-wrapper {
@@ -235,11 +233,15 @@ mat-drawer {
   padding: 15px 0;
 }
 
+::ng-deep .mdc-text-field__input::-webkit-calendar-picker-indicator {
+  display: block;
+}
+
 @media screen and (max-width: 430px) {
   .title-page {
     font-size: 30px;
   }
-  .major-filter{
+  .major-filter {
     width: 100%;
     margin-bottom: -6%;
   }
