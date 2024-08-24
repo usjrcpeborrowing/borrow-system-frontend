@@ -29,10 +29,12 @@ mat-card-content p {
   }
   
   .detail-quantity {
+    
+    background-color: rgb(62, 112, 62);
+    color: white;
     position: relative;
     display: inline-flex;
     align-items: center;
-    width: 3%;
   }
   
   .detail-select {

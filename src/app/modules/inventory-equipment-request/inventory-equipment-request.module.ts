@@ -13,6 +13,7 @@ import { InventoryEquipmentRequestComponent } from './inventory-equipment-reques
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 @NgModule({
@@ -27,12 +28,14 @@ import { MatSelectModule } from '@angular/material/select';
     SharedModule,
     HeaderModule,
     MaterialModule,
+    MatDialogModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     MatSelectModule,
     MatCardModule,
     MatCheckboxModule,
     FormsModule,
+    SharedModule
   ]
 })
 export class InventoryEquipmentRequestModule { }

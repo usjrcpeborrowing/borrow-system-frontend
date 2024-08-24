@@ -1,9 +1,10 @@
 
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Constants } from 'src/app/models/Constant';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-
+import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-dialog/equipment-detail-dialog.component';
 @Component({
   selector: 'app-inventory-equipment-request-card-panel',
   templateUrl: './inventory-equipment-request-card-panel.component.html',
@@ -20,7 +21,8 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   selectAll = false;
   remarks: string = 'haha';
 
-  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
+  constructor(
+    public dialog: MatDialog,private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -35,6 +37,14 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
 
   ngOnChanges(changes: SimpleChanges): void {}
 
+  viewItem(): void {
+    console.log('view');
+    this.dialog.open(EquipmentDetailDialogComponent, {
+      height: '80vh',
+      width: '45vw',
+    });
+  }
+  
   toggleSelectAll(event: any): void {
     this.selectAll = event.checked;
     this.items.forEach((item) => {

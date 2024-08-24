@@ -4,7 +4,9 @@ import { NotificationInterface } from 'src/app/models/Notification';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { SocketioService } from 'src/app/services/socketio.service';
+import { ChangePasswordComponent } from '../change-password/change-password.component';
 
+import { MatDialog } from '@angular/material/dialog';
 interface NavigationItem {
   name: string;
   url: string;
@@ -56,7 +58,13 @@ export class HeaderComponent implements OnInit {
     ],
   };
   currentNavigations: any[] = [];
-  constructor(private authService: AuthService, private router: Router, private socketIOService: SocketioService, private notificationService: NotificationService) {}
+  constructor(
+    public dialog: MatDialog,
+    private authService: AuthService, 
+    private router: Router, 
+    private socketIOService: SocketioService,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
@@ -100,6 +108,14 @@ export class HeaderComponent implements OnInit {
     } else {
       this.currentNavigations = [];
     }
+  }
+  
+  changePassword(event: Event): void {
+    console.log('view');
+    this.dialog.open(ChangePasswordComponent, {
+      height: '55vh',
+      width: '30vw',
+    });
   }
 
   logout(event: Event): void {

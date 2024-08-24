@@ -39,6 +39,7 @@
       </button>
     </div>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="changePassword($event)">Change Password</button>
       <button mat-menu-item (click)="logout($event)">Logout</button>
     </mat-menu>
   </div>
@@ -50,7 +51,7 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  
+
   <div class="button-header" *ngIf="currentNavigations.length === 0">
     <a [routerLink]="'/login'">Login</a>
   </div>

@@ -3,9 +3,11 @@
 <div class="scrollable-panel">
   <div class="table-content">
       <ng-container matColumnDef="itemPanel">
-        <div *ngFor="let item of items">
+        <!-- <div *ngFor="let item of items">
           <app-inventory-equipment-request-card-panel [data]="item" [items]="item.itemborrowed"></app-inventory-equipment-request-card-panel>
-        </div>
+        
+        </div> -->
+        <app-inventory-equipment-request-card-panel></app-inventory-equipment-request-card-panel>
       </ng-container>
     <ng-template #noResults>
       <p>No Results Found</p>

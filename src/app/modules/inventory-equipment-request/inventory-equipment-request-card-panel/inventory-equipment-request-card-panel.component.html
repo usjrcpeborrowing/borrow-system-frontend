@@ -1,4 +1,4 @@
-<mat-card appearance="outlined">
+<!-- <mat-card appearance="outlined">
     <mat-card-content class="panel-description">
       <div>
         <div mat-card-title class="detail-name">
@@ -75,6 +75,73 @@
         </button>
         <button mat-raised-button (click)="returnItems(status_return)">
           Return
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+   -->
+
+   <mat-card appearance="outlined">
+    <mat-card-content class="panel-description">
+      <div>
+        <div mat-card-title class="detail-name">
+          Reads John Doe
+        </div>
+        <div mat-card-title class="detail-name">
+          | ID: 202000320
+        </div>
+      </div>
+  
+      <div mat-card-title class="detail-info">
+        <div class="borrowed-items-class">Edited Items</div>
+        <div class="detail-date">
+          Sep 12, 2024 - 4:32 PM
+        </div>
+      </div>
+      <div class="hline"></div>
+      <div class="checkbox-container">
+        <div class="detail-select">Select All</div>
+        <mat-checkbox
+          [(ngModel)]="selectAll"
+          (change)="toggleSelectAll($event)"
+        ></mat-checkbox>
+      </div>
+      <div class="item-container">
+
+          <div class="item-row">
+            <button mat-icon-button class="detail-quantity" (click)="viewItem()">
+              <mat-icon>info</mat-icon>
+            </button>
+            <div class="detail-equipment"> Laptop Acer Intel i5</div>
+            <div class="detail-condition">
+              Item Description Change
+            </div>
+            <mat-checkbox
+            ></mat-checkbox>
+          </div>
+          <div class="item-row">
+            <button mat-icon-button class="detail-quantity" (click)="viewItem()">
+              <mat-icon>info</mat-icon>
+            </button>
+            <div class="detail-equipment"> PC Unit Intel i7 13th gen</div>
+            <div class="detail-condition">
+              Item Description Change
+            </div>
+            <mat-checkbox
+            ></mat-checkbox>
+          </div>
+        </div>
+        
+      <div class="action-wrapper">
+        <button
+          class="report-button"
+          mat-raised-button
+          (click)="releaseItems(status_released)"
+        >
+          Accept
+        </button>
+        <button mat-raised-button (click)="returnItems(status_return)">
+          Reject
         </button>
       </div>
     </mat-card-content>

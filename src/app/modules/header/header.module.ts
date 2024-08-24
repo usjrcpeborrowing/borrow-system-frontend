@@ -12,6 +12,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -25,6 +27,7 @@ import { SharedModule } from '../shared/shared.module';
     MatButtonModule,
     MaterialModule,
     MatDialogModule,
+    
     MatMenuModule,
     RouterModule,
     SharedModule
