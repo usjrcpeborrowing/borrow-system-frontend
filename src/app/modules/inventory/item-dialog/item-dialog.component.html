@@ -117,7 +117,7 @@
         <mat-form-field class="addRemarks" floatLabel="always">
           <mat-label>Condition</mat-label>
           <!-- <input matInput autocomplete="off" [(ngModel)]="data.condition" /> -->
-          <mat-select [(ngModel)]="data.condition" >
+          <mat-select [(ngModel)]="data.condition">
             <mat-option *ngFor="let status of equipmentStatus" [value]="status">
               {{ status }}
             </mat-option>
@@ -166,13 +166,9 @@
       <div class="image-container">
         <img
           class="fit-image"
-          [src]="data.images.thumbnailUrl"
+          [src]="data.images.midSizeUrl"
           alt="Item Image"
-          *ngIf="data.images.thumbnailUrl; else noImage"
         />
-        <ng-template #noImage>
-          <p>No image link provided.</p>
-        </ng-template>
       </div>
       <div class="edit-image" *ngIf="isFaculty()">
         <!-- <button mat-raised-button *ngIf="!isEditingImage" (click)="isEditingImage = true">Edit Image</button>

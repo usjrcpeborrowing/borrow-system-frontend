@@ -168,13 +168,13 @@
     </div>
     <div class="first-content">
       <div class="image-container">
-        <img *ngIf="imageUrl" [src]="imageUrl" />
+        <img [src]="imageUrl || 'http://placehold.it/180'" />
       </div>
       <!-- <div class="add-image">
                 <input type="text" placeholder="Enter Google Drive Image Link" (blur)="loadImageFromGoogleDrive($event)">
             </div> -->
       <div class="add-image">
-        <input type="file" (change)="loadImageFromFile($event)" disabled />
+        <input type="file" accept="image/*" (change)="loadImageFromFile($event)"/>
       </div>
     </div>
     <div class="add-button">

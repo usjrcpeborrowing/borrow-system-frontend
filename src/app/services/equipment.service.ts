@@ -13,6 +13,7 @@ import { Transaction } from '../models/Transaction';
 export class EquipmentService {
   token = localStorage.getItem('token');
   addEquipmentSubject: Subject<string> = new Subject<string>();
+  addEquipmentImageSubject: Subject<string> = new Subject<string>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -297,6 +298,11 @@ export class EquipmentService {
   onAddEquipment(): Observable<string> {
     return this.addEquipmentSubject.asObservable();
   }
+
+  onAddEquipmentImage(): Observable<string> {
+    return this.addEquipmentImageSubject.asObservable()
+  }
+
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));
   }

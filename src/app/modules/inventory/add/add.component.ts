@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
@@ -27,7 +27,7 @@ export class AddComponent implements OnInit {
   filteredBrands!: Observable<string[]>;
 
   isFetching: boolean = true;
-  imageUrl: string | null = null;
+  imageUrl: any = null;
   googleDriveLink: string = '';
 
   userDepartment: any = '';
@@ -76,6 +76,12 @@ export class AddComponent implements OnInit {
       quantity: [1, [Validators.required, Validators.min(1)]],
       unit: ['', Validators.required],
       isborrow: [true, Validators.required],
+      // images: this.fb.array([])
+      images: this.fb.group({
+        url: [''],
+        thumbnailUrl: [''],
+        midSizeUrl: [''],
+      }),
     });
   }
 
@@ -100,6 +106,15 @@ export class AddComponent implements OnInit {
       startWith(''),
       map((value) => this._filterLocation(value))
     );
+
+    this.equipmentService.onAddEquipmentImage().subscribe({
+      next: (resp) => {
+        // console.log(resp);
+        // (this.addItemForm.get('images') as FormArray).push(this.fb.control(resp));
+        (this.addItemForm.controls['images'] as FormGroup).controls['url'].setValue(resp);
+        console.log(this.addItemForm);
+      },
+    });
   }
 
   private _filterEquipmentTypes(value: string): string[] {
@@ -117,20 +132,55 @@ export class AddComponent implements OnInit {
     return this.location.filter((option) => option.toLowerCase().includes(filterValue));
   }
   loadImageFromFile(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-      const file = inputElement.files[0];
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.imageUrl = e.target.result;
+    console.log('files', (event.target as HTMLInputElement).files);
+    let files = (event.target as HTMLInputElement).files as FileList;
 
-        console.log('Base64:', this.imageUrl);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      console.log('No file selected');
+    for (let x = 0; x < files.length; x++) {
+      if (this.validateImage(files[0])) {
+        this.previewImage(files[0]);
+      }
     }
+
+    // const inputElement = event.target as HTMLInputElement;
+    // if (inputElement.files && inputElement.files.length > 0) {
+    //   const file = inputElement.files[0];
+    //   const reader = new FileReader();
+    //   reader.onload = (e: any) => {
+    //     this.imageUrl = e.target.result;
+
+    //     console.log('Base64:', this.imageUrl);
+    //   };
+    //   reader.readAsDataURL(file);
+    // } else {
+    //   console.log('No file selected');
+    // }
   }
+
+  validateImage(image: File): Boolean {
+    const validtypes = ['image/jpeg', 'image/png'];
+    const maxSizeInBytes = 5e6; // 10MB
+    if (!validtypes.includes(image.type)) {
+      console.log('not valid haha');
+      this.snackbarService.openSnackBar('invalid image type', 'ok', true);
+      return false;
+    }
+    if (image.size > maxSizeInBytes) {
+      this.snackbarService.openSnackBar('image size too large', 'ok', true);
+      return false;
+    }
+    return true;
+  }
+
+  previewImage(image: File) {
+    // read the image...
+    var reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      this.imageUrl = e?.target?.result;
+      this.equipmentService.addEquipmentImageSubject.next(this.imageUrl);
+    };
+    reader.readAsDataURL(image);
+  }
+
   loadImageFromGoogleDrive(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     const googleDriveLink = inputElement.value;
@@ -183,6 +233,7 @@ export class AddComponent implements OnInit {
         },
         error: (err: any) => {
           this.snackbarService.openSnackBar(err.message, 'Close', true);
+          this.isloading = false;
         },
         complete: () => {
           this.isloading = false;
@@ -222,15 +273,11 @@ export class AddComponent implements OnInit {
     });
   }
   loadLocationList(): void {
-    this.equipmentService.getLocationList(this.currentUser.department).subscribe(
-      {
-        next: (resp) => {
-          this.location = resp.data;
-          this.addItemForm.get('location')?.setValue('');
-        },
-      }
-    );
+    this.equipmentService.getLocationList(this.currentUser.department).subscribe({
+      next: (resp) => {
+        this.location = resp.data;
+        this.addItemForm.get('location')?.setValue('');
+      },
+    });
   }
-
-  
 }

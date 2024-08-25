@@ -37,8 +37,13 @@ export class ItemDialogComponent implements OnInit {
   isEditingImage = false;
   current_data: any;
   currentUser: any;
-  constructor(public dialogRef: MatDialogRef<ItemDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Item, private equipmentService: EquipmentService, 
-  private _snackBar: MatSnackBar, private authService: AuthService) {
+  constructor(
+    public dialogRef: MatDialogRef<ItemDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Item,
+    private equipmentService: EquipmentService,
+    private _snackBar: MatSnackBar,
+    private authService: AuthService
+  ) {
     this.current_data = { ...data };
   }
 
@@ -48,13 +53,13 @@ export class ItemDialogComponent implements OnInit {
     this.userType = this.currentUser?.role;
     this.loadEquipmentTypes();
     this.loadBrandList();
-    if (!this.data.images || typeof this.data.images !== 'object') {
-      this.data.images = {
-        thumbnailUrl: '',
-        midSizeUrl: '',
-        Url: '',
-      };
-    }
+    // if (!this.data.images || typeof this.data.images !== 'object') {
+    //   this.data.images = {
+    //     thumbnailUrl: '',
+    //     midSizeUrl: '',
+    //     url: '',
+    //   };
+    // }
 
     this.filteredEquipmentTypes = this.equipmentTypeControl.valueChanges.pipe(
       startWith(''),
@@ -64,6 +69,8 @@ export class ItemDialogComponent implements OnInit {
       startWith(''),
       map((value) => this._filterBrands(value))
     );
+
+    console.log('this data', this.data);
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
@@ -162,7 +169,6 @@ export class ItemDialogComponent implements OnInit {
     }
   }
   saveChanges() {
-    
     this.isloading = true;
     if (typeof this.data.images !== 'object') {
       console.error('data.images is not an object:', this.data.images);
@@ -170,7 +176,7 @@ export class ItemDialogComponent implements OnInit {
     }
     this.data.dateAcquired = new Date();
     if (this.imageUrl) {
-      this.data.images.Url = this.imageUrl;
+      this.data.images.url = this.imageUrl;
       this.data.images.midSizeUrl = this.imageUrl;
     }
     console.log('current data', this.current_data);
@@ -178,7 +184,6 @@ export class ItemDialogComponent implements OnInit {
     this.equipmentService.updateItem(this.data._id, this.data).subscribe(
       (response) => {
         if (response.success) {
-          
           this.isloading = false;
           console.log('Updating item with ID:', this.data._id);
           console.log('Item updated successfully:', response.data);
@@ -209,7 +214,7 @@ export class ItemDialogComponent implements OnInit {
             timeStamp: new Date(),
           };
           console.log('ITEM COOOOOOOOODE', transaction);
-          
+
           this.openSnackBar('Item Edit successfully!', 'Close', false);
           this.addTransactionItem(transaction);
           this.dialogRef.close();
@@ -219,7 +224,6 @@ export class ItemDialogComponent implements OnInit {
         }
       },
       (error) => {
-        
         this.openSnackBar('Item edit failed!', 'Close', true);
         console.error('Error updating item:', error);
       }
@@ -231,15 +235,15 @@ export class ItemDialogComponent implements OnInit {
       verticalPosition: 'top',
       horizontalPosition: 'center',
     };
-  
+
     if (isError) {
       config.panelClass = ['red-snackbar'];
     } else {
       config.panelClass = ['green-snackbar'];
     }
-  
+
     this._snackBar.openFromComponent(SnackbarComponent, {
-    ...config,
+      ...config,
       data: {
         error: isError,
         message: message,
