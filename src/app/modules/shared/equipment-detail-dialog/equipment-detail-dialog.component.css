@@ -13,13 +13,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
     padding: 5px 0;
 }
 
 .label {
     font-weight: bold;
-    width: 150px;
 }
 
 .detail {

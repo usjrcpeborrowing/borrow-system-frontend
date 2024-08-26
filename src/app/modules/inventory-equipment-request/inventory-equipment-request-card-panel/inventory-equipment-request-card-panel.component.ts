@@ -40,7 +40,7 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   viewItem(): void {
     console.log('view');
     this.dialog.open(EquipmentDetailDialogComponent, {
-      height: '80vh',
+      height: '90vh',
       width: '45vw',
     });
   }
