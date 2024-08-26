@@ -1,5 +1,4 @@
-
-<div class="dialog-detail">
+<!-- <div class="dialog-detail">
     <h2 mat-dialog-title>Item Details</h2>
     <div mat-dialog-content>
         <div class="item-details-container">
@@ -73,4 +72,42 @@
     <div mat-dialog-actions class="close-button">
         <button mat-button (click)="dialogRef.close()">Close</button>
     </div>
+</div> -->
+
+<div class="dialog-container">
+  <h2 mat-dialog-title>Equipment Details</h2>
+  <form [formGroup]="equipmentForm">
+    <mat-dialog-content class="mat-typography">
+      <div class="img-wrapper">
+        <img [src]="data.images.midSizeUrl || defaultImage" alt="" />
+      </div>
+
+      <div class="detail-wrapper">
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            placeholder="Placeholder"
+            formControlName="name"
+            readonly
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>test</mat-label>
+          <input matInput placeholder="Placeholder" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>test</mat-label>
+          <input matInput placeholder="Placeholder" />
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+  </form>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="equipmentForm.value" cdkFocusInitial>
+      Confirm
+    </button>
+  </mat-dialog-actions>
 </div>

@@ -1,17 +1,21 @@
-
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Constants } from 'src/app/models/Constant';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-dialog/equipment-detail-dialog.component';
+import { Item } from 'src/app/models/Items';
+import { EquipmentService } from 'src/app/services/equipment.service';
 @Component({
   selector: 'app-inventory-equipment-request-card-panel',
   templateUrl: './inventory-equipment-request-card-panel.component.html',
-  styleUrls: ['./inventory-equipment-request-card-panel.component.css']
+  styleUrls: ['./inventory-equipment-request-card-panel.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];
+  @Input() equipments: Item[] = [];
+
   @Input() data: any;
 
   equipmentStatus = Constants.equipmentStatus;
@@ -21,8 +25,7 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   selectAll = false;
   remarks: string = 'haha';
 
-  constructor(
-    public dialog: MatDialog,private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
+  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef, private equipmentService: EquipmentService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -37,14 +40,19 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
 
   ngOnChanges(changes: SimpleChanges): void {}
 
-  viewItem(): void {
+  viewItem(item: Item): void {
     console.log('view');
-    this.dialog.open(EquipmentDetailDialogComponent, {
-      height: '80vh',
-      width: '45vw',
+    const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
+      data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((resp) => {
+      if(resp) {
+        this.equipmentService.confirmEquipmentSubject.next(resp)
+      }
     });
   }
-  
+
   toggleSelectAll(event: any): void {
     this.selectAll = event.checked;
     this.items.forEach((item) => {
@@ -81,11 +89,11 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
     } else {
-      this.borrowedItemService.changeBorrowStatus.next({
-        borrowedItemId: this.data._id,
-        items: selected,
-        status: this.status_released,
-      });
+      // this.borrowedItemService.changeBorrowStatus.next({
+      //   borrowedItemId: this.data._id,
+      //   items: selected,
+      //   status: this.status_released,
+      // });
     }
   }
 
@@ -102,11 +110,11 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
 
     console.log(this.items);
 
-    this.borrowedItemService.changeBorrowStatus.next({
-      borrowedItemId: this.data._id,
-      items: selected,
-      status: this.status_return,
-    });
+    // this.borrowedItemService.changeBorrowStatus.next({
+    //   borrowedItemId: this.data._id,
+    //   items: selected,
+    //   status: this.status_return,
+    // });
   }
 
   formatStatus(status: string): string {

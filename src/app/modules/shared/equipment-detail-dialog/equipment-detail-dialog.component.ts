@@ -1,6 +1,8 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Item } from 'src/app/models/Items';
 
 @Component({
   selector: 'app-equipment-detail-dialog',
@@ -8,21 +10,40 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./equipment-detail-dialog.component.css']
 })
 export class EquipmentDetailDialogComponent implements OnInit {
-  itemDetails: any;
+  // itemDetails: any;
   
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
+  equipmentForm: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<EquipmentDetailDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.itemDetails = data;
+    @Inject(MAT_DIALOG_DATA) public data: Item,
+  private fb: FormBuilder) {
+    // this.itemDetails = data;
+    this.equipmentForm = fb.group({
+      _id: [data._id],
+      serialNo: [data.serialNo],
+      equipmentType: [data.equipmentType],
+      name: [data.name],
+      brand: [data.brand],
+      color: [data.color],
+      modelNo: [data.modelNo],
+      quantity: [data.quantity],
+      unit: [data.unit],
+      matter: [data.matter],
+      inventorytype: [data.inventorytype],
+      description: [data.description],
+      dateAcquired: [data.dateAcquired],
+      images: fb.group({
+        url: data.images.url,
+        midSizeUrl: data.images.midSizeUrl,
+        thumbnailUrl: data.images.thumbnailUrl
+      })
+
+    })
   }
   ngOnInit(): void {
     
-    const thumbnailUrl = this.itemDetails?.images?.midSizeUrl?.length ? this.itemDetails?.images?.midSizeUrl : '';
-    const id: string = thumbnailUrl.substring(thumbnailUrl.lastIndexOf('/d/') + 3, thumbnailUrl.lastIndexOf('/view'));
-    console.log(id);
-    this.displayImage = `https://drive.google.com/thumbnail?id=${id}&&sz=w1000`;
-    console.log("Image: ", this.itemDetails.images.thumbnailUrl)
+   
   }
 }

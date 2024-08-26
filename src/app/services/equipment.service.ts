@@ -7,6 +7,12 @@ import { InventoryFilter } from '../models/InventoryFilter';
 import { Item } from '../models/Items';
 import { Transaction } from '../models/Transaction';
 
+interface Response {
+  data: Item[];
+  message: string;
+  success: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -14,6 +20,7 @@ export class EquipmentService {
   token = localStorage.getItem('token');
   addEquipmentSubject: Subject<string> = new Subject<string>();
   addEquipmentImageSubject: Subject<string> = new Subject<string>();
+  confirmEquipmentSubject: Subject<Item> = new Subject<Item>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -111,6 +118,16 @@ export class EquipmentService {
       tap((data) => console.log('Equipment Types:', data)), // Debugging line
       catchError(this.handleError)
     );
+  }
+
+  getUnconfirmedEquipments(page: number, limit: number, department: string[]) {
+    const params = new HttpParams({
+      fromObject: {
+        department: department,
+      },
+    });
+
+    return this.http.get<Response>(environment.API_URL + '/api/equipment/getunconfirmedequipments', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
   }
 
   addEquipment(item: Item): Observable<any> {
@@ -300,7 +317,11 @@ export class EquipmentService {
   }
 
   onAddEquipmentImage(): Observable<string> {
-    return this.addEquipmentImageSubject.asObservable()
+    return this.addEquipmentImageSubject.asObservable();
+  }
+
+  onConfirmEquipment(): Observable<Item> {
+    return this.confirmEquipmentSubject.asObservable()
   }
 
   handleError(err: HttpErrorResponse) {

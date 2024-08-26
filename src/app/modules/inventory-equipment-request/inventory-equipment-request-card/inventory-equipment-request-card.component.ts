@@ -1,5 +1,6 @@
 
 import { Component, Input } from '@angular/core';
+import { Item } from 'src/app/models/Items';
 @Component({
   selector: 'app-inventory-equipment-request-card',
   templateUrl: './inventory-equipment-request-card.component.html',
@@ -7,10 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class InventoryEquipmentRequestCardComponent {
 
-  @Input() items: any[] = [];
-  
-
-  
+  @Input() equipments: Item[] = [];
   ngOnInit(): void {
   }
 }
