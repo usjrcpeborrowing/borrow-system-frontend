@@ -24,6 +24,46 @@
     gap: 10px;
 }
 
-::ng-deep .mat-mdc-text-field-wrapper {
-    width: 280px;
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px 0;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.detail {
+    flex-grow: 1;
+}
+.image-container{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 2%;
+    border: 1px solid ;
+    border-color: rgb(136, 136, 136);
+    width: 20vh;
+    height: 20vh;
+    overflow: hidden;
+}
+.image-container img{
+    max-width: 100%;
+    max-height: 100%;
+}
+.item-details {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.item-details div {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.item-details div:last-child {
+    margin-bottom: 0;
 }
