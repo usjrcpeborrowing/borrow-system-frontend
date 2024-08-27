@@ -62,4 +62,13 @@ export class UserService {
   onActivateUserSubject() {
     return this.activateUserSubject.asObservable()
   }
+
+  changePassword(userId: string, currentPassword: string, newPassword: string): Observable<any> {
+    //no patch yet
+    return this.http.patch<any>(environment.API_URL + '/api/users/' + `${userId}` + `${currentPassword}`, newPassword, {
+      headers: { Authorization: this.token as string }
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

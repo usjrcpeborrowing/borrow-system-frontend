@@ -31,7 +31,6 @@ export class PanelComponent {
         if (resp.success) {
           localStorage.setItem('token', resp?.token);
           localStorage.setItem('roles', JSON.stringify(resp?.data?.role));
-          // localStorage.setItem('firstName', resp?.data?.firstName);
           localStorage.setItem('user', JSON.stringify(resp?.data));
 
           this.authService.navigateToDashboard(resp?.data?.role[0]);

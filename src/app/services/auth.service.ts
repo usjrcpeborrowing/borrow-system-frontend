@@ -80,7 +80,6 @@ export class AuthService {
     return allowedRoles.some((allowedrole) => userRoles.includes(allowedrole));
 
   }
-
   getCurrentUser(): User | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
