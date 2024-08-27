@@ -33,6 +33,19 @@ export class InventoryEquipmentRequestComponent implements OnInit {
         },
       });
     });
+
+    this.equipmentService.onConfirmSelectedEquipments().subscribe({
+      next: (resp) => {
+        this.equipmentService.confirmEquipmentByIds(resp).subscribe({
+          next: (resp) => {
+            this.snackbarService.openSnackBar(resp.message, 'OK');
+          },
+          error: (err) => {
+            this.snackbarService.openSnackBar(err.message, 'OK', true);
+          },
+        });
+      },
+    });
     // this.borrowListService.onChangeBorrowStatus().subscribe({
     //   next: (resp) => {
     //     console.log(resp);

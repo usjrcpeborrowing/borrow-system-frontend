@@ -102,26 +102,22 @@
     </div>
     <div class="item-container">
       <div class="item-row" *ngFor="let equipment of equipments">
-        <button mat-icon-button class="detail-quantity" (click)="viewItem(equipment)">
+        <button
+          mat-icon-button
+          class="detail-quantity"
+          (click)="viewItem(equipment)"
+        >
           <mat-icon>info</mat-icon>
         </button>
-        <div class="detail-equipment">{{equipment.name}}</div>
+        <div class="detail-equipment">{{ equipment.name }}</div>
         <div class="detail-condition">Item Description Change</div>
-        <mat-checkbox></mat-checkbox>
+        <mat-checkbox [(ngModel)]="equipment['selected']"   (change)="onItemChange($event, equipment)"></mat-checkbox>
       </div>
     </div>
 
     <div class="action-wrapper">
-      <button
-        class="report-button"
-        mat-raised-button
-        (click)="releaseItems(status_released)"
-      >
-        Accept
-      </button>
-      <button mat-raised-button (click)="returnItems(status_return)">
-        Reject
-      </button>
+      <button class="report-button" mat-raised-button (click)="confirmSelectedEquipments()">Accept</button>
+      <button mat-raised-button>Reject</button>
     </div>
   </mat-card-content>
 </mat-card>

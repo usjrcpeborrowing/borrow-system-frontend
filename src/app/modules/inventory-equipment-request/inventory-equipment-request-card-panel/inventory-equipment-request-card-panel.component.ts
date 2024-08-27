@@ -6,6 +6,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-dialog/equipment-detail-dialog.component';
 import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 @Component({
   selector: 'app-inventory-equipment-request-card-panel',
   templateUrl: './inventory-equipment-request-card-panel.component.html',
@@ -13,32 +14,21 @@ import { EquipmentService } from 'src/app/services/equipment.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnChanges {
-  @Input() items: any[] = [];
   @Input() equipments: Item[] = [];
 
-  @Input() data: any;
-
   equipmentStatus = Constants.equipmentStatus;
-  selectedStatus = '';
-  status_released: string = 'released';
-  status_return: string = 'returned';
   selectAll = false;
-  remarks: string = 'haha';
-
   constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef, private equipmentService: EquipmentService, private snackbarService: SnackbarService) {}
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.items.forEach((item) => {
-        item.selected = false;
-        item.disabled = !['approved', 'pending_return'].includes(item.status);
-        console.log('remarrrsss', item.remarks);
-      });
-      this.cdr.detectChanges();
-    }, 0);
-  }
+  ngOnInit(): void {}
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['equipments']) {
+      this.equipments.forEach((item) => {
+        item['selected'] = false;
+      });
+    }
+  }
 
   viewItem(item: Item): void {
     console.log('view');
@@ -47,80 +37,35 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
     });
 
     dialogRef.afterClosed().subscribe((resp) => {
-      if(resp) {
-        this.equipmentService.confirmEquipmentSubject.next(resp)
+      if (resp) {
+        this.equipmentService.confirmEquipmentSubject.next(resp);
       }
     });
   }
 
-  toggleSelectAll(event: any): void {
-    this.selectAll = event.checked;
-    this.items.forEach((item) => {
-      if (!item.disabled) item.selected = this.selectAll;
+  toggleSelectAll(event: MatCheckboxChange): void {
+    this.equipments.forEach((item) => {
+      item['selected'] = event.checked;
     });
-    this.cdr.detectChanges();
   }
 
-  onItemChange(item: any): void {
-    if (!item.selected) {
-      this.selectAll = false;
-    } else {
-      this.selectAll = this.items.every((i) => i.selected);
-    }
-    this.cdr.detectChanges();
+  onItemChange(event: MatCheckboxChange, item: Item): void {
+    item['selected'] = event.checked;
   }
 
-  onItemStatusChange(index: any) {
-    console.log(index);
+  confirmSelectedEquipments() {
+    let body = {
+      equipmentIds: this.equipments.filter((item) => item['selected']).map((x) => x._id),
+      confirmed: true,
+    };
+    this.equipmentService.confirmSelectedEquipments.next(body);
   }
 
-  releaseItems(status: string) {
-    const selected = this.items
-      .filter((item) => item.selected)
-      .map((x) => ({
-        equipment: x.equipment._id,
-        quantity: x.quantity,
-        condition: x.condition,
-        status: status,
-        remarks: x.remarks,
-      }));
-
-    console.log(selected);
-    if (!selected.length) {
-      this.snackbarService.openSnackBar('No items selected', 'OK');
-    } else {
-      // this.borrowedItemService.changeBorrowStatus.next({
-      //   borrowedItemId: this.data._id,
-      //   items: selected,
-      //   status: this.status_released,
-      // });
-    }
-  }
-
-  returnItems(status: string) {
-    const selected = this.items
-      .filter((item) => item.selected)
-      .map((x) => ({
-        equipment: x.equipment._id,
-        quantity: x.quantity,
-        condition: x.condition,
-        status: status,
-        remarks: x.remarks,
-      }));
-
-    console.log(this.items);
-
-    // this.borrowedItemService.changeBorrowStatus.next({
-    //   borrowedItemId: this.data._id,
-    //   items: selected,
-    //   status: this.status_return,
-    // });
-  }
-
-  formatStatus(status: string): string {
-    return status
-      .split('_')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+  rejectSelectedEquipments() {
+    let body = {
+      equipmentIds: this.equipments.filter((item) => item['selected']).map((x) => x._id),
+      confirmed: false,
+    };
+    this.equipmentService.confirmSelectedEquipments.next(body);
   }
 }

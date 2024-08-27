@@ -13,6 +13,10 @@ interface Response {
   success: boolean;
 }
 
+interface ConfirmEquipments {
+  equipmentIds: string[];
+  confirmed: boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -21,6 +25,7 @@ export class EquipmentService {
   addEquipmentSubject: Subject<string> = new Subject<string>();
   addEquipmentImageSubject: Subject<string> = new Subject<string>();
   confirmEquipmentSubject: Subject<Item> = new Subject<Item>();
+  confirmSelectedEquipments: Subject<ConfirmEquipments> = new Subject<ConfirmEquipments>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -247,6 +252,10 @@ export class EquipmentService {
       .pipe(catchError(this.handleError));
   }
 
+  confirmEquipmentByIds(body: ConfirmEquipments) {
+    return this.http.patch<Response>(environment.API_URL + '/api/equipment/confirmequipmentbyids', body, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+  }
+
   searchEquipmentbyName(search: string) {
     return this.http.get<any>(environment.API_URL + '/api/equipment/searchbyname').pipe(catchError(this.handleError));
   }
@@ -321,7 +330,11 @@ export class EquipmentService {
   }
 
   onConfirmEquipment(): Observable<Item> {
-    return this.confirmEquipmentSubject.asObservable()
+    return this.confirmEquipmentSubject.asObservable();
+  }
+
+  onConfirmSelectedEquipments(): Observable<ConfirmEquipments> {
+    return this.confirmSelectedEquipments.asObservable();
   }
 
   handleError(err: HttpErrorResponse) {
