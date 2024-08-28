@@ -1,109 +1,7 @@
-<!-- <div class="dialog-detail">
-    <h2 mat-dialog-title>Item Details</h2>
-    <div mat-dialog-content>
-        <div class="item-details-container">
-            <div class="image-container">
-                <img
-                    class="fit-image"
-                    [src]="itemDetails?.images?.thumbnailUrl ? displayImage : defaultImage"
-                    alt=""
-                />
-            </div>
-            <div class="item-details">
-                <div class="row">
-                    <div class="label">Name:</div>
-                                
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-        
-                </div>
-                
-                <div class="row">
-                    <div class="label">Serial No:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <div class="label">Equipment Type:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-
-                <div class="row">
-                    <div class="label">Brand:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <div class="label">Matter:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                <div class="row">
-                    <div class="label">Inventory Type:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                
-                <div class="row">
-                    <div class="label">Quantity:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                
-                <div class="row">
-                    <div class="label">Condition:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                
-                <div class="row">
-                    <div class="label">Status:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                
-                <div class="row">
-                    <div class="label">Availability:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                
-                <div class="row">
-                    <div class="label">Location:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-                
-                <div class="row">
-                    <div class="label">Confirmed:</div>
-                    <mat-form-field class="detail" floatLabel="always">
-                        <input matInput autocomplete="off" />
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div mat-dialog-actions class="close-button">
-        <button mat-button (click)="dialogRef.close()">Close</button>
-    </div>
-</div> -->
-
 <div class="dialog-container">
   <h2 mat-dialog-title>Equipment Details</h2>
   <form [formGroup]="equipmentForm">
-    <mat-dialog-content class="mat-typography">
+    <mat-dialog-content class="dialog-content">
       <div class="img-wrapper">
         <img [src]="data.images.midSizeUrl || defaultImage" alt="" />
       </div>
@@ -111,20 +9,43 @@
       <div class="detail-wrapper">
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
-          <input
-            matInput
-            placeholder="Placeholder"
-            formControlName="name"
-            readonly
-          />
+          <input matInput formControlName="name" readonly />
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>test</mat-label>
-          <input matInput placeholder="Placeholder" />
+          <mat-label>Serial No.</mat-label>
+          <input matInput formControlName="serialNo" readonly />
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>test</mat-label>
-          <input matInput placeholder="Placeholder" />
+          <mat-label>Equipment Type</mat-label>
+          <input matInput formControlName="equipmentType" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Brand</mat-label>
+          <input matInput formControlName="brand" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Color</mat-label>
+          <input matInput formControlName="color" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Model No</mat-label>
+          <input matInput formControlName="modelNo" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Quantity</mat-label>
+          <input matInput formControlName="quantity" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Unit</mat-label>
+          <input matInput formControlName="unit" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Matter</mat-label>
+          <input matInput formControlName="matter" readonly />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Department</mat-label>
+          <input matInput formControlName="department" readonly />
         </mat-form-field>
       </div>
     </mat-dialog-content>

@@ -29,6 +29,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
       color: [data.color],
       modelNo: [data.modelNo],
       quantity: [data.quantity],
+      department: [data.department],
       unit: [data.unit],
       matter: [data.matter],
       inventorytype: [data.inventorytype],

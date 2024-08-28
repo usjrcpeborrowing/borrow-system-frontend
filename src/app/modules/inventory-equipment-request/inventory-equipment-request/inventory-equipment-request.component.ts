@@ -25,23 +25,20 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     this.equipmentService.onConfirmEquipment().subscribe((resp) => {
       console.log(resp);
       this.equipmentService.updateItem(resp._id, { ...resp, confirmed: true }).subscribe({
-        next: (resp) => {
-          this.snackbarService.openSnackBar(resp.message, 'OK');
-        },
-        error: (err) => {
-          this.snackbarService.openSnackBar(err.message, 'OK', true);
-        },
+        next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
+        error: (err) => this.snackbarService.openSnackBar(err.message, 'OK', true),
+        complete: () => this.getUnconfirmedEquipments(),
       });
     });
 
     this.equipmentService.onConfirmSelectedEquipments().subscribe({
       next: (resp) => {
         this.equipmentService.confirmEquipmentByIds(resp).subscribe({
-          next: (resp) => {
-            this.snackbarService.openSnackBar(resp.message, 'OK');
-          },
-          error: (err) => {
-            this.snackbarService.openSnackBar(err.message, 'OK', true);
+          next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
+          error: (err) => this.snackbarService.openSnackBar(err.message, 'OK', true),
+          complete: () => {
+            console.log('complete');
+            this.getUnconfirmedEquipments();
           },
         });
       },

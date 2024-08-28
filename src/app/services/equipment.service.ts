@@ -126,13 +126,16 @@ export class EquipmentService {
   }
 
   getUnconfirmedEquipments(page: number, limit: number, department: string[]) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+
     const params = new HttpParams({
       fromObject: {
         department: department,
       },
     });
 
-    return this.http.get<Response>(environment.API_URL + '/api/equipment/getunconfirmedequipments', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    return this.http.get<Response>(environment.API_URL + '/api/equipment/getunconfirmedequipments', { params, headers: headers }).pipe(catchError(this.handleError));
   }
 
   addEquipment(item: Item): Observable<any> {
