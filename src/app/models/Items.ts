@@ -28,5 +28,7 @@ export interface Item {
   };
   department: string;
   location: string;
+  isborrow: boolean,
   disp: boolean;
+
 }
