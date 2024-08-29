@@ -1,7 +1,8 @@
 <div class="notification-wrapper">
   <div class="action-wrapper">
-    <button mat-stroked-button>Mark All As Read</button>
+    <mat-chip>Mark all as reads</mat-chip>
   </div>
+  <div *ngIf="!notifications.length" class="no-notification">Empty Notification</div>
   <a
     *ngFor="let notification of notifications"
     [routerLink]="notification.route"
