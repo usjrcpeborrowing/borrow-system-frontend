@@ -1,26 +1,19 @@
 <mat-toolbar class="header">
-  <img src="/assets/USJR1.png" class="logo" />
+  <button mat-icon-button class="menu-icon" (click)="leftnav.toggle()">
+    <mat-icon>menu</mat-icon>
+</button>
+  <img src="/assets/LogoAndTitle.png" class="logo" />
   <div class="header-content">
-    <div class="title-text">University of San Jose - Recoletos</div>
-    <div class="sub-text">Laboratory Borrowing System</div>
   </div>
 
-  <div class="spacer1" *ngIf="currentNavigations.length === 0"></div>
-  <div class="button-header" *ngIf="currentNavigations.length > 0">
-    <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url">{{
-      nav.name
-    }}</a>
-  </div>
   <div class="spacer"></div>
   <div class="button-header-profile">
     <button
       mat-icon-button
       [matMenuTriggerFor]="notificationMenu"
-      *ngIf="currentNavigations.length > 0"
       (click)="getNotifications()"
     >
       <mat-icon [matBadge]="notification_count">notifications</mat-icon>
-      <!-- Use 'notifications' for a generic notifications icon -->
     </button>
     <mat-menu #notificationMenu="matMenu">
       <app-notification [notifications]="notifications"></app-notification>
@@ -30,9 +23,7 @@
         mat-icon-button
         [matMenuTriggerFor]="menu"
         class="profileName"
-        *ngIf="currentNavigations.length > 0"
       >
-        <!-- <span>Hello, {{ currentUser?.name.firstName }} {{ currentUser?.name.lastName }}</span> -->
         <span
           >Hello, {{ currentUser?.firstName }} {{ currentUser?.lastName }}</span
         >
@@ -45,17 +36,34 @@
   </div>
   <button
     mat-icon-button
-    class="menu-icon"
+    class="mobile-menu-icon"
     (click)="sidenav.toggle()"
     *ngIf="currentNavigations.length > 0"
   >
     <mat-icon>menu</mat-icon>
   </button>
 
+  
   <div class="button-header" *ngIf="currentNavigations.length === 0">
     <a [routerLink]="'/login'">Login</a>
   </div>
 </mat-toolbar>
+
+<mat-sidenav-container class="side-drawer">
+  <mat-sidenav #leftnav class="sidebar">
+    <div class="navbar-headerName">
+    <button mat-icon-button class="menu-icon-leftnav" (click)="leftnav.toggle()">
+      <mat-icon>menu</mat-icon>
+  </button>
+  <img src="/assets/LogoAndTitle.png" class="navbar-logo" />
+  </div>
+    <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url" class="nav-buttons">
+      <mat-icon>{{nav.icon}}</mat-icon>
+      <span class="nav-text">{{ nav.name }}</span>
+    </a>
+  </mat-sidenav>
+</mat-sidenav-container>
+
 
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav class="example-sidenav" mode="side">
