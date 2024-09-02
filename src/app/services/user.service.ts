@@ -3,12 +3,18 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
+
+interface Response {
+  data: any;
+  message: string;
+  success: boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   token = localStorage.getItem('token');
-  activateUserSubject: Subject<any> = new Subject<any>()
+  activateUserSubject: Subject<any> = new Subject<any>();
   constructor(private http: HttpClient) {}
 
   getDeparmentFaculty(department: string, search: string) {
@@ -30,9 +36,7 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  handleError(err: HttpErrorResponse) {
-    return throwError(() => new Error(err.message));
-  }
+  
   getUsers(department: string[]): Observable<any> {
     let params = new HttpParams({
       fromObject: {
@@ -60,15 +64,23 @@ export class UserService {
   }
 
   onActivateUserSubject() {
-    return this.activateUserSubject.asObservable()
+    return this.activateUserSubject.asObservable();
   }
 
-  changePassword(userId: string, currentPassword: string, newPassword: string): Observable<any> {
-    //no patch yet
-    return this.http.patch<any>(environment.API_URL + '/api/users/' + `${userId}` + `${currentPassword}`, newPassword, {
-      headers: { Authorization: this.token as string }
-    }).pipe(
-      catchError(this.handleError)
-    );
+  changePassword(userId: string, currentPassword: string, newPassword: string): Observable<Response> {
+    const body = {
+      old_password: currentPassword,
+      new_password: newPassword,
+    };
+    return this.http
+      .patch<Response>(environment.API_URL + '/api/users/changepassword/' + userId, body, {
+        headers: { Authorization: this.token as string },
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  handleError(err: HttpErrorResponse) {
+    console.log('hahaha erorr', err)
+    return throwError(() => new Error(err.message));
   }
 }

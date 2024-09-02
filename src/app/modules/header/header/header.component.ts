@@ -7,6 +7,8 @@ import { SocketioService } from 'src/app/services/socketio.service';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 
 import { MatDialog } from '@angular/material/dialog';
+import { UserService } from 'src/app/services/user.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 interface NavigationItem {
   name: string;
   url: string;
@@ -50,7 +52,7 @@ export class HeaderComponent implements OnInit {
       { name: 'Browse Items', url: '/borrow', icon: 'inbox' },
       { name: 'Inventory', url: '/inventory', icon: 'inbox' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
-      { name: 'Inventory Details', url: '/item-details', icon: 'assignment'},
+      { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
       { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'assignment' },
       { name: 'History', url: '/history/faculty', icon: 'menu' },
     ],
@@ -58,16 +60,18 @@ export class HeaderComponent implements OnInit {
       { name: 'Dashboard', url: '/dashboard/student', icon: 'menu' },
       { name: 'Browse Items', url: '/borrow', icon: 'menu' },
       { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
-      { name: 'History', url: '/history/student', icon: 'menu'},
+      { name: 'History', url: '/history/student', icon: 'menu' },
     ],
   };
   currentNavigations: any[] = [];
   constructor(
     public dialog: MatDialog,
-    private authService: AuthService, 
-    private router: Router, 
+    private authService: AuthService,
+    private router: Router,
     private socketIOService: SocketioService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private userService: UserService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -94,7 +98,7 @@ export class HeaderComponent implements OnInit {
       next: (resp: any) => {
         this.notifications = resp.data;
         this.notification_count = resp.unread;
-      
+
         console.log(resp);
       },
     });
@@ -113,15 +117,23 @@ export class HeaderComponent implements OnInit {
       this.currentNavigations = [];
     }
   }
-  
+
   changePassword(event: Event): void {
-    console.log('view');
-    this.dialog.open(ChangePasswordComponent, {
-      height: '55vh',
-      width: '30vw',
+    const dialogRef = this.dialog.open(ChangePasswordComponent);
+    const userId = this.authService.getCurrentUser()?._id as string;
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp) {
+        this.userService.changePassword(userId, resp.currentPassword, resp.newPassword).subscribe({
+          next: (resp) => {
+            this.snackbarService.openSnackBar(resp.message, 'OK');
+          },
+          error: (err) => {
+            this.snackbarService.openSnackBar(err.message, 'OK');
+          },
+        });
+      }
     });
   }
-  
 
   logout(event: Event): void {
     event.preventDefault();
@@ -134,5 +146,4 @@ export class HeaderComponent implements OnInit {
   toggleSidebar(expanded: boolean): void {
     this.isSidebarExpanded = expanded;
   }
-  
 }
