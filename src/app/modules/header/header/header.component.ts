@@ -12,6 +12,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 interface NavigationItem {
   name: string;
   url: string;
+  icon: string;
 }
 
 @Component({
@@ -27,36 +28,39 @@ export class HeaderComponent implements OnInit {
   notification_messages: string[] = [];
   navigations: { [key: string]: NavigationItem[] } = {
     administrator: [
-      { name: 'Dashboard', url: '/dashboard/admin' },
-      { name: 'Inventory', url: '/inventory' },
-      { name: 'Requests', url: '/faculty-borrowed-list' },
-      { name: 'Accounts', url: '/account-request' },
-      { name: 'History', url: '/history/admin' },
+      { name: 'Dashboard', url: '/dashboard/admin', icon: 'menu' },
+      { name: 'Inventory', url: '/inventory', icon: 'menu' },
+      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
+      { name: 'Accounts', url: '/account-request', icon: 'menu' },
+      { name: 'History', url: '/history/admin', icon: 'menu' },
     ],
     oic: [
-      { name: 'Dashboard', url: '/dashboard/oic' },
-      { name: 'Inventory', url: '/inventory' },
-      { name: 'Requests', url: '/faculty-borrowed-list' },
-      { name: 'Accounts', url: '/account-request' },
-      { name: 'History', url: '/history/oic' },
+      { name: 'Dashboard', url: '/dashboard/oic', icon: 'menu' },
+      { name: 'Inventory', url: '/inventory', icon: 'menu' },
+      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
+      { name: 'Accounts', url: '/account-request', icon: 'menu' },
+      { name: 'History', url: '/history/oic', icon: 'menu' },
     ],
     reads: [
-      { name: 'Dashboard', url: '/dashboard/reads' },
-      { name: 'Inventory', url: '/inventory' },
-      { name: 'Requests', url: '/borrowed-list' },
-      { name: 'History', url: '/history/reads' },
+      { name: 'Dashboard', url: '/dashboard/reads', icon: 'menu' },
+      { name: 'Inventory', url: '/inventory', icon: 'menu' },
+      { name: 'Requests', url: '/borrowed-list', icon: 'menu' },
+      { name: 'History', url: '/history/reads', icon: 'menu' },
     ],
     faculty: [
-      { name: 'Dashboard', url: '/dashboard/faculty' },
-      { name: 'Browse Items', url: '/borrow' },
-      { name: 'Requests', url: '/faculty-borrowed-list' },
-      { name: 'History', url: '/history/faculty' },
+      { name: 'Dashboard', url: '/dashboard/faculty', icon: 'menu' },
+      { name: 'Browse Items', url: '/borrow', icon: 'inbox' },
+      { name: 'Inventory', url: '/inventory', icon: 'inbox' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
+      { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
+      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'assignment' },
+      { name: 'History', url: '/history/faculty', icon: 'menu' },
     ],
     student: [
-      { name: 'Dashboard', url: '/dashboard/student' },
-      { name: 'Browse Items', url: '/borrow' },
-      { name: 'Requests', url: '/faculty-borrowed-list' },
-      { name: 'History', url: '/history/student' },
+      { name: 'Dashboard', url: '/dashboard/student', icon: 'menu' },
+      { name: 'Browse Items', url: '/borrow', icon: 'menu' },
+      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
+      { name: 'History', url: '/history/student', icon: 'menu' },
     ],
   };
   currentNavigations: any[] = [];
@@ -135,5 +139,11 @@ export class HeaderComponent implements OnInit {
     event.preventDefault();
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  isSidebarExpanded = false;
+
+  toggleSidebar(expanded: boolean): void {
+    this.isSidebarExpanded = expanded;
   }
 }

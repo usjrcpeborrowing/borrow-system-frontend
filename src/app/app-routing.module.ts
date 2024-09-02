@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AuthGuard } from './services/auth.guard';
+import { WildcardRedirectComponent } from './services/wildcard-direct';
 
 const routes: Routes = [
   {
@@ -112,8 +112,12 @@ const routes: Routes = [
     },
   },
   {
+    path: '',
+    loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
     path: '**',
-    redirectTo: 'landing-page',
+    component: WildcardRedirectComponent,
   },
 ];
 
@@ -121,4 +125,6 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+  
+}

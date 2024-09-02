@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, Subject, throwError } from 'rxjs';
+import { catchError, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NotificationInterface } from '../models/Notification';
 interface Response {
@@ -13,24 +13,24 @@ interface Response {
   providedIn: 'root',
 })
 export class NotificationService {
-  token = localStorage.getItem('token');
-  headers = {
-    Authorization: this.token as string,
-  };
   markAsViewedSubject:  Subject<boolean> = new Subject<boolean>();
   constructor(private http: HttpClient) {}
 
   getNotifications(userId: string, limit: number) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams();
     params = params.append('user', userId);
-    return this.http.get(environment.API_URL + '/api/notification', { params, headers: this.headers }).pipe(
+    return this.http.get(environment.API_URL + '/api/notification', { params, headers: headers }).pipe(
       catchError(this.handleError)
     );
   }
 
   updateNotificationAsViewed(id: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     const update = { viewed: true };
-    return this.http.patch<Response>(environment.API_URL + '/api/notification/' + id, update, { headers: this.headers }).pipe(catchError(this.handleError));
+    return this.http.patch<Response>(environment.API_URL + '/api/notification/' + id, update, { headers: headers }).pipe(catchError(this.handleError));
   }
 
   onMarkAsViewed() {
