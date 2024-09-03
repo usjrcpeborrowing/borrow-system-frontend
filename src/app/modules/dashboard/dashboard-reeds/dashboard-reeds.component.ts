@@ -7,12 +7,17 @@ import { Router } from '@angular/router';
 })
 export class DashboardReedsComponent implements OnInit{
 
+  isSidebarExpanded = false;
   showReportsComponent: boolean = false;
   showContentTabs: boolean = true;
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     
+  }
+  
+  toggleSidebar() {
+    this.isSidebarExpanded = !this.isSidebarExpanded;
   }
   directToBorrow(): void {
     this.router.navigate(['/borrow']);
