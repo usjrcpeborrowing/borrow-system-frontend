@@ -1,22 +1,37 @@
+<div class="header">
+    <app-header></app-header>
+</div>
+<h1 class="page-title">
+    <div class="toggle-button">
+    <button class="toggle-button" (click)="toggleSidebar()" mat-icon-button >
+        <mat-icon>{{ isSidebarExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+    </button>
+    </div>
+    Dashboard
+    <div class="hline">
 
-<h1 class="page-title">Dashboard <div class="hline"></div></h1>
+    </div>
+</h1>
 <div class="dashboard-content">
-    <div class="menu-panel">
+    
+    <div class="sidebar" [class.expanded]="isSidebarExpanded">
+
         <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
+            <button (click)="directToInventory()" mat-raised-button>
                 <mat-icon>inbox</mat-icon>
-                    Browse Items
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToBorrowRequest()">
-                <mat-icon>assignment</mat-icon>
-                    Borrow Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button   (click)="directToHistory()">
+                <span class="button-text" *ngIf="isSidebarExpanded">Borrow Items</span>
+            </button>
+
+            <button (click)="directToBorrowRequest()" mat-raised-button>
+                <mat-icon>inbox</mat-icon>
+                <span class="button-text" *ngIf="isSidebarExpanded">Borrow Requests</span>
+            </button>
+
+            <button (click)="directToHistory()" mat-raised-button>
                 <mat-icon>history</mat-icon>
-                    History
-                </button>
+                <span class="button-text" *ngIf="isSidebarExpanded">History</span>
+            </button>
         </div>
-        
     </div>
     <div class="menu-panel-mobile">
         <div class="buttons">

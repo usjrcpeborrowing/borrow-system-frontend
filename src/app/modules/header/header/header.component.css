@@ -89,7 +89,7 @@ a:hover::after {
 }
 
 .profileName {
-  width: 10%;
+  width: 100%;
 }
 
 .header-profileName {
@@ -181,7 +181,9 @@ a:hover::after {
   .logo {
     display: none;
   }
-
+  .menu-icon{
+    display: none;
+  }
   .title-text,
   .sub-text {
     font-size: 0px;
