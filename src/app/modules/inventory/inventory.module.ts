@@ -31,10 +31,10 @@ import { MatTableModule } from '@angular/material/table';
 import { AdminHeaderModule } from '../admin-header/admin-header.module';
 import { HeaderOicModule } from '../header-oic/header-oic.module';
 import { HeaderReadsModule } from '../header-reads/header-reads.module';
-import { ReadsHeaderModule } from '../reads-header/reads-header.module';
-import { ReportsComponent } from './reports/reports.component';
-import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material.module';
+import { ReadsHeaderModule } from '../reads-header/reads-header.module';
+import { SharedModule } from '../shared/shared.module';
+import { ReportsComponent } from './reports/reports.component';
 @NgModule({
   declarations: [
     InventoryComponent,

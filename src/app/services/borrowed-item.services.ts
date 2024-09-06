@@ -12,7 +12,6 @@ export class BorrowedItemsService {
 
   currentBorrowedItems = this.borrowedItems.asObservable();
   changeBorrowStatus: Subject<any> = new Subject<any>();
-  token = localStorage.getItem('token');
 
   constructor(private http: HttpClient) {}
 
@@ -22,6 +21,8 @@ export class BorrowedItemsService {
   }
 
   getBorrowedList(filter: BorrowedItemFilter) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         status: filter.status,
@@ -29,20 +30,24 @@ export class BorrowedItemsService {
         instructor: filter.instructor,
       },
     });
-    return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: { Authorization: this.token as string }, params }).pipe(
+    return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: headers, params }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
   }
 
   createBorrowItems(borrowedItems: any) {
-    return this.http.post<any>(environment.API_URL + '/api/borroweditems', borrowedItems, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.post<any>(environment.API_URL + '/api/borroweditems', borrowedItems, { headers: headers }).pipe(catchError(this.handleError));
   }
 
   getBorrowedItemStatuses() {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .get<{ data: { itemborrowed: { status: string }[] }[] }>(environment.API_URL + '/api/borroweditems', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
       })
       .pipe(
         map((response) => {
@@ -54,7 +59,9 @@ export class BorrowedItemsService {
   }
 
   updateBorrowedItemStatus(body: any, id: string) {
-    return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: headers }).pipe(catchError(this.handleError));
   }
 
   onChangeBorrowStatus() {

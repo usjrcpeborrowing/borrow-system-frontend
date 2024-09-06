@@ -16,7 +16,7 @@ export interface Item {
   images: {
     thumbnailUrl: string;
     midSizeUrl: string;
-    Url: string;
+    url: string;
   };
   remarks: string;
   condition: string;
@@ -28,5 +28,7 @@ export interface Item {
   };
   department: string;
   location: string;
+  isborrow: boolean,
   disp: boolean;
+
 }

@@ -42,3 +42,16 @@
 .notification-message {
   font-size: 14px;
 }
+
+mat-chip.mat-mdc-standard-chip {
+  height: var(--mdc-chip-container-height, 24px);
+  font-size: 12px;
+}
+
+.no-notification {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  height: 50px;
+}

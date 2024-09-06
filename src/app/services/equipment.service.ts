@@ -7,12 +7,24 @@ import { InventoryFilter } from '../models/InventoryFilter';
 import { Item } from '../models/Items';
 import { Transaction } from '../models/Transaction';
 
+interface Response {
+  data: Item[];
+  message: string;
+  success: boolean;
+}
+
+interface ConfirmEquipments {
+  equipmentIds: string[];
+  confirmed: boolean;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class EquipmentService {
-  token = localStorage.getItem('token');
   addEquipmentSubject: Subject<string> = new Subject<string>();
+  addEquipmentImageSubject: Subject<string> = new Subject<string>();
+  confirmEquipmentSubject: Subject<Item> = new Subject<Item>();
+  confirmSelectedEquipments: Subject<ConfirmEquipments> = new Subject<ConfirmEquipments>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -23,6 +35,9 @@ export class EquipmentService {
     }
   }
   getItemsShop(pagination: Pagination, filters: any): Observable<any> {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+
     console.log('Fetching items with params:', pagination, filters);
     let params = new HttpParams().set('page', pagination.page.toString()).set('limit', pagination.limit.toString());
 
@@ -34,7 +49,7 @@ export class EquipmentService {
       });
     }
 
-    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: { Authorization: this.token as string } }).pipe(
+    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(
       map((response) => {
         return response;
       }),
@@ -53,6 +68,9 @@ export class EquipmentService {
     //     }
     //   });
     // }
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+
     let params = new HttpParams();
 
     params = params.append('page', pagination.page);
@@ -69,10 +87,13 @@ export class EquipmentService {
     params = params.append('dateAcquired', filters.dateAcquired);
     console.log('The ordeal', params);
 
-    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
   }
 
   getAvailableEquipment(pagination: Pagination, filters: InventoryFilter): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         page: pagination.page,
@@ -86,7 +107,7 @@ export class EquipmentService {
         search: filters.name,
       },
     });
-    return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: headers }).pipe(catchError(this.handleError));
   }
 
   searchEquipment(searchTerm: string, filters: any): Observable<any> {
@@ -112,10 +133,23 @@ export class EquipmentService {
     );
   }
 
+  getUnconfirmedEquipments(page: number, limit: number, department: string[]) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+
+    const params = new HttpParams({
+      fromObject: {
+        department: department,
+      },
+    });
+
+    return this.http.get<Response>(environment.API_URL + '/api/equipment/getunconfirmedequipments', { params, headers: headers }).pipe(catchError(this.handleError));
+  }
+
   addEquipment(item: Item): Observable<any> {
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+
 
     return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers }).pipe(
       // tap((data) => console.log('Equipment added:', data, { headers })),
@@ -123,9 +157,8 @@ export class EquipmentService {
     );
   }
   addReports(report: Report): Observable<any> {
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
 
     return this.http.post<any>(environment.API_URL + '/api/report', report).pipe(
       tap((data) => console.log('Report added:', data, { headers })),
@@ -149,11 +182,10 @@ export class EquipmentService {
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
 
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
 
-    return this.http.get<any>(environment.API_URL + '/api/report', { params, headers: { Authorization: this.token as string } }).pipe(
+    return this.http.get<any>(environment.API_URL + '/api/report', { params, headers: headers}).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
@@ -162,24 +194,32 @@ export class EquipmentService {
     let params = new HttpParams();
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
-    return this.http.get<any>(environment.API_URL + '/api/transaction', { params, headers: { Authorization: this.token as string } }).pipe(
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.get<any>(environment.API_URL + '/api/transaction', { params, headers: headers}).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
   }
   addTransaction(transaction: Transaction): Observable<any> {
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
 
     return this.http.post<any>(environment.API_URL + '/api/transaction', transaction, { headers }).pipe(catchError(this.handleError));
   }
   getBrandListWithPagination(page: number, limit: number): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
 
-    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params, headers: headers }).pipe(catchError(this.handleError));
   }
   getEquipmentTypes(departments: string[]): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         departments,
@@ -187,12 +227,15 @@ export class EquipmentService {
     });
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getequipmenttype', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
         params,
       })
       .pipe(catchError(this.handleError));
   }
   getBrandList(departments: string[]): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         departments,
@@ -200,33 +243,49 @@ export class EquipmentService {
     });
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getbrandlist', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
         params,
       })
       .pipe(catchError(this.handleError));
   }
   getMatterList(): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getmatterlist', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
       })
       .pipe(catchError(this.handleError));
   }
 
   getDepartmentList(): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getdepartmentlist', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
       })
       .pipe(catchError(this.handleError));
   }
 
   getInventoryTypeList(): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getinventorytypelist', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
       })
       .pipe(catchError(this.handleError));
+  }
+
+  confirmEquipmentByIds(body: ConfirmEquipments) {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.patch<Response>(environment.API_URL + '/api/equipment/confirmequipmentbyids', body, { headers: headers}).pipe(catchError(this.handleError));
   }
 
   searchEquipmentbyName(search: string) {
@@ -234,16 +293,18 @@ export class EquipmentService {
   }
 
   getItemStatusList(): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .get<any>(environment.API_URL + '/api/equipment/getremarks', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
       })
       .pipe(catchError(this.handleError));
   }
   addEquipmentType(equipmentType: any): Observable<any> {
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http.post<any>(environment.API_URL + '/api/equipmenttype', equipmentType, { headers }).pipe(
       tap((data) => console.log('Equipment added:', data)),
       catchError(this.handleError)
@@ -251,9 +312,8 @@ export class EquipmentService {
   }
 
   updateItem(_id: string, item: Item): Observable<any> {
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http.patch<any>(environment.API_URL + '/api/equipment/' + `${item._id}`, item, { headers });
   }
   equipmentNameAscending(): Observable<any> {
@@ -270,9 +330,12 @@ export class EquipmentService {
   }
 
   getUsers(): Observable<any> {
+    
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .get<any>(environment.API_URL + '/api/users', {
-        headers: { Authorization: this.token as string },
+        headers: headers,
       })
       .pipe(catchError(this.handleError));
   }
@@ -283,9 +346,8 @@ export class EquipmentService {
     return this.http.get<any>(environment.API_URL + '/api/department').pipe(catchError(this.handleError));
   }
   getLocationList(departments: string[]): Observable<any> {
-    const headers = {
-      Authorization: this.token as string,
-    };
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         departments,
@@ -297,6 +359,19 @@ export class EquipmentService {
   onAddEquipment(): Observable<string> {
     return this.addEquipmentSubject.asObservable();
   }
+
+  onAddEquipmentImage(): Observable<string> {
+    return this.addEquipmentImageSubject.asObservable();
+  }
+
+  onConfirmEquipment(): Observable<Item> {
+    return this.confirmEquipmentSubject.asObservable();
+  }
+
+  onConfirmSelectedEquipments(): Observable<ConfirmEquipments> {
+    return this.confirmSelectedEquipments.asObservable();
+  }
+
   handleError(err: HttpErrorResponse) {
     return throwError(() => new Error(err.message));
   }

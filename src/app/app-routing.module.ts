@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AuthGuard } from './services/auth.guard';
+import { WildcardRedirectComponent } from './services/wildcard-direct';
 
 const routes: Routes = [
   {
@@ -70,6 +70,14 @@ const routes: Routes = [
     },
   },
   {
+    path: 'inventory-equipment-request',
+    loadChildren: () => import('./modules/inventory-equipment-request/inventory-equipment-request.module').then((m) => m.InventoryEquipmentRequestModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['administrator', 'oic', 'chairman'],
+    },
+  },
+  {
     path: 'item-details',
     loadChildren: () => import('./modules/item-details/item-details.module').then((m) => m.ItemDetailsModule),
     canActivate: [AuthGuard],
@@ -83,7 +91,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/history/history.module').then((m) => m.HistoryModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic', 'reads','student', 'faculty'],
+      roles: ['administrator', 'oic', 'reads', 'student', 'faculty'],
     },
   },
 
@@ -105,8 +113,12 @@ const routes: Routes = [
     },
   },
   {
+    path: '',
+    loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
+  },
+  {
     path: '**',
-    redirectTo: 'landing-page',
+    component: WildcardRedirectComponent,
   },
 ];
 

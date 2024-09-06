@@ -1,3 +1,4 @@
+
 <div class="header">
     <app-header></app-header>
 </div>
@@ -6,10 +7,23 @@
     
     <div class="menu-panel">
         <div class="buttons">
-            <button style=" justify-content: flex-start;" (click)="directToInventory()" mat-raised-button>
+            <button style=" justify-content: flex-start;" (click)="directToBorrow()" mat-raised-button>
                 <mat-icon>inbox</mat-icon>
                     Borrow Items
                 </button>
+            
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
+                <mat-icon>inbox</mat-icon>
+                    Inventory
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
+                <mat-icon>inbox</mat-icon>
+                    Item Details
+                </button>
+            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventoryRequest()">
+                    <mat-icon>inbox</mat-icon>
+                        Inventory Requests
+                    </button>
             <button style=" justify-content: flex-start;" (click)="directToBorrowRequest()" mat-raised-button>
                 <mat-icon>assignment</mat-icon>
                     Student Requests
