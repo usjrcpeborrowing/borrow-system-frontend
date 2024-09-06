@@ -4,39 +4,31 @@
 <h1 class="page-title">Dashboard <div class="hline"></div></h1>
 <div class="dashboard-content">
     
-    <div class="menu-panel">
+    <div class="sidebar" [class.expanded]="isSidebarExpanded">
+
         <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
+            <button (click)="directToInventory()" mat-raised-button>
                 <mat-icon>inbox</mat-icon>
-                    Inventory List
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showStudentRequests()">
-                <mat-icon>assignment</mat-icon>
-                    Student Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showReports()">
-                <mat-icon>report</mat-icon>
-                    Recent Reports
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
-                    <mat-icon>inbox</mat-icon>
-                        Item Details
-                    </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToHistory()">
-                <mat-icon>history</mat-icon>
-                    Reports and History
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToAccounts()">
-                <mat-icon>supervisor_account</mat-icon>
-                    Manage User Accounts
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToSettings()">
-                <mat-icon>settings</mat-icon>
-                    System Settings
-                </button>
+                <span class="button-text" *ngIf="isSidebarExpanded">Inventory List</span>
+            </button>
+            
+            <button (click)="showStudentRequests()" mat-raised-button>
+                <mat-icon>inbox</mat-icon>
+                <span class="button-text" *ngIf="isSidebarExpanded">Student Requests</span>
+            </button>
+            
+            <button (click)="directToItemDetails()" mat-raised-button>
+                <mat-icon>inbox</mat-icon>
+                <span class="button-text" *ngIf="isSidebarExpanded">Item Details</span>
+            </button>
+            
+            <button (click)="directToAccounts()" mat-raised-button>
+                <mat-icon>inbox</mat-icon>
+                <span class="button-text" *ngIf="isSidebarExpanded">Manage User Accounts</span>
+            </button>
+
+            
         </div>
-        
-        
     </div>
     <div class="menu-panel-mobile">
         <div class="buttons">

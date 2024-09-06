@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -11,8 +12,6 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-import { User } from 'src/app/models/User';
-
 export interface Instructor {
   _id: string;
   name: string;
@@ -77,6 +76,7 @@ export class BorrowComponent implements OnInit {
   currentUser: any;
   user: any;
   userId: string = '';
+  
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
@@ -85,7 +85,7 @@ export class BorrowComponent implements OnInit {
     private borrowedItemsService: BorrowedItemsService,
     private _snackBar: MatSnackBar,
     private userService: UserService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
   ) {
     this.borrowForm = this.fb.group({
       className: ['', Validators.required],
@@ -110,7 +110,6 @@ export class BorrowComponent implements OnInit {
         this.borrowForm.controls['instructor'].setValue('')
       },
     });
-
     // setTimeout(() => {
     this.filteredInstructor = this.borrowForm.controls['instructor'].valueChanges.pipe(
       startWith(''),

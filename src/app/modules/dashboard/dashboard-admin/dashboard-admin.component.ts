@@ -10,6 +10,8 @@ export class DashboardAdminComponent implements OnInit{
   showReportsComponent: boolean = false;
   showContentTabs: boolean = true;
   currentUser: any;
+  
+  isSidebarExpanded = false;
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
@@ -17,6 +19,10 @@ export class DashboardAdminComponent implements OnInit{
     // if (!this.currentUser || this.currentUser.role !== 'Admin') {
     //   this.router.navigate(['/']);
     // }
+  }
+  
+  toggleSidebar() {
+    this.isSidebarExpanded = !this.isSidebarExpanded;
   }
   directToInventory(): void {
     this.router.navigate(['/inventory']);

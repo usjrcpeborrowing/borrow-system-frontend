@@ -1,67 +1,98 @@
-
 <div class="header">
     <app-header></app-header>
 </div>
-<h1 class="page-title">Dashboard <div class="hline"></div></h1>
+
+<h1 class="page-title">
+    <div class="toggle-button">
+    <button class="toggle-button" (click)="toggleSidebar()" mat-icon-button >
+        <mat-icon>{{ isSidebarExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+    </button>
+    </div>
+    Dashboard
+    <div class="hline">
+
+    </div>
+</h1>
 <div class="dashboard-content">
     
-    <div class="menu-panel">
+    <div class="sidebar" [class.expanded]="isSidebarExpanded">
+
         <div class="buttons">
-            <button style=" justify-content: flex-start;" (click)="directToBorrow()" mat-raised-button>
+            <button (click)="directToBorrow()" mat-raised-button>
                 <mat-icon>inbox</mat-icon>
-                    Borrow Items
-                </button>
-            
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
+                <span class="button-text" *ngIf="isSidebarExpanded">Borrow Items</span>
+            </button>
+
+            <button (click)="directToInventory()" mat-raised-button>
                 <mat-icon>inbox</mat-icon>
-                    Inventory
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
+                <span class="button-text" *ngIf="isSidebarExpanded">Inventory</span>
+            </button>
+
+            <button (click)="directToItemDetails()" mat-raised-button>
                 <mat-icon>inbox</mat-icon>
-                    Item Details
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventoryRequest()">
-                    <mat-icon>inbox</mat-icon>
-                        Inventory Requests
-                    </button>
-            <button style=" justify-content: flex-start;" (click)="directToBorrowRequest()" mat-raised-button>
+                <span class="button-text" *ngIf="isSidebarExpanded">Item Details</span>
+            </button>
+
+            <button (click)="directToInventoryRequest()" mat-raised-button>
+                <mat-icon>inbox</mat-icon>
+                <span class="button-text" *ngIf="isSidebarExpanded">Inventory Requests</span>
+            </button>
+
+            <button (click)="directToBorrowRequest()" mat-raised-button>
                 <mat-icon>assignment</mat-icon>
-                    Student Requests
-                </button>
-            <button style=" justify-content: flex-start;"  (click)="directToHistory()"mat-raised-button>
+                <span class="button-text" *ngIf="isSidebarExpanded">Student Requests</span>
+            </button>
+
+            <button (click)="directToHistory()" mat-raised-button>
                 <mat-icon>history</mat-icon>
-                    History
-                </button>
+                <span class="button-text" *ngIf="isSidebarExpanded">History</span>
+            </button>
         </div>
-        
-        
     </div>
+
     <div class="menu-panel-mobile">
-        
         <div class="buttons">
-            <button style=" justify-content: flex-start;" (click)="directToInventory()" class="buttons-buttons" mat-raised-button>
+            <button (click)="directToBorrow()" class="buttons-buttons" mat-raised-button>
                 <div class="button-text">
-                <mat-icon class="icon-text">inbox</mat-icon>
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Borrow Items
+                </div>
+            </button>
+            <button (click)="directToInventory()" class="buttons-buttons" mat-raised-button>
+                <div class="button-text">
+                    <mat-icon class="icon-text">inbox</mat-icon>
                     Items
                 </div>
-                </button>
-            <button style=" justify-content: flex-start;"  (click)="directToBorrowRequest()"class="buttons-buttons" mat-raised-button>
+            </button>
+            
+            <button (click)="directToItemDetails()" class="buttons-buttons" mat-raised-button>
                 <div class="button-text">
-
-                <mat-icon class="icon-text">assignment</mat-icon>
+                    <mat-icon class="icon-text">inbox</mat-icon>
+                    Item Details
+                </div>
+            </button>
+            <button (click)="directToInventoryRequest()" class="buttons-buttons" mat-raised-button>
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
+                    Inventory Requests
+                </div>
+            </button>
+            <button (click)="directToBorrowRequest()" class="buttons-buttons" mat-raised-button>
+                <div class="button-text">
+                    <mat-icon class="icon-text">assignment</mat-icon>
                     Student Requests
                 </div>
-                </button>
-            <button style=" justify-content: flex-start;" (click)="directToHistory()" class="buttons-buttons" mat-raised-button>
+            </button>
+            <button (click)="directToHistory()" class="buttons-buttons" mat-raised-button>
                 <div class="button-text">
-                <mat-icon class="icon-text">history</mat-icon>
+                    <mat-icon class="icon-text">history</mat-icon>
                     History
                 </div>
-                </button>
+            </button>
         </div>
     </div>
+
     <div class="contents">
         <app-content-tabs></app-content-tabs>
     </div>
-
 </div>

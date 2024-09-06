@@ -2,15 +2,20 @@
   <app-header></app-header>
 </div>
 
-<div>
-  <h1 class="page-title">
-    Item Details
-    <div class="hline"></div>
-  </h1>
+<div class="page-title">
+  <div
+  class="view-category-container clickable"
+  [class.cart-openside]="openedCategory"
+  (click)="categoryClicked()"
+  >
+  <mat-icon>menu</mat-icon>
+  </div>
+  
+  <div class="title-page">Item List</div>
 </div>
 
-<mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened class="custom-drawer">
+<mat-drawer-container >
+  <mat-drawer mode="side" [opened]="openedCategory" position="start"class="example-container">
     <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
   </mat-drawer>
   <mat-drawer-content class="custom-drawer-itmes">
@@ -47,12 +52,13 @@
           </ng-container>
 
           <ng-container matColumnDef="serialNo">
-            <th mat-header-cell *matHeaderCellDef>Serial No.</th>
+            <th mat-header-cell *matHeaderCellDef class="mobile-details">Serial No.</th>
             <td
               mat-cell
               *matCellDef="let item"
               [matMenuTriggerFor]="serialNo"
               [class.revised]="isFieldRevised('serialNo', item?.revision)"
+              class="mobile-details"
             >
               {{ item.serialNo }}
               <mat-menu #serialNo="matMenu">
@@ -72,12 +78,13 @@
           </ng-container>
 
           <ng-container matColumnDef="equipmentType">
-            <th mat-header-cell *matHeaderCellDef>Equipment Type</th>
+            <th mat-header-cell *matHeaderCellDef  class="mobile-details">Equipment Type</th>
             <td
               mat-cell
               *matCellDef="let item"
               [matMenuTriggerFor]="equipmentType"
               [class.revised]="isFieldRevised('equipmentType', item?.revision)"
+              class="mobile-details"
             >
               {{ item.equipmentType }}
               <mat-menu #equipmentType="matMenu">
@@ -99,12 +106,13 @@
           </ng-container>
 
           <ng-container matColumnDef="brand">
-            <th mat-header-cell *matHeaderCellDef>Brand</th>
+            <th mat-header-cell *matHeaderCellDef  class="mobile-details">Brand</th>
             <td
               mat-cell
               *matCellDef="let item"
               [matMenuTriggerFor]="brand"
               [class.revised]="isFieldRevised('brand', item?.revision)"
+              class="mobile-details"
             >
               {{ item.brand }}
               <mat-menu #brand="matMenu">
@@ -124,12 +132,13 @@
           </ng-container>
 
           <ng-container matColumnDef="inventoryType">
-            <th mat-header-cell *matHeaderCellDef>Inventory Type</th>
+            <th mat-header-cell *matHeaderCellDef  class="mobile-details">Inventory Type</th>
             <td
               mat-cell
               *matCellDef="let item"
               [matMenuTriggerFor]="inventorytype"
               [class.revised]="isFieldRevised('inventoryType', item?.revision)"
+              class="mobile-details"
             >
               {{ item.inventorytype }}
               <mat-menu #inventorytype="matMenu">
@@ -151,7 +160,7 @@
           </ng-container>
 
           <ng-container matColumnDef="remarks">
-            <th mat-header-cell *matHeaderCellDef>Condition</th>
+            <th mat-header-cell *matHeaderCellDef  class="mobile-details">Condition</th>
             <td
               mat-cell
               *matCellDef="let item"
@@ -159,6 +168,7 @@
               [class.revised-defective]="
                 item.condition == 'defective' && item?.revision?.length
               "
+               class="mobile-details"
             >
               {{ item.condition }}
               <mat-menu #remarks="matMenu">
@@ -177,8 +187,8 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef>Quantity</th>
-            <td mat-cell *matCellDef="let item">{{ item.quantity }}</td>
+            <th mat-header-cell *matHeaderCellDef  class="mobile-details">Quantity</th>
+            <td mat-cell *matCellDef="let item"  class="mobile-details">{{ item.quantity }}</td>
           </ng-container>
 
           <ng-container matColumnDef="info">
@@ -193,6 +203,7 @@
               <mat-icon>notifications</mat-icon>
             </button>
           </ng-container>
+          
           <!-- Row definitions -->
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
