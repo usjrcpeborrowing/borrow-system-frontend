@@ -5,17 +5,18 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { environment } from 'src/environments/environment';
+import { User } from '../models/User';
 
-interface User {
-  userId: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  department: string[];
-  role: string;
-  token: string;
-  _id: string
-}
+// interface User {
+//   userId: string;
+//   password: string;
+//   firstName: string;
+//   lastName: string;
+//   department: string[];
+//   role: string;
+//   token: string;
+//   _id: string
+// }
 
 @Injectable({
   providedIn: 'root',

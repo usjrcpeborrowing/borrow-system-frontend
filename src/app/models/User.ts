@@ -1,12 +1,13 @@
 export interface User {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    role: string;
-    age: number;
-    department: string;
-    email: string;
-    schoolId: string;
-    password: string;
-    activated: boolean;
+    _id:string
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  role: string[];
+  age: number;
+  department: string[];
+  email: string;
+  schoolId: string;
+  password: string;
+  activated: boolean;
 }

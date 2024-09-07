@@ -127,7 +127,7 @@ export class BorrowComponent implements OnInit {
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return currentUser ? currentUser.role === 'faculty' : false;
+    return currentUser ? currentUser.role.includes('faculty') : false;
   }
 
   isReads(): boolean {
