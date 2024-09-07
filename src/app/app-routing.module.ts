@@ -74,7 +74,7 @@ const routes: Routes = [
     loadChildren: () => import('./modules/inventory-equipment-request/inventory-equipment-request.module').then((m) => m.InventoryEquipmentRequestModule),
     canActivate: [AuthGuard],
     data: {
-      roles: ['administrator', 'oic', 'chairman'],
+      roles: ['administrator', 'oic', 'chairman', 'faculty', 'reads'],
     },
   },
   {
