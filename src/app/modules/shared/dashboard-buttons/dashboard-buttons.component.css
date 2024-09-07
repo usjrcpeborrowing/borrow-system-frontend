@@ -1,0 +1,185 @@
+.page-title{
+    font-size: 50px;
+    margin: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    width: 95%;
+    font-weight: 700;
+}
+.dashboard-content{
+    margin-top: -20px;
+    display: flex;
+}
+.hline {
+    display: table-cell;
+    width: 95%;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: none;
+}
+.hline:after {
+    content: '';
+    border-top: 1px solid rgb(46, 125, 70);
+    width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.sidebar{
+    margin: 20px;
+    width: 80px;
+    border-right: 1px solid #45824a;
+    height: 100%;
+    background-color: #ffffff;
+    padding-top: 10px;
+    transition: width 0.3s;
+    overflow: hidden;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.sidebar.expanded {
+    width: 250px;
+}
+
+.toggle-button {
+    margin: 5px;
+    margin-top: -4px;
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    display: flex;
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    
+}
+
+.menu-items button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.menu-items mat-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.menu-items .button-text {
+    display: none;
+}
+
+.sidebar.expanded .menu-items .button-text {
+    display: inline;
+}
+
+.menu-panel {
+    margin: 10px;
+    margin-left: 15px;
+    margin-top: 5px;
+    float: left;
+    width: 20%;
+    
+    height: 65vh;
+    padding: 7px;
+    border: none;
+}
+.contents{
+    width: 60%;
+}
+.buttons .mat-mdc-raised-button.mat-unthemed{
+    justify-content: flex-start;
+    margin-bottom: 5px;
+    color: rgb(0, 0, 0);
+    width: 100%;
+    height: 60px;
+    border-radius: 20px;
+    margin-right: 20px;
+    font-size: 17px;
+    box-shadow: none;
+}
+.header{
+    
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+
+.menu-panel-mobile{
+    display: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .page-title{
+        text-align: center;
+        font-size: 50px;
+        margin: 30px;
+        
+        margin-left: -6px;
+        font-family: Arial, Helvetica, sans-serif;
+        display: table;
+        width: 100%;
+        font-weight: 700;
+    }
+    .hline{
+        display: none;
+    }
+    .toggle-button{
+        display:none;
+    }
+    .sidebar{
+        display: none;
+    }
+    .contents{
+        display: none;
+    }
+    .menu-panel-mobile{
+        display:block;
+        position: relative;
+        margin: 10px;
+        margin-left: 15px;
+        margin-top: 5px;
+        width: 90%;
+        height: 65vh;
+        padding: 7px;
+        border: none;
+        border-top: 1px solid #45824a;
+    }
+    
+    .buttons{
+        flex-direction: column;
+        position: relative;
+    }
+    .buttons .mat-mdc-raised-button.mat-unthemed{
+        justify-content: center !important;
+        margin: 4px;
+        color: white;
+        background: linear-gradient(to right, rgb(53, 97, 53), #73a773);
+        width: 47%;
+        height: 150px;
+        border-radius: 20px;
+        padding-left: 0px;
+        font-size: 13px;
+        box-shadow: none;
+    }
+    .button-text{
+        flex-direction: column;
+    }
+    .icon-text{
+        width: 100%;
+        height: 100%;
+        font-size: 50px;
+    }
+}
