@@ -1,6 +1,9 @@
+
 .page-title{
     font-size: 50px;
-    margin: 30px;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     width: 95%;
@@ -10,28 +13,9 @@
     margin-top: -20px;
     display: flex;
 }
-.hline {
-    display: table-cell;
-    width: 95%;
-    padding-left: 20px;
-    padding-right: 20px;
-    border: none;
-}
-.hline:after {
-    content: '';
-    border-top: 1px solid rgb(46, 125, 70);
-    width: 100%;
-    display: inline-block;
-    vertical-align: middle;
-}
-
 .sidebar{
-    margin: 20px;
     width: 80px;
-    border-right: 1px solid #45824a;
     height: 100%;
-    background-color: #ffffff;
-    padding-top: 10px;
     transition: width 0.3s;
     overflow: hidden;
     position: relative;
@@ -44,9 +28,8 @@
 }
 
 .toggle-button {
-    margin: 5px;
-    margin-top: -4px;
-    color: rgb(0, 0, 0);
+    margin-left: -10px;
+    color: rgb(255, 255, 255);
     font-size: 24px;
     display: flex;
 }
@@ -61,7 +44,6 @@
 .menu-items button {
     background: none;
     border: none;
-    color: white;
     padding: 15px;
     text-align: left;
     font-size: 18px;
@@ -73,7 +55,6 @@
 
 .menu-items mat-icon {
     font-size: 24px;
-    margin-right: 10px;
 }
 
 .menu-items .button-text {
@@ -82,10 +63,13 @@
 
 .sidebar.expanded .menu-items .button-text {
     display: inline;
+    
 }
 
+.sidebar.expanded .buttons .mat-mdc-raised-button.mat-unthemed{
+    justify-content: flex-start;
+}
 .menu-panel {
-    margin: 10px;
     margin-left: 15px;
     margin-top: 5px;
     float: left;
@@ -99,13 +83,12 @@
     width: 60%;
 }
 .buttons .mat-mdc-raised-button.mat-unthemed{
-    justify-content: flex-start;
+    justify-content: center;
     margin-bottom: 5px;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     width: 100%;
     height: 60px;
-    border-radius: 20px;
-    margin-right: 20px;
+    background-color: rgb(62, 112, 62);
     font-size: 17px;
     box-shadow: none;
 }

@@ -1,7 +1,4 @@
 <mat-toolbar class="header">
-  <button mat-icon-button class="menu-icon" (click)="leftnav.toggle()" *ngIf="currentNavigations.length > 0">
-    <mat-icon>menu</mat-icon>
-</button>
   <img src="/assets/LogoAndTitle.png" class="logo" />
   
   <img src="/assets/USJR1.png" class="mobile-logo" />
@@ -51,21 +48,6 @@
     <a [routerLink]="'/login'">Login</a>
   </div>
 </mat-toolbar>
-
-<mat-sidenav-container class="side-drawer">
-  <mat-sidenav #leftnav class="sidebar">
-    <div class="navbar-headerName">
-    <button mat-icon-button class="menu-icon-leftnav" (click)="leftnav.toggle()">
-      <mat-icon>menu</mat-icon>
-  </button>
-  <img src="/assets/LogoAndTitle.png" class="navbar-logo" />
-  </div>
-    <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url" class="nav-buttons">
-      <mat-icon>{{nav.icon}}</mat-icon>
-      <span class="nav-text">{{ nav.name }}</span>
-    </a>
-  </mat-sidenav>
-</mat-sidenav-container>
 
 
 <mat-sidenav-container class="example-container">

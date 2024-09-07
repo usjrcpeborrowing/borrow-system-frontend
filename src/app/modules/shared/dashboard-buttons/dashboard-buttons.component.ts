@@ -24,6 +24,9 @@ export class DashboardButtonsComponent  implements OnInit{
   toggleSidebar() {
       this.isSidebarExpanded = !this.isSidebarExpanded;
   }
+  directToDashboard():void{
+    this.router.navigate(['/dashboard/faculty']);
+  }
   directToBorrow(): void {
     this.router.navigate(['/borrow']);
   }
