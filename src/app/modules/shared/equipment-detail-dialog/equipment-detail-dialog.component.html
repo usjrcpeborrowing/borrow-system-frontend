@@ -66,13 +66,19 @@
         <mat-checkbox formControlName="isborrow">Can be borrowed</mat-checkbox>
       </div>
     </mat-dialog-content>
-  </form>
 
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Cancel</button>
-    <button mat-button (click)="canEdit = !canEdit">Edit Before Saving</button>
-    <button mat-button [mat-dialog-close]="equipmentForm.value" cdkFocusInitial>
-      Confirm
-    </button>
-  </mat-dialog-actions>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button (click)="canEdit = !canEdit">
+        Edit Before Saving
+      </button>
+      <button
+        mat-button
+        [mat-dialog-close]="equipmentForm.value"
+        cdkFocusInitial
+      >
+        Confirm
+      </button>
+    </mat-dialog-actions>
+  </form>
 </div>
