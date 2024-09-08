@@ -9,59 +9,127 @@
       <div class="detail-wrapper">
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput formControlName="name" [readonly]="canEdit" />
+          <input matInput formControlName="name" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Serial No.</mat-label>
-          <input matInput formControlName="serialNo" [readonly]="canEdit" />
+          <input matInput formControlName="serialNo" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Equipment Type</mat-label>
           <input
             matInput
             formControlName="equipmentType"
-            [readonly]="canEdit"
+            [readonly]="!canEdit"
           />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Brand</mat-label>
-          <input matInput formControlName="brand" [readonly]="canEdit" />
+          <input
+            matInput
+            formControlName="brand"
+            [readonly]="!canEdit"
+            [matAutocomplete]="autobrands"
+          />
+          <mat-hint *ngIf="canEdit"
+            >Just type the brand not seen on the list</mat-hint
+          >
+          <mat-autocomplete #autobrands="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredbrands | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Color</mat-label>
-          <input matInput formControlName="color" [readonly]="canEdit" />
+          <input matInput formControlName="color" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Model No</mat-label>
-          <input matInput formControlName="modelNo" [readonly]="canEdit" />
+          <input matInput formControlName="modelNo" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Quantity</mat-label>
-          <input matInput formControlName="quantity" [readonly]="canEdit" />
+          <input matInput formControlName="quantity" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Unit</mat-label>
-          <input matInput formControlName="unit" [readonly]="canEdit" />
+          <input matInput formControlName="unit" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Matter</mat-label>
-          <input matInput formControlName="matter" [readonly]="canEdit" />
+
+          <input
+            matInput
+            formControlName="matter"
+            [readonly]="!canEdit"
+            [matAutocomplete]="automatter"
+          />
+          <mat-autocomplete #automatter="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredmatters | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Department</mat-label>
-          <input matInput formControlName="department" [readonly]="canEdit" />
+          <input
+            matInput
+            formControlName="department"
+            [readonly]="true"
+            [matAutocomplete]="autodepartment"
+          />
+          <mat-autocomplete #autodepartment="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filtereddepartments | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Inventory Type</mat-label>
           <input
             matInput
             formControlName="inventorytype"
-            [readonly]="canEdit"
+            [readonly]="!canEdit"
+            [matAutocomplete]="autoinventorytype"
           />
+          <mat-autocomplete #autoinventorytype="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredinventorytypes | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Location</mat-label>
-          <input matInput formControlName="location" [readonly]="canEdit" />
+          <input
+            matInput
+            formControlName="location"
+            [readonly]="!canEdit"
+            [matAutocomplete]="autoLocations"
+          />
+          <mat-hint *ngIf="canEdit"
+            >Just type the location not seen on the list</mat-hint
+          >
+          <mat-autocomplete #autoLocations="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredlocations | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
         </mat-form-field>
         <mat-checkbox formControlName="isborrow">Can be borrowed</mat-checkbox>
       </div>

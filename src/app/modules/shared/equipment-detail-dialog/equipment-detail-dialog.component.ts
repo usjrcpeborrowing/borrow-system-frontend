@@ -1,7 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { map, Observable, startWith } from 'rxjs';
 import { Item } from 'src/app/models/Items';
+import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
+import { EquipmentService } from 'src/app/services/equipment.service';
+import { Constants } from 'src/app/models/Constant';
 
 type Data = {
   item: Item;
@@ -13,11 +18,31 @@ type Data = {
   styleUrls: ['./equipment-detail-dialog.component.css'],
 })
 export class EquipmentDetailDialogComponent implements OnInit {
+  user: User;
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
   equipmentForm: FormGroup;
-  canEdit: boolean = true;
-  constructor(public dialogRef: MatDialogRef<EquipmentDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: Data, private fb: FormBuilder) {
+  canEdit: boolean = false;
+
+  brands: string[] = [];
+  locations: string[] = [];
+  inventorytypes: string[]=Constants.equipmentInventoryType;
+  departments: string[] = Constants.departments;
+  matters:string[]=Constants.equipmentMatterType;
+  filteredbrands!: Observable<string[]>;
+  filteredlocations!: Observable<string[]>;
+  filtereddepartments!: Observable<string[]>;
+  filteredinventorytypes!: Observable<string[]>;
+  filteredmatters!: Observable<string[]>;
+
+
+  constructor(
+    public dialogRef: MatDialogRef<EquipmentDetailDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Data,
+    private fb: FormBuilder,
+    private equipmentService: EquipmentService,
+    private authService: AuthService
+  ) {
     // this.itemDetails = data;
     this.equipmentForm = fb.group({
       _id: [data.item._id],
@@ -42,6 +67,56 @@ export class EquipmentDetailDialogComponent implements OnInit {
       }),
       isborrow: [data.item.isborrow],
     });
+
+    this.user = this.authService.getCurrentUser() as User;
   }
-  ngOnInit(): void {}
+
+  ngOnInit(): void {
+    this.filteredbrands = this.equipmentForm.controls['brand'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.brands))
+    );
+
+    this.filteredlocations = this.equipmentForm.controls['location'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.locations))
+    );
+
+    this.filtereddepartments = this.equipmentForm.controls['department'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.departments))
+    );
+
+    this.filteredinventorytypes = this.equipmentForm.controls['inventorytype'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.inventorytypes))
+    );
+
+    this.filteredmatters = this.equipmentForm.controls['matter'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.matters))
+    );
+
+    this.getBrands();
+    this.getLocations();
+  }
+
+  getBrands() {
+    this.equipmentService.getBrandList(this.user.department).subscribe({
+      next: (resp) => (this.brands = resp.data),
+      error: (err) => console.error(err),
+    });
+  }
+
+  getLocations() {
+    this.equipmentService.getLocationList(this.user.department).subscribe({
+      next: (resp) => (this.locations = resp.data),
+      error: (err) => console.error(err),
+    });
+  }
+
+  private _filter(value: string, options: string[]): string[] {
+    const filterValue = value.toLowerCase();
+    return options.filter((option) => option.toLowerCase().includes(filterValue));
+  }
 }
