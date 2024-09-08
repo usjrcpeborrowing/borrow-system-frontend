@@ -1,9 +1,9 @@
 <div class="dialog-container">
   <h2 mat-dialog-title>Equipment Details</h2>
   <form [formGroup]="equipmentForm">
-    <mat-dialog-content class="dialog-content">
+    <mat-dialog-content>
       <div class="img-wrapper">
-        <img [src]="data.images.midSizeUrl || defaultImage" alt="" />
+        <img [src]="data.item.images.midSizeUrl || defaultImage" alt="" />
       </div>
 
       <div class="detail-wrapper">
@@ -11,11 +11,11 @@
           <mat-label>Name</mat-label>
           <input matInput formControlName="name" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Serial No.</mat-label>
           <input matInput formControlName="serialNo" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Equipment Type</mat-label>
           <input
             matInput
@@ -23,35 +23,35 @@
             [readonly]="canEdit"
           />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Brand</mat-label>
           <input matInput formControlName="brand" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Color</mat-label>
           <input matInput formControlName="color" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Model No</mat-label>
           <input matInput formControlName="modelNo" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Quantity</mat-label>
           <input matInput formControlName="quantity" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Unit</mat-label>
           <input matInput formControlName="unit" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Matter</mat-label>
           <input matInput formControlName="matter" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Department</mat-label>
           <input matInput formControlName="department" [readonly]="canEdit" />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Inventory Type</mat-label>
           <input
             matInput
@@ -59,7 +59,7 @@
             [readonly]="canEdit"
           />
         </mat-form-field>
-        <mat-form-field appearance="outline">
+        <mat-form-field>
           <mat-label>Location</mat-label>
           <input matInput formControlName="location" [readonly]="canEdit" />
         </mat-form-field>
@@ -69,15 +69,13 @@
 
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Cancel</button>
-      <button mat-button (click)="canEdit = !canEdit">
-        Edit Before Saving
-      </button>
+      <button mat-button (click)="canEdit = !canEdit">Enable Edit</button>
       <button
         mat-button
         [mat-dialog-close]="equipmentForm.value"
         cdkFocusInitial
       >
-        Confirm
+        {{ data.action }}
       </button>
     </mat-dialog-actions>
   </form>

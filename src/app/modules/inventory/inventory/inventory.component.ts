@@ -5,6 +5,7 @@ import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 @Component({
   selector: 'app-inventory',
   templateUrl: './inventory.component.html',
@@ -37,16 +38,25 @@ export class InventoryComponent implements OnInit {
   currentUser: any;
   currentUserRole: any;
   isloading: boolean = false;
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService) {}
+  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute, private equipmentService: EquipmentService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     const rolesString = localStorage.getItem('roles');
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
     this.currentUser = this.authService.getCurrentUser();
-    this.equipmentService.onAddEquipment().subscribe(resp=> this.getEquipmentList())
+    this.equipmentService.onAddEquipment().subscribe((resp) => this.getEquipmentList());
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
+    });
+
+    this.equipmentService.onUpdateEquipment().subscribe((resp) => {
+      console.log('haha resp item on update', resp);
+      this.equipmentService.updateItem(resp._id, resp).subscribe({
+        next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
+        error: (err) => this.snackbarService.openSnackBar(err.message, 'OK', true),
+        complete: ()=> this.getEquipmentList()
+      });
     });
   }
   isAdmin(): boolean {

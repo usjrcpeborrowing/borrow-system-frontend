@@ -25,6 +25,7 @@ export class EquipmentService {
   addEquipmentImageSubject: Subject<string> = new Subject<string>();
   confirmEquipmentSubject: Subject<Item> = new Subject<Item>();
   confirmSelectedEquipments: Subject<ConfirmEquipments> = new Subject<ConfirmEquipments>();
+  updateEquipmentSubject: Subject<Item> = new Subject<Item>();
   constructor(private http: HttpClient) {}
 
   searchOrGetItems(searchWord: string, filters: any, pagination: Pagination): Observable<any> {
@@ -282,10 +283,15 @@ export class EquipmentService {
   }
 
   confirmEquipmentByIds(body: ConfirmEquipments) {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http.patch<Response>(environment.API_URL + '/api/equipment/confirmequipmentbyids', body, { headers: headers}).pipe(catchError(this.handleError));
+  }
+
+  confirmEquipment(_id: string, item: Item): Observable<any> {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.patch<any>(environment.API_URL + '/api/equipment/confirmequipment/' + `${item._id}`, item, { headers });
   }
 
   searchEquipmentbyName(search: string) {
@@ -370,6 +376,10 @@ export class EquipmentService {
 
   onConfirmSelectedEquipments(): Observable<ConfirmEquipments> {
     return this.confirmSelectedEquipments.asObservable();
+  }
+
+  onUpdateEquipment(): Observable<Item> {
+    return this.updateEquipmentSubject.asObservable();
   }
 
   handleError(err: HttpErrorResponse) {

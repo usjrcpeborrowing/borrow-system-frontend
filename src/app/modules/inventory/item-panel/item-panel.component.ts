@@ -3,21 +3,21 @@ import { MatDialog } from '@angular/material/dialog';
 import { Item } from 'src/app/models/Items';
 import { AuthService } from 'src/app/services/auth.service';
 import { ItemDialogComponent } from '../item-dialog/item-dialog.component';
+import { EquipmentDetailComponent } from '../../borrow/equipment-detail/equipment-detail.component';
+import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-dialog/equipment-detail-dialog.component';
+import { EquipmentService } from 'src/app/services/equipment.service';
 
 @Component({
   selector: 'app-item-panel',
   templateUrl: './item-panel.component.html',
-  styleUrls: ['./item-panel.component.css']
+  styleUrls: ['./item-panel.component.css'],
 })
-export class ItemPanelComponent implements OnInit{
+export class ItemPanelComponent implements OnInit {
   @Input() item: Item = {} as Item | any;
   panelOpenState = false;
   defaultImage = './../../../../assets//equipment_default_image.png';
 
-  constructor(
-    public dialog: MatDialog,
-    private authService: AuthService,
-  ) {}
+  constructor(public dialog: MatDialog, private authService: AuthService, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
     this.viewImage();
@@ -29,25 +29,40 @@ export class ItemPanelComponent implements OnInit{
   viewImage() {
     if (this.item.images && this.item.images.thumbnailUrl) {
       const match = this.item.images.thumbnailUrl.match(/\/(?:file\/d\/|thumbnail\?id=)([\w-]+)(?:\/|$)/);
-      
+
       if (match) {
         const imageId = match[1];
         this.item.images.thumbnailUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
         // console.log('Image URL:', this.item);
       } else {
-        this.item.images.thumbnailUrl = "";
+        this.item.images.thumbnailUrl = '';
       }
     } else {
       this.item.images = this.item.images || {};
-      this.item.images.thumbnailUrl = "";
+      this.item.images.thumbnailUrl = '';
     }
   }
+  // viewItemDetails() {
+  //   console.log('view');
+  //   this.dialog.open(ItemDialogComponent, {
+  //     data: this.item,
+  //     height: '73vh',
+  //     width: '55vw',
+  //   });
+  // }
+
   viewItemDetails() {
-    console.log('view');
-    this.dialog.open(ItemDialogComponent, {
-      data: this.item,
-      height: '73vh',
-      width: '55vw',
+    const dialogRef=this.dialog.open(EquipmentDetailDialogComponent, {
+      data: {
+        item: this.item,
+        action: 'Confirm',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp) {
+        this.equipmentService.updateEquipmentSubject.next(resp);
+      }
     });
   }
 }

@@ -39,7 +39,10 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   viewItem(item: Item): void {
     console.log('view');
     const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
-      data: item,
+      data: {
+        action: 'Confirm',
+        item: item,
+      },
     });
 
     dialogRef.afterClosed().subscribe((resp) => {
