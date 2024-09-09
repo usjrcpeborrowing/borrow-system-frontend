@@ -11,6 +11,7 @@ interface Response {
   data: Item[];
   message: string;
   success: boolean;
+  total: number;
 }
 
 interface ConfirmEquipments {
@@ -139,6 +140,8 @@ export class EquipmentService {
 
     const params = new HttpParams({
       fromObject: {
+        page: pagination.page,
+        limit: pagination.limit,
         equipmenttype: filter.equipmenttype,
         brand: filter.brand,
         mattertype: filter.mattertype,

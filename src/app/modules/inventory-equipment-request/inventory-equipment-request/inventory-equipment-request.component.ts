@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Item } from 'src/app/models/Items';
@@ -36,7 +37,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
   currentUser: any;
   equipments: Item[] = [];
   openedCategory: boolean = false;
-  constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {}
+  constructor(private equipmentService: EquipmentService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
@@ -68,10 +69,23 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     });
   }
 
+  paginate(event: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/inventory-equipment-request'], navigationExtras);
+  }
+
   getUnconfirmedEquipments(): void {
     this.equipmentService.getUnconfirmedEquipments(this.inventoryFilter, this.pagination, this.currentUser.department).subscribe({
       next: (resp) => {
+        console.log('haha  resp', resp);
         this.equipments = resp.data;
+        this.pagination.length = resp.total as number;
       },
     });
   }
@@ -84,6 +98,8 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.getUnconfirmedEquipments();
   }
 }

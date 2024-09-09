@@ -21,6 +21,16 @@
     <app-inventory-equipment-request-card
       [equipments]="equipments"
     ></app-inventory-equipment-request-card>
-    <mat-paginator> </mat-paginator>
+    <section id="pagination">
+      <mat-paginator
+        [length]="pagination.length"
+        [pageSize]="pagination.limit"
+        [pageIndex]="pagination.page - 1"
+        [pageSizeOptions]="pagination.pageSizeOption"
+        [showFirstLastButtons]="true"
+        (page)="paginate($event)"
+      >
+      </mat-paginator>
+    </section>
   </mat-drawer-content>
 </mat-drawer-container>
