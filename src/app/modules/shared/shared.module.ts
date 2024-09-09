@@ -7,10 +7,11 @@ import { EquipmentDetailDialogComponent } from './equipment-detail-dialog/equipm
 import { NotificationComponent } from './notification/notification.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InventoryCategoryComponent } from './inventory-category/inventory-category.component';
 
 @NgModule({
-  declarations: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent],
+  declarations: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
-  exports: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent],
+  exports: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent],
 })
 export class SharedModule {}

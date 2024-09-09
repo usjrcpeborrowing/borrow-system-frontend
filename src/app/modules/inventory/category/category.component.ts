@@ -1,10 +1,11 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { DateRange, MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatSelectChange } from '@angular/material/select';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
+import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { DepartmentService } from 'src/app/services/department.services';
@@ -73,7 +74,8 @@ interface Filters {
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.css'],
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnChanges {
+  @Input() filter!: InventoryFilter;
   equipments: Equipment[] = [];
   brands: string[] = [];
   matters: string[] = [];
@@ -83,7 +85,6 @@ export class CategoryComponent implements OnInit {
   locations: string[] = [];
   selectedValue: string[] = [];
   equipmenttypes: string[] = [];
-  selectedEquipment: Equipment | null = null;
   startDate: Date | null = null;
   endDate: Date | null = null;
 
@@ -103,10 +104,10 @@ export class CategoryComponent implements OnInit {
     { name: 'Name (Z-A)', color: undefined, value: 'desc', isSelected: false },
   ];
   selectedChipOptions: string[] = [];
-  dateRange = new FormGroup({
-    start: new FormControl<Date | null>(null),
-    end: new FormControl<Date | null>(null),
-  });
+  // dateRange = new FormGroup({
+  //   start: new FormControl<Date | null>(null),
+  //   end: new FormControl<Date | null>(null),
+  // });
   filterForm: FormGroup;
   currentUser: any;
   @Output() selectedCategories: EventEmitter<any> = new EventEmitter();
@@ -120,9 +121,18 @@ export class CategoryComponent implements OnInit {
     private authService: AuthService
   ) {
     this.filterForm = this.fb.group({
-      equipmenttype: new FormControl(''),
+      equipmenttype: [''],
+      brand: [''],
+      mattertype: [''],
+      inventorytype: [''],
+      location: [''],
+      dateRange: this.fb.group({
+        start: [''],
+        end: [''],
+      }),
     });
   }
+
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.loadBrandList();
@@ -132,19 +142,42 @@ export class CategoryComponent implements OnInit {
     this.getItemStatusList();
     this.getDepartmentList();
     this.getLocationList();
-    this.dateRange.valueChanges.subscribe((value) => {
-      const start = value.start?.toISOString().split('T')[0];
-      let end = value.end?.toISOString().split('T')[0];
-      if (!end) {
-        end = '';
-      }
+    this.filterForm.controls['dateRange'].valueChanges.subscribe((value) => {
+      let start = value?.start ? value.start.toISOString().split('T').shift() : '';
+      let end = value?.end ? value?.end?.toISOString().split('T').shift() : '';
       const dateRangeString = end ? `${start}|${end}` : start;
-      this.selectedCategories.emit({ filtername: 'dateAcquired', value: dateRangeString });
+      this.navigate('dateAcquired', dateRangeString);
     });
   }
 
+  navigate(param: string, value = undefined) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        [param]: value ? value : this.filterForm.controls[param].value,
+      },
+      queryParamsHandling: 'merge',
+    };
+
+    this.router.navigate(['/inventory'], navigationExtras);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['filter']) {
+      const filters = changes['filter'].currentValue;
+      const [start, end] = filters.dateAcquired.split('|');
+      this.filterForm.controls['equipmenttype'].patchValue(filters.equipmenttype);
+      this.filterForm.controls['mattertype'].patchValue(filters.mattertype);
+      this.filterForm.controls['brand'].patchValue(filters.brand);
+      this.filterForm.controls['inventorytype'].patchValue(filters.brand);
+
+      this.filterForm.controls['dateRange'].patchValue({
+        start: start,
+        end: end,
+      });
+    }
+  }
+
   loadEquipmentTypes(): void {
-    console.log('dept', this.currentUser.department)
     this.equipmentService.getEquipmentTypes(this.currentUser.department).subscribe(
       (response) => {
         this.equipmenttypes = response.data;
@@ -156,19 +189,11 @@ export class CategoryComponent implements OnInit {
   }
 
   loadBrandList(): void {
-    this.equipmentService.getBrandList(this.currentUser.department).subscribe(
-      {
-        next: (resp) => {
-          this.brands = resp.data;
-        },
-      }
-      // (response) => {
-      //   this.brands = response.data;
-      // },
-      // (error) => {
-      //   console.error('Error fetching brand list:', error);
-      // }
-    );
+    this.equipmentService.getBrandList(this.currentUser.department).subscribe({
+      next: (resp) => {
+        this.brands = resp.data;
+      },
+    });
   }
 
   loadMatterList(): void {
@@ -235,61 +260,10 @@ export class CategoryComponent implements OnInit {
 
     this.selectedCategories.emit({ filtername, value });
   }
-  onDateChange(event: MatDatepickerInputEvent<Date>, type: 'startDate' | 'endDate'): void {
-    const date = event.value;
-    this.startDate = date;
-    const start = date?.toISOString().split('T')[0];
-    this.selectedCategories.emit({ filtername: 'dateAcquired', value: start });
-  }
-  onDateEndChange(event: MatDatepickerInputEvent<Date>, type: 'startDate' | 'endDate'): void {
-    const date = event.value;
-    this.endDate = date;
-    const end = this.endDate?.toISOString().split('T')[0];
-
-    this.selectedCategories.emit({ filtername: 'enddate', value: end });
-  }
-  onDateRangeChanged(event: MatDatepickerInputEvent<DateRange<Date>>): void {
-    const range = event.value;
-    if (range) {
-      const start = range.start?.toISOString().split('T')[0];
-      const end = range.end?.toISOString().split('T')[0];
-      this.selectedCategories.emit({ filtername: 'dateAcquired', value: { start, end } });
-    }
-  }
 
   resetFilters(): void {
-    this.selectedEquipment = null;
-    this.selectedBrands = null;
-    this.selectedMatter = null;
-    this.selectedInventoryType = null;
-    this.selectedRemarks = null;
-    this.selectedDepartment = null;
-    this.selectedDateAcquired = null;
-    this.selectedSort = null;
-    this.selectedLocation = null;
-    this.dateRange.reset({
-      start: null,
-      end: null,
-    });
-    const queryParams: Params = {};
-    queryParams['search'] = '';
-    queryParams['equipmenttype'] = '';
-    queryParams['brand'] = '';
-    queryParams['mattertype'] = '';
-    queryParams['description'] = '';
-    queryParams['inventorytype'] = '';
-    queryParams['remarks'] = '';
-    queryParams['department'] = '';
-    queryParams['dateAcquired'] = '';
-    queryParams['location'] = '';
-    queryParams['status'] = '';
-    queryParams['sort'] = '';
-    queryParams['search'] = '';
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams,
-      queryParamsHandling: 'merge',
-    });
+    this.filterForm.reset();
+    this.router.navigate(['/inventory']);
   }
 
   // handleQueryParams(params: Params): void {

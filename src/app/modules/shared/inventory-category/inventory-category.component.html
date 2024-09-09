@@ -1,7 +1,20 @@
 <div class="panel-name">Category</div>
 
 <form [formGroup]="filterForm">
+  <!-- <div class="search-filter-wrapper"> -->
+
+  <!-- </div> -->
   <div class="form-fields-container">
+    <mat-form-field floatLabel="always">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        placeholder="Type Here"
+        formControlName="search"
+        autocomplete="off"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
     <mat-form-field class="form-field">
       <mat-label>Equipment Type</mat-label>
       <mat-select
@@ -16,7 +29,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Brand</mat-label>
       <mat-select formControlName="brand" (selectionChange)="navigate('brand')">
@@ -25,7 +37,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Matter Type</mat-label>
       <mat-select
@@ -37,7 +48,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Inventory Type</mat-label>
       <mat-select
@@ -52,7 +62,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
     <mat-form-field class="form-field">
       <mat-label>Date Acquired</mat-label>
       <mat-date-range-input formGroupName="dateRange" [rangePicker]="picker">
@@ -64,58 +73,18 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
-      <mat-label>Remarks</mat-label>
-      <mat-select
-        [(value)]="selectedRemarks"
-        (selectionChange)="onSelectChanged('remarks', $event)"
-      >
-        <mat-option *ngFor="let x of remarks" [value]="x">
-          {{ x }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
-      <mat-label>Department</mat-label>
-      <mat-select
-        [(value)]="selectedDepartment"
-        (selectionChange)="onSelectChanged('department', $event)"
-        disabled
-      >
-        <mat-option *ngFor="let dept of departments" [value]="dept">
-          {{ dept }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field class="form-field">
       <mat-label>Location</mat-label>
       <mat-select
-        [(value)]="selectedLocation"
-        (selectionChange)="onSelectChanged('location', $event)"
+        formControlName="location"
+        (selectionChange)="navigate('location')"
       >
         <mat-option *ngFor="let location of locations" [value]="location">
           {{ location }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-    <div class="edit-button">
-      <button mat-raised-button (click)="resetFilters()">Reset Filter</button>
-    </div>
   </div>
-  <div class="panel-name">Filter</div>
-  <mat-chip-listbox
-    class="mat-mdc-chip-set-stacked"
-    aria-label="Color selection"
-  >
-    <mat-chip-option
-      *ngFor="let sortSelected of sortSelecteds"
-      [color]="sortSelected.color"
-      [value]="sortSelected.value"
-      (selectionChange)="onSelectChanged('sort', sortSelected.value)"
-    >
-      {{ sortSelected.name }}
-    </mat-chip-option>
-  </mat-chip-listbox>
+  <div class="edit-button">
+    <button mat-raised-button (click)="resetFilters()">Reset Filter</button>
+  </div>
 </form>

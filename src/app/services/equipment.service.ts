@@ -92,7 +92,6 @@ export class EquipmentService {
   }
 
   getAvailableEquipment(pagination: Pagination, filters: InventoryFilter): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams({
@@ -134,23 +133,30 @@ export class EquipmentService {
     );
   }
 
-  getUnconfirmedEquipments(page: number, limit: number, department: string[]) {
+  getUnconfirmedEquipments(filter: InventoryFilter, pagination: Pagination, department: string[]) {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
 
     const params = new HttpParams({
       fromObject: {
+        equipmenttype: filter.equipmenttype,
+        brand: filter.brand,
+        mattertype: filter.mattertype,
+        inventorytype: filter.inventorytype,
+        name: filter.name,
+        dateAcquired: filter.dateAcquired,
+        location: filter.location,
         department: department,
+        confirmed: false,
       },
     });
 
-    return this.http.get<Response>(environment.API_URL + '/api/equipment/getunconfirmedequipments', { params, headers: headers }).pipe(catchError(this.handleError));
+    return this.http.get<Response>(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
   }
 
   addEquipment(item: Item): Observable<any> {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
-
 
     return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers }).pipe(
       // tap((data) => console.log('Equipment added:', data, { headers })),
@@ -186,7 +192,7 @@ export class EquipmentService {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
 
-    return this.http.get<any>(environment.API_URL + '/api/report', { params, headers: headers}).pipe(
+    return this.http.get<any>(environment.API_URL + '/api/report', { params, headers: headers }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
@@ -195,10 +201,10 @@ export class EquipmentService {
     let params = new HttpParams();
     params = params.append('page', pagination.page);
     params = params.append('limit', pagination.limit);
-    
+
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
-    return this.http.get<any>(environment.API_URL + '/api/transaction', { params, headers: headers}).pipe(
+    return this.http.get<any>(environment.API_URL + '/api/transaction', { params, headers: headers }).pipe(
       map((response) => response.data),
       catchError(this.handleError)
     );
@@ -210,7 +216,6 @@ export class EquipmentService {
     return this.http.post<any>(environment.API_URL + '/api/transaction', transaction, { headers }).pipe(catchError(this.handleError));
   }
   getBrandListWithPagination(page: number, limit: number): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     const params = new HttpParams().set('page', page.toString()).set('limit', limit.toString());
@@ -218,7 +223,6 @@ export class EquipmentService {
     return this.http.get<any>(environment.API_URL + '/api/equipment/getbrandlist', { params, headers: headers }).pipe(catchError(this.handleError));
   }
   getEquipmentTypes(departments: string[]): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams({
@@ -234,7 +238,6 @@ export class EquipmentService {
       .pipe(catchError(this.handleError));
   }
   getBrandList(departments: string[]): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams({
@@ -250,7 +253,6 @@ export class EquipmentService {
       .pipe(catchError(this.handleError));
   }
   getMatterList(): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http
@@ -261,7 +263,6 @@ export class EquipmentService {
   }
 
   getDepartmentList(): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http
@@ -272,7 +273,6 @@ export class EquipmentService {
   }
 
   getInventoryTypeList(): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http
@@ -285,7 +285,7 @@ export class EquipmentService {
   confirmEquipmentByIds(body: ConfirmEquipments) {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
-    return this.http.patch<Response>(environment.API_URL + '/api/equipment/confirmequipmentbyids', body, { headers: headers}).pipe(catchError(this.handleError));
+    return this.http.patch<Response>(environment.API_URL + '/api/equipment/confirmequipmentbyids', body, { headers: headers }).pipe(catchError(this.handleError));
   }
 
   confirmEquipment(_id: string, item: Item): Observable<any> {
@@ -299,7 +299,6 @@ export class EquipmentService {
   }
 
   getItemStatusList(): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http
@@ -336,7 +335,6 @@ export class EquipmentService {
   }
 
   getUsers(): Observable<any> {
-    
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http
