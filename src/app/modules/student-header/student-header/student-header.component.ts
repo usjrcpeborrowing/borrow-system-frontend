@@ -15,7 +15,7 @@ export class StudentHeaderComponent implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   currentUser: any;
   isSidebarOpen = false;
-  notifications: NotificationInterface[]=[]
+  notifications: NotificationInterface[] = [];
   constructor(private authService: AuthService, private router: Router, private socketIOService: SocketioService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
@@ -54,13 +54,13 @@ export class StudentHeaderComponent implements OnInit {
   }
 
   getNotifications() {
-    this.notificationService.getNotifications(this.currentUser._id, 10).subscribe({
-      next: (resp:any) => {
+    this.notificationService.getNotifications(this.currentUser._id, 1, 10).subscribe({
+      next: (resp: any) => {
         this.notifications = resp.data;
       },
-      error: (err)=> {
-        console.error(err.message)
-      }
+      error: (err) => {
+        console.error(err.message);
+      },
     });
   }
 }

@@ -57,13 +57,7 @@ export class HeaderOicComponent implements OnInit {
     ],
   };
   currentNavigations: any[] = [];
-  constructor(
-    public dialog: MatDialog,
-    private authService: AuthService, 
-    private router: Router, 
-    private socketIOService: SocketioService,
-    private notificationService: NotificationService
-  ) {}
+  constructor(public dialog: MatDialog, private authService: AuthService, private router: Router, private socketIOService: SocketioService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
@@ -85,11 +79,11 @@ export class HeaderOicComponent implements OnInit {
   }
 
   getNotifications() {
-    this.notificationService.getNotifications(this.currentUser._id, this.limit).subscribe({
+    this.notificationService.getNotifications(this.currentUser._id, 1, this.limit).subscribe({
       next: (resp: any) => {
         this.notifications = resp.data;
         this.notification_count = resp.unread;
-      
+
         console.log(resp);
       },
     });
@@ -108,8 +102,6 @@ export class HeaderOicComponent implements OnInit {
       this.currentNavigations = [];
     }
   }
-  
- 
 
   logout(event: Event): void {
     event.preventDefault();
@@ -122,5 +114,4 @@ export class HeaderOicComponent implements OnInit {
   toggleSidebar(expanded: boolean): void {
     this.isSidebarExpanded = expanded;
   }
-  
 }
