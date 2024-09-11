@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -9,11 +10,11 @@ interface NavigationItem {
 }
 
 @Component({
-  selector: 'app-dashboard-buttons',
-  templateUrl: './dashboard-buttons.component.html',
-  styleUrls: ['./dashboard-buttons.component.css']
+  selector: 'app-dashboard-buttons-mobile',
+  templateUrl: './dashboard-buttons-mobile.component.html',
+  styleUrls: ['./dashboard-buttons-mobile.component.css']
 })
-export class DashboardButtonsComponent implements OnInit {
+export class DashboardButtonsMobileComponent implements OnInit {
 
   isSidebarExpanded = false;
   currentUser: any;
@@ -23,8 +24,6 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Dashboard', url: '/dashboard/admin', icon: 'menu' },
       { name: 'Inventory', url: '/inventory', icon: 'menu' },
       { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
-      { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
       { name: 'Accounts', url: '/account-request', icon: 'menu' },
       { name: 'History', url: '/history/admin', icon: 'menu' },
     ],

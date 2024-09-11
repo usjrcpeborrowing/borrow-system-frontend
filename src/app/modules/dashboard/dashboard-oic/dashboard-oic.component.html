@@ -1,97 +1,22 @@
 <div class="header">
     <app-header></app-header>
 </div>
-<h1 class="page-title">Dashboard <div class="hline"></div></h1>
-<div class="dashboard-content">
-    
-    <div class="menu-panel">
-        <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
-                <mat-icon>inbox</mat-icon>
-                    Inventory
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToItemDetails()">
-                <mat-icon>inbox</mat-icon>
-                    Item Details
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventoryRequest()">
-                <mat-icon>inbox</mat-icon>
-                    Inventory Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button (click)="showStudentRequests()">
-                <mat-icon>assignment</mat-icon>
-                    Borrow Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button (click)="showAccountRequests()">
-                <mat-icon>assignment</mat-icon>
-                    Account Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="showReports()">
-                <mat-icon>report</mat-icon>
-                        Reports
-                    </button>
-            <button style=" justify-content: flex-start;" mat-raised-button   (click)="directToHistory()">
-                <mat-icon>history</mat-icon>
-                    History
-                </button>
-                <button style=" justify-content: flex-start;" mat-raised-button   (click)="directToManageStudents()">
-                    <mat-icon>supervisor_account</mat-icon>
-                        Manage Students
-                    </button>
+<div class="page">
+    <div class="dashboard-buttons">
+        <app-dashboard-buttons></app-dashboard-buttons>
+    </div>
+    <div class="page-content">
+        <h1 class="page-title">
+            Dashboard
+            <div class="hline">
+            </div>
+        </h1>
+        <div class="menu-panel-mobile">
+            <app-dashboard-buttons-mobile></app-dashboard-buttons-mobile>
         </div>
-        
-    </div>
-    <div class="menu-panel-mobile">
-        <div class="buttons">
-                
-        <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToInventory()">
-            <div class="button-text">
-                <mat-icon class="icon-text">inbox</mat-icon>
-                Inventory
-                </div>
-            </button>
-                <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToItemDetails()">
-                    <div class="button-text">
-                        <mat-icon class="icon-text">inbox</mat-icon>
-                        Item Details
-                        </div>
-                    </button>
-            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons" (click)="showStudentRequests()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">assignment</mat-icon>
-                    Item Requests
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons" (click)="showAccountRequests()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">assignment</mat-icon>
-                    Account Requests
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="showReports()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">report</mat-icon>
-                        Reports
-                        </div>
-                    </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToHistory()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">history</mat-icon>
-                    History
-                    </div>
-                </button>
-                <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToManageStudents()">
-                    <div class="button-text">
-                        <mat-icon class="icon-text">supervisor_account</mat-icon>
-                        Manage Students
-                        </div>
-                    </button>
-        </div>
-    </div>
-    <div class="contents">
-        <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>
-        <app-system-reports  *ngIf="showReportsComponent"></app-system-reports>
-        <app-inventory-levels *ngIf="showInventoryComponent"></app-inventory-levels>
-    </div>
 
+        <div class="contents">
+            <app-content-tabs></app-content-tabs>
+        </div>
+    </div>
 </div>

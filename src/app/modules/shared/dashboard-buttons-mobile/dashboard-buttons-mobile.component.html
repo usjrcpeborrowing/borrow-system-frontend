@@ -1,0 +1,8 @@
+
+
+<div class="buttons">
+    <button style=" justify-content: flex-start;" *ngFor="let navItem of navigations[currentRole]" (click)="navigateTo(navItem.url)" mat-raised-button class="buttons-buttons">
+        <mat-icon class="icon-text">{{ navItem.icon }}</mat-icon>
+        <span class="button-text">{{ navItem.name }}</span>
+    </button>
+</div>

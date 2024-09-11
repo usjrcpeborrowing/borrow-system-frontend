@@ -1,51 +1,21 @@
-
-    <div class="dashboard-button">
+<div class="dashboard-button">
     <h1 class="page-title">
-        <div class="toggle-button">
-        <button class="toggle-button" (click)="toggleSidebar()" mat-icon-button >
-            <mat-icon>{{ isSidebarExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+      <div class="toggle-button">
+        <button class="toggle-button" (click)="toggleSidebar()" mat-icon-button>
+          <mat-icon>{{ isSidebarExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
         </button>
-        </div>
+      </div>
     </h1>
     <div class="dashboard-content">
-        
-        <div class="sidebar" [class.expanded]="isSidebarExpanded">
-
-            <div class="buttons">
-                <button (click)="directToDashboard()" mat-raised-button>
-                    <mat-icon>inbox</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">Dashboard</span>
-                </button>
-                <button (click)="directToBorrow()" mat-raised-button>
-                    <mat-icon>inbox</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">Borrow Items</span>
-                </button>
-
-                <button (click)="directToInventory()" mat-raised-button>
-                    <mat-icon>inbox</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">Inventory</span>
-                </button>
-
-                <button (click)="directToItemDetails()" mat-raised-button>
-                    <mat-icon>inbox</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">Item Details</span>
-                </button>
-
-                <button (click)="directToInventoryRequest()" mat-raised-button>
-                    <mat-icon>inbox</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">Inventory Requests</span>
-                </button>
-
-                <button (click)="directToBorrowRequest()" mat-raised-button>
-                    <mat-icon>assignment</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">Student Requests</span>
-                </button>
-
-                <button (click)="directToHistory()" mat-raised-button>
-                    <mat-icon>history</mat-icon>
-                    <span class="button-text" *ngIf="isSidebarExpanded">History</span>
-                </button>
-            </div>
+      <div class="sidebar" [class.expanded]="isSidebarExpanded">
+        <div class="buttons">
+          <!-- Loop through navigation items based on the current role -->
+          <button *ngFor="let navItem of navigations[currentRole]" (click)="navigateTo(navItem.url)" mat-raised-button>
+            <mat-icon>{{ navItem.icon }}</mat-icon>
+            <span class="button-text" *ngIf="isSidebarExpanded">{{ navItem.name }}</span>
+          </button>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+  

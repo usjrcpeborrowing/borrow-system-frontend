@@ -14,11 +14,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DashboardButtonsMobileComponent } from './dashboard-buttons-mobile/dashboard-buttons-mobile.component';
 @NgModule({
-  declarations: [DashboardButtonsComponent,SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent, DashboardButtonsComponent],
+  declarations: [DashboardButtonsMobileComponent, DashboardButtonsComponent,SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent, DashboardButtonsComponent, DashboardButtonsMobileComponent],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule, MatButtonModule, MatIconModule,MatTableModule, MatTabsModule
 
   ],
-  exports: [DashboardButtonsComponent, SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent],
+  exports: [DashboardButtonsMobileComponent, DashboardButtonsComponent, SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent],
 })
 export class SharedModule {}

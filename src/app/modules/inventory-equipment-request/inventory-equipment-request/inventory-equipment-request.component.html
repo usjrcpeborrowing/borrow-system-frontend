@@ -1,36 +1,42 @@
 <div class="header">
   <app-header></app-header>
 </div>
-
-<div class="page-title">
-  <div
-    class="view-category-container clickable"
-    [class.cart-openside]="openedCategory"
-    (click)="openedCategory = !openedCategory"
-  >
-    <mat-icon>menu</mat-icon>
+<div class="page">
+  <div class="dashboard-content">
+    <app-dashboard-buttons></app-dashboard-buttons>
   </div>
-
-  <div class="title-page">Inventory Requests</div>
-</div>
-<mat-drawer-container class="example-container">
-  <mat-drawer mode="side" [opened]="openedCategory" position="start">
-    <app-inventory-category [filter]="inventoryFilter"></app-inventory-category>
-  </mat-drawer>
-  <mat-drawer-content class="custom-drawer-itmes">
-    <app-inventory-equipment-request-card
-      [equipments]="equipments"
-    ></app-inventory-equipment-request-card>
-    <section id="pagination">
-      <mat-paginator
-        [length]="pagination.length"
-        [pageSize]="pagination.limit"
-        [pageIndex]="pagination.page - 1"
-        [pageSizeOptions]="pagination.pageSizeOption"
-        [showFirstLastButtons]="true"
-        (page)="paginate($event)"
+  <div class="page-content">
+    <div class="page-title">
+      <div
+        class="view-category-container clickable"
+        [class.cart-openside]="openedCategory"
+        (click)="openedCategory = !openedCategory"
       >
-      </mat-paginator>
-    </section>
-  </mat-drawer-content>
-</mat-drawer-container>
+        <mat-icon>menu</mat-icon>
+      </div>
+
+      <div class="title-page">Inventory Requests</div>
+    </div>
+    <mat-drawer-container class="example-container">
+      <mat-drawer mode="side" [opened]="openedCategory" position="start">
+        <app-inventory-category [filter]="inventoryFilter"></app-inventory-category>
+      </mat-drawer>
+      <mat-drawer-content class="custom-drawer-itmes">
+        <app-inventory-equipment-request-card
+          [equipments]="equipments"
+        ></app-inventory-equipment-request-card>
+        <section id="pagination">
+          <mat-paginator
+            [length]="pagination.length"
+            [pageSize]="pagination.limit"
+            [pageIndex]="pagination.page - 1"
+            [pageSizeOptions]="pagination.pageSizeOption"
+            [showFirstLastButtons]="true"
+            (page)="paginate($event)"
+          >
+          </mat-paginator>
+        </section>
+      </mat-drawer-content>
+    </mat-drawer-container>
+    </div>
+</div>

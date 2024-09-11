@@ -1,4 +1,17 @@
 
+.page{
+  display: flex;
+  height: 100%;
+}
+.page-content{
+  display:inline-block;
+  width: 100%;
+}
+.dashboard-content{
+  
+  border-right: 1px solid #45824a91;
+  background-color: rgb(99, 143, 99);
+}
 .page-title{
   margin: 0px;
   padding: 4vh;
@@ -142,7 +155,7 @@
   margin-left: 15px;
   margin-top: 5px;
   float: left;
-  height: 65vh;
+  height: 100%;
   padding: 7px;
   border: none;
 }
@@ -250,6 +263,10 @@
 
 @media screen and (max-width: 1200px) {
   .mobile-details{
+    display: none;
+  }
+  
+  .dashboard-content{
     display: none;
   }
   .example-container {

@@ -57,6 +57,7 @@ export class ContentTabsComponent implements OnInit {
         this.itemlist = resp.data;
         this.pagination.length = resp.total;
         this.noItems = this.itemlist.length === 0;
+        console.log(this.itemlist);
       },
       error: (err) => {
         this.isFetching = false;

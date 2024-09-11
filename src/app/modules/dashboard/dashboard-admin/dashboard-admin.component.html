@@ -1,86 +1,22 @@
 <div class="header">
     <app-header></app-header>
 </div>
-<h1 class="page-title">Dashboard <div class="hline"></div></h1>
-<div class="dashboard-content">
-    
-    <div class="sidebar" [class.expanded]="isSidebarExpanded">
+<div class="page">
+    <div class="dashboard-buttons">
+        <app-dashboard-buttons></app-dashboard-buttons>
+    </div>
+    <div class="page-content">
+        <h1 class="page-title">
+            Dashboard
+            <div class="hline">
+            </div>
+        </h1>
+        <div class="menu-panel-mobile">
+            <app-dashboard-buttons-mobile></app-dashboard-buttons-mobile>
+        </div>
 
-        <div class="buttons">
-            <button (click)="directToInventory()" mat-raised-button>
-                <mat-icon>inbox</mat-icon>
-                <span class="button-text" *ngIf="isSidebarExpanded">Inventory List</span>
-            </button>
-            
-            <button (click)="showStudentRequests()" mat-raised-button>
-                <mat-icon>inbox</mat-icon>
-                <span class="button-text" *ngIf="isSidebarExpanded">Student Requests</span>
-            </button>
-            
-            <button (click)="directToItemDetails()" mat-raised-button>
-                <mat-icon>inbox</mat-icon>
-                <span class="button-text" *ngIf="isSidebarExpanded">Item Details</span>
-            </button>
-            
-            <button (click)="directToAccounts()" mat-raised-button>
-                <mat-icon>inbox</mat-icon>
-                <span class="button-text" *ngIf="isSidebarExpanded">Manage User Accounts</span>
-            </button>
-
-            
+        <div class="contents">
+            <app-content-tabs></app-content-tabs>
         </div>
     </div>
-    <div class="menu-panel-mobile">
-        <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons"  (click)="directToInventory()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">inbox</mat-icon>
-                    Inventory List
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="showStudentRequests()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">assignment</mat-icon>
-                    Student Requests
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="showReports()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">report</mat-icon>
-                    Recent Reports
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToItemDetails()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">inbox</mat-icon>
-                        Item Details
-                        </div>
-                    </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToHistory()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">history</mat-icon>
-                    Reports and History
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToAccounts()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">supervisor_account</mat-icon>
-                    Manage User Accounts
-                    </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons" (click)="directToSettings()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">settings</mat-icon>
-                    System Settings
-                    </div>
-                </button>
-        </div>
-    </div>
-    <div class="contents">
-        <app-content-tabs *ngIf="showContentTabs"></app-content-tabs>
-        <app-system-reports  *ngIf="showReportsComponent"></app-system-reports>
-    </div>
-    
-    
-
 </div>
