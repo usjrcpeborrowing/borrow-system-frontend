@@ -83,7 +83,7 @@
 
 <mat-card appearance="outlined">
   <mat-card-content class="panel-description">
-    <div>
+    <!-- <div>
       <div mat-card-title class="detail-name">Reads John Doe</div>
       <div mat-card-title class="detail-name">| ID: 202000320</div>
     </div>
@@ -91,8 +91,8 @@
     <div mat-card-title class="detail-info">
       <div class="borrowed-items-class">Edited Items</div>
       <div class="detail-date">Sep 12, 2024 - 4:32 PM</div>
-    </div>
-    <div class="hline"></div>
+    </div> -->
+    <!-- <div class="hline"></div> -->
     <div class="checkbox-container">
       <div class="detail-select">Select All</div>
       <mat-checkbox
@@ -102,21 +102,28 @@
     </div>
     <div class="item-container">
       <div class="item-row" *ngFor="let equipment of equipments">
-        <button
-          mat-icon-button
-          class="detail-quantity"
-          (click)="viewItem(equipment)"
+        <mat-icon class="view-button" (click)="viewItem(equipment)"
+          >visibility</mat-icon
         >
-          <mat-icon>info</mat-icon>
-        </button>
-        <div class="detail-equipment">{{ equipment.name }}</div>
-        <div class="detail-condition">Item Description Change</div>
-        <mat-checkbox [(ngModel)]="equipment['selected']"   (change)="onItemChange($event, equipment)"></mat-checkbox>
+        <div>{{ equipment.serialNo }}</div>
+        <div>{{ equipment.name }}</div>
+        <div>{{ equipment.brand }}</div>
+        <mat-checkbox
+          [(ngModel)]="equipment['selected']"
+          [disabled]="equipment['disabled']"
+          (change)="onItemChange($event, equipment)"
+        ></mat-checkbox>
       </div>
     </div>
 
     <div class="action-wrapper">
-      <button class="report-button" mat-raised-button (click)="confirmSelectedEquipments()">Accept</button>
+      <button
+        class="report-button"
+        mat-raised-button
+        (click)="confirmSelectedEquipments()"
+      >
+        Accept
+      </button>
       <button mat-raised-button>Reject</button>
     </div>
   </mat-card-content>
