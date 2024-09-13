@@ -7,7 +7,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class TransactionService {
-
   constructor(private http: HttpClient) {}
 
   getTransation(equipmentIds: string[]): Observable<any> {
@@ -18,6 +17,18 @@ export class TransactionService {
     });
 
     return this.http.get(environment.API_URL + '/api/transaction', { params, headers }).pipe(catchError(this.handleError));
+  }
+
+  combineRevisions(revisions: any[]) {
+    return revisions
+      .map((rev) => {
+        return rev.revision.map((x: any) => {
+          let spread = { ...x, ...rev };
+          delete spread.revision;
+          return spread;
+        });
+      })
+      .flat(1);
   }
 
   handleError(err: HttpErrorResponse) {

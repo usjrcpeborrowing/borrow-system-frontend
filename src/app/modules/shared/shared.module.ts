@@ -8,9 +8,10 @@ import { NotificationComponent } from './notification/notification.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InventoryCategoryComponent } from './inventory-category/inventory-category.component';
+import { EquipmentHistoryComponent } from './equipment-history/equipment-history.component';
 
 @NgModule({
-  declarations: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent],
+  declarations: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent, EquipmentHistoryComponent],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [SnackbarComponent, NotificationComponent, BorrowItemCategoryComponent, EquipmentDetailDialogComponent, InventoryCategoryComponent],
 })

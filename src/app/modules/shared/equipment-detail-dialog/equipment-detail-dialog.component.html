@@ -112,6 +112,23 @@
           </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
+          <mat-label>Condition</mat-label>
+          <input
+            matInput
+            formControlName="condition"
+            [readonly]="!canEdit"
+            [matAutocomplete]="autocondition"
+          />
+          <mat-autocomplete #autocondition="matAutocomplete">
+            <mat-option
+              *ngFor="let condition of filteredconditions | async"
+              [value]="condition"
+            >
+              {{ condition }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Location</mat-label>
           <input
             matInput
@@ -131,8 +148,20 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date Acquired</mat-label>
+          <input
+            matInput
+            formControlName="dateAcquired"
+            [value]="equipmentForm.get('dateAcquired')?.value | date : 'mediumDate'"
+            [readonly]="true"
+          />
+        </mat-form-field>
         <mat-checkbox formControlName="isborrow">Can be borrowed</mat-checkbox>
       </div>
+      <app-equipment-history
+        [transaction]="transaction"
+      ></app-equipment-history>
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">

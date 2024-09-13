@@ -7,6 +7,8 @@ import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { Constants } from 'src/app/models/Constant';
+import { Transaction } from 'src/app/models/Transaction';
+import { TransactionService } from 'src/app/services/transaction.service';
 
 type Data = {
   item: Item;
@@ -26,22 +28,25 @@ export class EquipmentDetailDialogComponent implements OnInit {
 
   brands: string[] = [];
   locations: string[] = [];
-  inventorytypes: string[]=Constants.equipmentInventoryType;
+  inventorytypes: string[] = Constants.equipmentInventoryType;
   departments: string[] = Constants.departments;
-  matters:string[]=Constants.equipmentMatterType;
+  matters: string[] = Constants.equipmentMatterType;
+  conditions: string[] = Constants.equipmentStatus;
   filteredbrands!: Observable<string[]>;
   filteredlocations!: Observable<string[]>;
   filtereddepartments!: Observable<string[]>;
   filteredinventorytypes!: Observable<string[]>;
   filteredmatters!: Observable<string[]>;
-
+  filteredconditions!: Observable<string[]>;
+  transaction!: Transaction;
 
   constructor(
     public dialogRef: MatDialogRef<EquipmentDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Data,
     private fb: FormBuilder,
     private equipmentService: EquipmentService,
-    private authService: AuthService
+    private authService: AuthService,
+    private transactionService: TransactionService
   ) {
     // this.itemDetails = data;
     this.equipmentForm = fb.group({
@@ -60,6 +65,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
       description: [data.item.description],
       dateAcquired: [data.item.dateAcquired],
       location: [data.item.location],
+      condition: [data.item.condition],
       images: fb.group({
         url: data.item.images.url,
         midSizeUrl: data.item.images.midSizeUrl,
@@ -97,8 +103,14 @@ export class EquipmentDetailDialogComponent implements OnInit {
       map((value) => this._filter(value || '', this.matters))
     );
 
+    this.filteredconditions= this.equipmentForm.controls['condition'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.conditions))
+    );
+
     this.getBrands();
     this.getLocations();
+    this.getEquipmentHistory();
   }
 
   getBrands() {
@@ -112,6 +124,13 @@ export class EquipmentDetailDialogComponent implements OnInit {
     this.equipmentService.getLocationList(this.user.department).subscribe({
       next: (resp) => (this.locations = resp.data),
       error: (err) => console.error(err),
+    });
+  }
+
+  getEquipmentHistory() {
+    this.transactionService.getTransation([this.data.item._id]).subscribe((resp) => {
+      console.log('transaction resp', resp);
+      this.transaction = resp.data[0];
     });
   }
 

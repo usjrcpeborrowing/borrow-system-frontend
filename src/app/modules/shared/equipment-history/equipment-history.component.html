@@ -1,0 +1,20 @@
+<div class="history-container">
+  <mat-accordion>
+    <mat-expansion-panel hideToggle class="mat-elevation-z0">
+      <mat-expansion-panel-header>
+        <mat-panel-title> View Equipment History </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list *ngIf="revisions.length">
+        <!-- <div mat-subheader>History</div> -->
+        <mat-list-item *ngFor="let rev of revisions">
+          <mat-icon matListItemIcon>history</mat-icon>
+          <div matListItemTitle>{{ rev.field }}</div>
+          <div matListItemLine>
+            {{ rev.oldValue }} → {{ rev.newValue }} {{ rev.user }}
+            {{ rev.timeStamp | date : "shortDate" }}
+          </div>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
