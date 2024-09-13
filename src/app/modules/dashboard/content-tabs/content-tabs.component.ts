@@ -11,6 +11,9 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 })
 export class ContentTabsComponent implements OnInit {
   isFetching: boolean = false;
+  
+  defaultImage = '../../../../assets//equipment_default_image.png';
+  displayImage: string = '';
   noItems: boolean = false;
   itemlist: any[] = [];
   pagination: Pagination = {
@@ -38,6 +41,7 @@ export class ContentTabsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
@@ -57,6 +61,11 @@ export class ContentTabsComponent implements OnInit {
         this.itemlist = resp.data;
         this.pagination.length = resp.total;
         this.noItems = this.itemlist.length === 0;
+        
+        const midsizeurl = resp.data?.images?.midSizeUrl?.length ? resp.data?.images?.midSizeUrl : '';
+        const id: string = midsizeurl.substring(midsizeurl.lastIndexOf('/d/') + 3, midsizeurl.lastIndexOf('/view'));
+        this.displayImage = `https://drive.google.com/thumbnail?id=${id}&&sz=w1000`;
+        
         console.log(this.itemlist);
       },
       error: (err) => {
