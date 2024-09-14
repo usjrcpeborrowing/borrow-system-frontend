@@ -124,8 +124,8 @@ export class ItemsComponent implements OnInit, OnChanges {
 
   addItem(): void {
     const dialog = this.dialog.open(AddComponent, {
-      height: '73vh',
-      width: '55vw',
+      // height: '73vh',
+      // width: '55vw',
     });
 
     dialog.afterClosed().subscribe((resp) => this.equipmentService.addEquipmentSubject.next(''));
