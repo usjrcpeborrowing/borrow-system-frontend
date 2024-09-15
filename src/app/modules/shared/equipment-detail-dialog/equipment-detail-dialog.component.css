@@ -78,18 +78,29 @@
 .item-details div:last-child {
   margin-bottom: 0;
 }
-
-::ng-deep .mat-mdc-text-field-wrapper {
-  min-width: 280px;
+.checkbox-wrapper {
+  min-width: 220px;
 }
+/* ::ng-deep .mat-mdc-text-field-wrapper {
+  min-width: 280px;
+} */
 
 @media screen and (max-width: 480px) {
   .dialog-container {
     min-width: auto;
     width: auto;
   }
-}
 
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    min-width: auto;
+  }
+
+  ::ng-deep .mdc-dialog .mdc-dialog__content {
+    padding: 10px;
+  }
+
+
+}
 
 ::ng-deep.mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent;
