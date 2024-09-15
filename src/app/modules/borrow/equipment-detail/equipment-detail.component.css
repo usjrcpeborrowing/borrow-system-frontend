@@ -23,7 +23,7 @@
 }
 
 .detail {
-    flex-grow: 1;
+    flex-grow: 0;
 }
 .image-container{
     position: relative;
@@ -53,4 +53,43 @@
 
 .item-details div:last-child {
     margin-bottom: 0;
+}
+
+.close-button .mat-mdc-raised-button.mat-unthemed{
+    display: flex;
+    width: 100px;
+    margin-left: auto;
+    margin-right: 2%;
+    margin-top: 2%;
+    background-color: rgb(227, 149, 104);
+    color: white;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .dialog-detail{
+        padding: 0%;
+    }
+    .item-details-container {
+        
+        display:contents;
+        flex-direction: column;
+        padding: 1px;
+    }
+    
+    .item-details {
+        position: relative;
+        text-align: left;
+    }
+
+        
+    .label {
+        font-weight: bold;
+        width: 150px;
+    }
+    
+    .detail {
+        flex: 1;
+        display: block;
+    }
 }

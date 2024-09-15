@@ -1,47 +1,23 @@
-
-<h1 class="page-title">Dashboard <div class="hline"></div></h1>
-<div class="dashboard-content">
-    <div class="menu-panel">
-        <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToInventory()">
-                <mat-icon>inbox</mat-icon>
-                    Browse Items
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  (click)="directToBorrowRequest()">
-                <mat-icon>assignment</mat-icon>
-                    Borrow Requests
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button   (click)="directToHistory()">
-                <mat-icon>history</mat-icon>
-                    History
-                </button>
+<div class="header">
+    <app-header></app-header>
+</div>
+<div class="page">
+    <div class="dashboard-buttons">
+        <app-dashboard-buttons></app-dashboard-buttons>
+    </div>
+    <div class="page-content">
+        <h1 class="page-title">
+            Dashboard
+            <div class="hline">
+            </div>
+        </h1>
+        <div class="menu-panel-mobile">
+            <app-dashboard-buttons-mobile></app-dashboard-buttons-mobile>
         </div>
-        
-    </div>
-    <div class="menu-panel-mobile">
-        <div class="buttons">
-            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons" (click)="directToInventory()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">inbox</mat-icon>
-                    Browse Items
-                </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button class="buttons-buttons"  (click)="directToBorrowRequest()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">assignment</mat-icon>
-                    Borrow Requests
-                </div>
-                </button>
-            <button style=" justify-content: flex-start;" mat-raised-button  class="buttons-buttons"  (click)="directToHistory()">
-                <div class="button-text">
-                    <mat-icon class="icon-text">history</mat-icon>
-                    History
-                </div>
-                </button>
-        </div>
-    </div>
-    <div class="contents">
-        <app-student-contents></app-student-contents>
-    </div>
 
+        <div class="contents">
+            <app-content-tabs></app-content-tabs>
+        </div>
+
+    </div>
 </div>

@@ -11,6 +11,7 @@ import { HeaderReadsModule } from '../header-reads/header-reads.module';
 import { HeaderModule } from '../header/header.module';
 import { InventoryLevelsModule } from '../inventory-levels/inventory-levels.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
+import { SharedModule } from '../shared/shared.module';
 import { StudentHeaderModule } from '../student-header/student-header.module';
 import { SystemReportsModule } from '../system-reports/system-reports.module';
 import { AnnouncementsComponent } from './announcements/announcements.component';
@@ -24,7 +25,6 @@ import { DashboardReedsComponent } from './dashboard-reeds/dashboard-reeds.compo
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { StudentContentsComponent } from './student-contents/student-contents.component';
-
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -48,6 +48,7 @@ import { StudentContentsComponent } from './student-contents/student-contents.co
     MatTableModule,
     MatButtonModule,
     MatIconModule,
+    SharedModule,
     AdminHeaderModule,
     HeaderModule,
     SystemReportsModule,

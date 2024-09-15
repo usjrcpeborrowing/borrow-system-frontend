@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardComponent implements OnInit{
   
+  isSidebarExpanded = false;
   currentUser: any;
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -16,6 +17,9 @@ export class DashboardComponent implements OnInit{
     // if (!this.currentUser || this.currentUser.role !== 'Student') {
     //   this.router.navigate(['/']);
     // }
+  }
+  toggleSidebar() {
+    this.isSidebarExpanded = !this.isSidebarExpanded;
   }
   directToInventory(): void {
     this.router.navigate(['/borrow']);

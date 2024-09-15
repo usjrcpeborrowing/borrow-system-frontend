@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class DashboardFacultyComponent implements OnInit{
   
+  isSidebarExpanded = false;
   currentUser: any;
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -18,6 +19,11 @@ export class DashboardFacultyComponent implements OnInit{
     // if (!this.currentUser || this.currentUser.role !== 'Student') {
     //   this.router.navigate(['/']);
     // }
+  }
+
+
+  toggleSidebar() {
+      this.isSidebarExpanded = !this.isSidebarExpanded;
   }
   directToBorrow(): void {
     this.router.navigate(['/borrow']);

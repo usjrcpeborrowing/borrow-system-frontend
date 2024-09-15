@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { InventoryReportInterface } from 'src/app/models/InventoryReport';
@@ -11,7 +12,8 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { InventoryReportService } from 'src/app/services/inventory-report.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { ItemDetailDialogComponent } from '../item-detail-dialog/item-detail-dialog.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
@@ -19,6 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class ItemDetailsComponent implements OnInit {
   @Input() item: Item = {} as Item | any;
+  openedCategory: boolean = false;
   displayedColumns: string[] = ['name', 'serialNo', 'equipmentType', 'brand', 'inventoryType', 'remarks', 'quantity', 'info'];
   pagination: Pagination = {
     length: 0,
@@ -51,6 +54,7 @@ export class ItemDetailsComponent implements OnInit {
   };
   currentUserRole: any;
   sortUsed: 'asc' | 'desc' = 'asc';
+  dialogWidth: string = '45%';
   constructor(
     public dialog: MatDialog,
     private authService: AuthService,
@@ -59,7 +63,8 @@ export class ItemDetailsComponent implements OnInit {
     private equipmentService: EquipmentService,
     private transactionService: TransactionService,
     private inventoryReportService: InventoryReportService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private breakpointObserver: BreakpointObserver
   ) {}
 
   ngOnInit(): void {
@@ -69,6 +74,9 @@ export class ItemDetailsComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
       this.getInventoryReport();
+    });
+    this.breakpointObserver.observe(['(max-width: 500px)']).subscribe((state: BreakpointState) => {
+      this.dialogWidth = state.matches ? '100%' : '45%';
     });
   }
   isAdmin(): boolean {
@@ -81,6 +89,9 @@ export class ItemDetailsComponent implements OnInit {
     return this.currentUserRole.includes('oic');
   }
 
+  categoryClicked() {
+    this.openedCategory = !this.openedCategory;
+  }
   onFilterSelect(event: any) {
     let filter = event.filtername;
     let value = event.value;
@@ -219,9 +230,10 @@ export class ItemDetailsComponent implements OnInit {
 
   viewItemDetails(item: any): void {
     this.dialog.open(ItemDetailDialogComponent, {
-      height: '90vh',
-      width: '47vw',
+      height: '80%',
+      width: this.dialogWidth,
       data: item,
     });
   }
+
 }

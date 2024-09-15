@@ -113,10 +113,6 @@ const routes: Routes = [
     },
   },
   {
-    path: '',
-    loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
-  },
-  {
     path: '**',
     component: WildcardRedirectComponent,
   },
