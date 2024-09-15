@@ -78,10 +78,12 @@
 .item-details div:last-child {
   margin-bottom: 0;
 }
-
-::ng-deep .mat-mdc-text-field-wrapper {
-  min-width: 280px;
+.checkbox-wrapper {
+  min-width: 220px;
 }
+/* ::ng-deep .mat-mdc-text-field-wrapper {
+  min-width: 280px;
+} */
 
 @media screen and (max-width: 480px) {
   .dialog-container {

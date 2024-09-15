@@ -153,11 +153,17 @@
           <input
             matInput
             formControlName="dateAcquired"
-            [value]="equipmentForm.get('dateAcquired')?.value | date : 'mediumDate'"
+            [value]="
+              equipmentForm.get('dateAcquired')?.value | date : 'mediumDate'
+            "
             [readonly]="true"
           />
         </mat-form-field>
-        <mat-checkbox formControlName="isborrow">Can be borrowed</mat-checkbox>
+        <div class="checkbox-wrapper">
+          <mat-checkbox formControlName="isborrow">
+            Can be borrowed
+          </mat-checkbox>
+        </div>
       </div>
       <app-equipment-history
         [transaction]="transaction"
