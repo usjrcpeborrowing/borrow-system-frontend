@@ -234,6 +234,7 @@ a:hover::after {
   .sidenav-header,
   .sidenav-menu {
     padding: 16px;
+    margin-bottom: 5px;
   }
 
   .sidenav-header img {

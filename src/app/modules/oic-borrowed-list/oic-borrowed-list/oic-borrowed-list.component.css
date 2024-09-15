@@ -7,6 +7,19 @@
     z-index: 1000;
 }
 
+.page{
+    display: flex;
+    height: 100%;
+  }
+  .page-content{
+    display:inline-block;
+    width: 100%;
+  }
+  .dashboard-content{
+    
+    border-right: 1px solid #45824a91;
+    background-color: rgb(99, 143, 99);
+  }
 .page-title{
     margin: 0px;
     padding: 4vh;
@@ -29,7 +42,6 @@
 }
 .example-container {
     width: 100%;
-    height: 100%;
     flex-grow: 1;
 }
 .custom-drawer-items {
@@ -60,7 +72,9 @@
 
 
 @media screen and (max-width: 1200px) {
-        
+    .dashboard-content{
+        display: none;
+    }
     .example-container {
         width: 100%;
         height: 100%;

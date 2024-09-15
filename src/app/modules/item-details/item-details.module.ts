@@ -30,9 +30,10 @@ import { HeaderModule } from '../header/header.module';
 import { InventoryModule } from '../inventory/inventory.module';
 import { MaterialModule } from '../material.module';
 import { ReadsHeaderModule } from '../reads-header/reads-header.module';
-import { ItemDetailDialogComponent } from './item-detail-dialog/item-detail-dialog.component';
-import { InventoryReportProgressComponent } from './inventory-report-progress/inventory-report-progress.component';
+import { SharedModule } from '../shared/shared.module';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { InventoryReportProgressComponent } from './inventory-report-progress/inventory-report-progress.component';
+import { ItemDetailDialogComponent } from './item-detail-dialog/item-detail-dialog.component';
 @NgModule({
   declarations: [
     ItemDetailsComponent,
@@ -44,6 +45,7 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     CommonModule,
     ItemDetailsRoutingModule,
     HeaderModule,
+    SharedModule,
     InventoryModule,
     AdminHeaderModule,
     ReadsHeaderModule,

@@ -74,7 +74,7 @@ export class ItemDialogComponent implements OnInit {
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return !currentUser || !this.cantEditRole(currentUser.role);
+    return !currentUser || !this.cantEditRole(currentUser.role[0]);
   }
   private _filterEquipmentTypes(value: string): string[] {
     console.log('Filtering equipment types with value:', value);

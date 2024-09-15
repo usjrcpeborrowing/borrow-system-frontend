@@ -7,6 +7,8 @@ import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-di
 import { Item } from 'src/app/models/Items';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { AuthService } from 'src/app/services/auth.service';
+import { User } from 'src/app/models/User';
 @Component({
   selector: 'app-inventory-equipment-request-card-panel',
   templateUrl: './inventory-equipment-request-card-panel.component.html',
@@ -18,7 +20,10 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
 
   equipmentStatus = Constants.equipmentStatus;
   selectAll = false;
-  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef, private equipmentService: EquipmentService, private snackbarService: SnackbarService) {}
+  currentUser: User;
+  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef, private equipmentService: EquipmentService, private snackbarService: SnackbarService, private authService: AuthService) {
+    this.currentUser = authService.getCurrentUser() as User;
+  }
 
   ngOnInit(): void {}
 
@@ -26,6 +31,7 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
     if (changes['equipments']) {
       this.equipments.forEach((item) => {
         item['selected'] = false;
+        item['disabled'] = !this.authService.hasAnyRoles(['oic', 'chairman'], this.currentUser.role);
       });
     }
   }
@@ -33,7 +39,10 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   viewItem(item: Item): void {
     console.log('view');
     const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
-      data: item,
+      data: {
+        action: 'Confirm',
+        item: item,
+      },
     });
 
     dialogRef.afterClosed().subscribe((resp) => {
@@ -45,7 +54,7 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
 
   toggleSelectAll(event: MatCheckboxChange): void {
     this.equipments.forEach((item) => {
-      item['selected'] = event.checked;
+      if (!item['disabled']) item['selected'] = event.checked;
     });
   }
 

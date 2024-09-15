@@ -14,13 +14,18 @@ interface Response {
 })
 export class NotificationService {
   markAsViewedSubject:  Subject<boolean> = new Subject<boolean>();
+  markAllAsReadSubject:Subject<boolean> = new Subject<boolean>();
+  paginateNotificationSubject: Subject<number> = new Subject<number>();
+
   constructor(private http: HttpClient) {}
 
-  getNotifications(userId: string, limit: number) {
+  getNotifications(userId: string, page: number,limit: number) {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams();
     params = params.append('user', userId);
+    params = params.append('page', page);
+
     return this.http.get(environment.API_URL + '/api/notification', { params, headers: headers }).pipe(
       catchError(this.handleError)
     );
@@ -33,8 +38,22 @@ export class NotificationService {
     return this.http.patch<Response>(environment.API_URL + '/api/notification/' + id, update, { headers: headers }).pipe(catchError(this.handleError));
   }
 
+  updateAllNotificationsAsViewed(userId: string){
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.patch<Response>(environment.API_URL + '/api/notification/markallasread/' + userId, {}, { headers: headers }).pipe(catchError(this.handleError));
+  }
+
   onMarkAsViewed() {
     return this.markAsViewedSubject.asObservable()
+  }
+
+  onPaginateNotification() {
+    return this.paginateNotificationSubject.asObservable()
+  }
+
+  onMarkAllAsRead() {
+    return this.markAllAsReadSubject.asObservable()
   }
 
   handleError(err: HttpErrorResponse) {

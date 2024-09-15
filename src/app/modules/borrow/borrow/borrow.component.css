@@ -3,6 +3,20 @@
   top: 0;
   z-index: 1000;
 }
+
+.page{
+  display: flex;
+
+}
+.page-content{
+  display:inline-block;
+  width: 100%;
+}
+.dashboard-content{
+  
+  border-right: 1px solid #45824a91;
+  background-color: rgb(99, 143, 99);
+}
 .page-title {
   /* margin-bottom: -5vh; */
   display: flex;
@@ -188,6 +202,10 @@ mat-drawer {
   }
   mat-drawer {
     width: 100%;
+  }
+  
+  .dashboard-content{
+    display: none;
   }
   .page-title {
     margin-bottom: -5vh;

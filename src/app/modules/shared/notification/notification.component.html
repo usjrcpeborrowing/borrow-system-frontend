@@ -1,8 +1,10 @@
 <div class="notification-wrapper">
   <div class="action-wrapper">
-    <mat-chip>Mark all as reads</mat-chip>
+    <mat-chip (click)="markAllAsReads()">Mark all as reads</mat-chip>
   </div>
-  <div *ngIf="!notifications.length" class="no-notification">Empty Notification</div>
+  <div *ngIf="!notifications.length" class="no-notification">
+    Empty Notification
+  </div>
   <a
     *ngFor="let notification of notifications"
     [routerLink]="notification.route"
@@ -17,3 +19,15 @@
     </div>
   </a>
 </div>
+<section id="pagination" (click)="$event.stopPropagation()">
+  <mat-paginator
+    [length]="pagination.length"
+    [pageSize]="pagination.limit"
+    [pageIndex]="pagination.page - 1"
+    [pageSizeOptions]="pagination.pageSizeOption"
+    [showFirstLastButtons]="true"
+    [hidePageSize]="true"
+    (page)="paginate($event)"
+  >
+  </mat-paginator>
+</section>

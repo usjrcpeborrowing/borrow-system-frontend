@@ -2,21 +2,17 @@
 
 <div class="scrollable-panel">
   <div class="table-content">
-      <ng-container matColumnDef="itemPanel">
-        <!-- <div *ngFor="let item of items">
+    <ng-container matColumnDef="itemPanel">
+      <!-- <div *ngFor="let item of items">
           <app-inventory-equipment-request-card-panel [data]="item" [items]="item.itemborrowed"></app-inventory-equipment-request-card-panel>
         
         </div> -->
-        <app-inventory-equipment-request-card-panel [equipments]="equipments"></app-inventory-equipment-request-card-panel>
-      </ng-container>
+      <app-inventory-equipment-request-card-panel
+        [equipments]="equipments"
+      ></app-inventory-equipment-request-card-panel>
+    </ng-container>
     <ng-template #noResults>
       <p>No Results Found</p>
     </ng-template>
   </div>
 </div>
-
-<div class="paginator">
-  <mat-paginator >
-  </mat-paginator>
-</div>
-

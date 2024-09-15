@@ -2,11 +2,14 @@
     <h1 class="page-title">New Items</h1>
     <div class="featured-items">
       <div *ngFor="let item of itemlist" class="item-panel">
-        <img
+                
+        <div class="image-wrapper">
+            <img
             class="fit-image"
-            [src]="item?.images?.midSizeUrl"
+            [src]="item?.images?.midSizeUrl ? displayImage : defaultImage"
             alt=""
-        />
+            />
+        </div>
         <div class="item-name">{{ item.name }}</div>
         </div>
     </div>

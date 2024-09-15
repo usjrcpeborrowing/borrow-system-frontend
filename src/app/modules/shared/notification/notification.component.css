@@ -40,7 +40,8 @@
 }
 
 .notification-message {
-  font-size: 14px;
+  font-size: 11px;
+  line-height: normal;
 }
 
 mat-chip.mat-mdc-standard-chip {
@@ -55,3 +56,10 @@ mat-chip.mat-mdc-standard-chip {
   font-weight: 500;
   height: 50px;
 }
+::ng-deep .mat-mdc-paginator-container {
+  min-height: 48px;
+  /* justify-content: center !important; */
+}
+/* ::ng-deep .mat-mdc-paginator-range-label {
+  display: none;
+} */

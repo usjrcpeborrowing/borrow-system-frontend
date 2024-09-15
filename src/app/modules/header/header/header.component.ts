@@ -24,6 +24,8 @@ export class HeaderComponent implements OnInit {
   currentUser: any;
   notifications: NotificationInterface[] = [];
   limit: number = 10;
+  page: number = 1;
+  total: number = 0;
   notification_count: number = 0;
   notification_messages: string[] = [];
   navigations: { [key: string]: NavigationItem[] } = {
@@ -87,18 +89,32 @@ export class HeaderComponent implements OnInit {
     this.getNotifications();
 
     this.notificationService.onMarkAsViewed().subscribe({
+      next: (resp) => this.getNotifications(),
+    });
+
+    this.notificationService.onPaginateNotification().subscribe({
       next: (resp) => {
+        this.page = resp;
         this.getNotifications();
       },
+    });
+
+    this.notificationService.onMarkAllAsRead().subscribe((resp) => {
+      this.notificationService.updateAllNotificationsAsViewed(this.currentUser._id).subscribe({
+        next: (resp) => {
+          console.log(resp);
+          this.getNotifications();
+        },
+      });
     });
   }
 
   getNotifications() {
-    this.notificationService.getNotifications(this.currentUser._id, this.limit).subscribe({
+    this.notificationService.getNotifications(this.currentUser._id, this.page, this.limit).subscribe({
       next: (resp: any) => {
         this.notifications = resp.data;
         this.notification_count = resp.unread;
-
+        this.total = resp.total;
         console.log(resp);
       },
     });

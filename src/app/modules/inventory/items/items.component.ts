@@ -69,7 +69,7 @@ export class ItemsComponent implements OnInit, OnChanges {
 
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
-    return !currentUser || !this.cantEditRole(currentUser.role);
+    return !currentUser || !this.cantEditRole(currentUser.role[0]);
   }
   private cantEditRole(role: string): boolean {
     const allowedRoles = ['faculty', 'Instructor'];
