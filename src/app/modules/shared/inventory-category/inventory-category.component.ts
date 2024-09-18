@@ -57,7 +57,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['filter']) {
+    if (changes['filter'].currentValue) {
       console.log('niceeee', changes['filter']);
       const filters = changes['filter'].currentValue;
       const [start, end] = filters.dateAcquired.split('|');
@@ -65,7 +65,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       this.filterForm.controls['mattertype'].patchValue(filters.mattertype);
       this.filterForm.controls['brand'].patchValue(filters.brand);
       this.filterForm.controls['inventorytype'].patchValue(filters.brand);
-      this.filterForm.controls['location'].patchValue(filters.brand);
+      this.filterForm.controls['location'].patchValue(filters.location);
       this.filterForm.controls['dateRange'].patchValue({
         start: start,
         end: end,

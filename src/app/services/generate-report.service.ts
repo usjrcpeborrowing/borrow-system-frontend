@@ -5,6 +5,7 @@ import { InventoryFilter } from '../models/InventoryFilter';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, throwError } from 'rxjs';
+import { Filter } from '../models/Filter';
 
 interface Response {
   data: Item[];
@@ -19,13 +20,15 @@ interface Response {
 export class GenerateReportService {
   constructor(private http: HttpClient) {}
 
-  createProps(equipments: Item[], filters: string[]) {
-    let date = new Date().toLocaleDateString();
+  createProps(equipments: Item[], filters: InventoryFilter) {
+    let date = new Date().toISOString().split('T')[0];
+    let dept = filters.department;
+    let filename = 'USJR_' + dept + '_' + date;
     let headers = ['serialNo', 'modelNo', 'name', 'equipmentType', 'brand', 'quantity', 'unit', 'condition'];
     return {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       returnJsPDFDocObject: true,
-      fileName: 'this_is_filename',
+      fileName: filename,
       orientationLandscape: true,
       compress: true,
       // logo: {
@@ -41,17 +44,17 @@ export class GenerateReportService {
       business: {
         name: 'University of San Jose- Recoletos',
         address: 'Magallanes Street, 6000 Cebu City, Philippines',
-        phone: 'teast Department',
-        email: 'haha',
+        phone: filters.department,
+        // email: filters.location,
       },
-      contact: {
-        label: 'Report issued for:',
-        name: 'contact name',
-        address: 'contact address',
-      },
+      // contact: {
+      //   label: 'Report issued for:',
+      //   name: 'contact name',
+      //   address: 'contact address',
+      // },
       invoice: {
-        label: 'Report #: ',
-        num: 19,
+        // label: 'Report #: ',
+        // num: 19,
         invGenDate: 'Generated Date: ' + date,
         headerBorder: false,
         tableBodyBorder: false,
@@ -63,7 +66,7 @@ export class GenerateReportService {
         invDesc: '',
       },
       footer: {
-        text: 'footer',
+        text: filename
       },
       pageEnable: true,
       pageLabel: 'Page ',
