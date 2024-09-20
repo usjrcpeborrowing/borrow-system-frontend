@@ -24,15 +24,23 @@
       </mat-drawer> -->
 
       <mat-drawer mode="side" [opened]="openedCategory" position="start">
-        <app-inventory-category [filter]="inventoryFilter"></app-inventory-category>
+        <app-inventory-category
+          [filter]="inventoryFilter"
+        ></app-inventory-category>
       </mat-drawer>
       <mat-drawer-content class="custom-drawer-itmes">
-        <app-items
-          [pagination]="pagination"
-          [filter]="inventoryFilter"
-          (pageChange)="onPageChange($event)"
-          [equipmentlist]="equipmentlist"
-        ></app-items>
+        <app-items [equipmentlist]="equipmentlist"></app-items>
+        <section id="pagination">
+          <mat-paginator
+            [length]="pagination.length"
+            [pageSize]="pagination.limit"
+            [pageIndex]="pagination.page - 1"
+            [pageSizeOptions]="pagination.pageSizeOption"
+            [showFirstLastButtons]="true"
+            (page)="paginate($event)"
+          >
+          </mat-paginator>
+        </section>
       </mat-drawer-content>
     </mat-drawer-container>
   </div>

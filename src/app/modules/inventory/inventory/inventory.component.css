@@ -71,6 +71,16 @@
     vertical-align: middle;
 }
 
+#pagination {
+    padding-top: 20px;
+  }
+  mat-paginator,
+  mat-button-toggle-group,
+  mat-slide-toggle {
+    background: #e3f7ee;
+    font-size: 12px;
+  }
+
 @media screen and (max-width: 1200px) {
     .dashboard-content{
         display: none;

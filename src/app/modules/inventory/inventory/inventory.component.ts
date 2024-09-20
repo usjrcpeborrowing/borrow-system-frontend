@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Pagination } from 'src/app/models/Pagination';
@@ -93,6 +94,17 @@ export class InventoryComponent implements OnInit {
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
     });
+  }
+
+  paginate(event: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/inventory'], navigationExtras);
   }
 
   queryParamsHandling(params: Params) {
