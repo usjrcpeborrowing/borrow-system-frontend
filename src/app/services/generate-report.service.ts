@@ -31,16 +31,16 @@ export class GenerateReportService {
       fileName: filename,
       orientationLandscape: true,
       compress: true,
-      // logo: {
-      //   src: 'https://raw.githubusercontent.com/usjrcpeborrowing/borrow-system-frontend/main/src/assets/USJR1.png',
-      //   type: 'PNG', //optional, when src= data:uri (nodejs case)
-      //   width: 48.33, //aspect ratio = width/height
-      //   height: 31.66,
-      //   margin: {
-      //     top: 0, //negative or positive num, from the current position
-      //     left: 0, //negative or positive num, from the current position
-      //   },
-      // },
+      logo: {
+        src: 'https://raw.githubusercontent.com/usjrcpeborrowing/borrow-system-frontend/main/src/assets/USJR1-min.png',
+        // type: 'PNG', //optional, when src= data:uri (nodejs case)
+        width: 30, //aspect ratio = width/height
+        height: 30,
+        margin: {
+          top: 0, //negative or positive num, from the current position
+          left: 0, //negative or positive num, from the current position
+        },
+      },
       business: {
         name: 'University of San Jose- Recoletos',
         address: 'Magallanes Street, 6000 Cebu City, Philippines',
@@ -62,11 +62,16 @@ export class GenerateReportService {
           return { title: head };
         }),
         table: Array.from(equipments, (item) => headers.map((head) => item[head])),
-        invDescLabel: 'Filtered By: ' + filters.toString(),
-        invDesc: '',
+        // invDescLabel: 'Filtered By: ' + filters.toString(),
+        invDesc:
+          'Filtered By: ' +
+          Object.entries(filters)
+            .filter(([key, val]) => val)
+            .map(([key, val]) => key + ' as ' + val)
+            .toLocaleString(),
       },
       footer: {
-        text: filename
+        text: filename,
       },
       pageEnable: true,
       pageLabel: 'Page ',

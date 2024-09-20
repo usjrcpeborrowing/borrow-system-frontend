@@ -8,25 +8,23 @@
   <div class="page-content">
     <div class="page-title">
       <div
-      class="view-category-container clickable"
-      [class.cart-openside]="openedCategory"
-      (click)="categoryClicked()"
+        class="view-category-container clickable"
+        [class.cart-openside]="openedCategory"
+        (click)="categoryClicked()"
       >
-      <mat-icon>menu</mat-icon>
+        <mat-icon>menu</mat-icon>
       </div>
-      
+
       <div class="title-page">Inventory</div>
-      
     </div>
 
     <div class="hline"></div>
     <mat-drawer-container class="example-container">
       <!-- <mat-drawer mode="side" opened class="custom-drawer">
       </mat-drawer> -->
-      
+
       <mat-drawer mode="side" [opened]="openedCategory" position="start">
-        
-        <app-category (selectedCategories)="onFilterSelect($event)"></app-category>
+        <app-inventory-category [filter]="inventoryFilter"></app-inventory-category>
       </mat-drawer>
       <mat-drawer-content class="custom-drawer-itmes">
         <app-items
