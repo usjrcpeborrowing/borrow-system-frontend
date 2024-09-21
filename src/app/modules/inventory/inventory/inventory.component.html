@@ -29,7 +29,10 @@
         ></app-inventory-category>
       </mat-drawer>
       <mat-drawer-content class="custom-drawer-itmes">
-        <app-items [equipmentlist]="equipmentlist"></app-items>
+        <app-items
+          [equipmentlist]="equipmentlist"
+          [filter]="inventoryFilter"
+        ></app-items>
         <section id="pagination">
           <mat-paginator
             [length]="pagination.length"

@@ -111,13 +111,12 @@ export class InventoryComponent implements OnInit {
     this.inventoryFilter.equipmenttype = params['equipmenttype'] ? params['equipmenttype'] : '';
     this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
     this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
-    this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
-    this.inventoryFilter.description = params['description'] ? params['description'] : '';
-    this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
     this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
     this.getEquipmentList();
   }

@@ -77,7 +77,7 @@
   mat-paginator,
   mat-button-toggle-group,
   mat-slide-toggle {
-    background: #e3f7ee;
+    /* background: #e3f7ee; */
     font-size: 12px;
   }
 

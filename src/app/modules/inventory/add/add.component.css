@@ -47,6 +47,8 @@
 
 .checkbox-wrapper {
   min-width: 220px;
+  display: flex;
+  justify-content: center;
 }
 
 .label {
