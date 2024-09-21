@@ -206,6 +206,22 @@
           </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
+          <mat-label>Category</mat-label>
+          <input
+            matInput
+            formControlName="categories"
+            [matAutocomplete]="autocategories"
+          />
+          <mat-autocomplete #autocategories="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredcategories | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Brand</mat-label>
           <input
             matInput
@@ -276,6 +292,7 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+
         <mat-form-field>
           <mat-label>Condition</mat-label>
           <input
