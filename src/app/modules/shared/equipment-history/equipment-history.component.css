@@ -1,0 +1,17 @@
+.history-container {
+  padding: 20px;
+}
+
+.history-wrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0 10px;
+}
+@media screen and (max-width: 480px) {
+  .history-container {
+    padding: 10px;
+  }
+}

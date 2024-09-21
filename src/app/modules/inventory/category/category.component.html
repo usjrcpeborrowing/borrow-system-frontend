@@ -80,7 +80,6 @@
       <mat-select
         [(value)]="selectedDepartment"
         (selectionChange)="onSelectChanged('department', $event)"
-        disabled
       >
         <mat-option *ngFor="let dept of departments" [value]="dept">
           {{ dept }}
@@ -91,8 +90,8 @@
     <mat-form-field class="form-field">
       <mat-label>Location</mat-label>
       <mat-select
-        [(value)]="selectedLocation"
-        (selectionChange)="onSelectChanged('location', $event)"
+        formControlName="location"
+        (selectionChange)="navigate('location')"
       >
         <mat-option *ngFor="let location of locations" [value]="location">
           {{ location }}

@@ -87,7 +87,6 @@ export class EquipmentService {
     params = params.append('name', filters.name);
 
     params = params.append('dateAcquired', filters.dateAcquired);
-    console.log('The ordeal', params);
 
     return this.http.get(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
   }

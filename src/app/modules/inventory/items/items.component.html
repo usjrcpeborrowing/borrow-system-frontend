@@ -1,5 +1,4 @@
-
-<div class="search-item">
+<!-- <div class="search-item">
   <mat-form-field class="searchbar" floatLabel="always">
     <mat-label>Search Item</mat-label>
     <input
@@ -11,7 +10,7 @@
     />
     <mat-icon matSuffix class="searchbar">search</mat-icon>
   </mat-form-field>
-</div>
+</div> -->
 
 <div class="scrollable-panel">
   <div class="table-header">
@@ -45,6 +44,25 @@
     </ng-template>
   </div>
 </div>
+<div class="generate-buttons">
+  <div class="add-button">
+    <button mat-raised-button (click)="addItem()">Add Item</button>
+  </div>
+  <span class="spacer"></span>
+  <div class="report-button" *ngIf="isFaculty()">
+    <button mat-raised-button (click)="reportItems()">Report Inventory</button>
+  </div>
+  <div class="report-button">
+    <button
+      mat-raised-button
+      (click)="download()"
+      [class.spinner]="isloading"
+      [disabled]="isloading"
+    >
+      Download
+    </button>
+  </div>
+</div>
 
 <div class="paginator">
   <mat-paginator
@@ -56,15 +74,3 @@
   </mat-paginator>
 </div>
 <!-- conditional buttpn -->
-<div class="generate-buttons" *ngIf="isFaculty()">
-  <div class="add-button">
-    <button mat-raised-button (click)="addItem()">Add Item</button>
-  </div>
-  <span class="spacer"></span>
-  <div class="report-button" *ngIf="isFaculty()">
-    <button mat-raised-button (click)="reportItems()">Report Inventory</button>
-  </div>
-  <div class="report-button" *ngIf="isFaculty()">
-    <button mat-raised-button (click)="download()">Download Report</button>
-  </div>
-</div>

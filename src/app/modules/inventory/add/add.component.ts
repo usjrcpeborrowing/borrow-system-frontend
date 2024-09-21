@@ -18,10 +18,10 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./add.component.css'],
 })
 export class AddComponent implements OnInit {
+  defaultImage = '../../../../assets//equipment_default_image.png';
   checkedBy: string = ''; // Checked By value
   isloading: boolean = false;
   equipmentTypeControl = new FormControl();
-  filteredEquipmentTypes!: Observable<string[]>; // Add ! here
 
   brandControl = new FormControl();
   filteredBrands!: Observable<string[]>;
@@ -32,7 +32,6 @@ export class AddComponent implements OnInit {
 
   userDepartment: any = '';
   userType: any = '';
-  equipmenttypes: string[] = [];
 
   location: string[] = [];
 
@@ -40,15 +39,29 @@ export class AddComponent implements OnInit {
   filteredLocation!: Observable<string[]>;
   brands: string[] = [];
   transactiontype: string = '';
-  matters: string[] = Constants.equipmentMatterType;
+  // matters: string[] = Constants.equipmentMatterType;
   currentUser: any;
+
+  equipmenttypes: string[] = [];
+  locations: string[] = [];
+  inventorytypes: string[] = Constants.equipmentInventoryType;
+  departments: string[] = Constants.departments;
+  matters: string[] = Constants.equipmentMatterType;
+  conditions: string[] = Constants.equipmentStatus;
+  filteredequipmenttypes!: Observable<string[]>;
+  filteredbrands!: Observable<string[]>;
+  filteredlocations!: Observable<string[]>;
+  filtereddepartments!: Observable<string[]>;
+  filteredinventorytypes!: Observable<string[]>;
+  filteredmatters!: Observable<string[]>;
+  filteredconditions!: Observable<string[]>;
   // remarks: Remark[] = [
   //   { value: 'Functional', viewValue: 'Functional' },
   //   { value: 'Defective', viewValue: 'Defective' },
   //   { value: 'Turnover', viewValue: 'Turnover' },
   // ];
   remarks: string[] = Constants.equipmentStatus;
-  inventorytypes: string[] = Constants.equipmentInventoryType;
+  // inventorytypes: string[] = Constants.equipmentInventoryType;
 
   addItemForm: FormGroup;
   constructor(
@@ -66,8 +79,10 @@ export class AddComponent implements OnInit {
       brand: ['', Validators.required],
       matter: ['', Validators.required],
       serialNo: [''],
+      description:[''],
       modelNo: ['', Validators.required],
       inventorytype: ['', Validators.required],
+      inventorytag: [false, Validators.required],
       color: ['', Validators.required],
       condition: ['', Validators.required],
       checkedBy: ['', Validators.required],
@@ -76,6 +91,8 @@ export class AddComponent implements OnInit {
       quantity: [1, [Validators.required, Validators.min(1)]],
       unit: ['', Validators.required],
       isborrow: [true, Validators.required],
+      dateAcquired: ['', Validators.required],
+      warrantyPeriod: [''],
       // images: this.fb.array([])
       images: this.fb.group({
         url: [''],
@@ -94,18 +111,18 @@ export class AddComponent implements OnInit {
     this.loadEquipmentTypes();
     this.loadBrandList();
     this.loadLocationList();
-    this.filteredEquipmentTypes = this.addItemForm.get('equipmentType')!.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filterEquipmentTypes(value))
-    );
-    this.filteredBrands = this.addItemForm.get('brand')!.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filterBrands(value))
-    );
-    this.filteredLocation = this.addItemForm.get('location')!.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filterLocation(value))
-    );
+    // this.filteredEquipmentTypes = this.addItemForm.get('equipmentType')!.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => this._filterEquipmentTypes(value))
+    // );
+    // this.filteredBrands = this.addItemForm.get('brand')!.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => this._filterBrands(value))
+    // );
+    // this.filteredLocation = this.addItemForm.get('location')!.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) => this._filterLocation(value))
+    // );
 
     this.equipmentService.onAddEquipmentImage().subscribe({
       next: (resp) => {
@@ -115,16 +132,47 @@ export class AddComponent implements OnInit {
         console.log(this.addItemForm);
       },
     });
+
+    this.filteredequipmenttypes = this.addItemForm.controls['equipmentType'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.equipmenttypes))
+    );
+
+    this.filteredbrands = this.addItemForm.controls['brand'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.brands))
+    );
+
+    this.filteredlocations = this.addItemForm.controls['location'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.locations))
+    );
+
+    this.filtereddepartments = this.addItemForm.controls['department'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.departments))
+    );
+
+    this.filteredinventorytypes = this.addItemForm.controls['inventorytype'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.inventorytypes))
+    );
+
+    this.filteredmatters = this.addItemForm.controls['matter'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.matters))
+    );
+
+    this.filteredconditions = this.addItemForm.controls['condition'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.conditions))
+    );
   }
 
-  private _filterEquipmentTypes(value: string): string[] {
+  private _filter(value: string, options: string[]): string[] {
+    console.log('filtere', value);
     const filterValue = value.toLowerCase();
-    return this.equipmenttypes.filter((option) => option.toLowerCase().includes(filterValue));
-  }
-
-  private _filterBrands(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.brands.filter((option) => option.toLowerCase().includes(filterValue));
+    return options.filter((option) => option.toLowerCase().includes(filterValue));
   }
 
   private _filterLocation(value: string): string[] {
@@ -140,20 +188,6 @@ export class AddComponent implements OnInit {
         this.previewImage(files[0]);
       }
     }
-
-    // const inputElement = event.target as HTMLInputElement;
-    // if (inputElement.files && inputElement.files.length > 0) {
-    //   const file = inputElement.files[0];
-    //   const reader = new FileReader();
-    //   reader.onload = (e: any) => {
-    //     this.imageUrl = e.target.result;
-
-    //     console.log('Base64:', this.imageUrl);
-    //   };
-    //   reader.readAsDataURL(file);
-    // } else {
-    //   console.log('No file selected');
-    // }
   }
 
   validateImage(image: File): Boolean {
@@ -181,22 +215,6 @@ export class AddComponent implements OnInit {
     reader.readAsDataURL(image);
   }
 
-  loadImageFromGoogleDrive(event: Event): void {
-    const inputElement = event.target as HTMLInputElement;
-    const googleDriveLink = inputElement.value;
-
-    this.googleDriveLink = googleDriveLink;
-    const match = this.googleDriveLink.match(/\/(?:file\/d\/|thumbnail\?id=)([\w-]+)(?:\/|$)/);
-
-    if (match) {
-      const imageId = match[1];
-      this.imageUrl = `https://drive.google.com/thumbnail?id=${imageId}&sz=w1000`;
-      console.log('Image URL:', this.imageUrl);
-    } else {
-      this.imageUrl = null;
-    }
-  }
-
   searchEquipment(event: any) {
     const searchword = event.target.value;
     this.equipmentService.searchEquipmentbyName(searchword).subscribe((resp) => {
@@ -213,23 +231,6 @@ export class AddComponent implements OnInit {
       this.equipmentService.addEquipment(itemData).subscribe({
         next: (resp) => {
           this.snackbarService.openSnackBar(resp.message, 'close');
-          if (resp.success) {
-            this.transactiontype = 'add';
-            const itemID = resp.data._id;
-
-            const transaction: Transaction = {
-              transactionType: this.transactiontype,
-              user: this.checkedBy,
-              role: this.userType,
-              department: itemData.department,
-              location: itemData.location,
-              revision: [],
-              equipmentId: itemID,
-              timeStamp: new Date(),
-            };
-
-            this.addTransactionItem(transaction);
-          }
         },
         error: (err: any) => {
           this.snackbarService.openSnackBar(err.message, 'Close', true);
@@ -275,7 +276,7 @@ export class AddComponent implements OnInit {
   loadLocationList(): void {
     this.equipmentService.getLocationList(this.currentUser.department).subscribe({
       next: (resp) => {
-        this.location = resp.data;
+        this.locations = resp.data;
         this.addItemForm.get('location')?.setValue('');
       },
     });

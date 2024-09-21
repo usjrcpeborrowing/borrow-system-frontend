@@ -14,7 +14,10 @@
       [class.viewed]="notification.viewed"
       (click)="markAsRead(notification._id)"
     >
-      <div class="notification-type">{{ notification.type }}</div>
+      <div class="notification-type">
+        <span>{{ notification.type }}</span>
+        <span>{{ notification.createdAt | date: 'mediumDate' }}</span>
+      </div>
       <div class="notification-message">{{ notification.message }}</div>
     </div>
   </a>

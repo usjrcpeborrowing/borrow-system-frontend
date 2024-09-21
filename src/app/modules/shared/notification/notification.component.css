@@ -32,11 +32,21 @@
 }
 
 .notification-type {
+  font-size: 12px;
+  line-height: normal;
+  display: flex;
+  justify-content: space-between;
+}
+
+.notification-type span:first-child {
   text-transform: uppercase;
   font-weight: 500;
   color: blueviolet;
-  font-size: 12px;
-  line-height: normal;
+}
+
+.notification-type span:nth-child(2) {
+  font-weight: 300;
+  color: rgb(133, 133, 133);
 }
 
 .notification-message {

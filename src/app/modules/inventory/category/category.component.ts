@@ -162,14 +162,15 @@ export class CategoryComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['filter']) {
+    if (changes['filter'].currentValue) {
       const filters = changes['filter'].currentValue;
+      console.log({ filters });
       const [start, end] = filters.dateAcquired.split('|');
       this.filterForm.controls['equipmenttype'].patchValue(filters.equipmenttype);
       this.filterForm.controls['mattertype'].patchValue(filters.mattertype);
       this.filterForm.controls['brand'].patchValue(filters.brand);
       this.filterForm.controls['inventorytype'].patchValue(filters.brand);
-
+      this.filterForm.controls['location'].patchValue(filters.location);
       this.filterForm.controls['dateRange'].patchValue({
         start: start,
         end: end,
