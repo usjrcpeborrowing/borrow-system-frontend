@@ -1,48 +1,36 @@
 <div class="header">
   <app-header></app-header>
 </div>
-<div class="page-title">
-    <div
-    class="view-category-container clickable"
-    [class.cart-openside]="openedCategory"
-    (click)="categoryClicked()"
-    >
-    <mat-icon>menu</mat-icon>
+<div class="page">
+  <div class="dashboard-content">
+    <app-dashboard-buttons></app-dashboard-buttons>
+  </div>
+  <div class="page-content">
+    <div class="page-title">
+      <div
+        class="view-category-container clickable"
+        [class.cart-openside]="openedCategory"
+        (click)="categoryClicked()"
+      >
+        <mat-icon>menu</mat-icon>
+      </div>
+  
+      <div class="title-page">Borrowed List</div>
     </div>
-    
-    <div class="title-page">Borrowed List</div>
+    <mat-drawer-container>
+      <mat-drawer
+        mode="side"
+        [opened]="openedCategory"
+        position="start"
+        class="example-container"
+      >
+        <app-borrow-item-category></app-borrow-item-category>
+      </mat-drawer>
+      <mat-drawer-content class="custom-drawer-itmes">
+        <app-student-borrow-card
+          [items]="borrowedItems"
+        ></app-student-borrow-card>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
 </div>
-<mat-drawer-container >
-<mat-drawer mode="side" [opened]="openedCategory" position="start"class="example-container">
-    <div class="search-filter-wrapper">
-      <mat-form-field floatLabel="always">
-        <mat-label>Search</mat-label>
-        
-        <input
-          matInput
-          placeholder="Type Here"
-          autocomplete="off"
-        />
-        <!-- <input
-          matInput
-          placeholder="Type Here"
-          autocomplete="off"
-          [formControl]="searchedWord"
-          (keyup.enter)="searchItem($event)"
-        /> -->
-        
-        <mat-icon matSuffix
-          >search</mat-icon
-        >
-        <!-- <mat-icon matSuffix (click)="searchProduct($event)"
-          >search</mat-icon
-        > -->
-      </mat-form-field>
-    </div>
-
-    <app-borrow-item-category></app-borrow-item-category>
-  </mat-drawer>
-<mat-drawer-content class="custom-drawer-itmes">
-    <app-student-borrow-card [items]="borrowedItems"></app-student-borrow-card>
-</mat-drawer-content>
-</mat-drawer-container>

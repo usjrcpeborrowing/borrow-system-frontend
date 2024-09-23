@@ -3,7 +3,7 @@
   <div class="image-wrapper">
     <img
       class="fit-image"
-      [src]="equipmentlist?.images?.midSizeUrl ? displayImage : defaultImage"
+      [src]="equipmentlist?.images?.midSizeUrl || defaultImage"
       alt=""
     />
   </div>

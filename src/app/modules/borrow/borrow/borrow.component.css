@@ -4,16 +4,14 @@
   z-index: 1000;
 }
 
-.page{
+.page {
   display: flex;
-
 }
-.page-content{
-  display:inline-block;
+.page-content {
+  display: inline-block;
   width: 100%;
 }
-.dashboard-content{
-  
+.dashboard-content {
   border-right: 1px solid #45824a91;
   background-color: rgb(99, 143, 99);
 }
@@ -137,7 +135,7 @@ mat-drawer {
   width: 20%;
 }
 .item-container {
-  height: calc(100vh - 120px); /* Adjust the height as needed */
+  height: calc(100vh - 250px); /* Adjust the height as needed */
   overflow-y: auto;
 }
 .view-cart-container {
@@ -203,8 +201,8 @@ mat-drawer {
   mat-drawer {
     width: 100%;
   }
-  
-  .dashboard-content{
+
+  .dashboard-content {
     display: none;
   }
   .page-title {
@@ -253,6 +251,16 @@ mat-drawer {
 
 ::ng-deep .mdc-text-field__input::-webkit-calendar-picker-indicator {
   display: block;
+}
+
+#pagination {
+  padding-top: 20px;
+}
+mat-paginator,
+mat-button-toggle-group,
+mat-slide-toggle {
+  /* background: #e3f7ee; */
+  font-size: 12px;
 }
 
 @media screen and (max-width: 430px) {

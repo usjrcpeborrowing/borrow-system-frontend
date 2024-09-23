@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
@@ -12,6 +11,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { PageEvent } from '@angular/material/paginator';
 export interface Instructor {
   _id: string;
   name: string;
@@ -51,7 +51,7 @@ export class BorrowComponent implements OnInit {
   selectedInstructor: string = '';
   //
 
-  purpose_list = ["class_use", "research", "instructional", "others"];
+  purpose_list = ['class_use', 'research', 'instructional', 'others'];
   filteredOptions!: Observable<string[]>;
 
   pagination: Pagination = {
@@ -76,7 +76,7 @@ export class BorrowComponent implements OnInit {
   currentUser: any;
   user: any;
   userId: string = '';
-  
+
   constructor(
     private equipmentService: EquipmentService,
     private activatedRoute: ActivatedRoute,
@@ -85,7 +85,7 @@ export class BorrowComponent implements OnInit {
     private borrowedItemsService: BorrowedItemsService,
     private _snackBar: MatSnackBar,
     private userService: UserService,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {
     this.borrowForm = this.fb.group({
       className: ['', Validators.required],
@@ -107,7 +107,7 @@ export class BorrowComponent implements OnInit {
     this.userService.getDeparmentFaculty(this.user.department[0], '').subscribe({
       next: (resp) => {
         this.instructorlist = resp.data;
-        this.borrowForm.controls['instructor'].setValue('')
+        this.borrowForm.controls['instructor'].setValue('');
       },
     });
     // setTimeout(() => {
@@ -223,17 +223,27 @@ export class BorrowComponent implements OnInit {
     this.selectedCategories = categories;
   }
 
+  paginate(event: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/borrow'], navigationExtras);
+  }
+
   queryParamsHandling(params: Params) {
     this.inventoryFilter.equipmenttype = params['equipmenttype'] ? params['equipmenttype'] : '';
     this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
     this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
-    this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
-    this.inventoryFilter.description = params['description'] ? params['description'] : '';
-    this.inventoryFilter.remarks = params['remarks'] ? params['remarks'] : '';
     this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
     this.getEquipmentList();
   }
@@ -243,7 +253,6 @@ export class BorrowComponent implements OnInit {
       this.isFetching = false;
       this.noItems = true;
       this.equipmentlist = resp.data;
-      console.log('equipmentsssss', resp)
       this.pagination.length = resp.total;
       this.sortItemsByName(this.sortUsed);
     });
@@ -305,7 +314,6 @@ export class BorrowComponent implements OnInit {
       endPeriod: this.borrowForm.controls['endPeriod'].value,
     };
 
-   
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');
@@ -344,12 +352,12 @@ export class BorrowComponent implements OnInit {
 
   onSubmit() {
     if (this.addedEquipment.length === 0) {
-      this.openSnackBar("Empty borrowed items.", 'OK');
+      this.openSnackBar('Empty borrowed items.', 'OK');
       return;
     }
 
     if (this.borrowForm.invalid) {
-      this.openSnackBar("Please fill all required fields", 'OK');
+      this.openSnackBar('Please fill all required fields', 'OK');
       return;
     }
 
@@ -369,7 +377,6 @@ export class BorrowComponent implements OnInit {
       endPeriod: this.borrowForm.controls['endPeriod'].value,
     };
 
-   
     this.borrowedItemsService.createBorrowItems(body).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');
