@@ -7,6 +7,7 @@ export interface Item {
   brand: object;
   color: string;
   modelNo: string;
+  categories: string[];
   quantity: number;
   unit: string;
   matter: string;

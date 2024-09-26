@@ -30,7 +30,7 @@ export class DashboardButtonsComponent implements OnInit {
     ],
     oic: [
       { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
-      { name: 'Browse Items', url: '/borrow', icon: 'view_module' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'view_module' },
       { name: 'Inventory', url: '/inventory', icon: 'inbox' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
@@ -39,7 +39,7 @@ export class DashboardButtonsComponent implements OnInit {
     ],
     reads: [
       { name: 'Dashboard', url: '/dashboard/reads', icon: 'home' },
-      { name: 'Browse Items', url: '/borrow', icon: 'view_module' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'view_module' },
       { name: 'Inventory', url: '/inventory', icon: 'menu' },
       { name: 'Requests', url: '/borrowed-list', icon: 'how_to_reg' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
@@ -47,7 +47,7 @@ export class DashboardButtonsComponent implements OnInit {
     ],
     faculty: [
       { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
-      { name: 'Browse Items', url: '/borrow', icon: 'view_module' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'view_module' },
       { name: 'Inventory', url: '/inventory', icon: 'inbox' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'description' },
@@ -56,9 +56,9 @@ export class DashboardButtonsComponent implements OnInit {
     ],
     student: [
       { name: 'Dashboard', url: '/dashboard/student', icon: 'home' },
-      { name: 'Browse Items', url: '/borrow', icon: 'view_module' },
-      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
-      { name: 'History', url: '/history/student', icon: 'book' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'view_module' },
+      { name: 'Borrow History', url: '/student-borrowed-list', icon: 'history' },
+      // { name: 'History', url: '/history/student', icon: 'book' },
     ],
   };
 

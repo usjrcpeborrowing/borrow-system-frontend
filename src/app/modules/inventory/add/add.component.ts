@@ -44,6 +44,7 @@ export class AddComponent implements OnInit {
 
   equipmenttypes: string[] = [];
   locations: string[] = [];
+  categories: string[] = [];
   inventorytypes: string[] = Constants.equipmentInventoryType;
   departments: string[] = Constants.departments;
   matters: string[] = Constants.equipmentMatterType;
@@ -55,6 +56,7 @@ export class AddComponent implements OnInit {
   filteredinventorytypes!: Observable<string[]>;
   filteredmatters!: Observable<string[]>;
   filteredconditions!: Observable<string[]>;
+  filteredcategories!: Observable<string[]>;
   // remarks: Remark[] = [
   //   { value: 'Functional', viewValue: 'Functional' },
   //   { value: 'Defective', viewValue: 'Defective' },
@@ -79,7 +81,7 @@ export class AddComponent implements OnInit {
       brand: ['', Validators.required],
       matter: ['', Validators.required],
       serialNo: [''],
-      description:[''],
+      description: [''],
       modelNo: ['', Validators.required],
       inventorytype: ['', Validators.required],
       inventorytag: [false, Validators.required],
@@ -92,6 +94,7 @@ export class AddComponent implements OnInit {
       unit: ['', Validators.required],
       isborrow: [true, Validators.required],
       dateAcquired: ['', Validators.required],
+      categories: [''],
       warrantyPeriod: [''],
       // images: this.fb.array([])
       images: this.fb.group({
@@ -166,6 +169,11 @@ export class AddComponent implements OnInit {
     this.filteredconditions = this.addItemForm.controls['condition'].valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || '', this.conditions))
+    );
+
+    this.filteredcategories = this.addItemForm.controls['categories'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.categories))
     );
   }
 
@@ -256,6 +264,17 @@ export class AddComponent implements OnInit {
       }
     );
   }
+
+  getCategories(): void {
+    this.equipmentService.getCategories(this.currentUser.department).subscribe({
+      next: (resp) => {
+        this.categories = resp.data;
+        this.addItemForm.get('categories')?.setValue('');
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
   loadEquipmentTypes(): void {
     this.equipmentService.getEquipmentTypes(this.currentUser.department).subscribe({
       next: (resp) => {

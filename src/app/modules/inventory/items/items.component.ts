@@ -22,7 +22,18 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 })
 export class ItemsComponent implements OnInit, OnChanges {
   @Input() pagination: Pagination;
-  @Input() filter!: InventoryFilter;
+  @Input() filter: InventoryFilter = {
+    equipmenttype: '',
+    brand: '',
+    mattertype: '',
+    inventorytype: '',
+    description: '',
+    remarks: '',
+    department: '',
+    name: '',
+    dateAcquired: '',
+    location: '',
+  };
   @Input() equipmentlist: any;
 
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
@@ -59,7 +70,9 @@ export class ItemsComponent implements OnInit, OnChanges {
 
     this.user = this.authService.getCurrentUser() as User;
   }
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+
+  }
 
   ngOnInit(): void {
     // this.activatedRoute.queryParams.subscribe((params) =>
@@ -306,7 +319,6 @@ export class ItemsComponent implements OnInit, OnChanges {
       },
       complete: () => (this.isloading = false),
     });
-    let filter = Object.values(this.filter);
   }
 
   submitReport(reports: any): void {

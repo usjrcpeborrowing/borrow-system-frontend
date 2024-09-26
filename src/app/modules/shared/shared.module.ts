@@ -11,6 +11,7 @@ import { InventoryCategoryComponent } from './inventory-category/inventory-categ
 import { EquipmentHistoryComponent } from './equipment-history/equipment-history.component';
 import { DashboardButtonsMobileComponent } from './dashboard-buttons-mobile/dashboard-buttons-mobile.component';
 import { DashboardButtonsComponent } from './dashboard-buttons/dashboard-buttons.component';
+import { NoResultsComponent } from './no-results/no-results.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DashboardButtonsComponent } from './dashboard-buttons/dashboard-buttons
     InventoryCategoryComponent,
     EquipmentHistoryComponent,
     DashboardButtonsComponent,
+    NoResultsComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -32,6 +34,7 @@ import { DashboardButtonsComponent } from './dashboard-buttons/dashboard-buttons
     InventoryCategoryComponent,
     DashboardButtonsMobileComponent,
     DashboardButtonsComponent,
+    NoResultsComponent
   ],
 })
 export class SharedModule {}

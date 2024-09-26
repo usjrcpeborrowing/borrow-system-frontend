@@ -32,12 +32,15 @@ export class EquipmentDetailDialogComponent implements OnInit {
   departments: string[] = Constants.departments;
   matters: string[] = Constants.equipmentMatterType;
   conditions: string[] = Constants.equipmentStatus;
+  categories: string[] = [];
   filteredbrands!: Observable<string[]>;
   filteredlocations!: Observable<string[]>;
   filtereddepartments!: Observable<string[]>;
   filteredinventorytypes!: Observable<string[]>;
   filteredmatters!: Observable<string[]>;
   filteredconditions!: Observable<string[]>;
+  filteredcategories!: Observable<string[]>;
+
   transaction!: Transaction;
 
   constructor(
@@ -66,6 +69,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
       dateAcquired: [data.item.dateAcquired],
       location: [data.item.location],
       condition: [data.item.condition],
+      categories: [data.item.categories],
       images: fb.group({
         url: data.item.images.url,
         midSizeUrl: data.item.images.midSizeUrl,
@@ -108,8 +112,14 @@ export class EquipmentDetailDialogComponent implements OnInit {
       map((value) => this._filter(value || '', this.conditions))
     );
 
+    this.filteredcategories= this.equipmentForm.controls['categories'].valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.categories))
+    );
+
     this.getBrands();
     this.getLocations();
+    this.getCategories()
     this.getEquipmentHistory();
   }
 
@@ -123,6 +133,13 @@ export class EquipmentDetailDialogComponent implements OnInit {
   getLocations() {
     this.equipmentService.getLocationList(this.user.department).subscribe({
       next: (resp) => (this.locations = resp.data),
+      error: (err) => console.error(err),
+    });
+  }
+
+  getCategories() {
+    this.equipmentService.getCategories(this.user.department).subscribe({
+      next: (resp) => (this.categories = resp.data),
       error: (err) => console.error(err),
     });
   }

@@ -264,6 +264,22 @@ export class EquipmentService {
       .pipe(catchError(this.handleError));
   }
 
+  getCategories(departments: string[]): Observable<any> {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    let params = new HttpParams({
+      fromObject: {
+        departments,
+      },
+    });
+    return this.http
+      .get<Response>(environment.API_URL + '/api/equipment/getcategories', {
+        headers: headers,
+        params,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
   getDepartmentList(): Observable<any> {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };

@@ -1,5 +1,10 @@
-<div class="panel-name">Category</div>
+<div class="panel-name">Filters</div>
 <div class="form-fields-container">
+  <mat-form-field floatLabel="always">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Type Here" autocomplete="off" />
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
   <mat-form-field class="form-field">
     <mat-label>Borrow Status</mat-label>
     <mat-select (selectionChange)="navigate($event)">

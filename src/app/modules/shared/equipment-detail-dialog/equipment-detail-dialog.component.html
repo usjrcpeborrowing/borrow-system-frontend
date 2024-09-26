@@ -24,6 +24,26 @@
           />
         </mat-form-field>
         <mat-form-field>
+          <mat-label>Category</mat-label>
+          <input
+            matInput
+            formControlName="categories"
+            [readonly]="!canEdit"
+            [matAutocomplete]="autocategories"
+          />
+          <mat-hint *ngIf="canEdit"
+            >Just type the brand not seen on the list</mat-hint
+          >
+          <mat-autocomplete #autocategories="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredcategories | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
           <mat-label>Brand</mat-label>
           <input
             matInput
@@ -152,7 +172,7 @@
           <mat-label>Date Acquired</mat-label>
           <input
             matInput
-            formControlName="dateAcquired"
+            
             [value]="
               equipmentForm.get('dateAcquired')?.value | date : 'mediumDate'
             "
