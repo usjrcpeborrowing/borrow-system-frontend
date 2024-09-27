@@ -6,6 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
+import { jwtDecode } from 'jwt-decode';
 
 // interface User {
 //   userId: string;
@@ -61,8 +62,8 @@ export class AuthService {
         this.router.navigate(['/dashboard/instructor']);
         break;
       case 'faculty':
-          this.router.navigate(['/dashboard/faculty']);
-          break;
+        this.router.navigate(['/dashboard/faculty']);
+        break;
       case 'oic':
         this.router.navigate(['/dashboard/oic']);
         break;
@@ -77,10 +78,13 @@ export class AuthService {
 
   hasAnyRoles(allowedRoles: string[], userRoles: string[]) {
     // return allowedRoles.some((allowedrole) => userRoles.some((userrole) => userrole == allowedrole));
-    console.log('has any roles', allowedRoles.some((allowedrole) => userRoles.includes(allowedrole)))
+    console.log(
+      'has any roles',
+      allowedRoles.some((allowedrole) => userRoles.includes(allowedrole))
+    );
     return allowedRoles.some((allowedrole) => userRoles.includes(allowedrole));
-
   }
+
   getCurrentUser(): User | null {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
@@ -88,6 +92,12 @@ export class AuthService {
   logout(): void {
     localStorage.clear();
     this.router.navigate(['/login']);
+  }
+
+  isTokenExpired(token: string): boolean {
+    const decoded: any = jwtDecode(token);
+    const expirationTime = decoded.exp * 1000; // Convert to milliseconds
+    return Date.now() >= expirationTime;
   }
 
   isLoggedIn(): boolean {
