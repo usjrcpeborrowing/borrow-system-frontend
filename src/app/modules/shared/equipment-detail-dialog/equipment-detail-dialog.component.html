@@ -172,12 +172,15 @@
           <mat-label>Date Acquired</mat-label>
           <input
             matInput
-            
             [value]="
               equipmentForm.get('dateAcquired')?.value | date : 'mediumDate'
             "
             [readonly]="true"
           />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Checked By</mat-label>
+          <input matInput formControlName="checkedBy" [readonly]="true" />
         </mat-form-field>
         <div class="checkbox-wrapper">
           <mat-checkbox formControlName="isborrow">

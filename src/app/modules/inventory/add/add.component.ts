@@ -11,6 +11,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { Constants } from 'src/app/models/Constant';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-add',
@@ -40,7 +41,7 @@ export class AddComponent implements OnInit {
   brands: string[] = [];
   transactiontype: string = '';
   // matters: string[] = Constants.equipmentMatterType;
-  currentUser: any;
+  currentUser: User;
 
   equipmenttypes: string[] = [];
   locations: string[] = [];
@@ -75,6 +76,7 @@ export class AddComponent implements OnInit {
     private fb: FormBuilder,
     private snackbarService: SnackbarService
   ) {
+    this.currentUser = this.authService.getCurrentUser() as User;
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
       equipmentType: ['', Validators.required],
@@ -87,7 +89,7 @@ export class AddComponent implements OnInit {
       inventorytag: [false, Validators.required],
       color: ['', Validators.required],
       condition: ['', Validators.required],
-      checkedBy: ['', Validators.required],
+      checkedBy: [this.currentUser.firstName, Validators.required],
       location: ['', Validators.required],
       department: ['', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
@@ -106,11 +108,10 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
     this.userDepartment = this.currentUser?.department[0];
     this.checkedBy = `${this.currentUser?.firstName} ${this.currentUser?.lastName}`;
     this.userType = this.currentUser?.role;
-    this.addItemForm.get('checkedBy')?.setValue(this.currentUser._id);
+    // this.addItemForm.get('checkedBy')?.setValue(this.currentUser._id);
     this.loadEquipmentTypes();
     this.loadBrandList();
     this.loadLocationList();

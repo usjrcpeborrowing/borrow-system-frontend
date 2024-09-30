@@ -75,6 +75,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
         midSizeUrl: data.item.images.midSizeUrl,
         thumbnailUrl: data.item.images.thumbnailUrl,
       }),
+      checkedBy:[data.item.checkedBy],
       isborrow: [data.item.isborrow],
     });
 

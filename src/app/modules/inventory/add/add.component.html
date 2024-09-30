@@ -354,6 +354,10 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Checked By</mat-label>
+          <input matInput formControlName="checkedBy" [readonly]="true" />
+        </mat-form-field>
         <div class="checkbox-wrapper">
           <mat-checkbox formControlName="isborrow">
             Can be borrowed

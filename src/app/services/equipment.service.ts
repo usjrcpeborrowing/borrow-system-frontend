@@ -160,7 +160,9 @@ export class EquipmentService {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
 
-    return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers }).pipe(
+    console.log('thizis token', headers);
+
+    return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers: headers }).pipe(
       // tap((data) => console.log('Equipment added:', data, { headers })),
       catchError(this.handleError)
     );
