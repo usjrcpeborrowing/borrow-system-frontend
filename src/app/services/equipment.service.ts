@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, map, tap, throwError } from 'rxjs';
 import { Pagination } from 'src/app/models/Pagination';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { InventoryFilter } from '../models/InventoryFilter';
 import { Item } from '../models/Items';
 import { Transaction } from '../models/Transaction';
