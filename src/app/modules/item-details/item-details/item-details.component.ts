@@ -40,6 +40,7 @@ export class ItemDetailsComponent implements OnInit {
     name: '',
     dateAcquired: '',
     location: '',
+    categories: ''
   };
 
   equipmentlist: any[] = [];
@@ -185,6 +186,7 @@ export class ItemDetailsComponent implements OnInit {
 
   queryParamsHandling(params: Params) {
     this.inventoryFilter.equipmenttype = params['equipmenttype'] ? params['equipmenttype'] : '';
+    this.inventoryFilter.categories = params['categories'] ? params['categories'] : '';
     this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
     this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';

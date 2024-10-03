@@ -19,6 +19,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   filterForm: FormGroup;
   user: User;
   equipmenttypes: string[] = [];
+  categories: string[] = [];
   locations: string[] = [];
   brands: string[] = [];
   matters: string[] = Constants.equipmentMatterType;
@@ -27,6 +28,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   constructor(private fb: FormBuilder, private router: Router, private equipmentService: EquipmentService, private authService: AuthService) {
     this.filterForm = this.fb.group({
       equipmenttype: [''],
+      categories: [''],
       brand: [''],
       mattertype: [''],
       inventorytype: [''],
@@ -46,6 +48,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
     this.getEquipments();
     this.getBrands();
     this.getLocations();
+    this.getCategories()
 
     this.filterForm.controls['search'].valueChanges.pipe(debounceTime(600)).subscribe((val) => this.navigate('search', val));
     this.filterForm.controls['dateRange'].valueChanges.subscribe((value) => {
@@ -62,6 +65,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       const filters = changes['filter'].currentValue;
       const [start, end] = filters.dateAcquired.split('|');
       this.filterForm.controls['equipmenttype'].patchValue(filters.equipmenttype);
+      this.filterForm.controls['categories'].patchValue(filters.categories);
       this.filterForm.controls['mattertype'].patchValue(filters.mattertype);
       this.filterForm.controls['brand'].patchValue(filters.brand);
       this.filterForm.controls['inventorytype'].patchValue(filters.brand);
@@ -83,6 +87,12 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   getBrands() {
     this.equipmentService.getBrandList(this.user.department).subscribe({
       next: (resp) => (this.brands = resp.data),
+    });
+  }
+
+  getCategories() {
+    this.equipmentService.getCategories(this.user.department).subscribe({
+      next: (resp) => (this.categories = resp.data),
     });
   }
 

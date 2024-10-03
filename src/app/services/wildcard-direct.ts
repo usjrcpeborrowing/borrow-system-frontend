@@ -16,15 +16,20 @@ export class WildcardRedirectComponent implements OnInit {
         const userRoles = localStorage.getItem('roles') !== null ? JSON.parse(localStorage.getItem('roles') as string) : [];
         let redirectTo = '/dashboard';
         if (userRoles.includes('student')) {
-            redirectTo = '/dashboard/student';
+            // redirectTo = '/dashboard/student';
+            redirectTo = '/borrow';
         } else if (userRoles.includes('reads')) {
-            redirectTo = '/dashboard/reads';
+            // redirectTo = '/dashboard/reads';
+            redirectTo = '/inventory';
         } else if (userRoles.includes('faculty')) {
-            redirectTo = '/dashboard/faculty';
+            // redirectTo = '/dashboard/faculty';
+            redirectTo = '/borrow';
         } else if (userRoles.includes('oic')) {
-            redirectTo = '/dashboard/oic';
+            // redirectTo = '/dashboard/oic';
+            redirectTo = '/inventory';
         } else if (userRoles.includes('administrator')) {
-            redirectTo = '/dashboard/admin';
+            // redirectTo = '/dashboard/admin';
+            redirectTo = '/inventory';
         }
             this.router.navigate([redirectTo]);
         } else {

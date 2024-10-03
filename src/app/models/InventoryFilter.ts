@@ -9,4 +9,5 @@ export interface InventoryFilter {
     name: string;
     dateAcquired: string;
     location: string;
+    categories: string;
 }

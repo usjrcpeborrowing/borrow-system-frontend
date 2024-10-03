@@ -32,6 +32,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     name: '',
     dateAcquired: '',
     location: '',
+    categories: ''
   };
 
   currentUser: any;
@@ -92,6 +93,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
 
   queryParamsHandling(params: Params) {
     this.inventoryFilter.equipmenttype = params['equipmenttype'] ? params['equipmenttype'] : '';
+    this.inventoryFilter.categories = params['categories'] ? params['categories'] : '';
     this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
     this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
     this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];

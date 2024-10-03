@@ -85,7 +85,7 @@ export class EquipmentService {
     params = params.append('department', filters.department);
     params = params.append('location', filters.location);
     params = params.append('name', filters.name);
-
+    params = params.append('categories', filters.categories);
     params = params.append('dateAcquired', filters.dateAcquired);
 
     return this.http.get(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
@@ -105,6 +105,7 @@ export class EquipmentService {
         equipmenttype: filters.equipmenttype,
         location: filters.location,
         search: filters.name,
+        categories: filters.categories
       },
     });
     return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: headers }).pipe(catchError(this.handleError));
@@ -149,6 +150,7 @@ export class EquipmentService {
         dateAcquired: filter.dateAcquired,
         location: filter.location,
         department: department,
+        categories: filter.categories,
         confirmed: false,
       },
     });

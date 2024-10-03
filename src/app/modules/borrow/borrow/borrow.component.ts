@@ -72,6 +72,7 @@ export class BorrowComponent implements OnInit {
     name: '',
     dateAcquired: '',
     location: '',
+    categories: '',
   };
   currentUserRole: any;
   currentUser: any;
@@ -111,7 +112,7 @@ export class BorrowComponent implements OnInit {
         this.borrowForm.controls['instructor'].setValue('');
       },
     });
-    
+
     // setTimeout(() => {
     this.filteredInstructor = this.borrowForm.controls['instructor'].valueChanges.pipe(
       startWith(''),
@@ -122,11 +123,10 @@ export class BorrowComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
-    
-    if(!this.equipmentlist.length){
+
+    if (!this.equipmentlist.length) {
       this.equipmentEmpty = true;
-    }
-    else{
+    } else {
       this.equipmentEmpty = false;
     }
   }
@@ -245,6 +245,7 @@ export class BorrowComponent implements OnInit {
 
   queryParamsHandling(params: Params) {
     this.inventoryFilter.equipmenttype = params['equipmenttype'] ? params['equipmenttype'] : '';
+    this.inventoryFilter.categories = params['categories'] ? params['categories'] : '';
     this.inventoryFilter.brand = params['brand'] ? params['brand'] : '';
     this.inventoryFilter.mattertype = params['mattertype'] ? params['mattertype'] : '';
     this.inventoryFilter.department = params['department'] ? params['department'] : this.currentUser.department[0];

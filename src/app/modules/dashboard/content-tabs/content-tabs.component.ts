@@ -33,6 +33,7 @@ export class ContentTabsComponent implements OnInit {
     name: '',
     dateAcquired: '',
     location: '',
+    categories: ''
   };
 
   constructor(
