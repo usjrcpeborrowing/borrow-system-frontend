@@ -18,13 +18,15 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getDeparmentFaculty(department: string, search: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         department,
         search,
       },
     });
-    return this.http.get<any>(environment.API_URL + '/api/users/getdepartmentfaculty', { params, headers: { Authorization: this.token as string } }).pipe(catchError(this.handleError));
+    return this.http.get<any>(environment.API_URL + '/api/users/getdepartmentfaculty', { params, headers }).pipe(catchError(this.handleError));
   }
   createUser(user: User): Observable<any> {
     const headers = {
@@ -36,8 +38,10 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  
+
   getUsers(department: string[]): Observable<any> {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
         department,
@@ -45,19 +49,21 @@ export class UserService {
     });
     return this.http
       .get<any>(environment.API_URL + '/api/users', {
-        headers: { Authorization: this.token as string },
+        headers,
         params,
       })
       .pipe(catchError(this.handleError));
   }
 
   activateUser(userId: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
     return this.http
       .patch<any>(
         environment.API_URL + '/api/users/activateuser/' + userId,
         {},
         {
-          headers: { Authorization: this.token as string },
+          headers,
         }
       )
       .pipe(catchError(this.handleError));
@@ -80,7 +86,7 @@ export class UserService {
   }
 
   handleError(err: HttpErrorResponse) {
-    console.log('hahaha erorr', err)
+    console.log('hahaha erorr', err);
     return throwError(() => new Error(err.message));
   }
 }
