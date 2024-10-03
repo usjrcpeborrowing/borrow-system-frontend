@@ -4,7 +4,7 @@ import { Item } from '../models/Items';
 import { InventoryFilter } from '../models/InventoryFilter';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { catchError, throwError } from 'rxjs';
+import { catchError, filter, throwError } from 'rxjs';
 import { Filter } from '../models/Filter';
 
 interface Response {
@@ -92,6 +92,7 @@ export class GenerateReportService {
         location: filters.location,
         name: filters.name,
         dateAcquired: filters.dateAcquired,
+        categories: filters.categories
       },
     });
 
