@@ -32,7 +32,7 @@ export class GenerateReportService {
       orientationLandscape: true,
       compress: true,
       logo: {
-        src: 'https://usjr-inventory-image-bucket-266735840448.s3.ap-southeast-1.amazonaws.com/USJR_logo_min.png',
+        src: './../assets/USJR1-min.png',
         // type: 'PNG', //optional, when src= data:uri (nodejs case)
         width: 30, //aspect ratio = width/height
         height: 30,
