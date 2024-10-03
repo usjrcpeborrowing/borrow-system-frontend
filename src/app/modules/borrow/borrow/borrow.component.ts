@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
@@ -11,7 +12,6 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
-import { PageEvent } from '@angular/material/paginator';
 export interface Instructor {
   _id: string;
   name: string;
@@ -31,6 +31,7 @@ export class BorrowComponent implements OnInit {
 
   greetings: string = 'CPE';
   equipmentlist: any[] = [];
+  equipmentEmpty: boolean = true;
   openedCart: boolean = false;
 
   openedCategory: boolean = false;
@@ -110,6 +111,7 @@ export class BorrowComponent implements OnInit {
         this.borrowForm.controls['instructor'].setValue('');
       },
     });
+    
     // setTimeout(() => {
     this.filteredInstructor = this.borrowForm.controls['instructor'].valueChanges.pipe(
       startWith(''),
@@ -120,6 +122,13 @@ export class BorrowComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
+    
+    if(!this.equipmentlist.length){
+      this.equipmentEmpty = true;
+    }
+    else{
+      this.equipmentEmpty = false;
+    }
   }
 
   addToCart(item: Item) {

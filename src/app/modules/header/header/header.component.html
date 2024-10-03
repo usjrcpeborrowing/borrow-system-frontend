@@ -23,7 +23,7 @@
       ></app-notification>
     </mat-menu>
     <div class="profileName-header">
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="profileName">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="profileName" *ngIf="currentNavigations.length > 0">
         <span
           >Hello, {{ currentUser?.firstName }} {{ currentUser?.lastName }}</span
         >

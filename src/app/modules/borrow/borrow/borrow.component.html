@@ -36,7 +36,7 @@
             <div *ngIf="isFetching" class="loading-overlay">
               <mat-spinner class="loading-spinner"></mat-spinner>
             </div>
-            <app-no-results *ngIf="!equipmentlist.length; else elseblock">
+            <app-no-results *ngIf="equipmentEmpty === true; else elseblock">
             </app-no-results>
             <ng-template #elseblock>
               <div
