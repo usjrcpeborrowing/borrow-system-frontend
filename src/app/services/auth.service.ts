@@ -53,26 +53,32 @@ export class AuthService {
   navigateToDashboard(role: string): void {
     switch (role.toLowerCase()) {
       case 'student':
-        this.router.navigate(['/dashboard/student']);
+        // this.router.navigate(['/dashboard/student']);
+        this.router.navigate(['/borrow']);
         break;
       case 'reads':
-        this.router.navigate(['/dashboard/reads']);
+        // this.router.navigate(['/dashboard/reads']);
+        this.router.navigate(['/inventory']);
         break;
       case 'instructor':
-        this.router.navigate(['/dashboard/instructor']);
+        // this.router.navigate(['/dashboard/instructor']);
+        this.router.navigate(['/borrow']);
         break;
       case 'faculty':
-        this.router.navigate(['/dashboard/faculty']);
+        // this.router.navigate(['/dashboard/faculty']);
+        this.router.navigate(['/borrow']);
         break;
       case 'oic':
-        this.router.navigate(['/dashboard/oic']);
+        // this.router.navigate(['/dashboard/oic']);
+        this.router.navigate(['/inventory']);
         break;
       case 'admin':
       case 'administrator':
-        this.router.navigate(['/dashboard/admin']);
+        // this.router.navigate(['/dashboard/admin']);
+        this.router.navigate(['/inventory']);
         break;
       default:
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/borrow']);
     }
   }
 
