@@ -58,6 +58,15 @@ export class HeaderComponent implements OnInit {
       { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'assignment' },
       { name: 'History', url: '/history/faculty', icon: 'menu' },
     ],
+    chairman: [
+      { name: 'Dashboard', url: '/dashboard/faculty', icon: 'menu' },
+      { name: 'Browse Items', url: '/borrow', icon: 'inbox' },
+      { name: 'Inventory', url: '/inventory', icon: 'inbox' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
+      { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
+      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'assignment' },
+      { name: 'History', url: '/history/faculty', icon: 'menu' },
+    ],
     student: [
       { name: 'Dashboard', url: '/dashboard/student', icon: 'menu' },
       { name: 'Browse Items', url: '/borrow', icon: 'menu' },
@@ -78,6 +87,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
+
     this.updateNavigations();
 
     this.socketIOService.listen('notification').subscribe({
@@ -124,6 +134,7 @@ export class HeaderComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user && Array.isArray(user.role) && user.role.length > 0) {
       const primaryRole = user.role[0];
+      console.log({ primaryRole });
       if (this.navigations[primaryRole]) {
         this.currentNavigations = this.navigations[primaryRole];
       } else {
