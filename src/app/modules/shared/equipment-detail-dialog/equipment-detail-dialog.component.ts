@@ -9,6 +9,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { Constants } from 'src/app/models/Constant';
 import { Transaction } from 'src/app/models/Transaction';
 import { TransactionService } from 'src/app/services/transaction.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 type Data = {
   item: Item;
@@ -42,6 +43,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
   filteredcategories!: Observable<string[]>;
 
   transaction!: Transaction;
+  imageUrl: any = null;
 
   constructor(
     public dialogRef: MatDialogRef<EquipmentDetailDialogComponent>,
@@ -49,7 +51,8 @@ export class EquipmentDetailDialogComponent implements OnInit {
     private fb: FormBuilder,
     private equipmentService: EquipmentService,
     private authService: AuthService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private snackbarService: SnackbarService
   ) {
     // this.itemDetails = data;
     this.equipmentForm = fb.group({
@@ -65,7 +68,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
       unit: [data.item.unit],
       matter: [data.item.matter],
       inventorytype: [data.item.inventorytype],
-      description: [data.item.description],
+      description: [data.item.description || ''],
       dateAcquired: [data.item.dateAcquired],
       location: [data.item.location],
       condition: [data.item.condition],
@@ -75,14 +78,20 @@ export class EquipmentDetailDialogComponent implements OnInit {
         midSizeUrl: data.item.images.midSizeUrl,
         thumbnailUrl: data.item.images.thumbnailUrl,
       }),
-      checkedBy:[data.item.checkedBy],
+      checkedBy: [data.item.checkedBy],
       isborrow: [data.item.isborrow],
     });
-
     this.user = this.authService.getCurrentUser() as User;
+    this.imageUrl = this.data.item.images.midSizeUrl;
   }
 
   ngOnInit(): void {
+    this.equipmentService.onAddEquipmentImage().subscribe({
+      next: (resp) => {
+        (this.equipmentForm.controls['images'] as FormGroup).controls['url'].setValue(resp);
+      },
+    });
+
     this.filteredbrands = this.equipmentForm.controls['brand'].valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || '', this.brands))
@@ -108,19 +117,19 @@ export class EquipmentDetailDialogComponent implements OnInit {
       map((value) => this._filter(value || '', this.matters))
     );
 
-    this.filteredconditions= this.equipmentForm.controls['condition'].valueChanges.pipe(
+    this.filteredconditions = this.equipmentForm.controls['condition'].valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || '', this.conditions))
     );
 
-    this.filteredcategories= this.equipmentForm.controls['categories'].valueChanges.pipe(
+    this.filteredcategories = this.equipmentForm.controls['categories'].valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value || '', this.categories))
     );
 
     this.getBrands();
     this.getLocations();
-    this.getCategories()
+    this.getCategories();
     this.getEquipmentHistory();
   }
 
@@ -150,6 +159,42 @@ export class EquipmentDetailDialogComponent implements OnInit {
       console.log('transaction resp', resp);
       this.transaction = resp.data[0];
     });
+  }
+
+  loadImageFromFile(event: Event): void {
+    console.log('files', (event.target as HTMLInputElement).files);
+    let files = (event.target as HTMLInputElement).files as FileList;
+
+    for (let x = 0; x < files.length; x++) {
+      if (this.validateImage(files[0])) {
+        this.previewImage(files[0]);
+      }
+    }
+  }
+
+  validateImage(image: File): Boolean {
+    const validtypes = ['image/jpeg', 'image/png'];
+    const maxSizeInBytes = 5e6; // 10MB
+    if (!validtypes.includes(image.type)) {
+      console.log('not valid haha');
+      this.snackbarService.openSnackBar('invalid image type', 'ok', true);
+      return false;
+    }
+    if (image.size > maxSizeInBytes) {
+      this.snackbarService.openSnackBar('image size too large', 'ok', true);
+      return false;
+    }
+    return true;
+  }
+
+  previewImage(image: File) {
+    // read the image...
+    var reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      this.imageUrl = e?.target?.result;
+      this.equipmentService.addEquipmentImageSubject.next(this.imageUrl);
+    };
+    reader.readAsDataURL(image);
   }
 
   private _filter(value: string, options: string[]): string[] {

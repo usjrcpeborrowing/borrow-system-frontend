@@ -27,6 +27,12 @@
   object-fit: contain;
 }
 
+.img-action-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
 .detail-wrapper {
   display: flex;
   justify-content: center;
