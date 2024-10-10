@@ -73,24 +73,37 @@
               <mat-form-field appearance="fill" class="first-content-form">
                 <mat-label>Role</mat-label>
                 <input matInput type="text" formControlName="role" />
-                <!-- <mat-select formControlName="role">
-                  <mat-option *ngFor="let role of rolelist" [value]="role">
-                    {{ role }}
-                  </mat-option>
-                </mat-select> -->
               </mat-form-field>
-              <mat-form-field appearance="fill" class="first-content-form">
+              <!-- <mat-form-field class="major-filter">
                 <mat-label>Department</mat-label>
-                <mat-select formControlName="department">
-                  <mat-option
-                    *ngFor="let department of departmentlist"
-                    [value]="department"
+                <mat-chip-grid #chipGrid aria-label="category chips">
+                  <mat-chip-row
+                    *ngFor="let dept of selected_depts"
+                    color="primary"
+                    highlighted
                   >
-                    {{ department }}
+                    {{ dept }}
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip-row>
+                </mat-chip-grid>
+                <input
+                  type="text"
+                  matInput
+                  formControlName="search"
+                  [matChipInputFor]="chipGrid"
+                  [matAutocomplete]="autodept"
+                />
+                <mat-autocomplete
+                  #autodept="matAutocomplete"
+                  (optionSelected)="selected($event)"
+                >
+                  <mat-option *ngFor="let dept of departmentlist" [value]="dept">
+                    {{ dept }}
                   </mat-option>
-                  <!-- Add other departments as needed -->
-                </mat-select>
-              </mat-form-field>
+                </mat-autocomplete>
+              </mat-form-field> -->
             </div>
           </div>
           <div class="second-content">
@@ -146,3 +159,5 @@
     </div>
   </div>
 </body>
+
+

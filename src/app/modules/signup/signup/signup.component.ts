@@ -4,6 +4,7 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { Constants } from 'src/app/models/Constant';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -13,6 +14,7 @@ export class SignupComponent {
   signupForm: FormGroup;
   rolelist = Constants.userRoles;
   departmentlist = Constants.departments;
+  selected_depts: string[] = [];
 
   constructor(private fb: FormBuilder, private userService: UserService, private _snackBar: MatSnackBar) {
     this.signupForm = this.fb.group(
@@ -22,11 +24,12 @@ export class SignupComponent {
         lastName: ['', Validators.required],
         role: ['student', Validators.required],
         age: ['', [Validators.required, Validators.min(0)]],
-        department: ['', Validators.required],
+        department: [[], Validators.required],
         email: ['', [Validators.required, Validators.email]],
         schoolId: ['', Validators.required],
         password: ['', [Validators.required]],
         confirmPassword: ['', Validators.required],
+        search: ['']
       },
       { validator: this.passwordMatchValidator }
     );
@@ -34,6 +37,10 @@ export class SignupComponent {
 
   passwordMatchValidator(form: FormGroup) {
     return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
+  }
+
+  selected(event: MatAutocompleteSelectedEvent) {
+    this.selected_depts.push(event.option.value);
   }
 
   onSubmit() {
