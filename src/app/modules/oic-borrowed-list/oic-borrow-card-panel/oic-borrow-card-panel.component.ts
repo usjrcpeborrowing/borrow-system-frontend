@@ -11,6 +11,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
   @Input() data: any;
 
   status_approved: string = 'approved';
+  status_rejected: string = 'rejected';
   selectAll = false;
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService) {}
@@ -44,7 +45,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  approvedItems(status: string) {
+  updateStatus(status: string) {
     const selected = this.items
       .filter((item) => item.selected)
       .map((x) => {
@@ -56,7 +57,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
         };
       });
 
-    this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_approved });
+    this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: status });
   }
   formatStatus(status: string): string {
     return status

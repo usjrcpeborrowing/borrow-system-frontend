@@ -43,12 +43,12 @@
     </div>
 
     <div class="button-content">
-      <span class="spacer"></span>
-      <div class="report-button">
-        <button mat-raised-button (click)="approvedItems(status_approved)">
-          Approve
-        </button>
-      </div>
+      <button mat-raised-button (click)="updateStatus(status_rejected)">
+        Reject
+      </button>
+      <button mat-raised-button (click)="updateStatus(status_approved)">
+        Approve
+      </button>
     </div>
   </mat-card-content>
 </mat-card>
