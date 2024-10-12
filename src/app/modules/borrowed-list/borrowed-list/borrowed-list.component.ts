@@ -31,7 +31,7 @@ export class BorrowedListComponent implements OnInit {
     this.borrowListService.onChangeBorrowStatus().subscribe({
       next: (resp) => {
         console.log(resp);
-        if (resp.status == 'released' || resp.status == 'returned') {
+        if (['released', 'returned', 'unreturned'].includes(resp.status)) {
           this.updateBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
       },
@@ -62,7 +62,6 @@ export class BorrowedListComponent implements OnInit {
     // console.log({ body });
     // console.log(this.borrowedItems);
 
-    
     // const changed_status_items = this.borrowedItems.filter((x) => x._id == id).itemborrowed.filter((item: any) => body.items.some((x) => x.equipment._id == item.equipment));
     // console.log(changed_status_items);
     this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({

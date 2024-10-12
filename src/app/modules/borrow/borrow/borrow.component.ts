@@ -89,6 +89,7 @@ export class BorrowComponent implements OnInit {
     private userService: UserService,
     private fb: FormBuilder
   ) {
+    this.currentUser = this.authService.getCurrentUser();
     this.borrowForm = this.fb.group({
       className: ['', Validators.required],
       classCode: ['', Validators.required],
@@ -96,11 +97,11 @@ export class BorrowComponent implements OnInit {
       endPeriod: ['', Validators.required],
       instructor: ['', Validators.required],
       purpose: ['', Validators.required],
+      department: [this.currentUser.department],
     });
   }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
     const rolesString = localStorage.getItem('roles');
     const rolesArray = rolesString ? JSON.parse(rolesString) : [];
     this.currentUserRole = rolesArray.join(', ');
@@ -322,6 +323,7 @@ export class BorrowComponent implements OnInit {
       className: this.borrowForm.controls['className'].value,
       startPeriod: this.borrowForm.controls['startPeriod'].value,
       endPeriod: this.borrowForm.controls['endPeriod'].value,
+      department: this.borrowForm.controls['department'].value,
     };
 
     this.borrowedItemsService.createBorrowItems(body).subscribe({
@@ -333,6 +335,7 @@ export class BorrowComponent implements OnInit {
       },
       complete: () => {
         this.isFetching = false;
+        this.borrowForm.reset();
       },
     });
   }
@@ -385,6 +388,7 @@ export class BorrowComponent implements OnInit {
       className: this.borrowForm.controls['className'].value,
       startPeriod: this.borrowForm.controls['startPeriod'].value,
       endPeriod: this.borrowForm.controls['endPeriod'].value,
+      department: this.borrowForm.controls['department'].value,
     };
 
     this.borrowedItemsService.createBorrowItems(body).subscribe({
@@ -396,6 +400,8 @@ export class BorrowComponent implements OnInit {
       },
       complete: () => {
         this.isFetching = false;
+        this.borrowForm.reset();
+        this.addedEquipment = [];
       },
     });
   }
