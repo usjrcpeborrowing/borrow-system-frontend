@@ -33,7 +33,7 @@ export class ItemsComponent implements OnInit, OnChanges {
     name: '',
     dateAcquired: '',
     location: '',
-    categories: ''
+    categories: '',
   };
   @Input() equipmentlist: any;
 
@@ -71,9 +71,7 @@ export class ItemsComponent implements OnInit, OnChanges {
 
     this.user = this.authService.getCurrentUser() as User;
   }
-  ngOnChanges(changes: SimpleChanges): void {
-
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     // this.activatedRoute.queryParams.subscribe((params) =>
@@ -314,6 +312,7 @@ export class ItemsComponent implements OnInit, OnChanges {
     this.generateReportService.getEquipmentsForReport(this.filter).subscribe({
       next: (resp) => {
         equipments_for_report = resp.data;
+        console.log('equipments_for_report', equipments_for_report.length);
         const props = this.generateReportService.createProps(equipments_for_report, this.filter);
         var pdfObject = jsPDFInvoiceTemplate.default(props);
         this.snackbarService.openSnackBar('Success Downloading Report', 'OK');

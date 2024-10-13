@@ -19,7 +19,7 @@ export class StudentBorrowCardPanelComponent implements OnInit {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
-        item.disabled = item.status !== 'released';
+        item.disabled = !['released', 'unreturned'].includes(item.status);
       });
       this.cdr.detectChanges();
     }, 0);
@@ -63,8 +63,7 @@ export class StudentBorrowCardPanelComponent implements OnInit {
   formatStatus(status: string): string {
     return status
       .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 }
-

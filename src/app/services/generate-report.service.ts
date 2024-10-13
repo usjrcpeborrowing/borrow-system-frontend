@@ -24,7 +24,7 @@ export class GenerateReportService {
     let date = new Date().toISOString().split('T')[0];
     let dept = filters.department;
     let filename = 'USJR_' + dept + '_' + date;
-    let headers = ['serialNo', 'modelNo', 'name', 'equipmentType', 'brand', 'quantity', 'unit', 'condition'];
+    let headers = ['serialNo', 'modelNo', 'name', 'equipmentType', 'brand', 'quantity', 'unit', 'condition', 'inventorytype', 'location'];
     return {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       returnJsPDFDocObject: true,
@@ -92,7 +92,7 @@ export class GenerateReportService {
         location: filters.location,
         name: filters.name,
         dateAcquired: filters.dateAcquired,
-        categories: filters.categories
+        categories: filters.categories,
       },
     });
 
