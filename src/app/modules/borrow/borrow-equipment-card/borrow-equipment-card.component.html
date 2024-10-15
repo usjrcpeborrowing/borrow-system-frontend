@@ -3,15 +3,18 @@
   <div class="image-wrapper">
     <img
       class="fit-image"
-      [src]="equipmentlist?.images?.midSizeUrl || defaultImage"
+      [src]="equipment?.images?.midSizeUrl || defaultImage"
       alt=""
     />
   </div>
   <div class="text-wrapper">
-    <div class="item-name">{{ equipmentlist.name }}</div>
+    <div class="item-name">{{ equipment.name }}</div>
     <div class="brand">
-      <span>{{ equipmentlist.brand }}</span>
-      <span>Qty: {{ equipmentlist.quantity }}</span>
+      <span>{{ equipment.brand }}</span>
+      <span>Qty: {{ equipment.quantity }}</span>
+    </div>
+    <div class="availability" [class.unavailable]="available == 'unavailable'">
+      {{ available }}
     </div>
   </div>
   <div class="action-wrapper">
@@ -21,7 +24,13 @@
       </button>
     </div>
     <div class="add-button">
-      <button mat-flat-button (click)="addEquipment()">ADD</button>
+      <button
+        mat-flat-button
+        (click)="addEquipment()"
+        [disabled]="available == 'unavailable'"
+      >
+        ADD
+      </button>
     </div>
   </div>
 </div>

@@ -46,7 +46,8 @@
                 <app-borrow-equipment-card
                   class="card"
                   *ngFor="let equipment of equipmentlist"
-                  [equipmentlist]="equipment"
+                  [equipment]="equipment"
+                  [class.unavailable]="equipment.availability == 'borrowed'"
                   (addToCart)="addItemToAddedEquipment($event)"
                 ></app-borrow-equipment-card>
               </div>
