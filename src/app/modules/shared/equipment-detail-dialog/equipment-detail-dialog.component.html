@@ -204,6 +204,7 @@
       <button mat-button mat-dialog-close>Cancel</button>
       <button mat-button (click)="canEdit = !canEdit">Enable Edit</button>
       <button
+        [disabled]="!canConfirm"
         mat-button
         [mat-dialog-close]="equipmentForm.value"
         cdkFocusInitial

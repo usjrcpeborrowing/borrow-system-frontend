@@ -26,6 +26,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
   displayImage: string = '';
   equipmentForm: FormGroup;
   canEdit: boolean = false;
+  canConfirm: boolean = false;
 
   brands: string[] = [];
   locations: string[] = [];
@@ -83,6 +84,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
     });
     this.user = this.authService.getCurrentUser() as User;
     this.imageUrl = this.data.item.images.midSizeUrl;
+    this.canConfirm = this.authService.hasAnyRoles(['chairman', 'oic'], this.user.role);
   }
 
   ngOnInit(): void {
