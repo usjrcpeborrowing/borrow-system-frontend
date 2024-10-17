@@ -13,6 +13,8 @@ export class OicBorrowCardPanelComponent implements OnInit {
   status_approved: string = 'approved';
   status_rejected: string = 'rejected';
   selectAll = false;
+  borrower: string = '';
+  instructor: string = '';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService) {}
 
@@ -26,6 +28,9 @@ export class OicBorrowCardPanelComponent implements OnInit {
       console.log(this.items)
       this.cdr.detectChanges();
     }, 0);
+    
+    this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
+    this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
   }
 
   toggleSelectAll(event: any): void {

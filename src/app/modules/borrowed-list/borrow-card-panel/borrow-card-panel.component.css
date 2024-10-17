@@ -2,6 +2,45 @@ mat-card-content p {
   margin-bottom: 0.2em;
 }
 
+.name-wrapper {
+  display: flex;
+}
+
+.detail-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.borrower-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.borrower {
+  padding: 20px 0 5px;
+  display: flex;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.class-wrapper {
+  padding: 20px 0;
+  font-weight: 500;
+}
+
+.class-details {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.class-details span {
+  padding: 2px 0;
+  min-width: 100px;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(62, 112, 62);
+  display: inline-block;
+}
+
 .action-wrapper {
   display: flex;
   justify-content: flex-end;
@@ -9,23 +48,10 @@ mat-card-content p {
   padding: 10px;
   gap: 20px;
 }
-
-.detail-name {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 10px;
-}
 .detail-value {
   display: inline-flex;
   align-items: center;
   margin-right: 10px;
-}
-
-.detail-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
 }
 
 .detail-quantity {
@@ -63,11 +89,6 @@ mat-card-content p {
   width: 10%;
 }
 
-.detail-value,
-.detail-date {
-  margin-right: 10px;
-  font-size: 15px;
-}
 .item-container {
   display: flex;
   flex-direction: column;
@@ -83,9 +104,6 @@ mat-card-content p {
 
 .last-item .item-row {
   margin-bottom: 0;
-}
-.borrowed-items-class {
-  font-size: 16px;
 }
 
 .hline {
@@ -145,18 +163,17 @@ mat-card-content p {
   background-color: transparent;
 }
 
-
-@media screen and (max-width: 600px) {
-  .item-row{
+@media screen and (max-width: 480px) {
+  .item-row {
     font-size: 10px;
   }
-  .detail-quantity{
+  .detail-quantity {
     margin-right: 10px;
   }
-  .detail-equipment{
+  .detail-equipment {
     width: 15%;
   }
-  .item-container{
+  .item-container {
     margin-left: -5%;
     margin-right: -5%;
   }
@@ -165,10 +182,16 @@ mat-card-content p {
     margin-left: -5%;
     flex-direction: column;
   }
-  .detail-status{
+  .detail-status {
     margin-left: -30px;
   }
-  .form-condition{
+  .form-condition {
     width: 80%;
+  }
+
+  .detail-wrapper {
+    /* padding: 0 20px; */
+    padding: 0;
+    flex-direction: column-reverse;
   }
 }

@@ -12,6 +12,8 @@ export class StudentBorrowCardPanelComponent implements OnInit {
 
   status_return: string = 'pending_return';
   selectAll = false;
+  borrower: string = '';
+  instructor: string = '';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
@@ -23,6 +25,9 @@ export class StudentBorrowCardPanelComponent implements OnInit {
       });
       this.cdr.detectChanges();
     }, 0);
+
+    this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
+    this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
   }
 
   toggleSelectAll(event: any): void {

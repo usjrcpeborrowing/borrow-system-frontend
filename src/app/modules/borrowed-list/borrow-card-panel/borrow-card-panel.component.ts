@@ -17,6 +17,8 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   status_return: string = 'returned';
   selectAll = false;
   remarks: string = 'haha';
+  borrower: string = '';
+  instructor: string = '';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
@@ -29,6 +31,9 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
       });
       this.cdr.detectChanges();
     }, 0);
+
+    this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
+    this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
   }
 
   ngOnChanges(changes: SimpleChanges): void {}
