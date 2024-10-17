@@ -75,6 +75,7 @@
 @media screen and (max-width: 480px) {
   .dialog-detail {
     padding: 0%;
+    min-width: auto;
   }
   .item-details-container {
     display: contents;
