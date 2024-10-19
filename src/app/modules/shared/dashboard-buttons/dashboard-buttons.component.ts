@@ -26,7 +26,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
       { name: 'Accounts', url: '/account-request', icon: 'how_to_reg' },
-      { name: 'History', url: '/history/admin', icon: 'book' },
+      // { name: 'History', url: '/history/admin', icon: 'book' },
     ],
     oic: [
       // { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
@@ -43,7 +43,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory', url: '/inventory', icon: 'handyman' },
       { name: 'Requests', url: '/borrowed-list', icon: 'how_to_reg' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
-      { name: 'History', url: '/history/reads', icon: 'book' },
+      // { name: 'History', url: '/history/reads', icon: 'book' },
     ],
     faculty: [
       // { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
@@ -52,7 +52,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'description' },
       { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
-      { name: 'History', url: '/history/faculty', icon: 'book' },
+      // { name: 'History', url: '/history/faculty', icon: 'book' },
     ],
     chairman: [
       // { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
@@ -61,7 +61,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'description' },
       { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
-      { name: 'History', url: '/history/faculty', icon: 'book' },
+      // { name: 'History', url: '/history/faculty', icon: 'book' },
     ],
     student: [
       // { name: 'Dashboard', url: '/dashboard/student', icon: 'home' },

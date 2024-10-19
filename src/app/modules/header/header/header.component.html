@@ -1,12 +1,11 @@
 <mat-toolbar class="header">
   <img src="/assets/LogoAndTitle.png" class="logo" />
-  
+
   <img src="/assets/USJR1.png" class="mobile-logo" />
-  <div class="header-content">
-  </div>
+  <div class="header-content"></div>
 
   <div class="spacer"></div>
-  <div class="button-header-profile" >
+  <div class="button-header-profile">
     <button
       mat-icon-button
       [matMenuTriggerFor]="notificationMenu"
@@ -23,7 +22,12 @@
       ></app-notification>
     </mat-menu>
     <div class="profileName-header">
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="profileName" *ngIf="currentNavigations.length > 0">
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        class="profileName"
+        *ngIf="currentNavigations.length > 0"
+      >
         <span
           >Hello, {{ currentUser?.firstName }} {{ currentUser?.lastName }}</span
         >
@@ -49,7 +53,6 @@
     <a [routerLink]="'/login'">Login</a>
   </div>
 </mat-toolbar>
-
 
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav class="example-sidenav" mode="side">
@@ -77,6 +80,7 @@
       <a *ngFor="let nav of currentNavigations" [routerLink]="nav.url">{{
         nav.name
       }}</a>
+      <a (click)="logout($event)">Logout</a>
     </div>
   </mat-sidenav>
 </mat-sidenav-container>
