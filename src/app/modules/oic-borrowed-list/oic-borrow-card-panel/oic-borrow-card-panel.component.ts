@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-oic-borrow-card-panel',
@@ -16,19 +17,19 @@ export class OicBorrowCardPanelComponent implements OnInit {
   borrower: string = '';
   instructor: string = '';
 
-  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService) {}
+  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
         // item.disabled = ['approved', 'rejected'].includes(item.status);
-        item.disabled = item.status !== 'pending_approval'
+        item.disabled = item.status !== 'pending_approval';
       });
-      console.log(this.items)
+      console.log(this.items);
       this.cdr.detectChanges();
     }, 0);
-    
+
     this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
     this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
   }
@@ -62,6 +63,10 @@ export class OicBorrowCardPanelComponent implements OnInit {
         };
       });
 
+    if (!selected.length) {
+      this.snackbarService.openSnackBar('No items selected', 'OK');
+      return;
+    }
     this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: status });
   }
   formatStatus(status: string): string {

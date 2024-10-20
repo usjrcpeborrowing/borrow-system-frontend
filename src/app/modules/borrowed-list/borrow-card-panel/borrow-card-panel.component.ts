@@ -70,7 +70,6 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         remarks: x.remarks,
       }));
 
-    console.log(selected);
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
     } else {
@@ -93,7 +92,10 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         remarks: x.remarks,
       }));
 
-    console.log(this.items);
+    if (!selected.length) {
+      this.snackbarService.openSnackBar('No items selected', 'OK');
+      return;
+    }
 
     this.borrowedItemService.changeBorrowStatus.next({
       borrowedItemId: this.data._id,
