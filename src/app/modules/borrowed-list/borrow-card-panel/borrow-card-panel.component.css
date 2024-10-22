@@ -6,12 +6,6 @@ mat-card-content p {
   display: flex;
 }
 
-.detail-wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-}
-
 .borrower-wrapper {
   display: flex;
   flex-direction: column;
@@ -54,39 +48,10 @@ mat-card-content p {
   margin-right: 10px;
 }
 
-.detail-quantity {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  width: 3%;
-}
-
 .detail-select {
   position: relative;
   display: inline-flex;
   align-items: center;
-}
-
-.detail-equipment {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  width: 30%;
-}
-
-.detail-condition {
-  position: relative;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 50%;
-}
-
-.detail-status {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  width: 10%;
 }
 
 .item-container {
@@ -163,34 +128,52 @@ mat-card-content p {
   background-color: transparent;
 }
 
+.class-detail-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.detail-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.item-row div:not(:first-child),
+.detail-wrapper div,
+.detail-wrapper mat-form-field {
+  flex: 1 1 0;
+  padding: 0 10px;
+}
+
+.img-wrapper {
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgb(109, 109, 109);
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media screen and (max-width: 480px) {
-  .item-row {
-    font-size: 10px;
-  }
   .detail-quantity {
     margin-right: 10px;
   }
-  .detail-equipment {
-    width: 15%;
-  }
+
   .item-container {
     margin-left: -5%;
     margin-right: -5%;
   }
-  .detail-condition {
-    display: flex;
-    margin-left: -5%;
-    flex-direction: column;
-  }
-  .detail-status {
-    margin-left: -30px;
-  }
-  .form-condition {
-    width: 80%;
-  }
 
   .detail-wrapper {
-    /* padding: 0 20px; */
+    padding: 0;
+    flex-direction: column-reverse;
+  }
+
+  .class-detail-wrapper {
     padding: 0;
     flex-direction: column-reverse;
   }

@@ -1,6 +1,6 @@
 <mat-card appearance="outlined">
   <mat-card-content class="panel-description">
-    <div class="detail-wrapper">
+    <div class="class-detail-wrapper">
       <div class="class-wrapper">
         <div class="class-details">
           <span>CLASS: </span>{{ data.className }}
@@ -36,10 +36,16 @@
         [class.last-item]="i === items.length - 1"
       >
         <div class="item-row">
-          <div class="detail-quantity">Qty. {{ item.quantity }}</div>
-          <div class="detail-equipment">{{ item.equipment.name }}</div>
-          <div class="detail-condition">
-            <mat-form-field class="form-condition">
+          <div class="img-wrapper">
+            <img
+              [src]="item?.equipment?.images?.thumbnailUrl ?? defaultImage"
+              alt="Equipment Image"
+            />
+          </div>
+          <div class="detail-wrapper">
+            <div>{{ item.quantity }}</div>
+            <div>{{ item.equipment.name }}</div>
+            <mat-form-field>
               <mat-select
                 [(ngModel)]="item.condition"
                 (selectionChange)="onItemStatusChange(item.condition)"
@@ -53,16 +59,16 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="form-condition">
+            <mat-form-field>
               <mat-label>Remarks</mat-label>
               <input
                 matInput
                 [(ngModel)]="item.remarks"
-                [disabled]="item.disabled"
+                [readonly]="item.disabled"
               />
             </mat-form-field>
+            <div>{{ formatStatus(item.status) }}</div>
           </div>
-          <div class="detail-status">{{ formatStatus(item.status) }}</div>
           <mat-checkbox
             [(ngModel)]="item.selected"
             (change)="onItemChange(item)"

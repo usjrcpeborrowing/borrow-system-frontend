@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges }
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Constants } from 'src/app/models/Constant';
+
 @Component({
   selector: 'app-borrow-card-panel',
   templateUrl: './borrow-card-panel.component.html',
@@ -19,6 +20,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   remarks: string = 'haha';
   borrower: string = '';
   instructor: string = '';
+  defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 

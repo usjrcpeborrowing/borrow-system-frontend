@@ -1,6 +1,6 @@
 <mat-card appearance="outlined">
   <mat-card-content class="panel-description">
-    <div class="detail-wrapper">
+    <div class="class-detail-wrapper">
       <div class="class-wrapper">
         <div class="class-details">
           <span>CLASS: </span>{{ data.className }}
@@ -36,16 +36,25 @@
         [class.last-item]="i === items.length - 1"
       >
         <div class="item-row">
-          <div class="detail-quantity">Qty. {{ item.quantity }}</div>
-          <div class="detail-equipment">{{ item.equipment.name }}</div>
-          <div class="detail-condition">{{ item.condition }}</div>
-          <div class="detail-status">{{ formatStatus(item.status) }}</div>
+          <div class="img-wrapper">
+            <img
+              [src]="item?.equipment?.images?.thumbnailUrl ?? defaultImage"
+              alt="Equipment Image"
+            />
+          </div>
+          <div class="detail-wrapper">
+            <div>Qty. {{ item.quantity }}</div>
+            <div>{{ item.equipment.name }}</div>
+            <div>{{ item.condition }}</div>
+            <div>{{ formatStatus(item.status) }}</div>
+          </div>
           <mat-checkbox
             [(ngModel)]="item.selected"
             (change)="onItemChange(item)"
             [disabled]="item.disabled"
           ></mat-checkbox>
         </div>
+        <mat-divider></mat-divider>
       </div>
     </div>
 

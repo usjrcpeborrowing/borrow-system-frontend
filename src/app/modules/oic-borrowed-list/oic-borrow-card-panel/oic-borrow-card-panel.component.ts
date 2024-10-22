@@ -16,6 +16,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
   selectAll = false;
   borrower: string = '';
   instructor: string = '';
+  defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
