@@ -99,3 +99,21 @@ body {
   background-color: #e3f7ee;
   // background-color: #ebefec;
 }
+
+/**
+ style overrides
+*/
+
+//form fields
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: transparent;
+}
+
+// .mdc-text-field .mdc-floating-label {
+//   font-size: 14px;
+// }
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent;
+}
