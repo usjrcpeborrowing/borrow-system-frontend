@@ -1,20 +1,17 @@
 .card-container {
   /* This makes all divs the same width */
-  background-color: lightgray;
+  /* background-color: lightgray; */
   /* margin: 5px; */
   /* width: 100%; */
   gap: 5px;
   min-height: 50px;
-}
-
-.image-wrapper {
-  background-color: #ffffff;
+  /* background-color: rgba(65, 116, 94, 0.2); */
 }
 
 .image-wrapper .fit-image {
   width: 100%;
   height: 150px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .text-wrapper {
@@ -23,6 +20,13 @@
   align-items: flex-start;
   padding: 10px 0;
   gap: 8px;
+}
+
+.text-wrapper .item-name {
+  -webkit-text-decoration: underline rgba(187, 53, 180, 0.3) solid 4px;
+  text-decoration: underline rgba(187, 53, 180, 0.3) solid 0.2em;
+  text-underline-offset: 1px;
+  text-decoration-skip-ink: none;
 }
 
 .text-wrapper .item-name,
@@ -47,13 +51,6 @@
   color: rgb(85 85 85);
 }
 
-.add-button .mat-mdc-unelevated-button.mat-unthemed {
-  display: flex;
-  max-width: 100px;
-  margin-left: 5%;
-  background-color: rgb(62, 112, 62);
-  color: white;
-}
 .text-wrapper .brand {
   font-size: 13px;
   color: #3d3b3b;

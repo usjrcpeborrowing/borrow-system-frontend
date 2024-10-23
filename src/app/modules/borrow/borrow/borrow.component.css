@@ -38,6 +38,10 @@
   font-weight: 700;
   /* margin-left: 1%;
   margin-right: 10px; */
+  -webkit-text-decoration: underline rgba(187, 53, 180, 0.3) solid 4px;
+  text-decoration: underline rgba(187, 53, 180, 0.3) solid 0.2em;
+  text-underline-offset: 1px;
+  text-decoration-skip-ink: none;
 }
 .title-page-line {
   font-size: 50px;
@@ -75,9 +79,10 @@
   flex-direction: row;
 }
 
-.example-container {
+.matdrawer-container {
   flex-grow: 1;
   padding: 10px;
+  background-color: #e3f7ee;
 }
 .filter-bar {
   position: fixed;
@@ -114,8 +119,8 @@
 .card {
   /* flex-grow: 1; */
   /* This makes all divs the same width */
-  background-color: rgb(224, 236, 224);
-  border: 1px solid rgb(116, 177, 132);
+  /* background-color: rgb(224, 236, 224); */
+  background-color: rgba(65, 116, 94, 0.2);
   padding: 10px;
   min-width: 200px;
   gap: 5px;
@@ -124,8 +129,7 @@
 }
 
 .unavailable {
-  background-color: rgb(199 199 199);
-  border: 1px solid rgb(71 71 71);
+  background-color: rgb(216, 216, 216);
 }
 
 .custom-drawer {
@@ -156,7 +160,7 @@ mat-drawer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #81bc8c;
+  background: rgba(187, 53, 180, 0.3);
   cursor: pointer;
   z-index: 1;
 }
@@ -169,7 +173,7 @@ mat-drawer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #e1e7e1;
+  background: rgba(187, 53, 180, 0.3);
   cursor: pointer;
 }
 
@@ -187,20 +191,20 @@ mat-drawer {
   align-items: center;
   min-height: 300px;
 }
-.action-wrapper .mat-mdc-raised-button.mat-unthemed {
+.action-wrapper {
   display: flex;
-  max-width: 100px;
-  height: 60px;
-  margin-top: 10px;
-  margin-right: 20px;
-  background-color: rgb(62, 112, 62);
-  color: white;
+  justify-content: center;
+  padding: 20px 15px;
+}
+
+.mdc-button.mat-mdc-raised-button {
+  width: 100%;
 }
 
 .class-detail-category {
   display: none;
 }
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 480px) {
   .card {
     flex-grow: 1;
   }
@@ -246,6 +250,18 @@ mat-drawer {
     width: 100%;
     margin-bottom: -4%;
   }
+
+  .view-category-container,
+  .view-cart-container {
+    height: 45px;
+    width: 45px;
+  }
+
+  .title-page {
+    font-size: 32px;
+    font-weight: 500;
+  }
+
 }
 
 .borrowed-items-wrapper {
@@ -269,7 +285,7 @@ mat-slide-toggle {
   font-size: 12px;
 }
 
-@media screen and (max-width: 430px) {
+/* @media screen and (max-width: 430px) {
   .title-page {
     font-size: 30px;
   }
@@ -277,4 +293,4 @@ mat-slide-toggle {
     width: 100%;
     margin-bottom: -6%;
   }
-}
+} */

@@ -40,31 +40,66 @@ $md-greenpalette: (
 );
 
 $md-pinkpalette: (
-  50: #f6f4f9,
-  100: #e9e3ef,
-  200: #dbd0e4,
-  300: #cdbdd9,
-  400: #c2afd1,
-  500: #b7a1c9,
-  600: #b099c3,
-  700: #a78fbc,
-  800: #9f85b5,
-  900: #9074a9,
+  50: #fce6e6,
+  100: #f8b3b3,
+  200: #f78e8e,
+  300: #f66a6a,
+  400: #f54d4d,
+  // 500: #ff9d914d,
+  // 500: #f0cdcb// secondary,
+  600: #ff8b8b,
+  700: #ff7575,
+  800: #ff6060,
+  900: #ff4c4c,
   A100: #ffffff,
-  A200: #fbf6ff,
-  A400: #e2c3ff,
-  A700: #d6a9ff,
+  A200: #ffe6e6,
+  A400: #ffb3b3,
+  A700: #ff9999,
   contrast: (
     50: #000000,
     100: #000000,
     200: #000000,
     300: #000000,
     400: #000000,
-    500: #000000,
-    600: #000000,
-    700: #000000,
-    800: #000000,
-    900: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
+);
+
+$md-violetpalette: (
+  50: #f3e8f7,
+  100: #e0b2e9,
+  200: #d08ddc,
+  300: #c369d0,
+  400: #b44bb8,
+  500: #bb35b44d,
+  // Your specified value
+  600: #a92ab1,
+  700: #9b249e,
+  800: #8d1d8b,
+  900: #7e1780,
+  A100: #ffffff,
+  A200: #f0d5f7,
+  A400: #d58ae2,
+  A700: #b566c1,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
     A100: #000000,
     A200: #000000,
     A400: #000000,
@@ -73,7 +108,7 @@ $md-pinkpalette: (
 );
 
 $usjrinventory-primary: mat.define-palette($md-greenpalette);
-$usjrinventory-accent: mat.define-palette($md-pinkpalette);
+$usjrinventory-accent: mat.define-palette($md-violetpalette);
 $usjrinventory-warn: mat.define-palette(mat.$red-palette);
 $usjrinventory-theme: mat.define-light-theme(
   (
@@ -100,6 +135,21 @@ body {
   // background-color: #ebefec;
 }
 
+.underlined {
+  -webkit-text-decoration: underline rgba(187, 53, 180, 0.3) solid 4px;
+  text-decoration: underline rgba(187, 53, 180, 0.3) solid 0.2em;
+  text-underline-offset: 1px;
+  text-decoration-skip-ink: none;
+}
+
+.mat-mdc-snack-bar-container {
+  &.snackbar-style {
+    --mdc-snackbar-container-color: #f3e8f7;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #000;
+  }
+}
+
 /**
  style overrides
 */
@@ -116,4 +166,24 @@ body {
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent;
+}
+
+.mat-drawer-inner-container {
+  background-color: #e3f7ee;
+}
+
+.mat-accent {
+  color: #000000 !important;
+}
+
+.mat-mdc-paginator-container {
+  background-color: #e3f7ee;
+}
+
+.card {
+  &:hover {
+    @include mat.elevation(12);
+    transition: ease-in-out 0.3s;
+    cursor: pointer;
+  }
 }

@@ -19,18 +19,17 @@
   </div>
   <div class="action-wrapper">
     <div class="detail-button">
-      <button mat-flat-button mat-raised-button (click)="viewItemDetails()">
-        DETAIL
+      <button color="accent" mat-raised-button (click)="viewItemDetails()">
+        Detail
       </button>
     </div>
-    <div class="add-button">
-      <button
-        mat-flat-button
-        (click)="addEquipment()"
-        [disabled]="available == 'unavailable'"
-      >
-        ADD
-      </button>
-    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="addEquipment()"
+      [disabled]="available == 'unavailable'"
+    >
+      Add
+    </button>
   </div>
 </div>

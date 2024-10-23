@@ -1,4 +1,4 @@
-<div class="panel-name">Filters</div>
+<div class="panel-name underlined">Filters</div>
 
 <form [formGroup]="filterForm">
   <!-- <div class="search-filter-wrapper"> -->
@@ -35,10 +35,7 @@
         formControlName="categories"
         (selectionChange)="navigate('categories')"
       >
-        <mat-option
-          *ngFor="let category of categories"
-          [value]="category"
-        >
+        <mat-option *ngFor="let category of categories" [value]="category">
           {{ category }}
         </mat-option>
       </mat-select>
@@ -98,7 +95,9 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="edit-button">
-    <button mat-raised-button (click)="resetFilters()">Reset Filter</button>
+  <div class="action-wrapper">
+    <button mat-raised-button (click)="resetFilters()" color="accent">
+      Reset Filter
+    </button>
   </div>
 </form>
