@@ -1,9 +1,6 @@
 <div class="panel-name underlined">Filters</div>
 
 <form [formGroup]="filterForm">
-  <!-- <div class="search-filter-wrapper"> -->
-
-  <!-- </div> -->
   <div class="form-fields-container">
     <mat-form-field floatLabel="always">
       <mat-label>Search</mat-label>
@@ -96,7 +93,7 @@
     </mat-form-field>
   </div>
   <div class="action-wrapper">
-    <button mat-raised-button (click)="resetFilters()" color="accent">
+    <button mat-raised-button color="accent" (click)="resetFilters()">
       Reset Filter
     </button>
   </div>

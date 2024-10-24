@@ -48,9 +48,9 @@ mat-card-content p {
 
 .class-details span {
   padding: 2px 0;
-  min-width: 100px;
+  min-width: 110px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
   color: rgb(62, 112, 62);
   display: inline-block;
 }

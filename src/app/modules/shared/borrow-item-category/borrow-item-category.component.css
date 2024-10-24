@@ -1,7 +1,7 @@
 .panel-name {
   border-radius: 5px;
   font-size: 25px;
-  padding: 2px;
+  padding: 2px 10px;
 }
 
 .form-fields-container {
@@ -38,9 +38,12 @@
   margin: 10px;
   max-width: 30%;
 }
-.edit-button .mat-mdc-raised-button.mat-unthemed {
-  box-shadow: none;
-  background-color: #f1efef;
-  color: rgb(0, 0, 0);
+
+.action-wrapper {
+  display: flex;
+  padding: 10px;
+}
+
+.action-wrapper .mdc-button.mat-mdc-raised-button {
   width: 100%;
 }

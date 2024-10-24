@@ -180,6 +180,14 @@ body {
   background-color: #e3f7ee;
 }
 
+.mat-drawer-content {
+  background-color: #e3f7ee;
+}
+
+.mat-mdc-card-content.panel-description {
+  background-color: #e6efe7;
+}
+
 .card {
   &:hover {
     @include mat.elevation(12);
