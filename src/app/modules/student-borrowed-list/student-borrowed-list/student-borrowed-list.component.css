@@ -5,8 +5,7 @@
   gap: 20px;
 }
 .title-page {
-  font-size: 50px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3em;
   font-weight: 700;
 }
 
@@ -67,9 +66,8 @@
   .dashboard-content {
     display: none;
   }
-  /* .example-container {
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
-  } */
+
+  .title-page {
+    font-size: 2em;
+  }
 }

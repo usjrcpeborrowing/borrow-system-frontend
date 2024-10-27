@@ -148,7 +148,8 @@ mat-card-content p {
 
   .detail-wrapper {
     padding: 0;
-    flex-direction: column-reverse;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .class-detail-wrapper {

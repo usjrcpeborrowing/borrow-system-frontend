@@ -12,21 +12,12 @@
         [class.cart-openside]="openedCategory"
         (click)="categoryClicked()"
       >
-        <mat-icon>menu</mat-icon>
+        <mat-icon>tune</mat-icon>
       </div>
-      <div class="title-page">Borrowed Items</div>
+      <div class="title-page underlined">Borrowed Items</div>
     </div>
-    <mat-drawer-container class="example-container">
-      <mat-drawer mode="side" [opened]="openedCategory" position="start">
-        <div class="search-filter-wrapper">
-          <mat-form-field floatLabel="always">
-            <mat-label>Search</mat-label>
-
-            <input matInput placeholder="Type Here" autocomplete="off" />
-
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </div>
+    <mat-drawer-container [hasBackdrop]="false">
+      <mat-drawer mode="push" [opened]="openedCategory" position="start">
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
       <mat-drawer-content class="x`custom-drawer-itmes">

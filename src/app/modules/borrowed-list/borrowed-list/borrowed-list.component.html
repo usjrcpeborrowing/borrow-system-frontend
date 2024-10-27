@@ -16,8 +16,8 @@
       </div>
       <h1 class="title-page underlined">Borrowed Items</h1>
     </div>
-    <mat-drawer-container class="example-container">
-      <mat-drawer mode="side" [opened]="openedCategory" position="start">
+    <mat-drawer-container [hasBackdrop]="false">
+      <mat-drawer mode="push" [opened]="openedCategory" position="start">
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
       <mat-drawer-content class="custom-drawer-itmes">
