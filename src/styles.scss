@@ -160,11 +160,12 @@ body {
 
 .mat-mdc-form-field-focus-overlay {
   background-color: transparent;
+  font-size: 14px;
 }
 
-// .mdc-text-field .mdc-floating-label {
-//   font-size: 14px;
-// }
+.mdc-text-field .mdc-floating-label {
+  font-size: 14px;
+}
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled) {
   background-color: transparent;
