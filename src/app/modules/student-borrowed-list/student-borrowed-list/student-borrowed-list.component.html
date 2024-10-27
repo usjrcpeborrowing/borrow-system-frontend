@@ -12,21 +12,20 @@
         [class.cart-openside]="openedCategory"
         (click)="categoryClicked()"
       >
-        <mat-icon>menu</mat-icon>
+        <mat-icon>tune</mat-icon>
       </div>
   
-      <div class="title-page">Borrowed Items</div>
+      <div class="title-page underlined">Borrowed Items</div>
     </div>
-    <mat-drawer-container>
+    <mat-drawer-container [hasBackdrop]="false">
       <mat-drawer
-        mode="side"
+        mode="push"
         [opened]="openedCategory"
         position="start"
-        class="example-container"
       >
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
-      <mat-drawer-content class="custom-drawer-itmes">
+      <mat-drawer-content>
         <app-student-borrow-card
           [items]="borrowedItems"
         ></app-student-borrow-card>

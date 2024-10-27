@@ -11,8 +11,11 @@ import { Constants } from 'src/app/models/Constant';
 export class BorrowItemCategoryComponent {
   itemStatus: string[] = [];
   borrowstatus: string[] = Constants.borrowStatus;
+  url: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.url = this.router.url.split('?')[0];
+  }
 
   navigate(event: MatSelectChange) {
     const navigationExtras: NavigationExtras = {
@@ -22,5 +25,9 @@ export class BorrowItemCategoryComponent {
       queryParamsHandling: 'merge',
     };
     this.router.navigate([this.router.url.split('?')[0]], navigationExtras);
+  }
+
+  resetFilters(): void {
+    this.router.navigate([this.url]);
   }
 }

@@ -46,18 +46,25 @@
             <div>{{ item.quantity }}</div>
             <div>{{ item.equipment.name }}</div>
             <mat-form-field>
-              <mat-select
+              <mat-label>Condition</mat-label>
+              <input
+                matInput
+                [matAutocomplete]="autocondition"
+                [readonly]="item.disabled"
                 [(ngModel)]="item.condition"
-                (selectionChange)="onItemStatusChange(item.condition)"
-                [disabled]="item.disabled"
+                (input)="onFilterCondition($event)"
+              />
+              <mat-autocomplete
+                #autocondition="matAutocomplete"
+                (optionSelected)="item.condition = $event.option.value"
               >
                 <mat-option
-                  *ngFor="let status of equipmentStatus"
-                  [value]="status"
+                  *ngFor="let condition of filteredconditions | async"
+                  [value]="condition"
                 >
-                  {{ status }}
+                  {{ condition }}
                 </mat-option>
-              </mat-select>
+              </mat-autocomplete>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Remarks</mat-label>

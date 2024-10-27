@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges }
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { Constants } from 'src/app/models/Constant';
+import { map, Observable, startWith } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-borrow-card-panel',
@@ -20,6 +22,9 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   remarks: string = 'haha';
   borrower: string = '';
   instructor: string = '';
+  statusControl = new FormControl<string>('');
+  conditions: string[] = Constants.equipmentStatus;
+  filteredconditions!: Observable<string[]>;
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
@@ -36,9 +41,24 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
 
     this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
     this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
+
+    this.filteredconditions = this.statusControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filter(value || '', this.conditions))
+    );
   }
 
   ngOnChanges(changes: SimpleChanges): void {}
+
+  onFilterCondition(event: Event) {
+    this.statusControl.patchValue((event.target as HTMLInputElement).value);
+  }
+
+  private _filter(value: string, options: string[]): string[] {
+    console.log('filtere', value);
+    const filterValue = value.toLowerCase();
+    return options.filter((option) => option.toLowerCase().includes(filterValue));
+  }
 
   toggleSelectAll(event: any): void {
     this.selectAll = event.checked;
@@ -93,6 +113,8 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         status: status,
         remarks: x.remarks,
       }));
+
+    console.log('selected', selected);
 
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');

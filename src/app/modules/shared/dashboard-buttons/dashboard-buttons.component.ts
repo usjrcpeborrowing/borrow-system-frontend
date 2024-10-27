@@ -43,6 +43,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory', url: '/inventory', icon: 'handyman' },
       { name: 'Requests', url: '/borrowed-list', icon: 'how_to_reg' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
+      { name: 'Borrow History', url: '/student-borrowed-list', icon: 'history' },
       // { name: 'History', url: '/history/reads', icon: 'book' },
     ],
     faculty: [

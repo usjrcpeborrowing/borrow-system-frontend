@@ -1,15 +1,12 @@
 .page-title {
-  margin: 0px;
   padding: 4vh;
   display: flex;
+  align-items: center;
+  gap: 20px;
 }
 .title-page {
-  font-size: 50px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3em;
   font-weight: 700;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 10px;
 }
 
 .header {
@@ -46,9 +43,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #e1e7e1;
+  background-color: rgba(187, 53, 180, 0.3);
   cursor: pointer;
-  margin-top: -10px;
 }
 
 .page {
@@ -70,12 +66,8 @@
   .dashboard-content {
     display: none;
   }
-  .example-container {
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
-  }
+
   .title-page {
-    line-height: 0.8;
+    font-size: 2em;
   }
 }

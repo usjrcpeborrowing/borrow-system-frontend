@@ -40,11 +40,11 @@ export class BorrowEquipmentCardComponent implements OnInit {
     //   this.item.quantity = 1;
     // }
     this.addToCart.emit(this.equipment);
-    this._snackbar.open('Item Added Successful', '', {
+    this._snackbar.open('Item Added Successfully', '', {
       horizontalPosition: 'center',
       verticalPosition: 'top',
-      duration: 1000,
-      panelClass: ['custom-snackbar'],
+      duration: 2000,
+      panelClass: ['snackbar-style'],
     });
   }
 

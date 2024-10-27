@@ -7,6 +7,8 @@
   flex-direction: row;
   align-items: center;
   padding: 12px;
+  background-color: rgba(65, 116, 94, 0.2);
+  font-size: 12px;
 }
 
 .item-qty {

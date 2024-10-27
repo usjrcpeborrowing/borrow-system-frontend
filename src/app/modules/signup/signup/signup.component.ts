@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
@@ -27,16 +27,27 @@ export class SignupComponent {
         department: [[], Validators.required],
         email: ['', [Validators.required, Validators.email]],
         schoolId: ['', Validators.required],
-        password: ['', [Validators.required]],
+        password: ['', [Validators.required, Validators.minLength(3)]],
         confirmPassword: ['', Validators.required],
-        search: ['']
+        search: [''],
       },
-      { validator: this.passwordMatchValidator }
+      { validator: this.ConfirmedValidator('password', 'confirmPassword') }
     );
   }
 
-  passwordMatchValidator(form: FormGroup) {
-    return form.get('password')?.value === form.get('confirmPassword')?.value ? null : { mismatch: true };
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors['confirmedValidator']) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
@@ -84,5 +95,16 @@ export class SignupComponent {
         }
       );
     }
+  }
+
+  checkForErrorsIn(formControl: AbstractControl): string {
+    if (formControl.hasError('required')) {
+      return 'Min length is required';
+    }
+    if (formControl.hasError('confirmedValidator')) {
+      return 'Password do not match';
+    }
+
+    return '';
   }
 }
