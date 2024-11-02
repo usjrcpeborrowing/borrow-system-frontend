@@ -26,6 +26,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
   displayImage: string = '';
   equipmentForm: FormGroup;
   canEdit: boolean = false;
+  canUpdate: boolean = false;
   canConfirm: boolean = false;
 
   brands: string[] = [];
@@ -84,6 +85,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
     });
     this.user = this.authService.getCurrentUser() as User;
     this.imageUrl = this.data.item.images.midSizeUrl;
+    this.canUpdate = this.authService.hasAnyRoles(['chairman', 'oic', 'reads'], this.user.role);
     this.canConfirm = this.authService.hasAnyRoles(['chairman', 'oic'], this.user.role);
   }
 

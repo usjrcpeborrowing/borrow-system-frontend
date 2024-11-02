@@ -55,7 +55,7 @@ export class ItemPanelComponent implements OnInit {
     const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
       data: {
         item: this.item,
-        action: 'Confirm',
+        action: 'Update',
       },
     });
 
