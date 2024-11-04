@@ -9,28 +9,18 @@
     >
       <mat-expansion-panel-header>
         <mat-panel-title>
-          <div class="panel-title">
-            {{ item.name }}
-          </div>
+          <span>{{ item.name }}</span>
         </mat-panel-title>
         <mat-panel-description class="panel-description">
-          <div class="detail-container">
-            <div class="detail-value">{{ item.serialNo }}</div>
-          </div>
-          <div class="detail-container-equipment">
-            <div class="detail-value">{{ item.equipmentType }}</div>
-          </div>
-          <div class="detail-container-brand">
-            <div class="detail-value">{{ item.brand }}</div>
-          </div>
-          <div class="detail-container-desc">
-            <div class="detail-value">{{ item.inventorytype }}</div>
-          </div>
-          <div class="detail-container-status">
-            <div class="detail-value">{{ item.condition }}</div>
-          </div>
-          <div class="detail-container-quantity">
-            <div class="detail-value">{{ item.quantity }}</div>
+          <div>{{ item.serialNo }}</div>
+          <div>{{ item.equipmentType }}</div>
+          <div>{{ item.brand }}</div>
+          <div>{{ item.inventorytype }}</div>
+          <div>{{ item.condition }}</div>
+          <div>{{ item.quantity }}</div>
+          <div class="availability">
+            <span>borrowed: {{ item["availability"].borrowed }}</span>
+            <span>available: {{ item["availability"].available }}</span>
           </div>
         </mat-panel-description>
       </mat-expansion-panel-header>

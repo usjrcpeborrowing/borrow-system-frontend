@@ -14,13 +14,14 @@
 
 <div class="scrollable-panel">
   <div class="table-header">
-    <div class="header-name">Name</div>
-    <div class="header-serial">Serial No</div>
-    <div class="header-equipment">Equipment Type</div>
-    <div class="header-brand">Brand</div>
-    <div class="header-desc">Inventory Type</div>
-    <div class="header-status">Condition</div>
-    <div class="header-quantity">Quantity</div>
+    <div>Name</div>
+    <div>Serial No</div>
+    <div>Equipment Type</div>
+    <div>Brand</div>
+    <div>Inventory Type</div>
+    <div>Condition</div>
+    <div>Quantity</div>
+    <div>Availability</div>
   </div>
   <div class="table-content">
     <table
@@ -50,7 +51,9 @@
   </div>
   <span class="spacer"></span>
   <div class="report-button" *ngIf="isFaculty()">
-    <button mat-raised-button (click)="reportItems()" disabled>Report Inventory</button>
+    <button mat-raised-button (click)="reportItems()" disabled>
+      Report Inventory
+    </button>
   </div>
   <div class="report-button">
     <button

@@ -1,148 +1,102 @@
-
-.mat-mdc-raised-button.mat-unthemed{
-    display: flex;
-    max-width: 100px;
-    margin-top: 10px;
-    margin-left: 10px;
-    background-color: rgb(62, 112, 62);
-    color: white;
+.mat-mdc-raised-button.mat-unthemed {
+  display: flex;
+  max-width: 100px;
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: rgb(62, 112, 62);
+  color: white;
 }
 .mat-expansion-panel:not([class*="mat-elevation-z"]) {
-    box-shadow: 0px 3px 1px -2px rgba(255, 255, 255, 0.2), 0px 2px 2px 0px rgba(255, 255, 255, 0.14), 0px 1px 5px 0px rgba(255, 254, 254, 0.12);
+  box-shadow: 0px 3px 1px -2px rgba(255, 255, 255, 0.2),
+    0px 2px 2px 0px rgba(255, 255, 255, 0.14),
+    0px 1px 5px 0px rgba(255, 254, 254, 0.12);
 }
 .panel-description {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  flex: 1 1 0;
+  min-width: 75%;
+}
+
+.panel-description div {
+  flex: 1 1 0;
+  padding-right: 5px;
+}
+
+.panel-description .availability {
+  display: flex;
+  flex-direction: column;
+  font-size: 12;
 }
 
 .description-mobile {
-    display: none;
+  display: none;
 }
-
-.detail-container {
-    width: 8%;
-    margin-right: 5%;
-}
-
-.detail-container-equipment{
-    width: 12%;
-    margin-right: 7%;
-}
-.detail-container-brand{
-    width: 12%;
-    margin-right: 3%;
-}
-.detail-container-desc{
-    width: 12%;
-    margin-right: 5%;
-}
-.detail-container-status{
-    width: 12%;
-    margin-right: 9%;
-}
-.detail-container-quantity{
-    width: 12%;
-}
-.detail-container
-.detail-label {
-    font-weight: bold;
-    margin-right: 5px;
-}
-
 
 .spacer {
-    margin-right: 3%;
+  margin-right: 3%;
 }
-.edit-button .mat-mdc-raised-button.mat-unthemed{
-    background-color: rgb(62, 112, 62);
-    color: white;
+.edit-button .mat-mdc-raised-button.mat-unthemed {
+  background-color: rgb(62, 112, 62);
+  color: white;
 }
-.view-button .mat-mdc-raised-button.mat-unthemed{
-    background-color: rgb(62, 112, 62);
-    color: white;
+.view-button .mat-mdc-raised-button.mat-unthemed {
+  background-color: rgb(62, 112, 62);
+  color: white;
 }
 .title {
-    font-size: 10px;
-    text-transform: uppercase;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 
 .itemlist {
-    padding-bottom: 3px;
-
+  padding-bottom: 3px;
 }
-.disable_ripple:hover{
-    background-color: white;
+.disable_ripple:hover {
+  background-color: white;
 }
-.expanded-description{
-    display: flex;
-    flex-direction: row;
+.expanded-description {
+  display: flex;
+  flex-direction: row;
 }
-.item-image{
-    display: flex;
-    flex: 1;
+.item-image {
+  display: flex;
+  flex: 1;
 }
-.fit-image{
-    width: 10%;
-    height: 100%;
+.fit-image {
+  width: 10%;
+  height: 100%;
 }
-.notes-description{
-    display: flex;
-    flex-direction: column;
+.notes-description {
+  display: flex;
+  flex-direction: column;
 }
-.text-bold{
-    font-weight: bold;
+.text-bold {
+  font-weight: bold;
 }
-.mobile-value{
-    font-size: 14px;
-    margin-bottom: 5px;
+.mobile-value {
+  font-size: 14px;
+  margin-bottom: 5px;
 }
-.header-desc{
-    font-size: 15px;
-    font-weight: 700;
-    margin-bottom: -5px;
+.header-desc {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: -5px;
 }
 
 @media screen and (max-width: 800px) {
-    .panel-description{
-        display: none;
-    }
-    
-    .fit-image{
-        width: 80%;
-        height: 40%;
-    }
-    .description-mobile{
-        width: 50%;
-        display:block;
-    }
-    .detail-container {
-        width: 8%;
-        margin-right: 5%;
-    }
+  .panel-description {
+    display: none;
+  }
 
-    .detail-container-equipment{
-        width: 2%;
-        margin-right: 5%;
-    }
-    .detail-container-brand{
-        width: 2%;
-        margin-right: 5%;
-    }
-    .detail-container-desc{
-        width: 2%;
-        margin-right: 5%;
-    }
-    .detail-container-status{
-        width: 2%;
-        margin-right: 5%;
-    }
-    .detail-container-quantity{
-        width: 2%;
-    }
-    .detail-container
-    .detail-label {
-        font-weight: bold;
-        margin-right: 5px;
-    }
-
+  .fit-image {
+    width: 80%;
+    height: 40%;
+  }
+  .description-mobile {
+    width: 50%;
+    display: block;
+  }
 }
