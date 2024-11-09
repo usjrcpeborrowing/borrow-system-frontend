@@ -3,8 +3,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Item } from 'src/app/models/Items';
-import { EquipmentService } from 'src/app/services/equipment.service';
 import { EquipmentDetailComponent } from '../equipment-detail/equipment-detail.component';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { BorrowHistoryDialogComponent } from '../../shared/borrow-history-dialog/borrow-history-dialog.component';
 @Component({
   selector: 'app-borrow-equipment-card',
   templateUrl: './borrow-equipment-card.component.html',
@@ -19,7 +20,7 @@ export class BorrowEquipmentCardComponent implements OnInit {
   @Input() equipment: Item | any;
   @Input() item: Item = {} as Item | any;
   @Output() addToCart = new EventEmitter<Item>();
-  constructor(public dialog: MatDialog, private _snackbar: MatSnackBar, private equipmentService: EquipmentService, private breakpointObserver: BreakpointObserver) {}
+  constructor(public dialog: MatDialog, private _snackbar: MatSnackBar, private snackbarService: SnackbarService, private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
     const midsizeurl = this.equipment?.images?.midSizeUrl?.length ? this.equipment?.images?.midSizeUrl : '';
@@ -52,5 +53,9 @@ export class BorrowEquipmentCardComponent implements OnInit {
     this.dialog.open(EquipmentDetailComponent, {
       data: this.equipment,
     });
+  }
+
+  viewBorrowHistory(): void {
+    this.dialog.open(BorrowHistoryDialogComponent);
   }
 }

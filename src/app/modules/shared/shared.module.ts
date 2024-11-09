@@ -12,6 +12,7 @@ import { EquipmentHistoryComponent } from './equipment-history/equipment-history
 import { DashboardButtonsMobileComponent } from './dashboard-buttons-mobile/dashboard-buttons-mobile.component';
 import { DashboardButtonsComponent } from './dashboard-buttons/dashboard-buttons.component';
 import { NoResultsComponent } from './no-results/no-results.component';
+import { BorrowHistoryDialogComponent } from './borrow-history-dialog/borrow-history-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { NoResultsComponent } from './no-results/no-results.component';
     EquipmentHistoryComponent,
     DashboardButtonsComponent,
     NoResultsComponent,
+    BorrowHistoryDialogComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [

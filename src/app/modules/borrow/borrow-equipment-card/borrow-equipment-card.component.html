@@ -13,8 +13,13 @@
       <span>{{ equipment.brand }}</span>
       <span>Qty: {{ equipment.quantity }}</span>
     </div>
-    <div class="availability" [class.unavailable]="available == 'unavailable'">
-      {{ available }}
+    <div
+      class="availability"
+      [class.unavailable]="available == 'unavailable'"
+      (click)="viewBorrowHistory()"
+    >
+      <span>{{ available }}</span>
+      <mat-icon>info</mat-icon>
     </div>
   </div>
   <div class="action-wrapper">
