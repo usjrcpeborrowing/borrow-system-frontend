@@ -1,1 +1,66 @@
-<p>borrow-history-dialog works!</p>
+<div class="dialog-container">
+  <div class="dialog-title underlined">Currently Borrowed By:</div>
+  <div class="no-result" *ngIf="!currentBorrowHistory.length; else elseblock">
+    No Data Available
+  </div>
+  <ng-template #elseblock>
+    <div
+      class="dialog-content-container"
+      *ngFor="let current of currentBorrowHistory"
+    >
+      <div class="dialog-content-wrapper">
+        <div>
+          <mat-icon>person</mat-icon>
+          <span>{{ current.borrowedBy.firstName }}</span>
+        </div>
+        <div>
+          <mat-icon>pending</mat-icon><span>{{ current.status }}</span>
+        </div>
+        <div>
+          <mat-icon>description</mat-icon><span>{{ current.className }}</span>
+        </div>
+        <div>
+          <mat-icon>note</mat-icon><span>{{ current.purpose }}</span>
+        </div>
+        <div>
+          <mat-icon>tag</mat-icon><span>{{ current.quantity }}</span>
+        </div>
+        <div>
+          <mat-icon>calendar_month</mat-icon
+          ><span>{{ current.dateborrowed | date : "mediumDate" }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <div class="dialog-title underlined">Previously Borrowed By:</div>
+  <div class="no-result" *ngIf="!borrowHistory.length; else display">
+    No Data Available
+  </div>
+  <ng-template #display>
+    <div class="dialog-content-container" *ngFor="let history of borrowHistory">
+      <div class="dialog-content-wrapper">
+        <div>
+          <mat-icon>person</mat-icon>
+          <span>{{ history.borrowedBy.firstName }}</span>
+        </div>
+        <div>
+          <mat-icon>pending</mat-icon><span>{{ history.status }}</span>
+        </div>
+        <div>
+          <mat-icon>description</mat-icon><span>{{ history.className }}</span>
+        </div>
+        <div>
+          <mat-icon>note</mat-icon><span>{{ history.purpose }}</span>
+        </div>
+        <div>
+          <mat-icon>tag</mat-icon><span>{{ history.quantity }}</span>
+        </div>
+        <div>
+          <mat-icon>calendar_month</mat-icon
+          ><span>{{ history.dateborrowed | date : "mediumDate" }}</span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+  </ng-template>
+</div>

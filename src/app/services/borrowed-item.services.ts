@@ -4,6 +4,12 @@ import { BehaviorSubject, catchError, map, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BorrowedItemFilter } from '../models/BorrowedItemFilter';
 
+interface Response {
+  data: any[];
+  message: string;
+  success: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -62,6 +68,12 @@ export class BorrowedItemsService {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: headers }).pipe(catchError(this.handleError));
+  }
+
+  getBorrowedItemHistory(equipmentId: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.get<Response>(environment.API_URL + '/api/borroweditems/getborrowhistory/' + equipmentId, { headers: headers }).pipe(catchError(this.handleError));
   }
 
   onChangeBorrowStatus() {

@@ -56,6 +56,8 @@ export class BorrowEquipmentCardComponent implements OnInit {
   }
 
   viewBorrowHistory(): void {
-    this.dialog.open(BorrowHistoryDialogComponent);
+    this.dialog.open(BorrowHistoryDialogComponent,{
+      data: this.equipment._id
+    });
   }
 }
