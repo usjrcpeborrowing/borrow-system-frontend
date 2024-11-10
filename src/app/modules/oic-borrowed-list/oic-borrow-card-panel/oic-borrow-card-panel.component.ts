@@ -11,7 +11,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
   @Input() data: any;
 
-  status_approved: string = 'approved';
+  status_approved: string = "approved (unrelease)";
   status_rejected: string = 'rejected';
   selectAll = false;
   borrower: string = '';
@@ -75,5 +75,9 @@ export class OicBorrowCardPanelComponent implements OnInit {
       .split('_')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
+  }
+
+  actionDisabled() {
+    return this.items.filter((item) => item.selected).length == 0;
   }
 }

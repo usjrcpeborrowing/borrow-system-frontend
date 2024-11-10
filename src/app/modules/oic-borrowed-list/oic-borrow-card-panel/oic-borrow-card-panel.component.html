@@ -62,6 +62,7 @@
       <button
         mat-raised-button
         color="warn"
+        [disabled]="actionDisabled()"
         (click)="updateStatus(status_rejected)"
       >
         Reject
@@ -69,6 +70,7 @@
       <button
         mat-raised-button
         color="primary"
+        [disabled]="actionDisabled()"
         (click)="updateStatus(status_approved)"
       >
         Approve

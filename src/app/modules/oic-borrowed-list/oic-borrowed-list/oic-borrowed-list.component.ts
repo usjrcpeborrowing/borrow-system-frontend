@@ -30,7 +30,7 @@ export class OicBorrowedListComponent implements OnInit {
     });
     this.borrowListService.onChangeBorrowStatus().subscribe({
       next: (resp) => {
-        if (resp.status == 'approved' || resp.status == 'rejected') {
+        if (resp.status == 'approved (unrelease)' || resp.status == 'rejected') {
           this.approveBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
       },
@@ -58,7 +58,7 @@ export class OicBorrowedListComponent implements OnInit {
       items,
       status,
     };
-    console.log(body)
+    console.log(body);
     this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
       next: (resp) => {
         this.openSnackBar(resp.message, 'OK');

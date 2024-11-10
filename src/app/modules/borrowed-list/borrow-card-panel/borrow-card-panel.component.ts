@@ -33,8 +33,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
-        item.disabled = !['approved', 'pending_return', 'unreturned'].includes(item.status);
-        console.log('remarrrsss', item.remarks);
+        item.disabled = !['approved (unrelease)', 'pending_return', 'unreturned'].includes(item.status);
       });
       this.cdr.detectChanges();
     }, 0);
@@ -133,5 +132,17 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
       .split('_')
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
+  }
+
+  actionDisabled() {
+    return this.items.filter((item) => item.selected).length == 0;
+  }
+
+  releaseBtnDisabled() {
+    return this.items.filter((item) => item.selected && ['approved (unrelease)'].includes(item.status)).length == 0;
+  }
+
+  returnBtnDisabled() {
+    return this.items.filter((item) => item.selected && ['pending_return', 'unreturned'].includes(item.status)).length == 0;
   }
 }

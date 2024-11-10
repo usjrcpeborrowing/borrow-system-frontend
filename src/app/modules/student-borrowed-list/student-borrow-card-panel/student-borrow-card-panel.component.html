@@ -61,7 +61,12 @@
     <div class="button-content">
       <span class="spacer"></span>
       <div class="report-button">
-        <button mat-raised-button color="accent" (click)="returnItems(status_return)">
+        <button
+          mat-raised-button
+          color="accent"
+          (click)="returnItems(status_return)"
+          [disabled]="actionDisabled()"
+        >
           Return
         </button>
       </div>

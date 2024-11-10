@@ -87,13 +87,19 @@
 
     <div class="action-wrapper">
       <button
-        class="report-button"
         mat-raised-button
+        color="primary"
         (click)="releaseItems(status_released)"
+        [disabled]="releaseBtnDisabled()"
       >
         Release
       </button>
-      <button mat-raised-button (click)="returnItems(status_return)">
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="returnItems(status_return)"
+        [disabled]="returnBtnDisabled()"
+      >
         Return
       </button>
     </div>
