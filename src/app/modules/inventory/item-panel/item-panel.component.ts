@@ -20,7 +20,6 @@ export class ItemPanelComponent implements OnInit {
   constructor(public dialog: MatDialog, private authService: AuthService, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
-    console.log('log panel', this.item);
   }
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();

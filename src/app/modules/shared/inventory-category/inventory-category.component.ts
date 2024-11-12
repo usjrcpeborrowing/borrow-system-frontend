@@ -37,6 +37,10 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
         start: [''],
         end: [''],
       }),
+      recentlyBorrowed: this.fb.group({
+        start: [''],
+        end: [''],
+      }),
       search: [''],
     });
 
@@ -48,14 +52,27 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
     this.getEquipments();
     this.getBrands();
     this.getLocations();
-    this.getCategories()
+    this.getCategories();
 
     this.filterForm.controls['search'].valueChanges.pipe(debounceTime(600)).subscribe((val) => this.navigate('search', val));
     this.filterForm.controls['dateRange'].valueChanges.subscribe((value) => {
-      let start = value?.start ? value.start.toISOString().split('T').shift() : '';
-      let end = value?.end ? value?.end?.toISOString().split('T').shift() : '';
+      let { start = '', end = '' } = value;
+      start = start instanceof Date ? start.toISOString().split('T').shift() : '';
+      end = end instanceof Date ? end.toISOString().split('T').shift() : '';
       const dateRangeString = end ? `${start}|${end}` : start;
-      this.navigate('dateAcquired', dateRangeString);
+      if (dateRangeString) {
+        this.navigate('dateAcquired', dateRangeString);
+      }
+    });
+
+    this.filterForm.controls['recentlyBorrowed'].valueChanges.subscribe((value) => {
+      let { start = '', end = '' } = value;
+      start = start instanceof Date ? start.toISOString().split('T').shift() : '';
+      end = end instanceof Date ? end.toISOString().split('T').shift() : '';
+      const dateRangeString = end ? `${start}|${end}` : start;
+      if (dateRangeString) {
+        this.navigate('recentlyBorrowed', dateRangeString);
+      }
     });
   }
 
@@ -64,6 +81,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       console.log('niceeee', changes['filter']);
       const filters = changes['filter'].currentValue;
       const [start, end] = filters.dateAcquired.split('|');
+      const [recent_start, recent_end] = filters.recentlyBorrowed ? filters.recentlyBorrowed.split('|') : '';
       this.filterForm.controls['equipmenttype'].patchValue(filters.equipmenttype);
       this.filterForm.controls['categories'].patchValue(filters.categories);
       this.filterForm.controls['mattertype'].patchValue(filters.mattertype);
@@ -74,6 +92,10 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       this.filterForm.controls['dateRange'].patchValue({
         start: start,
         end: end,
+      });
+      this.filterForm.controls['recentlyBorrowed'].patchValue({
+        start: recent_start,
+        end: recent_end,
       });
     }
   }
@@ -103,6 +125,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   }
 
   resetFilters(): void {
+    console.log('urrrll', this.url);
     this.router.navigate([this.url]);
     this.filterForm.reset();
   }

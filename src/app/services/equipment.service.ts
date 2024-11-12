@@ -87,6 +87,7 @@ export class EquipmentService {
     params = params.append('name', filters.name);
     params = params.append('categories', filters.categories);
     params = params.append('dateAcquired', filters.dateAcquired);
+    params = params.append('recentlyBorrowed', filters.recentlyBorrowed);
 
     return this.http.get(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
   }
@@ -105,7 +106,8 @@ export class EquipmentService {
         equipmenttype: filters.equipmenttype,
         location: filters.location,
         search: filters.name,
-        categories: filters.categories
+        categories: filters.categories,
+        recentlyBorrowed: filters.recentlyBorrowed,
       },
     });
     return this.http.get(environment.API_URL + '/api/equipment/getavailableequipment', { params, headers: headers }).pipe(catchError(this.handleError));

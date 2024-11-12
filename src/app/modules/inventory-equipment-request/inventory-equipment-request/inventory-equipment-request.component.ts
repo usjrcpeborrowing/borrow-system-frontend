@@ -32,7 +32,8 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     name: '',
     dateAcquired: '',
     location: '',
-    categories: ''
+    categories: '',
+    recentlyBorrowed: ''
   };
 
   currentUser: any;
@@ -100,6 +101,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
+    this.inventoryFilter.recentlyBorrowed = params['recentlyBorrowed'] ? params['recentlyBorrowed'] : '';
     this.pagination.page = params['page'] ? params['page'] : 1;
     this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.getUnconfirmedEquipments();

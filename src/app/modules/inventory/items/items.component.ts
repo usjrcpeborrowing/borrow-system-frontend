@@ -34,6 +34,7 @@ export class ItemsComponent implements OnInit, OnChanges {
     dateAcquired: '',
     location: '',
     categories: '',
+    recentlyBorrowed: ''
   };
   @Input() equipmentlist: any;
 

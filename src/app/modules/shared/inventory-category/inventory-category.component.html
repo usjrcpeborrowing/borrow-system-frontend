@@ -81,6 +81,16 @@
     </mat-form-field>
 
     <mat-form-field class="form-field">
+      <mat-label>Recently Borrowed</mat-label>
+      <mat-date-range-input formGroupName="recentlyBorrowed" [rangePicker]="recentlyBorrowed">
+        <input matStartDate formControlName="start" placeholder="Start date" />
+        <input matEndDate formControlName="end" placeholder="End date" />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="recentlyBorrowed"></mat-datepicker-toggle>
+      <mat-date-range-picker #recentlyBorrowed></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
       <mat-label>Location</mat-label>
       <mat-select
         formControlName="location"
