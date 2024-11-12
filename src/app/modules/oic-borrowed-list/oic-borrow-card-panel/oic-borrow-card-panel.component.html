@@ -46,7 +46,13 @@
             <div>Qty. {{ item.quantity }}</div>
             <div>{{ item.equipment.name }}</div>
             <div>{{ item.condition }}</div>
-            <div>{{ formatStatus(item.status) }}</div>
+            <div class="status">
+              <span>{{ formatStatus(item.status) }}</span>
+              <mat-icon [matMenuTriggerFor]="menu">help</mat-icon>
+              <mat-menu #menu="matMenu">
+                <app-borrow-status-menu></app-borrow-status-menu>
+              </mat-menu>
+            </div>
           </div>
           <mat-checkbox
             [(ngModel)]="item.selected"

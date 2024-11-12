@@ -26,6 +26,20 @@ mat-card-content p {
   color: rgba(0, 0, 0, 0.54);
 }
 
+.detail-wrapper .status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-wrapper .status mat-icon {
+  height: 20px;
+  width: 20px;
+  font-size: 18px;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+}
+
 .class-details span {
   padding: 2px 0;
   min-width: 100px;

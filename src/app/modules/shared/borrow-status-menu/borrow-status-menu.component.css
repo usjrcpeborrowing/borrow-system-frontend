@@ -1,0 +1,7 @@
+.borrow-status-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    font-size: 12px;
+    max-width: 350px;
+}
