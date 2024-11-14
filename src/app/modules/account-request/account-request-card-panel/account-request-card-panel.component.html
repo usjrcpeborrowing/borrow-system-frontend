@@ -40,11 +40,13 @@
       </div>
     </div>
 
-    <div class="button-content">
-      <span class="spacer"></span>
-      <div class="report-button">
-        <button mat-raised-button (click)="approveUser(data._id)">Approve</button>
-      </div>
+    <div class="action-wrapper">
+      <button mat-raised-button color="warn" (click)="approveUser(data._id)">
+        Reject
+      </button>
+      <button mat-raised-button color="primary" (click)="approveUser(data._id)">
+        Approve
+      </button>
     </div>
   </mat-card-content>
 </mat-card>

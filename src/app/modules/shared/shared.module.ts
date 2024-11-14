@@ -14,6 +14,7 @@ import { DashboardButtonsComponent } from './dashboard-buttons/dashboard-buttons
 import { NoResultsComponent } from './no-results/no-results.component';
 import { BorrowHistoryDialogComponent } from './borrow-history-dialog/borrow-history-dialog.component';
 import { BorrowStatusMenuComponent } from './borrow-status-menu/borrow-status-menu.component';
+import { AccountRequestCategoryComponent } from './account-request-category/account-request-category.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BorrowStatusMenuComponent } from './borrow-status-menu/borrow-status-me
     NoResultsComponent,
     BorrowHistoryDialogComponent,
     BorrowStatusMenuComponent,
+    AccountRequestCategoryComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -40,6 +42,7 @@ import { BorrowStatusMenuComponent } from './borrow-status-menu/borrow-status-me
     DashboardButtonsComponent,
     NoResultsComponent,
     BorrowStatusMenuComponent,
+    AccountRequestCategoryComponent,
   ],
 })
 export class SharedModule {}

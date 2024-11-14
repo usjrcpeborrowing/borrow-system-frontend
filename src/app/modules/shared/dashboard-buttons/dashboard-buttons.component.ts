@@ -34,7 +34,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory', url: '/inventory', icon: 'handyman' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
-      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
+      { name: 'Borrow Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
       // { name: 'History', url: '/history/faculty', icon: 'book' },
     ],
     reads: [
@@ -52,7 +52,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory', url: '/inventory', icon: 'handyman' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'description' },
-      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
+      { name: 'Borrow Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
       // { name: 'History', url: '/history/faculty', icon: 'book' },
     ],
     chairman: [
@@ -61,7 +61,8 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Inventory', url: '/inventory', icon: 'handyman' },
       { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'playlist_add_check' },
       { name: 'Inventory Details', url: '/item-details', icon: 'description' },
-      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
+      { name: 'Borrow Requests', url: '/faculty-borrowed-list', icon: 'how_to_reg' },
+      { name: 'Account Request', url: '/account-request', icon: 'how_to_reg' },
       // { name: 'History', url: '/history/faculty', icon: 'book' },
     ],
     student: [

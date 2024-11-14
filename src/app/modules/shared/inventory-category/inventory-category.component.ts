@@ -125,7 +125,6 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   }
 
   resetFilters(): void {
-    console.log('urrrll', this.url);
     this.router.navigate([this.url]);
     this.filterForm.reset();
   }
@@ -137,7 +136,6 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       },
       queryParamsHandling: 'merge',
     };
-    const url = this.router.url.split('?')[0];
-    this.router.navigate([url], navigationExtras);
+    this.router.navigate([this.url], navigationExtras);
   }
 }

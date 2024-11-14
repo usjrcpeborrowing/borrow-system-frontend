@@ -9,6 +9,7 @@ import { AccountRequestCardPanelComponent } from './account-request-card-panel/a
 import { AccountRequestCardComponent } from './account-request-card/account-request-card.component';
 import { AccountRequestRoutingModule } from './account-request-routing.module';
 import { AccountRequestComponent } from './account-request/account-request.component';
+import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     AccountRequestComponent,
@@ -22,7 +23,8 @@ import { AccountRequestComponent } from './account-request/account-request.compo
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    HeaderModule
+    HeaderModule,
+    SharedModule
   ]
 })
 export class AccountRequestModule { }

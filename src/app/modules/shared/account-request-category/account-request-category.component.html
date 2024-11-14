@@ -1,0 +1,33 @@
+<div class="panel-name underlined">Filters</div>
+
+<form [formGroup]="filterForm">
+  <div class="form-fields-container">
+    <mat-form-field floatLabel="always">
+      <mat-label>Search</mat-label>
+      <input
+        matInput
+        placeholder="Type Here"
+        autocomplete="off"
+        formControlName="search"
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Account Status</mat-label>
+      <mat-select
+        (selectionChange)="navigate('status')"
+        formControlName="status"
+      >
+        <mat-option *ngFor="let status of accountStatus" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="action-wrapper">
+      <button mat-raised-button color="accent" (click)="resetFilters()">
+        Reset Filter
+      </button>
+    </div>
+  </div>
+</form>
