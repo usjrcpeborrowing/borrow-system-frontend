@@ -1,0 +1,19 @@
+<div class="student-list-container">
+  <div class="header-container">
+    <div class="header">
+      <div>SCHOOL ID</div>
+      <div>LAST NAME</div>
+      <div>FIRSTNAME</div>
+      <div>MIDDLE NAME</div>
+    </div>
+  </div>
+  <div class="student-detail-container">
+    <div class="student-detail-wrapper" *ngFor="let student of students">
+      <div>{{ student.schoolId }}</div>
+      <div>{{ student.lastName }}</div>
+      <div>{{ student.firstName }}</div>
+      <div>{{ student.middleName }}</div>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+</div>

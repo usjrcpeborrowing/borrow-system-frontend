@@ -1,0 +1,27 @@
+.student-list-container {
+  min-height: 450px;
+  border: 1px solid #575757;
+  border-radius: 5px;
+  margin: 10px;
+}
+
+.student-detail-container,
+.header-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+}
+
+.student-detail-wrapper,
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.student-detail-wrapper div,
+.header div {
+  flex: 1 1 0;
+  padding: 10px;
+}

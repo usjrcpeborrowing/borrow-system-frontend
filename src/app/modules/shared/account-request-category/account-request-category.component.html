@@ -13,6 +13,14 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <mat-form-field class="form-field">
+      <mat-label>Role</mat-label>
+      <mat-select (selectionChange)="navigate('role')" formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role">
+          {{ role }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="form-field">
       <mat-label>Account Status</mat-label>
       <mat-select
         (selectionChange)="navigate('status')"

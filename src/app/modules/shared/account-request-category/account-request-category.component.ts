@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
+import { Constants } from 'src/app/models/Constant';
 
 @Component({
   selector: 'app-account-request-category',
@@ -10,12 +11,14 @@ import { debounceTime } from 'rxjs';
 })
 export class AccountRequestCategoryComponent implements OnChanges, OnInit {
   filterForm: FormGroup;
+  roles: string[] = Constants.userRoles;
   url: string;
-  accountStatus: string[] = ['active', 'deactivated', 'rejected'];
+  accountStatus: string[] = ['pending_approval', 'active', 'deactivated', 'rejected'];
   constructor(private fb: FormBuilder, private router: Router) {
     this.filterForm = this.fb.group({
       search: [''],
       status: [''],
+      role: [''],
     });
     this.url = this.router.url.split('?')[0];
   }

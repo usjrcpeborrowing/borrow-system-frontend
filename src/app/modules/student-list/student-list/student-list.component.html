@@ -1,1 +1,27 @@
-<p>student-list works!</p>
+<div class="header">
+  <app-header></app-header>
+</div>
+<div class="page">
+  <div class="dashboard-content">
+    <app-dashboard-buttons></app-dashboard-buttons>
+  </div>
+  <div class="page-content">
+    <div class="page-title">
+      <div
+        class="view-category-container clickable"
+        (click)="openedCategory = !openedCategory"
+      >
+        <mat-icon>tune</mat-icon>
+      </div>
+      <h1 class="title-page underlined">Student List</h1>
+    </div>
+    <mat-drawer-container [hasBackdrop]="false">
+      <mat-drawer mode="push" [opened]="openedCategory" position="start">
+        <app-account-request-category></app-account-request-category>
+      </mat-drawer>
+      <mat-drawer-content>
+        <app-student-list-card [students]="students"></app-student-list-card>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

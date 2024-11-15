@@ -1,0 +1,53 @@
+.header {
+  position: sticky;
+}
+
+.page {
+  display: flex;
+  height: 100%;
+}
+
+.dashboard-content {
+  border-right: 1px solid #45824a91;
+  background-color: rgb(99, 143, 99);
+}
+
+.page-content {
+  display: inline-block;
+  width: 100%;
+}
+.page-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding: 4vh 3%;
+}
+
+.title-page {
+  font-size: 3em;
+  font-weight: 700;
+}
+
+.view-category-container {
+  position: relative;
+  border-radius: 10%;
+  height: 60px;
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(187, 53, 180, 0.3);
+  cursor: pointer;
+  margin-top: -10px;
+}
+
+@media screen and (max-width: 480px) {
+  .dashboard-content {
+    display: none;
+  }
+
+  .title-page {
+    font-size: 2em;
+  }
+}
