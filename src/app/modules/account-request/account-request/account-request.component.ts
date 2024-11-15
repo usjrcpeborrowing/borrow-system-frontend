@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { User } from 'src/app/models/User';
+import { UserCategoryFilter } from 'src/app/models/UserCategoryFilter';
 import { AuthService } from 'src/app/services/auth.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
@@ -12,11 +13,18 @@ import { UserService } from 'src/app/services/user.service';
 export class AccountRequestComponent implements OnInit {
   @Input() users: any[] = [];
   openedCategory: boolean = false;
-  currentUser: any;
-  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {}
+  userCategoryFilter: UserCategoryFilter = {
+    search: '',
+    role: '',
+    status: '',
+    department: [],
+  };
+  user: User;
+  constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {
+    this.user = this.authService.getCurrentUser() as User;
+  }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
     this.userService.onActivateUserSubject().subscribe((resp) => this.fetchUserList());
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
@@ -24,23 +32,16 @@ export class AccountRequestComponent implements OnInit {
   }
 
   fetchUserList(): void {
-    this.userService.getUsers(this.currentUser.department).subscribe(
-      (response) => {
-        if (response && Array.isArray(response.data)) {
-          const inactivatedUsers = response.data.filter((user: User) => !user.activated); // Filter user list with inactivated users
-          this.users = inactivatedUsers;
-        } else {
-          console.error('Data is not an array:', response);
-          this.users = [];
-        }
-      },
-      (error) => {
-        console.error('Failed to load users:', error);
-      }
-    );
+    this.userService.getUsers(this.userCategoryFilter).subscribe({
+      next: (resp) => (this.users = resp['data']),
+    });
   }
 
   queryParamsHandling(params: Params) {
+    this.userCategoryFilter.status = params['status'] ? params['status'] : 'pending_approval';
+    this.userCategoryFilter.department = this.user.department;
+    this.userCategoryFilter.role = params['role'] ? params['role'] : '';
+    this.userCategoryFilter.search = params['search'] ? params['search'] : '';
     this.fetchUserList();
   }
 }

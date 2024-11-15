@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
+import { UserCategoryFilter } from '../models/UserCategoryFilter';
 
 interface Response {
   data: any;
@@ -39,12 +40,15 @@ export class UserService {
     );
   }
 
-  getUsers(department: string[]): Observable<any> {
+  getUsers(filter: UserCategoryFilter): Observable<any> {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams({
       fromObject: {
-        department,
+        department: filter.department,
+        role: filter.role,
+        status: filter.status,
+        search: filter.search
       },
     });
     return this.http
