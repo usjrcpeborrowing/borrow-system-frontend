@@ -10,4 +10,5 @@ export interface User {
   schoolId: string;
   password: string;
   activated: boolean;
+  status: string;
 }

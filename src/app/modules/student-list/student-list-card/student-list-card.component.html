@@ -4,16 +4,29 @@
       <div>SCHOOL ID</div>
       <div>LAST NAME</div>
       <div>FIRSTNAME</div>
-      <div>MIDDLE NAME</div>
+      <div>ROLE</div>
+      <div>STATUS</div>
+      <div>SELECT</div>
     </div>
   </div>
+  <mat-divider></mat-divider>
   <div class="student-detail-container">
     <div class="student-detail-wrapper" *ngFor="let student of students">
       <div>{{ student.schoolId }}</div>
       <div>{{ student.lastName }}</div>
       <div>{{ student.firstName }}</div>
-      <div>{{ student.middleName }}</div>
+      <div>{{ student.role }}</div>
+      <div>{{ student.status }}</div>
+      <div>
+        <mat-checkbox (change)="onCheckBoxChanged($event, student._id)">
+        </mat-checkbox>
+      </div>
     </div>
-    <mat-divider></mat-divider>
   </div>
+</div>
+<div class="action-wrapper">
+  <button mat-raised-button color="accent" (click)="updateStatus('deactivated')">Deactivate</button>
+  <button mat-raised-button color="primary" (click)="updateStatus('active')">
+    Activate
+  </button>
 </div>

@@ -7,9 +7,10 @@ import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material.module';
 import { HeaderModule } from '../header/header.module';
 import { StudentListCardComponent } from './student-list-card/student-list-card.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [StudentListComponent, StudentListCardComponent],
-  imports: [CommonModule, StudentListRoutingModule, SharedModule, MaterialModule, HeaderModule],
+  imports: [CommonModule, StudentListRoutingModule, SharedModule, MaterialModule, HeaderModule, FormsModule],
 })
 export class StudentListModule {}

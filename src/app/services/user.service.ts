@@ -16,6 +16,7 @@ interface Response {
 export class UserService {
   token = localStorage.getItem('token');
   activateUserSubject: Subject<any> = new Subject<any>();
+  updateUserStatusSubject: Subject<any> = new Subject<any>();
   constructor(private http: HttpClient) {}
 
   getDeparmentFaculty(department: string, search: string) {
@@ -48,7 +49,7 @@ export class UserService {
         department: filter.department,
         role: filter.role,
         status: filter.status,
-        search: filter.search
+        search: filter.search,
       },
     });
     return this.http
@@ -73,8 +74,18 @@ export class UserService {
       .pipe(catchError(this.handleError));
   }
 
+  updateUserStatus(userIds: string[], status: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.post<Response>(environment.API_URL + '/api/users/updateuserstatus', { userIds, status }, { headers }).pipe(catchError(this.handleError));
+  }
+
   onActivateUserSubject() {
     return this.activateUserSubject.asObservable();
+  }
+
+  onUpdateUserStatus() {
+    return this.updateUserStatusSubject.asObservable();
   }
 
   changePassword(userId: string, currentPassword: string, newPassword: string): Observable<Response> {

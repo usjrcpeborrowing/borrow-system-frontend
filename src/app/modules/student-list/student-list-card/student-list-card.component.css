@@ -25,3 +25,11 @@
   flex: 1 1 0;
   padding: 10px;
 }
+
+.action-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  gap: 20px;
+}
