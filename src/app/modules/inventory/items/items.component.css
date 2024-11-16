@@ -54,26 +54,12 @@
   width: 500px;
   height: 500px;
 }
-.generate-buttons {
+.action-wrapper {
   display: flex;
+  gap: 10px;
+  padding: 10px;
 }
-.add-button .mat-mdc-raised-button.mat-unthemed {
-  display: flex;
-  max-width: 100px;
-  margin-top: 10px;
-  margin-left: 10px;
-  background-color: rgb(62, 112, 62);
-  color: white;
-}
-.report-button .mat-mdc-raised-button.mat-unthemed {
-  display: flex;
-  max-width: 100px;
-  height: 60px;
-  margin-top: 10px;
-  margin-right: 20px;
-  background-color: rgb(62, 112, 62);
-  color: white;
-}
+
 .scrollable-panel {
   margin: 10px;
   height: 450px;
@@ -110,7 +96,7 @@
   z-index: 10;
 }
 .spacer {
-  margin-right: 70%;
+  flex-grow: 1;
 }
 
 .no-items {

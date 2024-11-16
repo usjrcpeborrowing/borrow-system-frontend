@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InventoryReportInterface } from 'src/app/models/InventoryReport';
 import { InventoryReportService } from 'src/app/services/inventory-report.service';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
+import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -18,7 +20,8 @@ export class ReportsComponent implements OnInit {
   isloading: boolean = false;
   schoolYears: string[] = [];
   semester: string[] = ['1st', '2nd', 'summer'];
-  user = JSON.parse(localStorage.getItem('user') as string);
+  user: User;
+  departments: string[] = [];
   inventoryReport: InventoryReportInterface = {
     _id: '',
     schoolYear: '',
@@ -28,13 +31,21 @@ export class ReportsComponent implements OnInit {
     department: '',
   };
   inventoryReportForm: FormGroup;
-  constructor(public dialogRef: MatDialogRef<ReportsComponent>, private inventoryReportService: InventoryReportService, private _snackBar: MatSnackBar, private fb: FormBuilder) {
+  constructor(
+    public dialogRef: MatDialogRef<ReportsComponent>,
+    private inventoryReportService: InventoryReportService,
+    private _snackBar: MatSnackBar,
+    private fb: FormBuilder,
+    private authService: AuthService
+  ) {
+    this.user = authService.getCurrentUser() as User;
+    this.departments = this.user.department;
     this.inventoryReportForm = this.fb.group({
       schoolYear: ['', Validators.required],
       semester: ['', Validators.required],
       issuer: [`${this.user.firstName} ${this.user.lastName}`, Validators.required],
       issuedBy: [this.user._id, Validators.required],
-      department: [this.user.department.shift(), Validators.required],
+      department: [this.user.department[0], Validators.required],
     });
   }
 

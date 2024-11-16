@@ -45,26 +45,23 @@
     </ng-template>
   </div>
 </div>
-<div class="generate-buttons">
-  <div class="add-button">
-    <button mat-raised-button (click)="addItem()">Add Item</button>
-  </div>
+<div class="action-wrapper">
+  <button mat-raised-button color="primary" (click)="addItem()">
+    Add Item
+  </button>
   <span class="spacer"></span>
-  <div class="report-button" *ngIf="isFaculty()">
-    <button mat-raised-button (click)="reportItems()" disabled>
-      Report Inventory
-    </button>
-  </div>
-  <div class="report-button">
-    <button
-      mat-raised-button
-      (click)="download()"
-      [class.spinner]="isloading"
-      [disabled]="isloading"
-    >
-      Download Report
-    </button>
-  </div>
+  <button mat-raised-button color="accent" (click)="reportItems()">
+    Issue Inventory Report
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="download()"
+    [class.spinner]="isloading"
+    [disabled]="isloading"
+  >
+    Download Inventory
+  </button>
 </div>
 
 <!-- <div class="paginator">

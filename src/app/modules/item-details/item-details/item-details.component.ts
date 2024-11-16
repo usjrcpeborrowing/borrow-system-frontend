@@ -41,7 +41,7 @@ export class ItemDetailsComponent implements OnInit {
     dateAcquired: '',
     location: '',
     categories: '',
-    recentlyBorrowed: ''
+    recentlyBorrowed: '',
   };
 
   equipmentlist: any[] = [];
@@ -108,6 +108,7 @@ export class ItemDetailsComponent implements OnInit {
 
   getInventoryReport() {
     this.inventoryReportService.getInventoryReport().subscribe((resp: any) => {
+      console.log('inventory report', resp);
       this.inventoryReport = resp.data;
     });
   }
@@ -239,5 +240,4 @@ export class ItemDetailsComponent implements OnInit {
       data: item,
     });
   }
-
 }

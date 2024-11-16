@@ -11,36 +11,36 @@
             <div class="form-container">
               <mat-form-field floatLabel="always" class="formName">
                 <mat-label>Department:</mat-label>
-                <input
-                  matInput
-                  formControlName="department"
-                  readonly
-                />
+                <mat-select formControlName="department">
+                  <mat-option *ngFor="let dept of departments" [value]="dept">
+                    {{ dept }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
-              
+
               <div class="year-form">
-              <mat-form-field class="formName">
-                <mat-label>School Year</mat-label>
-                <mat-select
-                  (selectionChange)="selectRange($event)"
-                  formControlName="schoolYear"
-                >
-                  <mat-option
-                    *ngFor="let range of schoolYears"
-                    [value]="range"
-                    >{{ range }}</mat-option
+                <mat-form-field class="formName">
+                  <mat-label>School Year</mat-label>
+                  <mat-select
+                    (selectionChange)="selectRange($event)"
+                    formControlName="schoolYear"
                   >
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="formName">
-                <mat-label>Semester</mat-label>
-                <mat-select formControlName="semester">
-                  <mat-option *ngFor="let sem of semester" [value]="sem">{{
-                    sem
-                  }}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
+                    <mat-option
+                      *ngFor="let range of schoolYears"
+                      [value]="range"
+                      >{{ range }}</mat-option
+                    >
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="formName">
+                  <mat-label>Semester</mat-label>
+                  <mat-select formControlName="semester">
+                    <mat-option *ngFor="let sem of semester" [value]="sem">{{
+                      sem
+                    }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
               <mat-form-field floatLabel="always" class="formName">
                 <mat-label>Issued By:</mat-label>
                 <input matInput formControlName="issuer" readonly />
@@ -51,17 +51,11 @@
       </div>
     </div>
     <div class="action-wrapper">
-      <div 
-      class="submit-button">
-      <button
-      
-        mat-raised-button
-        [disabled]="isloading"
-        type="submit"
-      >
-        Issue
-      </button>
-    </div>
+      <div class="submit-button">
+        <button mat-raised-button [disabled]="isloading" type="submit">
+          Issue
+        </button>
+      </div>
       <button
         class="close-button"
         mat-raised-button

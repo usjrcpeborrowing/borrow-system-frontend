@@ -43,6 +43,18 @@
         />
       </mat-form-field>
       <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Department:</mat-label>
+        <input matInput [value]="inventoryReport.department" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>Semester:</mat-label>
+        <input matInput [value]="inventoryReport.semester" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
+        <mat-label>School Year:</mat-label>
+        <input matInput [value]="inventoryReport.schoolYear" readonly />
+      </mat-form-field>
+      <mat-form-field floatLabel="always" class="formName">
         <mat-label>Role:</mat-label>
         <input matInput [value]="appr.role" readonly />
       </mat-form-field>
