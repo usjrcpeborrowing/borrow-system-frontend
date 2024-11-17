@@ -16,7 +16,7 @@ export class AccountRequestComponent implements OnInit {
   userCategoryFilter: UserCategoryFilter = {
     search: '',
     role: '',
-    status: '',
+    status: 'pending_approval',
     department: [],
   };
   user: User;
@@ -25,23 +25,34 @@ export class AccountRequestComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.onActivateUserSubject().subscribe((resp) => this.fetchUserList());
+    this.userService.onUpdateUserStatus().subscribe({
+      next: (resp) => {
+        this.userService.updateUserStatus(resp.userIds, resp.status).subscribe({
+          next: (resp) => {
+            if (resp.success) {
+              this.snackbarService.openSnackBar(resp.message, 'Done');
+            }
+          },
+          complete: () => this.getUsers(),
+        });
+      },
+    });
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
   }
 
-  fetchUserList(): void {
+  getUsers(): void {
     this.userService.getUsers(this.userCategoryFilter).subscribe({
       next: (resp) => (this.users = resp['data']),
+      error: (err) => console.error(err.message),
     });
   }
-
   queryParamsHandling(params: Params) {
     this.userCategoryFilter.status = params['status'] ? params['status'] : 'pending_approval';
     this.userCategoryFilter.department = this.user.department;
     this.userCategoryFilter.role = params['role'] ? params['role'] : '';
     this.userCategoryFilter.search = params['search'] ? params['search'] : '';
-    this.fetchUserList();
+    this.getUsers();
   }
 }

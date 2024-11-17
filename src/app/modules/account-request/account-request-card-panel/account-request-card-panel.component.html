@@ -41,10 +41,18 @@
     </div>
 
     <div class="action-wrapper">
-      <button mat-raised-button color="warn" (click)="approveUser(data._id)">
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="updateStatus('deactivated')"
+      >
         Reject
       </button>
-      <button mat-raised-button color="primary" (click)="approveUser(data._id)">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="updateStatus('active')"
+      >
         Approve
       </button>
     </div>

@@ -24,7 +24,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   brands: string[] = [];
   matters: string[] = Constants.equipmentMatterType;
   inventorytypes: string[] = Constants.equipmentInventoryType;
-  departments: string[]=[]
+  departments: string[] = [];
 
   constructor(private fb: FormBuilder, private router: Router, private equipmentService: EquipmentService, private authService: AuthService) {
     this.filterForm = this.fb.group({
@@ -60,8 +60,8 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
     this.filterForm.controls['search'].valueChanges.pipe(debounceTime(600)).subscribe((val) => this.navigate('search', val));
     this.filterForm.controls['dateRange'].valueChanges.subscribe((value) => {
       let { start = '', end = '' } = value;
-      start = start instanceof Date ? start.toISOString().split('T').shift() : '';
-      end = end instanceof Date ? end.toISOString().split('T').shift() : '';
+      start = start instanceof Date ? start.toLocaleDateString('en-CA') : '';
+      end = end instanceof Date ? end.toLocaleDateString('en-CA') : '';
       const dateRangeString = end ? `${start}|${end}` : start;
       if (dateRangeString) {
         this.navigate('dateAcquired', dateRangeString);
@@ -70,8 +70,9 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
 
     this.filterForm.controls['recentlyBorrowed'].valueChanges.subscribe((value) => {
       let { start = '', end = '' } = value;
-      start = start instanceof Date ? start.toISOString().split('T').shift() : '';
-      end = end instanceof Date ? end.toISOString().split('T').shift() : '';
+      console.log(value);
+      start = start instanceof Date ? start.toLocaleDateString('en-CA') : '';
+      end = end instanceof Date ? end.toLocaleDateString('en-CA') : '';
       const dateRangeString = end ? `${start}|${end}` : start;
       if (dateRangeString) {
         this.navigate('recentlyBorrowed', dateRangeString);

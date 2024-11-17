@@ -31,7 +31,17 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
+    <mat-form-field class="form-field">
+      <mat-label>Department</mat-label>
+      <mat-select
+        formControlName="department"
+        (selectionChange)="navigate('department')"
+      >
+        <mat-option *ngFor="let dept of departments" [value]="dept">
+          {{ dept }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
     <div class="action-wrapper">
       <button mat-raised-button color="accent" (click)="resetFilters()">
         Reset Filter

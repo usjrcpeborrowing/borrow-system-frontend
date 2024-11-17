@@ -59,7 +59,7 @@
 }
 .expanded-description {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
 }
 .item-image {
   display: flex;
@@ -86,7 +86,7 @@
   margin-bottom: -5px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 480px) {
   .panel-description {
     display: none;
   }
@@ -98,5 +98,9 @@
   .description-mobile {
     width: 50%;
     display: block;
+  }
+
+  .expanded-description {
+    flex-direction: column;
   }
 }

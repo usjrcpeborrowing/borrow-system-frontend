@@ -2,8 +2,8 @@
   <div class="header-container">
     <div class="header">
       <div>SCHOOL ID</div>
-      <div>LAST NAME</div>
-      <div>FIRSTNAME</div>
+      <div>NAME</div>
+      <div>DEPARTMENT</div>
       <div>ROLE</div>
       <div>STATUS</div>
       <div>SELECT</div>
@@ -13,8 +13,8 @@
   <div class="student-detail-container">
     <div class="student-detail-wrapper" *ngFor="let student of students">
       <div>{{ student.schoolId }}</div>
-      <div>{{ student.lastName }}</div>
-      <div>{{ student.firstName }}</div>
+      <div>{{ student.lastName }}, {{ student.firstName }}</div>
+      <div>{{ student.department }}</div>
       <div>{{ student.role }}</div>
       <div>{{ student.status }}</div>
       <div>
@@ -25,7 +25,13 @@
   </div>
 </div>
 <div class="action-wrapper">
-  <button mat-raised-button color="accent" (click)="updateStatus('deactivated')">Deactivate</button>
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updateStatus('deactivated')"
+  >
+    Deactivate
+  </button>
   <button mat-raised-button color="primary" (click)="updateStatus('active')">
     Activate
   </button>

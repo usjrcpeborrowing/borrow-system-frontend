@@ -44,14 +44,17 @@ export class StudentListComponent implements OnInit {
 
   getUsers(): void {
     this.userService.getUsers(this.userCategoryFilter).subscribe({
-      next: (resp) => (this.students = resp['data']),
+      next: (resp) => {
+        this.students = resp['data'];
+        console.log(this.students.length);
+      },
       error: (err) => console.error(err.message),
     });
   }
 
   queryParamsHandling(params: Params) {
     this.userCategoryFilter.status = params['status'] ? params['status'] : '';
-    this.userCategoryFilter.department = this.user.department;
+    this.userCategoryFilter.department = params['department'] ? params['department'] : this.user.department;
     this.userCategoryFilter.role = params['role'] ? params['role'] : '';
     this.userCategoryFilter.search = params['search'] ? params['search'] : '';
     this.getUsers();

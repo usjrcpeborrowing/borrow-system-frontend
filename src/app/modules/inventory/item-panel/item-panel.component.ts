@@ -6,6 +6,7 @@ import { ItemDialogComponent } from '../item-dialog/item-dialog.component';
 import { EquipmentDetailComponent } from '../../borrow/equipment-detail/equipment-detail.component';
 import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-dialog/equipment-detail-dialog.component';
 import { EquipmentService } from 'src/app/services/equipment.service';
+import { BorrowHistoryDialogComponent } from '../../shared/borrow-history-dialog/borrow-history-dialog.component';
 
 @Component({
   selector: 'app-item-panel',
@@ -19,8 +20,7 @@ export class ItemPanelComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private authService: AuthService, private equipmentService: EquipmentService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   isFaculty(): boolean {
     const currentUser = this.authService.getCurrentUser();
     return currentUser ? currentUser.role.includes('faculty') : false;
@@ -62,6 +62,12 @@ export class ItemPanelComponent implements OnInit {
       if (resp) {
         this.equipmentService.updateEquipmentSubject.next(resp);
       }
+    });
+  }
+
+  viewBorrowHistory(): void {
+    this.dialog.open(BorrowHistoryDialogComponent, {
+      data: this.item._id,
     });
   }
 }

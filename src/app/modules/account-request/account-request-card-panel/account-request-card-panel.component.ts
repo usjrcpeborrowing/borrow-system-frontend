@@ -12,7 +12,7 @@ export class AccountRequestCardPanelComponent implements OnInit {
   @Input() users: any[] = [];
   @Input() data: any;
 
-  status_approved: string = "approved (unrelease)";
+  status_approved: string = 'approved (unrelease)';
   selectAll = false;
 
   constructor(private userService: UserService, private snackbarService: SnackbarService) {}
@@ -35,8 +35,16 @@ export class AccountRequestCardPanelComponent implements OnInit {
         this.snackbarService.openSnackBar(err.message, 'OK', true);
       },
       complete: () => {
-        this.userService.activateUserSubject.next('')
+        this.userService.activateUserSubject.next('');
       },
     });
+  }
+
+  updateStatus(status: string) {
+    let body = {
+      userIds: [this.data._id],
+      status: status,
+    };
+    this.userService.updateUserStatusSubject.next(body);
   }
 }

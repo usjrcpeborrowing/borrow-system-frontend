@@ -58,8 +58,9 @@
             {{ item.quantity }}
           </div>
         </div>
+        <button mat-raised-button (click)="viewItemDetails()">View/Edit</button>
+        <button mat-raised-button (click)="viewBorrowHistory()">History</button>
       </div>
-      <button mat-raised-button (click)="viewItemDetails()">View/Edit</button>
 
       <!-- <div class="edit-button" *ngIf="isFaculty(); else facultyUser">
         <button mat-raised-button (click)="viewItemDetails()">View</button>

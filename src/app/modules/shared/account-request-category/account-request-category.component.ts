@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { Constants } from 'src/app/models/Constant';
+import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-account-request-category',
@@ -14,13 +16,19 @@ export class AccountRequestCategoryComponent implements OnChanges, OnInit {
   roles: string[] = Constants.userRoles;
   url: string;
   accountStatus: string[] = ['pending_approval', 'active', 'deactivated', 'rejected'];
-  constructor(private fb: FormBuilder, private router: Router) {
+  departments: string[] = [];
+  user: User;
+
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.filterForm = this.fb.group({
       search: [''],
       status: [''],
       role: [''],
+      department: ['']
     });
     this.url = this.router.url.split('?')[0];
+    this.user = this.authService.getCurrentUser() as User;
+    this.departments = this.user.department;
   }
   ngOnInit(): void {
     this.filterForm.controls['search'].valueChanges.pipe(debounceTime(600)).subscribe((val) => this.navigate('search', val));
