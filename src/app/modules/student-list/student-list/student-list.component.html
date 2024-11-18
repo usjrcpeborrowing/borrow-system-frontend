@@ -21,6 +21,17 @@
       </mat-drawer>
       <mat-drawer-content>
         <app-student-list-card [students]="students"></app-student-list-card>
+        <section id="pagination">
+          <mat-paginator
+            [length]="pagination.length"
+            [pageSize]="pagination.limit"
+            [pageIndex]="pagination.page - 1"
+            [pageSizeOptions]="pagination.pageSizeOption"
+            [showFirstLastButtons]="true"
+            (page)="paginate($event)"
+          >
+          </mat-paginator>
+        </section>
       </mat-drawer-content>
     </mat-drawer-container>
   </div>

@@ -4,6 +4,7 @@ import { Observable, Subject, catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../models/User';
 import { UserCategoryFilter } from '../models/UserCategoryFilter';
+import { Pagination } from '../models/Pagination';
 
 interface Response {
   data: any;
@@ -41,7 +42,7 @@ export class UserService {
     );
   }
 
-  getUsers(filter: UserCategoryFilter): Observable<any> {
+  getUsers(filter: UserCategoryFilter, pagination: Pagination): Observable<any> {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams({
@@ -50,6 +51,8 @@ export class UserService {
         role: filter.role,
         status: filter.status,
         search: filter.search,
+        page: pagination.page,
+        limit: pagination.limit,
       },
     });
     return this.http

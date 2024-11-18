@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
 import { UserCategoryFilter } from 'src/app/models/UserCategoryFilter';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,6 +19,12 @@ export class AccountRequestComponent implements OnInit {
     role: '',
     status: 'pending_approval',
     department: [],
+  };
+  pagination: Pagination = {
+    length: 0,
+    page: 1,
+    limit: 25,
+    pageSizeOption: [5, 10, 25, 50],
   };
   user: User;
   constructor(private userService: UserService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {
@@ -43,7 +50,7 @@ export class AccountRequestComponent implements OnInit {
   }
 
   getUsers(): void {
-    this.userService.getUsers(this.userCategoryFilter).subscribe({
+    this.userService.getUsers(this.userCategoryFilter, this.pagination).subscribe({
       next: (resp) => (this.users = resp['data']),
       error: (err) => console.error(err.message),
     });
