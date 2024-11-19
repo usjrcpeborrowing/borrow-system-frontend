@@ -198,6 +198,7 @@ export class ItemDetailsComponent implements OnInit {
     this.inventoryFilter.location = params['location'] ? params['location'] : '';
     this.inventoryFilter.name = params['search'] ? params['search'] : '';
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
+    this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     this.inventoryFilter.recentlyBorrowed = params['recentlyBorrowed'] ? params['recentlyBorrowed'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
     this.pagination.page = params['page'] ? params['page'] : 1;

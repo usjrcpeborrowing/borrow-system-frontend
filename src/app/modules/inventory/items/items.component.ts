@@ -34,9 +34,9 @@ export class ItemsComponent implements OnInit, OnChanges {
     dateAcquired: '',
     location: '',
     categories: '',
-    recentlyBorrowed: ''
+    recentlyBorrowed: '',
   };
-  @Input() equipmentlist: any;
+  @Input() equipmentlist: any[] = [];
 
   @Output() pageChange: EventEmitter<any> = new EventEmitter();
 

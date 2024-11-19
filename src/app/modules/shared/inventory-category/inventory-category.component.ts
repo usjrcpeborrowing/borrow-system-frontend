@@ -93,6 +93,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       this.filterForm.controls['inventorytype'].patchValue(filters.brand);
       this.filterForm.controls['location'].patchValue(filters.location);
       this.filterForm.controls['search'].patchValue(filters.name);
+      this.filterForm.controls['department'].patchValue(filters.department);
       this.filterForm.controls['dateRange'].patchValue({
         start: start,
         end: end,
