@@ -1,29 +1,25 @@
-
-.page{
+.page {
   display: flex;
   height: 100%;
 }
-.page-content{
-  display:inline-block;
+.page-content {
+  display: inline-block;
   width: 100%;
 }
-.dashboard-content{
-  
+.dashboard-content {
   border-right: 1px solid #45824a91;
   background-color: rgb(99, 143, 99);
 }
 .page-title {
-  margin: 0px;
-  padding: 4vh;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding: 4vh 3%;
 }
 .title-page {
-  font-size: 50px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-size: 3em;
   font-weight: 700;
-  margin-left: 20px;
-  margin-right: 20px;
-  margin-top: 10px;
 }
 
 .header {
@@ -77,7 +73,7 @@ mat-slide-toggle {
 }
 
 @media screen and (max-width: 600px) {
-  .dashboard-content{
+  .dashboard-content {
     display: none;
   }
   .title-page {
