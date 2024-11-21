@@ -251,8 +251,8 @@
           <input matInput formControlName="modelNo" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Quantity</mat-label>
-          <input matInput formControlName="quantity" />
+          <mat-label>Total Quantity</mat-label>
+          <input matInput formControlName="totalQuantity" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Unit</mat-label>
@@ -358,6 +358,7 @@
           <mat-label>Checked By</mat-label>
           <input matInput formControlName="checkedBy" [readonly]="true" />
         </mat-form-field>
+
         <div class="checkbox-wrapper">
           <mat-checkbox formControlName="isborrow">
             Can be borrowed
@@ -369,7 +370,44 @@
           </mat-checkbox>
         </div> -->
       </div>
+      <h1>additional Quantity</h1>
+      <div formArrayName="conditionAndQuantity">
+        <div
+          class="condition-quantity-wrapper"
+          *ngFor="
+            let conditionQty of conditionAndQuantity.controls;
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <mat-form-field>
+            <mat-label>Condition</mat-label>
+            <input matInput formControlName="condition" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput formControlName="quantity" />
+          </mat-form-field>
+          <button mat-button type="button" (click)="addConditionAndQuantity()">
+            Add Condition
+          </button>
+        </div>
+      </div>
     </mat-dialog-content>
+
+    <!-- <div formGroupName="conditionAndQuantityForm">
+      <div class="condition-quantity-wrapper">
+        <mat-form-field>
+          <mat-label>Condition</mat-label>
+          <input matInput formControlName="condition" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Quantity</mat-label>
+          <input matInput formControlName="quantity" />
+        </mat-form-field>
+       
+      </div>
+    </div> -->
 
     <mat-dialog-actions align="end">
       <button mat-button cdkFocusInitial type="submit">Add Item</button>

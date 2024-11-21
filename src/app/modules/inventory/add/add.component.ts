@@ -93,47 +93,37 @@ export class AddComponent implements OnInit {
       location: ['', Validators.required],
       department: ['', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
+      totalQuantity: [1, [Validators.required, Validators.min(1)]],
       unit: ['', Validators.required],
       isborrow: [true, Validators.required],
       dateAcquired: ['', Validators.required],
       categories: [''],
       warrantyPeriod: [''],
       // images: this.fb.array([])
+      conditionAndQuantityForm: this.fb.group({
+        condition: [''],
+        quantity: [''],
+      }),
       images: this.fb.group({
         url: [''],
         thumbnailUrl: [''],
         midSizeUrl: [''],
       }),
+      conditionAndQuantity: this.fb.array([]),
     });
+    this.conditionAndQuantity.push(this.createConditionAndQuantityForm());
   }
 
   ngOnInit(): void {
     this.userDepartment = this.currentUser?.department[0];
     this.checkedBy = `${this.currentUser?.firstName} ${this.currentUser?.lastName}`;
     this.userType = this.currentUser?.role;
-    // this.addItemForm.get('checkedBy')?.setValue(this.currentUser._id);
     this.loadEquipmentTypes();
     this.loadBrandList();
     this.loadLocationList();
-    // this.filteredEquipmentTypes = this.addItemForm.get('equipmentType')!.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => this._filterEquipmentTypes(value))
-    // );
-    // this.filteredBrands = this.addItemForm.get('brand')!.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => this._filterBrands(value))
-    // );
-    // this.filteredLocation = this.addItemForm.get('location')!.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => this._filterLocation(value))
-    // );
-
     this.equipmentService.onAddEquipmentImage().subscribe({
       next: (resp) => {
-        // console.log(resp);
-        // (this.addItemForm.get('images') as FormArray).push(this.fb.control(resp));
         (this.addItemForm.controls['images'] as FormGroup).controls['url'].setValue(resp);
-        console.log(this.addItemForm);
       },
     });
 
@@ -176,6 +166,30 @@ export class AddComponent implements OnInit {
       startWith(''),
       map((value) => this._filter(value || '', this.categories))
     );
+
+    this.conditionAndQuantity.valueChanges.subscribe(() => {
+      const total = this.conditionAndQuantity.controls.reduce((sum, control) => {
+        const quantity = parseInt(control.get('quantity')?.value) || 0; // Ensure a default of 0
+        return sum + quantity;
+      }, 0);
+
+      this.addItemForm.controls['totalQuantity'].patchValue(total);
+    });
+  }
+
+  get conditionAndQuantity(): FormArray {
+    return this.addItemForm.get('conditionAndQuantity') as FormArray;
+  }
+
+  createConditionAndQuantityForm(): FormGroup {
+    return this.fb.group({
+      condition: ['', Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]],
+    });
+  }
+
+  addConditionAndQuantity(): void {
+    this.conditionAndQuantity.push(this.createConditionAndQuantityForm());
   }
 
   private _filter(value: string, options: string[]): string[] {

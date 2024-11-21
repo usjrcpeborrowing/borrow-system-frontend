@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as jsPDFInvoiceTemplate from 'jspdf-invoice-template';
+import { jsPDF } from 'jspdf-invoice-template';
 import { Item } from '../models/Items';
 import { InventoryFilter } from '../models/InventoryFilter';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { catchError, filter, throwError } from 'rxjs';
+import { catchError, filter, map, throwError } from 'rxjs';
 import { Filter } from '../models/Filter';
+import { style } from '@angular/animations';
 
 interface Response {
   data: Item[];
@@ -24,9 +26,35 @@ export class GenerateReportService {
     let date = new Date().toISOString().split('T')[0];
     let dept = filters.department;
     let filename = 'USJR_' + dept + '_' + date;
-    let headers = ['serialNo', 'modelNo', 'name', 'equipmentType', 'brand', 'quantity', 'unit', 'condition', 'inventorytype', 'location'];
+    let headers = [
+      {
+        columnName: 'Serial',
+        key: 'serialNo',
+        width: 10,
+      },
+      {
+        columnName: 'Model',
+        key: 'modelNo',
+        width: 10,
+      },
+      {
+        columnName: 'Name',
+        key: 'name',
+        width: 20,
+      },
+      {
+        columnName: 'Conditin & Qty',
+        key: 'conditionAndQuantityDisplay',
+        width: 25,
+      }
+    ];
+    // let headers = ['serialNo', 'modelNo', 'name', 'equipmentType', 'brand', 'quantity', 'unit', 'quantity', 'inventorytype', 'location', 'conditionAndQuantityDisplay'];
     return {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
+      onJsPDFDocCreation: (doc: jsPDF) => {
+        doc.addPage('legal', 'landscape');
+        doc.deletePage(1);
+      },
       returnJsPDFDocObject: true,
       fileName: filename,
       orientationLandscape: true,
@@ -59,9 +87,9 @@ export class GenerateReportService {
         headerBorder: false,
         tableBodyBorder: false,
         header: headers.map((head) => {
-          return { title: head };
+          return { title: head.columnName, style: { width: head.width } };
         }),
-        table: Array.from(equipments, (item) => headers.map((head) => item[head])),
+        table: Array.from(equipments, (item) => headers.map((head) => item[head.key])),
         // invDescLabel: 'Filtered By: ' + filters.toString(),
         invDesc:
           'Filtered By: ' +
@@ -96,7 +124,19 @@ export class GenerateReportService {
       },
     });
 
-    return this.http.get<Response>(environment.API_URL + '/api/equipment/getitemsforreport', { params, headers: headers }).pipe(catchError(this.handleError));
+    return this.http.get<Response>(environment.API_URL + '/api/equipment/getitemsforreport', { params, headers: headers }).pipe(
+      catchError(this.handleError),
+      map((resp) => {
+        return resp.data.map((item) => {
+          let { conditionAndQuantity } = item;
+          let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} - ${x.quantity}`).join('\n') : '';
+          return {
+            ...item,
+            conditionAndQuantityDisplay,
+          };
+        });
+      })
+    );
   }
 
   handleError(err: HttpErrorResponse) {

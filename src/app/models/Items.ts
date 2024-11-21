@@ -19,6 +19,14 @@ export interface Item {
     midSizeUrl: string;
     url: string;
   };
+  conditionAndQuantity:
+    | {
+        condition: string;
+        quantity: number;
+      }[]
+    | [];
+  conditionAndQuantityDisplay: string;
+  totalQuantity: number;
   remarks: string;
   condition: string;
   tags: boolean;
@@ -29,7 +37,6 @@ export interface Item {
   };
   department: string;
   location: string;
-  isborrow: boolean,
+  isborrow: boolean;
   disp: boolean;
-
 }

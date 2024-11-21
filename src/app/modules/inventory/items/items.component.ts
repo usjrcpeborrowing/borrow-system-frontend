@@ -312,7 +312,7 @@ export class ItemsComponent implements OnInit, OnChanges {
     let equipments_for_report: Item[] = [];
     this.generateReportService.getEquipmentsForReport(this.filter).subscribe({
       next: (resp) => {
-        equipments_for_report = resp.data;
+        equipments_for_report = resp;
         console.log('equipments_for_report', equipments_for_report.length);
         const props = this.generateReportService.createProps(equipments_for_report, this.filter);
         var pdfObject = jsPDFInvoiceTemplate.default(props);

@@ -17,7 +17,7 @@
           <div>{{ item.brand }}</div>
           <div>{{ item.inventorytype }}</div>
           <div>{{ item.condition }}</div>
-          <div>{{ item.quantity }}</div>
+          <div>{{ item["conditionAndQuantity"] }}</div>
           <div class="availability">
             <span>borrowed: {{ item["availability"].borrowed }}</span>
             <span>available: {{ item["availability"].available }}</span>
