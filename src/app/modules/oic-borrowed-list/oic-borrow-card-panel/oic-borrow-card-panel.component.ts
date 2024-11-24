@@ -1,4 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { User } from 'src/app/models/User';
+import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
@@ -11,21 +13,27 @@ export class OicBorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
   @Input() data: any;
 
-  status_approved: string = "oic_approved";
+  status_approved: string = 'oic_approved';
+  status_faculty_confirmed: string = 'faculty_confirmed';
   status_rejected: string = 'rejected';
   selectAll = false;
   borrower: string = '';
   instructor: string = '';
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
-
-  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
+  user: User;
+  isOIC: boolean = false;
+  constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService, private authService: AuthService) {
+    this.user = this.authService.getCurrentUser() as User;
+    this.isOIC = this.authService.hasAnyRoles(['oic'], this.user.role);
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
         // item.disabled = ['approved', 'rejected'].includes(item.status);
-        item.disabled = item.status !== 'pending_approval';
+        item.disabled = !['pending_approval', 'faculty_confirmed'].includes(item.status);
+        //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
       });
       console.log(this.items);
       this.cdr.detectChanges();
@@ -57,6 +65,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
       .filter((item) => item.selected)
       .map((x) => {
         return {
+          _id: x._id,
           equipment: x.equipment._id,
           quantity: x.quantity,
           condition: x.condition,

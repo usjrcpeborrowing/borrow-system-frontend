@@ -35,7 +35,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         item.selected = false;
         item.selectedQty = item.quantity;
         item.selectedCondition = item.condition;
-        item.selectedRemarks = item.remarks
+        item.selectedRemarks = item.remarks;
         item.disabled = !['oic_approved', 'pending_return', 'unreturned'].includes(item.status);
       });
       this.cdr.detectChanges();
@@ -57,7 +57,6 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   }
 
   private _filter(value: string, options: string[]): string[] {
-    console.log('filtere', value);
     const filterValue = value.toLowerCase();
     return options.filter((option) => option.toLowerCase().includes(filterValue));
   }
@@ -84,25 +83,41 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   }
 
   releaseItems(status: string) {
+    const partiallyReturned = this.items
+      .filter((item) => item.quantity !== item.selectedQty)
+      .map((x) => ({
+        _id: null,
+        equipment: x.equipment._id,
+        quantity: x.selectedQty,
+        condition: x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.selected ? status : x.status,
+        remarks: x.selectedRemarks,
+      }));
+    console.log({ partiallyReturned });
     let selected = this.items
       .filter((item) => item.selected)
       .map((x) => ({
+        _id: x._id,
         equipment: x.equipment._id,
-        quantity: x.quantity === x.selectedQty ? x.quantity : x.quantity - x.selectedQty,
-        condition: x.selectedCondition,
-        status: status,
-        remarks: x.selectedCondition,
+        quantity: x.quantity !== x.selectedQty ? x.quantity - x.selectedQty : x.quantity,
+        condition: x.quantity !== x.selectedQty ? x.condition : x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.quantity !== x.selectedQty ? x.status : status,
+        remarks: x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
       }));
-
+    selected = selected.concat(partiallyReturned);
+    console.log({ selected });
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
-    } else {
-      this.borrowedItemService.changeBorrowStatus.next({
-        borrowedItemId: this.data._id,
-        items: selected,
-        status: this.status_released,
-      });
+      return;
     }
+
+    this.borrowedItemService.changeBorrowStatus.next({
+      borrowedItemId: this.data._id,
+      items: selected,
+      status: this.status_return,
+    });
   }
 
   returnItems(status: string) {
@@ -127,7 +142,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         condition: x.quantity !== x.selectedQty ? x.condition : x.selectedCondition,
         prevCondition: x.condition,
         status: x.quantity !== x.selectedQty ? x.status : status,
-        remarks:x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
+        remarks: x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
       }));
     selected = selected.concat(partiallyReturned);
     console.log({ selected });

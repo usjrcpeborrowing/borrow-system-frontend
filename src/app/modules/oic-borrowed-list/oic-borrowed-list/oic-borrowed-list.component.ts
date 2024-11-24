@@ -30,7 +30,7 @@ export class OicBorrowedListComponent implements OnInit {
     });
     this.borrowListService.onChangeBorrowStatus().subscribe({
       next: (resp) => {
-        if (resp.status == 'oic_approved' || resp.status == 'rejected') {
+        if (['faculty_confirmed', 'oic_approved', 'rejected'].includes(resp.status)) {
           this.approveBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
       },

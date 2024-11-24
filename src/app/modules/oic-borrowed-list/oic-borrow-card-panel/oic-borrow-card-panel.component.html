@@ -77,9 +77,18 @@
         mat-raised-button
         color="primary"
         [disabled]="actionDisabled()"
+        (click)="updateStatus(status_faculty_confirmed)"
+      >
+        Faculty Confirm
+      </button>
+      <button
+        *ngIf="isOIC"
+        mat-raised-button
+        color="primary"
+        [disabled]="actionDisabled()"
         (click)="updateStatus(status_approved)"
       >
-        Note
+        OIC Approve
       </button>
     </div>
   </mat-card-content>
