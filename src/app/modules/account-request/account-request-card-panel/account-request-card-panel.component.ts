@@ -12,7 +12,7 @@ export class AccountRequestCardPanelComponent implements OnInit {
   @Input() users: any[] = [];
   @Input() data: any;
 
-  status_approved: string = 'approved (unrelease)';
+  status_approved: string = 'oic_approved';
   selectAll = false;
 
   constructor(private userService: UserService, private snackbarService: SnackbarService) {}

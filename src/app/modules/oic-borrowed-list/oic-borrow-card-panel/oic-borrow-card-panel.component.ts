@@ -11,7 +11,7 @@ export class OicBorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
   @Input() data: any;
 
-  status_approved: string = "approved (unrelease)";
+  status_approved: string = "oic_approved";
   status_rejected: string = 'rejected';
   selectAll = false;
   borrower: string = '';

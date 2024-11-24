@@ -36,7 +36,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         item.selectedQty = item.quantity;
         item.selectedCondition = item.condition;
         item.selectedRemarks = item.remarks
-        item.disabled = !['approved (unrelease)', 'pending_return', 'unreturned'].includes(item.status);
+        item.disabled = !['oic_approved', 'pending_return', 'unreturned'].includes(item.status);
       });
       this.cdr.detectChanges();
     }, 0);
@@ -155,7 +155,7 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   }
 
   releaseBtnDisabled() {
-    return this.items.filter((item) => item.selected && ['approved (unrelease)'].includes(item.status)).length == 0;
+    return this.items.filter((item) => item.selected && ['oic_approved'].includes(item.status)).length == 0;
   }
 
   returnBtnDisabled() {
