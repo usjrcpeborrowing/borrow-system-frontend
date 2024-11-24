@@ -43,7 +43,14 @@
             />
           </div>
           <div class="detail-wrapper">
-            <div>{{ item.quantity }}</div>
+            <mat-form-field>
+              <mat-label>Quantity</mat-label>
+              <input
+                matInput
+                [(ngModel)]="item.selectedQty"
+                [readonly]="item.selectedQty == 1"
+              />
+            </mat-form-field>
             <div>{{ item.equipment.name }}</div>
             <mat-form-field>
               <mat-label>Condition</mat-label>
@@ -51,12 +58,12 @@
                 matInput
                 [matAutocomplete]="autocondition"
                 [readonly]="item.disabled"
-                [(ngModel)]="item.condition"
+                [(ngModel)]="item.selectedCondition"
                 (input)="onFilterCondition($event)"
               />
               <mat-autocomplete
                 #autocondition="matAutocomplete"
-                (optionSelected)="item.condition = $event.option.value"
+                (optionSelected)="item.selectedCondition = $event.option.value"
               >
                 <mat-option
                   *ngFor="let condition of filteredconditions | async"
@@ -70,7 +77,7 @@
               <mat-label>Remarks</mat-label>
               <input
                 matInput
-                [(ngModel)]="item.remarks"
+                [(ngModel)]="item.selectedRemarks"
                 [readonly]="item.disabled"
               />
             </mat-form-field>

@@ -33,6 +33,9 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
+        item.selectedQty = item.quantity;
+        item.selectedCondition = item.condition;
+        item.selectedRemarks = item.remarks
         item.disabled = !['approved (unrelease)', 'pending_return', 'unreturned'].includes(item.status);
       });
       this.cdr.detectChanges();
@@ -81,14 +84,14 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   }
 
   releaseItems(status: string) {
-    const selected = this.items
+    let selected = this.items
       .filter((item) => item.selected)
       .map((x) => ({
         equipment: x.equipment._id,
-        quantity: x.quantity,
-        condition: x.condition,
+        quantity: x.quantity === x.selectedQty ? x.quantity : x.quantity - x.selectedQty,
+        condition: x.selectedCondition,
         status: status,
-        remarks: x.remarks,
+        remarks: x.selectedCondition,
       }));
 
     if (!selected.length) {
@@ -103,18 +106,31 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   }
 
   returnItems(status: string) {
-    const selected = this.items
+    const partiallyReturned = this.items
+      .filter((item) => item.quantity !== item.selectedQty)
+      .map((x) => ({
+        _id: null,
+        equipment: x.equipment._id,
+        quantity: x.selectedQty,
+        condition: x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.selected ? status : x.status,
+        remarks: x.selectedRemarks,
+      }));
+    console.log({ partiallyReturned });
+    let selected = this.items
       .filter((item) => item.selected)
       .map((x) => ({
+        _id: x._id,
         equipment: x.equipment._id,
-        quantity: x.quantity,
-        condition: x.condition,
-        status: status,
-        remarks: x.remarks,
+        quantity: x.quantity !== x.selectedQty ? x.quantity - x.selectedQty : x.quantity,
+        condition: x.quantity !== x.selectedQty ? x.condition : x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.quantity !== x.selectedQty ? x.status : status,
+        remarks:x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
       }));
-
-    console.log('selected', selected);
-
+    selected = selected.concat(partiallyReturned);
+    console.log({ selected });
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
       return;

@@ -89,7 +89,21 @@ export class EquipmentService {
     params = params.append('dateAcquired', filters.dateAcquired);
     params = params.append('recentlyBorrowed', filters.recentlyBorrowed);
 
-    return this.http.get(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
+    return this.http.get<Response>(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(
+      catchError(this.handleError),
+      map((resp) => {
+        resp.data = resp.data.map((item) => {
+          let { conditionAndQuantity } = item;
+          let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} - ${x.quantity}`).join('\n') : '';
+          return {
+            ...item,
+            conditionAndQuantityDisplay,
+          };
+        });
+
+        return resp;
+      })
+    );
   }
 
   getAvailableEquipment(pagination: Pagination, filters: InventoryFilter): Observable<any> {
