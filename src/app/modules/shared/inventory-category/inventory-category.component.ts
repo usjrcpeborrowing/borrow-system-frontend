@@ -24,6 +24,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   brands: string[] = [];
   matters: string[] = Constants.equipmentMatterType;
   inventorytypes: string[] = Constants.equipmentInventoryType;
+
   departments: string[] = [];
 
   constructor(private fb: FormBuilder, private router: Router, private equipmentService: EquipmentService, private authService: AuthService) {
@@ -48,7 +49,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
 
     this.user = this.authService.getCurrentUser() as User;
     this.url = this.router.url.split('?')[0];
-    this.departments = this.user.department;
+    this.departments = this.url == '/borrow' ? Constants.departments : this.user.department;
   }
 
   ngOnInit(): void {
