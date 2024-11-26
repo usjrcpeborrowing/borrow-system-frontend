@@ -53,6 +53,9 @@
 
 .condition-quantity-wrapper {
   display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .label {
@@ -94,6 +97,20 @@
 
 ::ng-deep .mat-mdc-text-field-wrapper {
   min-width: 280px;
+}
+
+::ng-deep .condition-quantity-wrapper .mat-mdc-text-field-wrapper {
+  min-width: 180px;
+}
+
+/* .condition-quantity-wrapper mat-form-field {
+  flex: 1 1 200px;
+} */
+
+.action-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
 }
 
 @media screen and (max-width: 480px) {

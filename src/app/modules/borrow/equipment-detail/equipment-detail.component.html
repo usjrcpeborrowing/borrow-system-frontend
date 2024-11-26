@@ -54,6 +54,14 @@
           <div class="label">Location:</div>
           <div class="detail">{{ itemDetails.location }}</div>
         </div>
+        <div class="row">
+          <div class="label">Condition:</div>
+          <div class="detail">
+            <span *ngFor="let conditionQty of itemDetails.conditionAndQuantity">
+              {{ conditionQty.condition }}({{ conditionQty.quantity }}) <br />
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -88,7 +88,7 @@ export class AddComponent implements OnInit {
       inventorytype: ['', Validators.required],
       inventorytag: [false, Validators.required],
       color: ['', Validators.required],
-      condition: ['', Validators.required],
+      condition: [''],
       checkedBy: [this.currentUser.firstName, Validators.required],
       location: ['', Validators.required],
       department: ['', Validators.required],
@@ -190,6 +190,15 @@ export class AddComponent implements OnInit {
 
   addConditionAndQuantity(): void {
     this.conditionAndQuantity.push(this.createConditionAndQuantityForm());
+  }
+
+  removeConditionAndQuantity(index: number): void {
+    if (this.conditionAndQuantity.length > 1) {
+      this.conditionAndQuantity.removeAt(index);
+    } else {
+      // Optionally handle the case where there is only one form group remaining
+      console.warn('Cannot remove the last condition and quantity');
+    }
   }
 
   private _filter(value: string, options: string[]): string[] {
