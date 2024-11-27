@@ -73,7 +73,7 @@ export class BorrowComponent implements OnInit {
     dateAcquired: '',
     location: '',
     categories: '',
-    recentlyBorrowed: ''
+    recentlyBorrowed: '',
   };
   currentUserRole: any;
   currentUser: any;
@@ -108,19 +108,19 @@ export class BorrowComponent implements OnInit {
     this.currentUserRole = rolesArray.join(', ');
     this.user = this.authService.getCurrentUser();
     this.userId = this.authService.getCurrentUser()?._id as string;
-    this.userService.getDeparmentFaculty(this.user.department[0], '').subscribe({
+    this.userService.getAllFaculty('').subscribe({
       next: (resp) => {
         this.instructorlist = resp.data;
         this.borrowForm.controls['instructor'].setValue('');
       },
     });
 
-    // setTimeout(() => {
     this.filteredInstructor = this.borrowForm.controls['instructor'].valueChanges.pipe(
       startWith(''),
       map((value) => this._filterInstructor(value || ''))
     );
-    // }, 4000);
+
+    // this.borrowForm.controls['instructor'].valueChanges.subscribe((resp) => console.log({ resp }));
 
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);

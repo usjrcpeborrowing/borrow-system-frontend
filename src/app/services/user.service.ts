@@ -31,6 +31,18 @@ export class UserService {
     });
     return this.http.get<any>(environment.API_URL + '/api/users/getdepartmentfaculty', { params, headers }).pipe(catchError(this.handleError));
   }
+
+  getAllFaculty(search: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    let params = new HttpParams({
+      fromObject: {
+        search,
+      },
+    });
+    return this.http.get<any>(environment.API_URL + '/api/users/getallfaculty', { params, headers }).pipe(catchError(this.handleError));
+  }
+
   createUser(user: User): Observable<any> {
     const headers = {
       Authorization: this.token as string,
