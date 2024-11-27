@@ -42,6 +42,7 @@ export class ItemDetailsComponent implements OnInit {
     location: '',
     categories: '',
     recentlyBorrowed: '',
+    condition: ''
   };
 
   equipmentlist: any[] = [];
@@ -200,6 +201,7 @@ export class ItemDetailsComponent implements OnInit {
     this.inventoryFilter.dateAcquired = params['dateAcquired'] ? params['dateAcquired'] : '';
     this.inventoryFilter.inventorytype = params['inventorytype'] ? params['inventorytype'] : '';
     this.inventoryFilter.recentlyBorrowed = params['recentlyBorrowed'] ? params['recentlyBorrowed'] : '';
+    this.inventoryFilter.condition = params['condition'] ? params['condition'] : '';
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
     this.pagination.page = params['page'] ? params['page'] : 1;
     this.pagination.limit = params['limit'] ? params['limit'] : 25;

@@ -10,5 +10,6 @@ export interface InventoryFilter {
     dateAcquired: string;
     location: string;
     categories: string;
-    recentlyBorrowed: string
+    recentlyBorrowed: string;
+    condition: string;
 }

@@ -34,7 +34,8 @@ export class ContentTabsComponent implements OnInit {
     dateAcquired: '',
     location: '',
     categories: '',
-    recentlyBorrowed: ''
+    recentlyBorrowed: '',
+    condition: ''
   };
 
   constructor(

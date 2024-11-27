@@ -24,6 +24,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
   brands: string[] = [];
   matters: string[] = Constants.equipmentMatterType;
   inventorytypes: string[] = Constants.equipmentInventoryType;
+  conditions: string[] = Constants.equipmentStatus;
 
   departments: string[] = [];
 
@@ -36,6 +37,7 @@ export class InventoryCategoryComponent implements OnInit, OnChanges {
       inventorytype: [''],
       location: [''],
       department: [''],
+      condition: [''],
       dateRange: this.fb.group({
         start: [''],
         end: [''],

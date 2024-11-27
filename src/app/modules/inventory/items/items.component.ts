@@ -35,6 +35,7 @@ export class ItemsComponent implements OnInit, OnChanges {
     location: '',
     categories: '',
     recentlyBorrowed: '',
+    condition: ''
   };
   @Input() equipmentlist: any[] = [];
 
