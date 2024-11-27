@@ -94,7 +94,7 @@ export class EquipmentService {
       map((resp) => {
         resp.data = resp.data.map((item) => {
           let { conditionAndQuantity } = item;
-          let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} - ${x.quantity}`).join('\n') : '';
+          let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} (${x.quantity})`).join('\n') : '';
           return {
             ...item,
             conditionAndQuantityDisplay,

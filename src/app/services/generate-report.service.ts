@@ -30,23 +30,48 @@ export class GenerateReportService {
       {
         columnName: 'Serial',
         key: 'serialNo',
-        width: 10,
+        width: 20,
       },
       {
         columnName: 'Model',
         key: 'modelNo',
-        width: 10,
+        width: 15,
       },
       {
         columnName: 'Name',
         key: 'name',
-        width: 20,
+        width: 50,
+      },
+      {
+        columnName: 'Equipment Type',
+        key: 'equipmentType',
+        width: 30,
+      },
+      {
+        columnName: 'Category',
+        key: 'categories',
+        width: 35,
+      },
+      {
+        columnName: 'Brand',
+        key: 'brand',
+        width: 15,
       },
       {
         columnName: 'Conditin & Qty',
         key: 'conditionAndQuantityDisplay',
-        width: 25,
-      }
+        width: 30,
+      },
+      {
+        columnName: 'Availability',
+        key: 'availability',
+        width: 30,
+      },
+      {
+        columnName: 'Location',
+        key: 'location',
+        width: 30,
+      },
     ];
     // let headers = ['serialNo', 'modelNo', 'name', 'equipmentType', 'brand', 'quantity', 'unit', 'quantity', 'inventorytype', 'location', 'conditionAndQuantityDisplay'];
     return {
@@ -127,12 +152,15 @@ export class GenerateReportService {
     return this.http.get<Response>(environment.API_URL + '/api/equipment/getitemsforreport', { params, headers: headers }).pipe(
       catchError(this.handleError),
       map((resp) => {
+        console.log(resp.data[0]);
         return resp.data.map((item) => {
-          let { conditionAndQuantity } = item;
-          let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} - ${x.quantity}`).join('\n') : '';
+          let { conditionAndQuantity, available, borrowed } = item;
+          let availability = `available (${available})\nborrowed (${borrowed})`;
+          let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} (${x.quantity})`).join('\n') : '';
           return {
             ...item,
             conditionAndQuantityDisplay,
+            availability,
           };
         });
       })
