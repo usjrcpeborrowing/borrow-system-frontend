@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
 import { Item } from 'src/app/models/Items';
@@ -82,6 +82,9 @@ export class EquipmentDetailDialogComponent implements OnInit {
       }),
       checkedBy: [data.item.checkedBy],
       isborrow: [data.item.isborrow],
+      conditionAndQuantity: this.fb.array([]),
+      totalQuantity: [data.item.totalQuantity],
+
     });
     this.user = this.authService.getCurrentUser() as User;
     this.imageUrl = this.data.item.images.midSizeUrl;
@@ -131,10 +134,43 @@ export class EquipmentDetailDialogComponent implements OnInit {
       map((value) => this._filter(value || '', this.categories))
     );
 
+    this.data.item.conditionAndQuantity.forEach((item) => this.conditionAndQuantity.push(this.createConditionAndQuantityForm(item.condition, item.quantity)));
+    this.conditionAndQuantity.valueChanges.subscribe(() => {
+      const total = this.conditionAndQuantity.controls.reduce((sum, control) => {
+        const quantity = parseInt(control.get('quantity')?.value) || 0; // Ensure a default of 0
+        return sum + quantity;
+      }, 0);
+
+      this.equipmentForm.controls['totalQuantity'].patchValue(total);
+    });
     this.getBrands();
     this.getLocations();
     this.getCategories();
     this.getEquipmentHistory();
+  }
+
+  get conditionAndQuantity(): FormArray {
+    return this.equipmentForm.get('conditionAndQuantity') as FormArray;
+  }
+
+  createConditionAndQuantityForm(condition: string, quantity: number): FormGroup {
+    return this.fb.group({
+      condition: [condition, Validators.required],
+      quantity: [quantity, [Validators.required, Validators.min(1)]],
+    });
+  }
+
+  addConditionAndQuantity(): void {
+    this.conditionAndQuantity.push(this.createConditionAndQuantityForm('funcitonal', 1));
+  }
+
+  removeConditionAndQuantity(index: number): void {
+    if (this.conditionAndQuantity.length > 1) {
+      this.conditionAndQuantity.removeAt(index);
+    } else {
+      // Optionally handle the case where there is only one form group remaining
+      console.warn('Cannot remove the last condition and quantity');
+    }
   }
 
   getBrands() {

@@ -183,7 +183,7 @@ export class AddComponent implements OnInit {
 
   createConditionAndQuantityForm(): FormGroup {
     return this.fb.group({
-      condition: ['', Validators.required],
+      condition: ['functional', Validators.required],
       quantity: [1, [Validators.required, Validators.min(1)]],
     });
   }
