@@ -12,8 +12,8 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 })
 export class SignupComponent {
   signupForm: FormGroup;
-  rolelist = Constants.userRoles;
-  departmentlist = Constants.departments;
+  roles = ['student', 'faculty'];
+  departmentlist = ['civil_engineering', 'computer_engineering', 'electrical_engineering', 'electronics_and_communications_engineering', 'industrial_engineering', 'mechanical_engineering'];
   selected_depts: string[] = [];
 
   constructor(private fb: FormBuilder, private userService: UserService, private _snackBar: MatSnackBar) {

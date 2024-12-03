@@ -30,8 +30,14 @@
           <input matInput formControlName="lastName" />
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Role</mat-label>
-          <input matInput formControlName="role" readonly/>
+          <!-- <mat-label>Role</mat-label>
+          <input matInput formControlName="role" readonly /> -->
+          <mat-label>Semester</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let role of roles" [value]="role">
+              {{ role }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field class="major-filter">
           <mat-label>Department</mat-label>
