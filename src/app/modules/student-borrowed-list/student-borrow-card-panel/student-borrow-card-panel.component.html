@@ -43,7 +43,14 @@
             />
           </div>
           <div class="detail-wrapper">
-            <div>Qty. {{ item.quantity }}</div>
+            <mat-form-field>
+              <mat-label>Quantity</mat-label>
+              <input
+                matInput
+                [(ngModel)]="item.selectedQty"
+                [readonly]="item.selectedQty == 1"
+              />
+            </mat-form-field>
             <div>{{ item.equipment.name }}</div>
             <div>{{ item.condition }}</div>
             <div class="status">

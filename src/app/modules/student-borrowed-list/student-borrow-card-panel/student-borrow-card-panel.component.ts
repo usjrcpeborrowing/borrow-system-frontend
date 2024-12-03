@@ -22,6 +22,9 @@ export class StudentBorrowCardPanelComponent implements OnInit {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
+        item.selectedQty = item.quantity;
+        item.selectedCondition = item.condition;
+        item.selectedRemarks = item.remarks;
         item.disabled = !['released', 'unreturned'].includes(item.status);
       });
       this.cdr.detectChanges();
@@ -49,24 +52,43 @@ export class StudentBorrowCardPanelComponent implements OnInit {
   }
 
   returnItems(status: string) {
-    const selected = this.items
+    const partiallyReturned = this.items
+      .filter((item) => item.quantity !== item.selectedQty)
+      .map((x) => ({
+        _id: null,
+        equipment: x.equipment._id,
+        quantity: x.selectedQty,
+        condition: x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.selected ? status : x.status,
+        remarks: x.selectedRemarks,
+      }));
+    console.log({ partiallyReturned });
+    let selected = this.items
       .filter((item) => item.selected)
-      .map((x) => {
-        return {
-          equipment: x.equipment._id,
-          quantity: x.quantity,
-          condition: x.condition,
-          status: status,
-        };
-      });
+      .map((x) => ({
+        _id: x._id,
+        equipment: x.equipment._id,
+        quantity: x.quantity !== x.selectedQty ? x.quantity - x.selectedQty : x.quantity,
+        condition: x.quantity !== x.selectedQty ? x.condition : x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.quantity !== x.selectedQty ? x.status : status,
+        remarks: x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
+      }));
+    selected = selected.concat(partiallyReturned);
+    console.log({ selected });
 
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
-    } else {
-      this.borrowedItemService.changeBorrowStatus.next({ borrowedItemId: this.data._id, items: selected, status: this.status_return });
+      return;
     }
+    this.borrowedItemService.changeBorrowStatus.next({
+      borrowedItemId: this.data._id,
+      items: selected,
+      status: this.status_return,
+    });
   }
-  
+
   formatStatus(status: string): string {
     return status
       .split('_')
