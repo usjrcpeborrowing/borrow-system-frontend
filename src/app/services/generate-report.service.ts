@@ -35,7 +35,7 @@ export class GenerateReportService {
       {
         columnName: 'Model',
         key: 'modelNo',
-        width: 15,
+        width: 20,
       },
       {
         columnName: 'Name',
@@ -45,6 +45,11 @@ export class GenerateReportService {
       {
         columnName: 'Equipment Type',
         key: 'equipmentType',
+        width: 30,
+      },
+      {
+        columnName: 'Inventory Type',
+        key: 'inventorytype',
         width: 30,
       },
       {
@@ -58,7 +63,7 @@ export class GenerateReportService {
         width: 15,
       },
       {
-        columnName: 'Conditin & Qty',
+        columnName: 'Condition & Qty',
         key: 'conditionAndQuantityDisplay',
         width: 30,
       },
@@ -77,7 +82,7 @@ export class GenerateReportService {
     return {
       outputType: jsPDFInvoiceTemplate.OutputType.Save,
       onJsPDFDocCreation: (doc: jsPDF) => {
-        doc.addPage('legal', 'landscape');
+        doc.addPage('a4', 'landscape');
         doc.deletePage(1);
       },
       returnJsPDFDocObject: true,

@@ -48,7 +48,7 @@
               <input
                 matInput
                 [(ngModel)]="item.selectedQty"
-                [readonly]="item.selectedQty == 1"
+                [readonly]="item.quantity == 1"
               />
             </mat-form-field>
             <div>{{ item.equipment.name }}</div>

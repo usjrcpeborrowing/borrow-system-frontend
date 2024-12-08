@@ -24,7 +24,6 @@ export class OicBorrowCardPanelComponent implements OnInit {
   isOIC: boolean = false;
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService, private authService: AuthService) {
     this.user = this.authService.getCurrentUser() as User;
-    this.isOIC = this.authService.hasAnyRoles(['oic'], this.user.role);
   }
 
   ngOnInit(): void {
@@ -32,15 +31,22 @@ export class OicBorrowCardPanelComponent implements OnInit {
       this.items.forEach((item) => {
         item.selected = false;
         // item.disabled = ['approved', 'rejected'].includes(item.status);
+        // item.disabled = !['pending_approval'].includes(item.status) || (!['faculty_confirmed'].includes(item.status) && this.isDeptOIC());
         item.disabled = !['pending_approval', 'faculty_confirmed'].includes(item.status);
+
         //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
       });
-      console.log(this.items);
+      console.log('mundo magiging ikaw', this.data);
+      this.isOIC = this.isDeptOIC();
       this.cdr.detectChanges();
     }, 0);
 
     this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
     this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
+  }
+
+  isDeptOIC(): boolean {
+    return this.authService.hasAnyRoles(['oic'], this.user.role) && this.user.department.includes(this.data?.department);
   }
 
   toggleSelectAll(event: any): void {

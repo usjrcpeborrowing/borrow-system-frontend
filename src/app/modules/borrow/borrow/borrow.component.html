@@ -86,6 +86,17 @@
               <form [formGroup]="borrowForm" (ngSubmit)="onSubmit()">
                 <div class="class-detail">
                   <mat-form-field class="major-filter">
+                    <mat-label>Department</mat-label>
+                    <input
+                      type="text"
+                      placeholder="Department"
+                      matInput
+                      formControlName="department"
+                      readonly
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field class="major-filter">
                     <mat-label>Instructor</mat-label>
                     <input
                       type="text"

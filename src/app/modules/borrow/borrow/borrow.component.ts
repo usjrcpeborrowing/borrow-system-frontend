@@ -261,6 +261,7 @@ export class BorrowComponent implements OnInit {
     this.pagination.page = params['page'] ? params['page'] : 1;
     this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.sortUsed = params['sort'] ? params['sort'] : 'asc';
+    this.borrowForm.controls['department'].setValue(this.inventoryFilter.department);
     this.getEquipmentList();
   }
   getEquipmentList() {
