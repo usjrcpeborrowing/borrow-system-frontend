@@ -52,6 +52,12 @@ export class StudentBorrowCardPanelComponent implements OnInit {
   }
 
   returnItems(status: string) {
+    let exceed = this.items.some((item) => item.selectedQty > item.quantity);
+    if (exceed) {
+      this.snackbarService.openSnackBar('Updated items exceeds on approved Qty', 'OK');
+      return;
+    }
+    
     const partiallyReturned = this.items
       .filter((item) => item.quantity !== item.selectedQty)
       .map((x) => ({

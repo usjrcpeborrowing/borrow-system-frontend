@@ -83,6 +83,12 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
   }
 
   releaseItems(status: string) {
+    let exceed = this.items.some((item) => item.selectedQty > item.quantity);
+    if (exceed) {
+      this.snackbarService.openSnackBar('Updated items exceeds on approved Qty', 'OK');
+      return;
+    }
+
     const partiallyReturned = this.items
       .filter((item) => item.quantity !== item.selectedQty)
       .map((x) => ({
@@ -107,7 +113,6 @@ export class BorrowCardPanelComponent implements OnInit, OnChanges {
         remarks: x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
       }));
     selected = selected.concat(partiallyReturned);
-    console.log({ selected });
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
       return;
