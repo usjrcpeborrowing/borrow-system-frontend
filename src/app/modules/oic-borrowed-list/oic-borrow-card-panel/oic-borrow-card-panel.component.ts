@@ -32,7 +32,13 @@ export class OicBorrowCardPanelComponent implements OnInit {
         item.selected = false;
         // item.disabled = ['approved', 'rejected'].includes(item.status);
         // item.disabled = !['pending_approval'].includes(item.status) || (!['faculty_confirmed'].includes(item.status) && this.isDeptOIC());
-        item.disabled = !['pending_approval', 'faculty_confirmed'].includes(item.status);
+        if (!['pending_approval'].includes(item.status)) {
+          if (['faculty_confirmed'].includes(item.status) && this.isDeptOIC()) {
+            item.disabled = false;
+          } else {
+            item.disabled = true;
+          }
+        }
 
         //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
       });
