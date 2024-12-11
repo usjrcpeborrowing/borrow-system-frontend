@@ -10,7 +10,18 @@
   />
 
   <div class="item-name">{{ equipment.name }}</div>
-  <div class="item-qty">
+  <form [formGroup]="addedItemForm">
+    <mat-form-field class="qty-input">
+      <mat-label>Qty</mat-label>
+      <input
+        matInput
+        formControlName="quantity"
+        [readonly]="length == 1"
+      />
+    </mat-form-field>
+  </form>
+
+  <!-- <div class="item-qty">
     <span>{{ quantity }}</span>
     <button
       mat-icon-button
@@ -26,7 +37,7 @@
     >
       <mat-icon>add</mat-icon>
     </button>
-  </div>
+  </div> -->
   <div class="circle">
     <button mat-icon-button (click)="removeItem()">
       <mat-icon>close</mat-icon>

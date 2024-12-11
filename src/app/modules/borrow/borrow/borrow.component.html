@@ -79,6 +79,7 @@
                     *ngFor="let equipment of addedEquipment"
                     [equipment]="equipment"
                     (toggleInCart)="toggleItemInCart($event)"
+                    (updateQuantity)="updateItemQuantityInAddedEquipment($event)"
                     (removeFromCart)="removeItemFromAddedEquipment($event)"
                   ></app-added-equipment-card>
                 </div>

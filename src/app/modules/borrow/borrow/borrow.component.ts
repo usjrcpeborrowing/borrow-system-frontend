@@ -74,7 +74,7 @@ export class BorrowComponent implements OnInit {
     location: '',
     categories: '',
     recentlyBorrowed: '',
-    condition: ''
+    condition: '',
   };
   currentUserRole: any;
   currentUser: any;
@@ -173,7 +173,7 @@ export class BorrowComponent implements OnInit {
     if (existingItemIndex !== -1) {
       return;
     } else {
-      this.addedEquipment.push(item);
+      this.addedEquipment.push({ ...item });
     }
   }
 
@@ -185,7 +185,7 @@ export class BorrowComponent implements OnInit {
   }
 
   updateItemQuantityInAddedEquipment({ item, quantity }: { item: Item; quantity: number }) {
-    const index = this.addedEquipment.indexOf(item);
+    const index = this.addedEquipment.findIndex((e) => e._id === item._id);
     if (index > -1) {
       this.addedEquipment[index].quantity = quantity;
     }
