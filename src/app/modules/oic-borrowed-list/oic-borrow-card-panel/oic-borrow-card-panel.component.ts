@@ -33,11 +33,17 @@ export class OicBorrowCardPanelComponent implements OnInit {
         // item.disabled = ['approved', 'rejected'].includes(item.status);
         // item.disabled = !['pending_approval'].includes(item.status) || (!['faculty_confirmed'].includes(item.status) && this.isDeptOIC());
         if (!['pending_faculty_confirmation'].includes(item.status)) {
+          console.log('neeeg');
           if (['faculty_confirmed'].includes(item.status) && this.isDeptOIC()) {
             item.disabled = false;
           } else {
             item.disabled = true;
           }
+        }
+        console.log('isfaculty', this.isClassFaculty(), this.data?.instructor, this.user._id);
+        // to disable pending_faculty_confirmation from oic
+        if (['pending_faculty_confirmation'].includes(item.status) && !this.isClassFaculty()) {
+          item.disabled = true;
         }
 
         //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
@@ -53,6 +59,10 @@ export class OicBorrowCardPanelComponent implements OnInit {
 
   isDeptOIC(): boolean {
     return this.authService.hasAnyRoles(['oic'], this.user.role) && this.user.department.includes(this.data?.department);
+  }
+
+  isClassFaculty(): boolean {
+    return this.data?.instructor._id == this.user._id;
   }
 
   toggleSelectAll(event: any): void {
