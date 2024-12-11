@@ -30,17 +30,18 @@ export class OicBorrowCardPanelComponent implements OnInit {
     setTimeout(() => {
       this.items.forEach((item) => {
         item.selected = false;
+        item.selectedQty = item.quantity;
+        item.selectedCondition = item.condition;
+        item.selectedRemarks = item.remarks;
         // item.disabled = ['approved', 'rejected'].includes(item.status);
         // item.disabled = !['pending_approval'].includes(item.status) || (!['faculty_confirmed'].includes(item.status) && this.isDeptOIC());
         if (!['pending_faculty_confirmation'].includes(item.status)) {
-          console.log('neeeg');
           if (['faculty_confirmed'].includes(item.status) && this.isDeptOIC()) {
             item.disabled = false;
           } else {
             item.disabled = true;
           }
         }
-        console.log('isfaculty', this.isClassFaculty(), this.data?.instructor, this.user._id);
         // to disable pending_faculty_confirmation from oic
         if (['pending_faculty_confirmation'].includes(item.status) && !this.isClassFaculty()) {
           item.disabled = true;
@@ -48,7 +49,6 @@ export class OicBorrowCardPanelComponent implements OnInit {
 
         //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
       });
-      console.log('mundo magiging ikaw', this.data);
       this.isOIC = this.isDeptOIC();
       this.cdr.detectChanges();
     }, 0);
@@ -83,17 +83,31 @@ export class OicBorrowCardPanelComponent implements OnInit {
   }
 
   updateStatus(status: string) {
-    const selected = this.items
+    const partiallyReturned = this.items
+      .filter((item) => item.quantity !== item.selectedQty)
+      .map((x) => ({
+        _id: null,
+        equipment: x.equipment._id,
+        quantity: x.selectedQty,
+        condition: x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.selected ? status : x.status,
+        remarks: x.selectedRemarks,
+      }));
+    console.log({ partiallyReturned });
+
+    let selected = this.items
       .filter((item) => item.selected)
-      .map((x) => {
-        return {
-          _id: x._id,
-          equipment: x.equipment._id,
-          quantity: x.quantity,
-          condition: x.condition,
-          status: status,
-        };
-      });
+      .map((x) => ({
+        _id: x._id,
+        equipment: x.equipment._id,
+        quantity: x.quantity !== x.selectedQty ? x.quantity - x.selectedQty : x.quantity,
+        condition: x.quantity !== x.selectedQty ? x.condition : x.selectedCondition,
+        prevCondition: x.condition,
+        status: x.quantity !== x.selectedQty ? x.status : status,
+        remarks: x.quantity !== x.selectedQty ? x.remarks : x.selectedRemarks,
+      }));
+    selected = selected.concat(partiallyReturned);
 
     if (!selected.length) {
       this.snackbarService.openSnackBar('No items selected', 'OK');
