@@ -51,6 +51,12 @@ export class ItemPanelComponent implements OnInit {
   // }
 
   viewItemDetails() {
+    this.dialog.open(EquipmentDetailComponent, {
+      data: this.item,
+    });
+  }
+
+  editEquipment() {
     const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
       data: {
         item: this.item,

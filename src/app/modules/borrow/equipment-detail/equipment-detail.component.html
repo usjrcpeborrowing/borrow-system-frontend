@@ -1,5 +1,5 @@
 <div class="dialog-detail">
-  <h2 mat-dialog-title>Item Details sss</h2>
+  <h2 mat-dialog-title>Item Details</h2>
   <div mat-dialog-content>
     <div class="item-details-container">
       <div class="image-container">
@@ -61,6 +61,10 @@
               {{ conditionQty.condition }}({{ conditionQty.quantity }}) <br />
             </span>
           </div>
+        </div>
+        <div class="row">
+          <div class="label">Total Quantity:</div>
+          <div class="detail">{{ itemDetails.totalQuantity }}</div>
         </div>
       </div>
     </div>

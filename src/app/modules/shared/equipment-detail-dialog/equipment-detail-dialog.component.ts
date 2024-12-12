@@ -25,9 +25,10 @@ export class EquipmentDetailDialogComponent implements OnInit {
   defaultImage = '../../../../assets//equipment_default_image.png';
   displayImage: string = '';
   equipmentForm: FormGroup;
-  canEdit: boolean = false;
+  canEdit: boolean = true;
   canUpdate: boolean = false;
   canConfirm: boolean = false;
+  isOIC: boolean = false;
 
   brands: string[] = [];
   locations: string[] = [];
@@ -90,6 +91,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
     this.imageUrl = this.data.item.images.midSizeUrl;
     this.canUpdate = this.authService.hasAnyRoles(['chairman', 'oic', 'reads'], this.user.role);
     this.canConfirm = this.authService.hasAnyRoles(['chairman', 'oic'], this.user.role);
+    this.isOIC = this.authService.hasAnyRoles(['chairman', 'oic'], this.user.role);
   }
 
   ngOnInit(): void {

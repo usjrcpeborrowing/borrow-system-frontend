@@ -1,5 +1,5 @@
 <div class="dialog-container">
-  <h2 mat-dialog-title>Equipment Details</h2>
+  <h2 mat-dialog-title>Equipment Details ({{ data.item._id }})</h2>
   <form [formGroup]="equipmentForm">
     <mat-dialog-content>
       <div class="img-wrapper">
@@ -79,9 +79,13 @@
           <input matInput formControlName="modelNo" [readonly]="!canEdit" />
         </mat-form-field>
         <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" [readonly]="!canEdit" />
+        </mat-form-field>
+        <!-- <mat-form-field>
           <mat-label>Quantity</mat-label>
           <input matInput formControlName="quantity" [readonly]="!canEdit" />
-        </mat-form-field>
+        </mat-form-field> -->
         <mat-form-field>
           <mat-label>Unit</mat-label>
           <input matInput formControlName="unit" [readonly]="!canEdit" />
@@ -258,9 +262,9 @@
 
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Cancel</button>
-      <button mat-button (click)="canEdit = !canEdit">Enable Edit</button>
+      <!-- <button mat-button (click)="canEdit = !canEdit">Enable Edit</button> -->
       <button
-        [disabled]="!canEdit"
+        [disabled]="data.action == 'Confirm' && !isOIC"
         mat-button
         [mat-dialog-close]="equipmentForm.value"
         cdkFocusInitial
