@@ -161,7 +161,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
   }
 
   addConditionAndQuantity(): void {
-    this.conditionAndQuantity.push(this.createConditionAndQuantityForm('funcitonal', 1));
+    this.conditionAndQuantity.push(this.createConditionAndQuantityForm('functional', 1));
   }
 
   removeConditionAndQuantity(index: number): void {

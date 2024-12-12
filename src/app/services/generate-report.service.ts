@@ -151,6 +151,7 @@ export class GenerateReportService {
         name: filters.name,
         dateAcquired: filters.dateAcquired,
         categories: filters.categories,
+        recentlyBorrowed: filters.recentlyBorrowed
       },
     });
 

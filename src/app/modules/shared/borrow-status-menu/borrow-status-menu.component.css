@@ -1,7 +1,16 @@
 .borrow-status-wrapper {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    font-size: 12px;
-    max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  font-size: 12px;
+  line-height: normal;
+  max-width: 350px;
+}
+
+.borrow-status-wrapper span {
+  padding: 2px 0;
+  min-width: 100px;
+  font-weight: 600;
+  color: rgb(62, 112, 62);
+  display: inline-block;
 }
