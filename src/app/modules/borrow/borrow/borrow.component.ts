@@ -99,6 +99,11 @@ export class BorrowComponent implements OnInit {
       endPeriod: ['', Validators.required],
       instructor: ['', Validators.required],
       purpose: ['', Validators.required],
+      otherpurpose: [''],
+      dateofuse: this.fb.group({
+        start: ['', Validators.required],
+        end: ['', Validators.required],
+      }),
       department: [this.currentUser.department],
     });
   }
@@ -298,54 +303,6 @@ export class BorrowComponent implements OnInit {
     this.router.navigate(['/borrow'], navigationExtras);
   }
 
-  borrowItems() {
-    if (this.addedEquipment.length === 0) {
-      alert('Cart is Empty');
-      return;
-    }
-
-    console.log(
-      this.addedEquipment.map((eq) => {
-        return {
-          equipment: eq._id,
-          quantity: eq.quantity,
-          condition: eq.remarks,
-        };
-      })
-    );
-
-    // this.isFetching = true;
-    let body = {
-      itemborrowed: this.addedEquipment.map((eq) => {
-        return {
-          equipment: eq._id,
-          quantity: eq.quantity,
-          condition: eq.remarks,
-        };
-      }),
-      borrower: this.userId,
-      purpose: this.borrowForm.controls['purpose'].value,
-      instructor: this.borrowForm.controls['instructor'].value,
-      className: this.borrowForm.controls['className'].value,
-      startPeriod: this.borrowForm.controls['startPeriod'].value,
-      endPeriod: this.borrowForm.controls['endPeriod'].value,
-      department: this.borrowForm.controls['department'].value,
-    };
-
-    this.borrowedItemsService.createBorrowItems(body).subscribe({
-      next: (resp) => {
-        this.openSnackBar(resp.message, 'OK');
-      },
-      error: (err) => {
-        this.openSnackBar(err.message, 'OK');
-      },
-      complete: () => {
-        this.isFetching = false;
-        this.borrowForm.reset();
-      },
-    });
-  }
-
   openSnackBar(message: string, action: string, isError: boolean = false): void {
     let config: MatSnackBarConfig = {
       duration: 3000,
@@ -389,12 +346,14 @@ export class BorrowComponent implements OnInit {
         };
       }),
       borrower: this.userId,
-      purpose: this.borrowForm.controls['purpose'].value,
       instructor: this.borrowForm.controls['instructor'].value,
       className: this.borrowForm.controls['className'].value,
+      classCode: this.borrowForm.controls['classCode'].value,
       startPeriod: this.borrowForm.controls['startPeriod'].value,
       endPeriod: this.borrowForm.controls['endPeriod'].value,
       department: this.borrowForm.controls['department'].value,
+      purpose: this.borrowForm.controls['purpose'].value == 'others' ? `Others (${this.borrowForm.controls['otherpurpose'].value})` : this.borrowForm.controls['purpose'].value,
+      dateofuse: this.borrowForm.controls['dateofuse'].value,
     };
 
     this.borrowedItemsService.createBorrowItems(body).subscribe({

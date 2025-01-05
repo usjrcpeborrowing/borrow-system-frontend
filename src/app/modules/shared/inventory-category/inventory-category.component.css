@@ -21,6 +21,7 @@
 .select-container {
   margin-left: 10px;
 }
+
 .mat-mdc-standard-chip.mat-primary.mat-mdc-chip-selected,
 .mat-mdc-standard-chip.mat-primary.mat-mdc-chip-highlighted {
   --mdc-chip-elevated-container-color: #5fa55a;

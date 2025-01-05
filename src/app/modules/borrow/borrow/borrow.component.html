@@ -79,7 +79,9 @@
                     *ngFor="let equipment of addedEquipment"
                     [equipment]="equipment"
                     (toggleInCart)="toggleItemInCart($event)"
-                    (updateQuantity)="updateItemQuantityInAddedEquipment($event)"
+                    (updateQuantity)="
+                      updateItemQuantityInAddedEquipment($event)
+                    "
                     (removeFromCart)="removeItemFromAddedEquipment($event)"
                   ></app-added-equipment-card>
                 </div>
@@ -123,7 +125,7 @@
                   </mat-form-field>
                   <mat-form-field class="major-filter">
                     <mat-label>Purpose</mat-label>
-                    <mat-select formControlName="purpose">
+                    <mat-select formControlName="purpose" #purpose>
                       <mat-option
                         *ngFor="let purpose of purpose_list"
                         [value]="purpose"
@@ -133,6 +135,17 @@
                       <!-- Add other departments as needed -->
                     </mat-select>
                   </mat-form-field>
+                  <mat-form-field
+                    *ngIf="purpose.value == 'others'"
+                    class="major-filter"
+                  >
+                    <mat-label>Specify Here</mat-label>
+                    <input
+                      matInput
+                      type="text"
+                      formControlName="otherpurpose"
+                    />
+                  </mat-form-field>
                   <mat-form-field class="major-filter">
                     <mat-label>Class Code</mat-label>
                     <input matInput type="text" formControlName="classCode" />
@@ -140,6 +153,29 @@
                   <mat-form-field class="major-filter">
                     <mat-label>Class Name</mat-label>
                     <input matInput type="text" formControlName="className" />
+                  </mat-form-field>
+                  <mat-form-field class="form-field">
+                    <mat-label>Date of Use</mat-label>
+                    <mat-date-range-input
+                      formGroupName="dateofuse"
+                      [rangePicker]="dateofuse"
+                    >
+                      <input
+                        matStartDate
+                        formControlName="start"
+                        placeholder="Start date"
+                      />
+                      <input
+                        matEndDate
+                        formControlName="end"
+                        placeholder="Return date"
+                      />
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="dateofuse"
+                    ></mat-datepicker-toggle>
+                    <mat-date-range-picker #dateofuse></mat-date-range-picker>
                   </mat-form-field>
                   <mat-form-field class="major-filter">
                     <mat-label>Start Period</mat-label>

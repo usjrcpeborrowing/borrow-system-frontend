@@ -196,6 +196,11 @@
 .class-detail-category {
   display: none;
 }
+
+.form-field {
+  height: 70px;
+  margin-bottom: -22px;
+}
 @media screen and (max-width: 480px) {
   .card {
     flex-grow: 1;
