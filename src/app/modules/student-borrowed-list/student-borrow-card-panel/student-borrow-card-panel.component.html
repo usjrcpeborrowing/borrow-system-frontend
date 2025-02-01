@@ -17,6 +17,12 @@
         <div class="class-details">
           <span>DEPARTMENT: </span>{{ data.department }}
         </div>
+        <div class="class-details">
+          <span>DATE OF USE: </span
+          >{{ data.startDate | date : "mediumDate" }} -{{
+            data.endDate | date : "mediumDate"
+          }}
+        </div>
       </div>
       <div class="borrower-wrapper">
         <div class="borrower">{{ borrower }}</div>
@@ -49,7 +55,6 @@
             <mat-form-field>
               <mat-label>Quantity</mat-label>
               <input
-              
                 matInput
                 [(ngModel)]="item.selectedQty"
                 [readonly]="item.quantity == 1"
@@ -74,7 +79,20 @@
         <mat-divider></mat-divider>
       </div>
     </div>
-
+    <mat-horizontal-stepper orientation="vertical" selectedIndex="2">
+      <ng-template matStepperIcon="edit">
+        <mat-icon>check</mat-icon>
+      </ng-template>
+      <mat-step label="Step 1" [completed]="true">
+        <span>1</span>
+      </mat-step>
+      <mat-step label="Step 2" [completed]="true">
+        <span>2</span>
+      </mat-step>
+      <mat-step label="Step 3" [completed]="true">
+        <span>3</span>
+      </mat-step>
+    </mat-horizontal-stepper>
     <div class="button-content">
       <span class="spacer"></span>
       <div class="report-button">

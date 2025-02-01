@@ -17,6 +17,12 @@
         <div class="class-details">
           <span>DEPARTMENT: </span>{{ data.department }}
         </div>
+        <div class="class-details">
+          <span>DATE OF USE: </span
+          >{{ data.startDate | date : "mediumDate" }} -{{
+            data.endDate | date : "mediumDate"
+          }}
+        </div>
       </div>
       <div class="borrower-wrapper">
         <div class="borrower">{{ borrower }}</div>
