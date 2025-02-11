@@ -1,0 +1,39 @@
+<!-- <mat-expansion-panel >
+  <mat-expansion-panel-header>
+    <mat-panel-title> Item Name </mat-panel-title>
+    <mat-panel-description class="borrowed-item-detail">
+      <div>Quantity</div>
+      <div>Condition</div>
+      <div>Status</div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+</mat-expansion-panel> -->
+<div class="expansion-panel-container">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ item["equipment"].name }} </mat-panel-title>
+      <mat-panel-description class="borrowed-item-detail">
+        <div>{{ item["selectedQty"] }}</div>
+        <div>{{ item.condition }}</div>
+        <div>{{ item["status"] }}</div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-horizontal-stepper orientation="vertical" selectedIndex="2">
+      <ng-template matStepperIcon="edit">
+        <mat-icon>check</mat-icon>
+      </ng-template>
+      <!-- <mat-step [label]="item['status']" [completed]="true">
+        <span>1</span>
+      </mat-step>
+      <mat-step label="Step 2" [completed]="true">
+        <span>2</span>
+      </mat-step>
+      <mat-step label="Step 3" [completed]="true">
+        <span>3</span>
+      </mat-step> -->
+      <mat-step *ngFor="let h of history" [label]="h.label" [completed]="true">
+        <!-- <span>{{ h?.updatedAt | date: "mediumDate" }}</span> -->
+      </mat-step>
+    </mat-horizontal-stepper>
+  </mat-expansion-panel>
+</div>

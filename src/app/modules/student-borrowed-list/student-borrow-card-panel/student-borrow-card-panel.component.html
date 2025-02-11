@@ -44,7 +44,8 @@
         *ngFor="let item of items; let i = index"
         [class.last-item]="i === items.length - 1"
       >
-        <div class="item-row">
+        <app-student-borrowed-item-row [item]="item" [history]="history"></app-student-borrowed-item-row>
+        <!-- <div class="item-row">
           <div class="img-wrapper">
             <img
               [src]="item?.equipment?.images?.thumbnailUrl ?? defaultImage"
@@ -75,11 +76,11 @@
             (change)="onItemChange(item)"
             [disabled]="item.disabled"
           ></mat-checkbox>
-        </div>
+        </div> -->
         <mat-divider></mat-divider>
       </div>
     </div>
-    <mat-horizontal-stepper orientation="vertical" selectedIndex="2">
+    <!-- <mat-horizontal-stepper orientation="vertical" selectedIndex="2">
       <ng-template matStepperIcon="edit">
         <mat-icon>check</mat-icon>
       </ng-template>
@@ -92,7 +93,7 @@
       <mat-step label="Step 3" [completed]="true">
         <span>3</span>
       </mat-step>
-    </mat-horizontal-stepper>
+    </mat-horizontal-stepper> -->
     <div class="button-content">
       <span class="spacer"></span>
       <div class="report-button">

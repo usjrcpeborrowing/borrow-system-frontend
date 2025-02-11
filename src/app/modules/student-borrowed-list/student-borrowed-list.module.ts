@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,12 +15,15 @@ import { StudentBorrowCardPanelComponent } from './student-borrow-card-panel/stu
 import { StudentBorrowCardComponent } from './student-borrow-card/student-borrow-card.component';
 import { StudentBorrowedListRoutingModule } from './student-borrowed-list-routing.module';
 import { StudentBorrowedListComponent } from './student-borrowed-list/student-borrowed-list.component';
+import { StudentBorrowedItemRowComponent } from './student-borrowed-item-row/student-borrowed-item-row.component';
 @NgModule({
   declarations: [
     StudentBorrowedListComponent,
     StudentBorrowCardPanelComponent,
-    StudentBorrowCardComponent
+    StudentBorrowCardComponent,
+    StudentBorrowedItemRowComponent
   ],
+  providers:[DatePipe],
   imports: [
     CommonModule,
     StudentBorrowedListRoutingModule,

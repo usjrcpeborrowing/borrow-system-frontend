@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 })
 export class StudentBorrowCardPanelComponent implements OnInit {
   @Input() items: any[] = [];
+  @Input() history: any[] = [];
   @Input() data: any;
 
   status_return: string = 'pending_return';
