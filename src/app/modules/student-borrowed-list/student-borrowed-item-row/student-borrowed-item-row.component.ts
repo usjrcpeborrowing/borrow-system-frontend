@@ -10,6 +10,8 @@ import { Item } from 'src/app/models/Items';
 export class StudentBorrowedItemRowComponent implements OnChanges {
   @Input() item!: Item;
   @Input() history: any[] = [];
+  status_return: string = 'pending_return';
+  defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private datePipe: DatePipe) {}
 

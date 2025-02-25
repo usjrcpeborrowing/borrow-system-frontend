@@ -1,5 +1,7 @@
 .expansion-panel-container {
   padding: 5px 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .borrowed-item-detail {
@@ -14,4 +16,34 @@
 .borrowed-item-detail div {
   flex: 1;
   padding: 0 5px;
+}
+
+
+.action-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 20px;
+}
+
+.img-wrapper {
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgb(109, 109, 109);
+}
+
+.img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.spacer {
+  flex: 1 1 0;
+}
+
+::ng-depp .mat-step-label-selected {
+  font-size: 245px;
+  color: green !important;
 }

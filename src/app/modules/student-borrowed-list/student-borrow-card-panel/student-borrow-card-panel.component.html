@@ -41,10 +41,16 @@
     </div>
     <div class="item-container">
       <div
+        class="item-row"
         *ngFor="let item of items; let i = index"
         [class.last-item]="i === items.length - 1"
       >
-        <app-student-borrowed-item-row [item]="item" [history]="history"></app-student-borrowed-item-row>
+        <div class="item-row-wrapper">
+          <app-student-borrowed-item-row
+            [item]="item"
+            [history]="history"
+          ></app-student-borrowed-item-row>
+        </div>
         <!-- <div class="item-row">
           <div class="img-wrapper">
             <img
@@ -77,6 +83,11 @@
             [disabled]="item.disabled"
           ></mat-checkbox>
         </div> -->
+        <mat-checkbox
+          [(ngModel)]="item.selected"
+          (change)="onItemChange(item)"
+          [disabled]="item.disabled"
+        ></mat-checkbox>
         <mat-divider></mat-divider>
       </div>
     </div>

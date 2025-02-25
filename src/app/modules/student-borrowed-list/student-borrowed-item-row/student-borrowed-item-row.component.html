@@ -10,10 +10,28 @@
 </mat-expansion-panel> -->
 <div class="expansion-panel-container">
   <mat-expansion-panel>
+    <div class="action-wrapper">
+      <div class="img-wrapper">
+        <img
+          [src]="item['equipment']?.images?.thumbnailUrl ?? defaultImage"
+          alt="Equipment Image"
+        />
+      </div>
+      <mat-form-field>
+        <mat-label>No. of items you want return</mat-label>
+        <input
+          matInput
+          [(ngModel)]="item['selectedQty']"
+          [readonly]="item.quantity == 1"
+        />
+      </mat-form-field>
+      <span class="spacer"></span>
+      <button mat-raised-button color="accent">Return</button>
+    </div>
     <mat-expansion-panel-header>
       <mat-panel-title> {{ item["equipment"].name }} </mat-panel-title>
       <mat-panel-description class="borrowed-item-detail">
-        <div>{{ item["selectedQty"] }}</div>
+        <div>{{ item["quantity"] }}</div>
         <div>{{ item.condition }}</div>
         <div>{{ item["status"] }}</div>
       </mat-panel-description>

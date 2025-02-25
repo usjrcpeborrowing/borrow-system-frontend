@@ -102,6 +102,10 @@ mat-card-content p {
   gap: 10px;
 }
 
+.item-row-wrapper {
+  flex: 1;
+}
+
 .last-item .item-row {
   margin-bottom: 0;
 }
@@ -157,10 +161,9 @@ mat-card-content p {
   height: 100%;
   object-fit: cover;
 }
-::ng-deep .mat-vertical-stepper-content 
-{
-    visibility: visible !important;
-    height: 100% !important;
+::ng-deep .mat-vertical-stepper-content {
+  visibility: visible !important;
+  height: 100% !important;
 }
 @media screen and (max-width: 480px) {
   .checkbox-container {
