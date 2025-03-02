@@ -184,4 +184,10 @@ mat-card-content p {
   .detail-wrapper div {
     padding: 2px;
   }
+
+  @media screen and (max-width: 480px) {
+    .item-row {
+      padding: 0;
+    }
+  }
 }

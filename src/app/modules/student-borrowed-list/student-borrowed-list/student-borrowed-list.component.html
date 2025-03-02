@@ -14,21 +14,20 @@
       >
         <mat-icon>tune</mat-icon>
       </div>
-  
+
       <div class="title-page underlined">Borrowed Items</div>
     </div>
     <mat-drawer-container [hasBackdrop]="false">
-      <mat-drawer
-        mode="push"
-        [opened]="openedCategory"
-        position="start"
-      >
+      <mat-drawer mode="push" [opened]="openedCategory" position="start">
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
       <mat-drawer-content>
-        <app-student-borrow-card
-          [items]="borrowedItems"
-        ></app-student-borrow-card>
+        <mat-spinner *ngIf="isloading; else elseblock"></mat-spinner>
+        <ng-template #elseblock>
+          <app-student-borrow-card
+            [items]="borrowedItems"
+          ></app-student-borrow-card>
+        </ng-template>
       </mat-drawer-content>
     </mat-drawer-container>
   </div>

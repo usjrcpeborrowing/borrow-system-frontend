@@ -18,6 +18,7 @@ export class BorrowedItemsService {
 
   currentBorrowedItems = this.borrowedItems.asObservable();
   changeBorrowStatus: Subject<any> = new Subject<any>();
+  returnSelectedItemSubject: Subject<any> = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 
@@ -37,7 +38,19 @@ export class BorrowedItemsService {
       },
     });
     return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: headers, params }).pipe(
-      map((response) => response.data),
+      map((response) => {
+        console.log(response)
+        response.data.forEach((data:any)=> {
+          data.itemborrowed.forEach((item: any) => {
+            let history = data.history.filter((his: any) => his.borrowItemId == item._id);
+            item.history = history;
+          });
+          return data;
+
+        })
+
+        return response.data
+      }),
       catchError(this.handleError)
     );
   }
@@ -78,6 +91,10 @@ export class BorrowedItemsService {
 
   onChangeBorrowStatus() {
     return this.changeBorrowStatus.asObservable();
+  }
+
+  onReturnSelectedItem() {
+    return this.returnSelectedItemSubject.asObservable();
   }
 
   handleError(err: HttpErrorResponse) {

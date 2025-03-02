@@ -42,13 +42,15 @@
     <div class="item-container">
       <div
         class="item-row"
-        *ngFor="let item of items; let i = index"
+        *ngFor="let item of items; let i = index;"
         [class.last-item]="i === items.length - 1"
       >
         <div class="item-row-wrapper">
           <app-student-borrowed-item-row
+            [borrowId]="data._id"
             [item]="item"
-            [history]="history"
+            [history]="item.history"
+            [selected]="item.selected"
           ></app-student-borrowed-item-row>
         </div>
         <!-- <div class="item-row">
@@ -111,10 +113,10 @@
         <button
           mat-raised-button
           color="accent"
-          (click)="returnItems(status_return)"
+          (click)="returnSelectedItems()"
           [disabled]="actionDisabled()"
         >
-          Return
+          Return Selected
         </button>
       </div>
     </div>

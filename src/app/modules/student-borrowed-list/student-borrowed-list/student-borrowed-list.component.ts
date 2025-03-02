@@ -13,6 +13,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class StudentBorrowedListComponent implements OnInit {
   @Input() items: any[] = [];
   borrowedItems: any[] = [];
+  isloading: boolean = false;
   borrowedItemFilter: BorrowedItemFilter = {
     status: '',
     instructor: '',
@@ -30,7 +31,6 @@ export class StudentBorrowedListComponent implements OnInit {
     });
     this.borrowListService.onChangeBorrowStatus().subscribe({
       next: (resp) => {
-        console.log(resp);
         if (resp.status == 'pending_return') {
           this.returnBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
         }
@@ -39,15 +39,13 @@ export class StudentBorrowedListComponent implements OnInit {
   }
 
   fetchBorrowedItems(): void {
-    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe(
-      (data) => {
-        this.borrowedItems = data;
-        console.log(data);
-      },
-      (error) => {
-        console.error('Failed to load borrowed items:', error);
-      }
-    );
+    this.isloading = true;
+    this.borrowedItems = [];
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
+      next: (resp) => (this.borrowedItems = resp),
+      error: (err) => console.error(err),
+      complete: () => (this.isloading = false),
+    });
   }
 
   categoryClicked() {

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 @Component({
@@ -6,7 +6,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './student-borrow-card-panel.component.html',
   styleUrls: ['./student-borrow-card-panel.component.css'],
 })
-export class StudentBorrowCardPanelComponent implements OnInit {
+export class StudentBorrowCardPanelComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];
   @Input() history: any[] = [];
   @Input() data: any;
@@ -20,19 +20,35 @@ export class StudentBorrowCardPanelComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.items.forEach((item) => {
-        item.selected = false;
-        item.selectedQty = item.quantity;
-        item.selectedCondition = item.condition;
-        item.selectedRemarks = item.remarks;
-        item.disabled = !['released', 'unreturned'].includes(item.status);
-      });
-      this.cdr.detectChanges();
-    }, 0);
+    // setTimeout(() => {
+    //   this.items.forEach((item) => {
+    //     item.selected = false;
+    //     item.selectedQty = item.quantity;
+    //     item.selectedCondition = item.condition;
+    //     item.selectedRemarks = item.remarks;
+    //     item.disabled = !['released', 'unreturned'].includes(item.status);
+    //   });
+    //   this.cdr.detectChanges();
+    // }, 0);
 
     this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
     this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    // console.log(changes['items'].currentValue);
+    if (changes['items'] && changes['items']?.currentValue) {
+      this.items = [];
+      this.items = changes['items']?.currentValue;
+
+      // this.items.forEach((item) => {
+      //   item.selected = false;
+      //   item.selectedQty = item.quantity;
+      //   item.selectedCondition = item.condition;
+      //   item.selectedRemarks = item.remarks;
+      //   item.disabled = !['released', 'unreturned'].includes(item.status);
+      // });
+    }
   }
 
   toggleSelectAll(event: any): void {
@@ -58,7 +74,7 @@ export class StudentBorrowCardPanelComponent implements OnInit {
       this.snackbarService.openSnackBar('Updated items exceeds on approved Qty', 'OK');
       return;
     }
-    
+
     const partiallyReturned = this.items
       .filter((item) => item.quantity !== item.selectedQty)
       .map((x) => ({
@@ -105,5 +121,9 @@ export class StudentBorrowCardPanelComponent implements OnInit {
 
   actionDisabled() {
     return this.items.filter((item) => item.selected).length == 0;
+  }
+
+  returnSelectedItems() {
+    this.borrowedItemService.returnSelectedItemSubject.next('');
   }
 }

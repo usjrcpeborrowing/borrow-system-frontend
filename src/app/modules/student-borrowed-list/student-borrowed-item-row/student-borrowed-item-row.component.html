@@ -18,15 +18,53 @@
         />
       </div>
       <mat-form-field>
-        <mat-label>No. of items you want return</mat-label>
+        <mat-label>No. of items to return</mat-label>
         <input
           matInput
           [(ngModel)]="item['selectedQty']"
           [readonly]="item.quantity == 1"
+          (input)="onQuantityChanged($any($event))"
         />
       </mat-form-field>
       <span class="spacer"></span>
-      <button mat-raised-button color="accent">Return</button>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="returnItem(status_return)"
+      >
+        Return
+      </button>
+    </div>
+    <div class="item-detail-mobile-container">
+      <div class="img-wrapper">
+        <img
+          [src]="item['equipment']?.images?.thumbnailUrl ?? defaultImage"
+          alt="Equipment Image"
+        />
+      </div>
+      <div class="item-detail-mobile-wrapper">
+        <div><span>Quantity:</span> {{ item["quantity"] }}</div>
+        <div><span>Condition:</span> {{ item.condition }}</div>
+        <div><span>Status:</span> {{ item["status"] }}</div>
+      </div>
+    </div>
+    <div class="action-wrapper-mobile">
+      <mat-form-field>
+        <mat-label>No. of items to return</mat-label>
+        <input
+          matInput
+          [(ngModel)]="item['selectedQty']"
+          [readonly]="item.quantity == 1"
+          (input)="onQuantityChanged($any($event))"
+        />
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="returnItem(status_return)"
+      >
+        Return
+      </button>
     </div>
     <mat-expansion-panel-header>
       <mat-panel-title> {{ item["equipment"].name }} </mat-panel-title>
@@ -41,14 +79,14 @@
         <mat-icon>check</mat-icon>
       </ng-template>
       <!-- <mat-step [label]="item['status']" [completed]="true">
-        <span>1</span>
-      </mat-step>
-      <mat-step label="Step 2" [completed]="true">
-        <span>2</span>
-      </mat-step>
-      <mat-step label="Step 3" [completed]="true">
-        <span>3</span>
-      </mat-step> -->
+          <span>1</span>
+        </mat-step>
+        <mat-step label="Step 2" [completed]="true">
+          <span>2</span>
+        </mat-step>
+        <mat-step label="Step 3" [completed]="true">
+          <span>3</span>
+        </mat-step> -->
       <mat-step *ngFor="let h of history" [label]="h.label" [completed]="true">
         <!-- <span>{{ h?.updatedAt | date: "mediumDate" }}</span> -->
       </mat-step>
