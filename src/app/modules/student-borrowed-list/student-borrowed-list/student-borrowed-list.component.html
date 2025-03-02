@@ -22,12 +22,9 @@
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
       <mat-drawer-content>
-        <mat-spinner *ngIf="isloading; else elseblock"></mat-spinner>
-        <ng-template #elseblock>
-          <app-student-borrow-card
-            [items]="borrowedItems"
-          ></app-student-borrow-card>
-        </ng-template>
+        <app-student-borrow-card
+          [items]="borrowedItems"
+        ></app-student-borrow-card>
       </mat-drawer-content>
     </mat-drawer-container>
   </div>

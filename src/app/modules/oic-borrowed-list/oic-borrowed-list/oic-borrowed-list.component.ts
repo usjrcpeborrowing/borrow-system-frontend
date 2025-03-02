@@ -5,6 +5,7 @@ import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { AuthService } from 'src/app/services/auth.service';
+import { take } from 'rxjs';
 @Component({
   selector: 'app-oic-borrowed-list',
   templateUrl: './oic-borrowed-list.component.html',
@@ -28,13 +29,16 @@ export class OicBorrowedListComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
-    this.borrowListService.onChangeBorrowStatus().subscribe({
-      next: (resp) => {
-        if (['faculty_confirmed', 'oic_approved', 'rejected'].includes(resp.status)) {
-          this.approveBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
-        }
-      },
-    });
+    this.borrowListService
+      .onChangeBorrowStatus()
+      .pipe(take(1))
+      .subscribe({
+        next: (resp) => {
+          if (['faculty_confirmed', 'oic_approved', 'rejected'].includes(resp.status)) {
+            this.approveBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
+          }
+        },
+      });
   }
 
   fetchBorrowedItems(): void {

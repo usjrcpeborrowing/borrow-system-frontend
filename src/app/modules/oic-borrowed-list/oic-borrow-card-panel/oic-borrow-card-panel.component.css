@@ -102,6 +102,10 @@ mat-card-content p {
   gap: 10px;
 }
 
+.item-row-wrapper {
+  flex: 1;
+}
+
 .last-item .item-row {
   margin-bottom: 0;
 }

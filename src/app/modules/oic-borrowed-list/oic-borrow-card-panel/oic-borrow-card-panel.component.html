@@ -41,10 +41,30 @@
     </div>
     <div class="item-container">
       <div
+        class="item-row"
         *ngFor="let item of items; let i = index"
         [class.last-item]="i === items.length - 1"
       >
-        <div class="item-row">
+        <div class="item-row-wrapper">
+          <app-oic-borrowed-item-row
+            [borrowId]="data._id"
+            [item]="item"
+            [selected]="item.selected"
+          ></app-oic-borrowed-item-row>
+        </div>
+        <mat-checkbox
+          *ngIf="isClassInstructor && !isDeptOIC"
+          [(ngModel)]="item.selected"
+          (change)="onItemChange(item)"
+          [disabled]="item.disabled"
+        ></mat-checkbox>
+        <mat-checkbox
+          *ngIf="isDeptOIC"
+          [(ngModel)]="item.selected"
+          (change)="onItemChange(item)"
+          [disabled]="item.disabled"
+        ></mat-checkbox>
+        <!-- <div class="item-row">
           <div class="img-wrapper">
             <img
               [src]="item?.equipment?.images?.thumbnailUrl ?? defaultImage"
@@ -69,7 +89,7 @@
             [disabled]="item.disabled"
           ></mat-checkbox>
         </div>
-        <mat-divider></mat-divider>
+        <mat-divider></mat-divider> -->
       </div>
     </div>
 
@@ -83,7 +103,7 @@
         Reject
       </button>
       <button
-        *ngIf="isClassFaculty()"
+        *ngIf="isClassInstructor && !isDeptOIC"
         mat-raised-button
         color="primary"
         [disabled]="actionDisabled()"
@@ -92,7 +112,7 @@
         Faculty Confirm
       </button>
       <button
-        *ngIf="isOIC"
+        *ngIf="isDeptOIC"
         mat-raised-button
         color="primary"
         [disabled]="actionDisabled()"

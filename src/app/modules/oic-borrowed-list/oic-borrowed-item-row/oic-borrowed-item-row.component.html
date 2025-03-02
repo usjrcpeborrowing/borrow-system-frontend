@@ -1,0 +1,12 @@
+<div class="expansion-panel-container">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{ item["equipment"].name }} </mat-panel-title>
+      <mat-panel-description class="borrowed-item-detail">
+        <div>{{ item["quantity"] }}</div>
+        <div>{{ item.condition }}</div>
+        <div>{{ item["status"] }}</div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</div>

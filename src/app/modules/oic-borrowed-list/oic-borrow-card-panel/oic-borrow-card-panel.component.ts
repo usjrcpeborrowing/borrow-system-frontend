@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
@@ -9,7 +9,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './oic-borrow-card-panel.component.html',
   styleUrls: ['./oic-borrow-card-panel.component.css'],
 })
-export class OicBorrowCardPanelComponent implements OnInit {
+export class OicBorrowCardPanelComponent implements OnInit, OnChanges {
   @Input() items: any[] = [];
   @Input() data: any;
 
@@ -21,48 +21,54 @@ export class OicBorrowCardPanelComponent implements OnInit {
   instructor: string = '';
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
   user: User;
-  isOIC: boolean = false;
+  isClassInstructor: boolean = false;
+  isDeptOIC: boolean = false;
+  checkbox_disabled = false;
   constructor(private cdr: ChangeDetectorRef, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService, private authService: AuthService) {
     this.user = this.authService.getCurrentUser() as User;
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.items.forEach((item) => {
-        item.selected = false;
-        item.selectedQty = item.quantity;
-        item.selectedCondition = item.condition;
-        item.selectedRemarks = item.remarks;
-        // item.disabled = ['approved', 'rejected'].includes(item.status);
-        // item.disabled = !['pending_approval'].includes(item.status) || (!['faculty_confirmed'].includes(item.status) && this.isDeptOIC());
-        if (!['pending_faculty_confirmation'].includes(item.status)) {
-          if (['faculty_confirmed'].includes(item.status) && this.isDeptOIC()) {
-            item.disabled = false;
-          } else {
-            item.disabled = true;
-          }
-        }
-        // to disable pending_faculty_confirmation from oic
-        if (['pending_faculty_confirmation'].includes(item.status) && !this.isClassFaculty()) {
-          item.disabled = true;
-        }
+    // setTimeout(() => {
+    //   this.items.forEach((item) => {
+    //     item.selected = false;
+    //     item.selectedQty = item.quantity;
+    //     item.selectedCondition = item.condition;
+    //     item.selectedRemarks = item.remarks;
+    //     item.disabled = 'pending_faculty_confirmation' !== item.status;
+    //     // item.disabled = ['approved', 'rejected'].includes(item.status);
+    //     // item.disabled = !['pending_approval'].includes(item.status) || (!['faculty_confirmed'].includes(item.status) && this.isDeptOIC());
+    //     // if (!['pending_faculty_confirmation'].includes(item.status)) {
+    //     //   if (['faculty_confirmed'].includes(item.status) && this.isDeptOIC()) {
+    //     //     item.disabled = false;
+    //     //   } else {
+    //     //     item.disabled = true;
+    //     //   }
+    //     // }
+    //     // // to disable pending_faculty_confirmation from oic
+    //     // if (['pending_faculty_confirmation'].includes(item.status) && !this.isClassFaculty()) {
+    //     //   item.disabled = true;
+    //     // }
 
-        //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
-      });
-      this.isOIC = this.isDeptOIC();
-      this.cdr.detectChanges();
-    }, 0);
+    //     //&& this.authService.hasAnyRoles(['faculty'], this.user.role)) || (!['faculty_confirmed'].includes(item.status) && this.authService.hasAnyRoles(['oic'], this.user.role));
+    //   });
+    //   // this.cdr.detectChanges();
+    // }, 0);
 
     this.borrower = this.data.borrower.firstName + ' ' + this.data.borrower.lastName;
     this.instructor = this.data.instructor.firstName + ' ' + this.data.instructor.lastName;
   }
 
-  isDeptOIC(): boolean {
-    return this.authService.hasAnyRoles(['oic'], this.user.role) && this.user.department.includes(this.data?.department);
-  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data'] && changes['data'].currentValue) {
+      this.isClassInstructor = this.data?.instructor._id == this.user._id;
+      this.isDeptOIC = this.authService.hasAnyRoles(['oic'], this.user.role) && this.user.department.includes(this.data?.department);
+    }
 
-  isClassFaculty(): boolean {
-    return this.data?.instructor._id == this.user._id;
+    if (changes['items'] && changes['items']?.currentValue) {
+      this.items = [];
+      this.items = changes['items']?.currentValue;
+    }
   }
 
   toggleSelectAll(event: any): void {

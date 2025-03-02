@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -11,11 +11,13 @@ import { OicBorrowedListComponent } from './oic-borrowed-list/oic-borrowed-list.
 import { HeaderModule } from '../header/header.module';
 import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
+import { OicBorrowedItemRowComponent } from './oic-borrowed-item-row/oic-borrowed-item-row.component';
 @NgModule({
   declarations: [
     OicBorrowedListComponent,
     OicBorrowCardComponent,
     OicBorrowCardPanelComponent,
+    OicBorrowedItemRowComponent,
   ],
   imports: [
     CommonModule,
@@ -26,6 +28,7 @@ import { SharedModule } from '../shared/shared.module';
     ReactiveFormsModule,
     FormsModule,
     SharedModule
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class OicBorrowedListModule { }
