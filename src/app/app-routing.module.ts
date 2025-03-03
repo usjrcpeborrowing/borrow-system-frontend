@@ -47,6 +47,14 @@ const routes: Routes = [
   },
   {
     path: 'faculty-borrowed-list',
+    loadChildren: () => import('./modules/faculty-borrowed-list/faculty-borrowed-list.module').then((m) => m.FacultyBorrowedListModule),
+    canActivate: [AuthGuard],
+    data: {
+      roles: ['oic', 'faculty'],
+    },
+  },
+  {
+    path: 'oic-borrowed-list',
     loadChildren: () => import('./modules/oic-borrowed-list/oic-borrowed-list.module').then((m) => m.OicBorrowedListModule),
     canActivate: [AuthGuard],
     data: {

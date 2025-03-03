@@ -1,0 +1,28 @@
+<div class="header">
+  <app-header></app-header>
+</div>
+
+<div class="page">
+  <div class="dashboard-content">
+    <app-dashboard-buttons></app-dashboard-buttons>
+  </div>
+  <div class="page-content">
+    <div class="page-title">
+      <div
+        class="view-category-container clickable"
+        (click)="openedCategory = !openedCategory"
+      >
+        <mat-icon>tune</mat-icon>
+      </div>
+      <div class="title underlined">Borrowed Items</div>
+    </div>
+    <mat-drawer-container [hasBackdrop]="false">
+      <mat-drawer mode="push" [opened]="openedCategory" position="start">
+        <app-borrow-item-category></app-borrow-item-category>
+      </mat-drawer>
+      <mat-drawer-content>
+        <app-faculty-borrow-card [borrowedItems]="borrowedItems"></app-faculty-borrow-card>
+      </mat-drawer-content>
+    </mat-drawer-container>
+  </div>
+</div>

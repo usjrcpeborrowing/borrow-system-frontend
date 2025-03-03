@@ -1,0 +1,8 @@
+.scrollable-panel {
+  margin: 10px;
+  height: 450px;
+  overflow-y: auto;
+  border: 1px solid #575757;
+  border-radius: 5px;
+  position: relative;
+}

@@ -1,0 +1,54 @@
+<mat-card>
+  <mat-card-content>
+    <div class="class-detail-wrapper">
+      <div class="class-wrapper">
+        <div class="class-details">
+          <span>CLASS: </span>{{ borrowedItem.className }}
+        </div>
+        <div class="class-details">
+          <span> PERIOD: </span>{{ borrowedItem.startPeriod }} -
+          {{ borrowedItem.endPeriod }}
+        </div>
+        <div class="class-details">
+          <span>PURPOSE: </span>{{ borrowedItem.purpose }}
+        </div>
+        <div class="class-details">
+          <span>INSTRUCTOR: </span>{{ "instructor" }}
+        </div>
+        <div class="class-details">
+          <span>DEPARTMENT: </span>{{ borrowedItem.department }}
+        </div>
+        <div class="class-details">
+          <span>DATE OF USE: </span
+          >{{ borrowedItem.startDate | date : "mediumDate" }} -{{
+            borrowedItem.endDate | date : "mediumDate"
+          }}
+        </div>
+      </div>
+      <div class="borrower-wrapper">
+        <div class="borrower">{{ "borrower" }}</div>
+        <mat-card-subtitle>
+          {{ borrowedItem.dateborrowed | date : "mediumDate" }}
+        </mat-card-subtitle>
+      </div>
+    </div>
+    <div class="hline"></div>
+    <div class="checkbox-container">
+      <div class="detail-select">Select All</div>
+      <mat-checkbox></mat-checkbox>
+    </div>
+    <div class="item-container">
+      <div
+        class="item-row"
+        *ngFor="let itemborrowed of borrowedItem.itemborrowed"
+      >
+        <div class="item-row-wrapper">
+          <app-faculty-borrowed-item-row
+            [borrowId]="borrowedItem._id"
+            [itemborrowed]="itemborrowed"
+          ></app-faculty-borrowed-item-row>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
