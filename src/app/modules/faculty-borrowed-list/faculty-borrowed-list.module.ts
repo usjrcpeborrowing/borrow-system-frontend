@@ -9,6 +9,7 @@ import { MaterialModule } from '../material.module';
 import { FacultyBorrowCardComponent } from './faculty-borrow-card/faculty-borrow-card.component';
 import { FacultyBorrowCardPanelComponent } from './faculty-borrow-card-panel/faculty-borrow-card-panel.component';
 import { FacultyBorrowedItemRowComponent } from './faculty-borrowed-item-row/faculty-borrowed-item-row.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { FacultyBorrowedItemRowComponent } from './faculty-borrowed-item-row/fac
     FacultyBorrowedListRoutingModule,
     HeaderModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule
   ]
 })
 export class FacultyBorrowedListModule { }

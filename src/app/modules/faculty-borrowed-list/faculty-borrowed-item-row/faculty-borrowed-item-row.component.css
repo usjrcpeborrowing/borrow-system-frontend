@@ -1,7 +1,11 @@
 .expansion-panel-container {
   padding: 5px 0;
   display: flex;
-  flex-direction: column;
+  gap: 5px;
+}
+
+.expansion-panel-wrapper {
+  flex: 1;
 }
 
 .borrowed-item-detail {

@@ -4,6 +4,7 @@ import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 
 @Component({
   selector: 'app-faculty-borrowed-list',
@@ -20,13 +21,21 @@ export class FacultyBorrowedListComponent implements OnInit {
     search: '',
   };
   user: User;
-  constructor(private activatedRoute: ActivatedRoute, private borrowListService: BorrowedItemsService, private authService: AuthService) {
+  constructor(private activatedRoute: ActivatedRoute, private borrowListService: BorrowedItemsService, private authService: AuthService, private snackbarService: SnackbarService) {
     this.user = authService.getCurrentUser() as User;
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
+    });
+
+    this.borrowListService.onChangeBorrowStatus().subscribe({
+      next: (resp) => {
+        if (resp.status == 'faculty_confirmed') {
+          this.updateBorrowedItemStatus(resp.items, resp.status, resp.borrowedItemId);
+        }
+      },
     });
   }
 
@@ -35,6 +44,22 @@ export class FacultyBorrowedListComponent implements OnInit {
     this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
       next: (resp) => (this.borrowedItems = resp),
       error: (err) => console.error(err),
+    });
+  }
+
+  updateBorrowedItemStatus(items: any[], status: string, id: string) {
+    const body = {
+      items,
+      status,
+    };
+
+    this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
+      next: (resp) => {
+        this.snackbarService.openSnackBar(resp.message, 'OK');
+      },
+      complete: () => {
+        this.fetchBorrowedItems();
+      },
     });
   }
 

@@ -87,6 +87,14 @@
   flex: 1;
 }
 
+.action-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 20px;
+  gap: 20px;
+}
+
 @media screen and (max-width: 480px) {
   .checkbox-container {
     padding: 0;

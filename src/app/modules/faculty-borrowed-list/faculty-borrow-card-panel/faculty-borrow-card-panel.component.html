@@ -35,7 +35,7 @@
     <div class="hline"></div>
     <div class="checkbox-container">
       <div class="detail-select">Select All</div>
-      <mat-checkbox></mat-checkbox>
+      <mat-checkbox (change)="selected = $event.checked"></mat-checkbox>
     </div>
     <div class="item-container">
       <div
@@ -46,9 +46,13 @@
           <app-faculty-borrowed-item-row
             [borrowId]="borrowedItem._id"
             [itemborrowed]="itemborrowed"
+            [selected]="selected"
           ></app-faculty-borrowed-item-row>
         </div>
       </div>
+    </div>
+    <div class="action-wrapper">
+      <button mat-raised-button color="accent" (click)="updateSelectedBorrowedItem()">Return Selected</button>
     </div>
   </mat-card-content>
 </mat-card>
