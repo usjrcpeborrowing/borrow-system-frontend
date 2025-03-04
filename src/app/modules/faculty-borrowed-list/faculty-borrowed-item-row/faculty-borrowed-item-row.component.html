@@ -11,6 +11,7 @@
           <div>{{ itemborrowed["status"] }}</div>
         </mat-panel-description>
       </mat-expansion-panel-header>
+      <app-custom-stepper [histories]="histories"></app-custom-stepper>
     </mat-expansion-panel>
   </div>
   <mat-checkbox [(ngModel)]="selected"></mat-checkbox>

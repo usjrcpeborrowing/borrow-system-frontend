@@ -1,0 +1,15 @@
+<div class="container">
+  <!-- completed -->
+  <div class="step completed" *ngFor="let history of histories">
+    <div class="v-stepper">
+      <div class="circle"></div>
+      <div class="line"></div>
+    </div>
+
+    <div class="content">
+      <div class="title">{{ history.status }}</div>
+      <div class="subtitle">{{ getDoerName(history) }}</div>
+      <div class="subtitle">{{ history.updatedAt | date : "mediumDate" }}</div>
+    </div>
+  </div>
+</div>

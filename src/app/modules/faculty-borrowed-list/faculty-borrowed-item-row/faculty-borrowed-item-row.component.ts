@@ -23,6 +23,7 @@ export class FacultyBorrowedItemRowComponent implements OnInit {
   @Input() borrowId: string = '';
   @Input() itemborrowed!: Item;
   @Input() selected: boolean = false;
+  @Input() histories: any[] = [];
 
   constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 

@@ -15,6 +15,7 @@ import { NoResultsComponent } from './no-results/no-results.component';
 import { BorrowHistoryDialogComponent } from './borrow-history-dialog/borrow-history-dialog.component';
 import { BorrowStatusMenuComponent } from './borrow-status-menu/borrow-status-menu.component';
 import { AccountRequestCategoryComponent } from './account-request-category/account-request-category.component';
+import { CustomStepperComponent } from './custom-stepper/custom-stepper.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { AccountRequestCategoryComponent } from './account-request-category/acco
     BorrowHistoryDialogComponent,
     BorrowStatusMenuComponent,
     AccountRequestCategoryComponent,
+    CustomStepperComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -43,6 +45,7 @@ import { AccountRequestCategoryComponent } from './account-request-category/acco
     NoResultsComponent,
     BorrowStatusMenuComponent,
     AccountRequestCategoryComponent,
+    CustomStepperComponent
   ],
 })
 export class SharedModule {}
