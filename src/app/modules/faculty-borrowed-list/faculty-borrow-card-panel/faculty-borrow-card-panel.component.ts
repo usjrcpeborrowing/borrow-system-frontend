@@ -10,7 +10,7 @@ export class FacultyBorrowCardPanelComponent implements OnChanges {
   @Input() borrowedItem: any;
   selected: boolean = false;
   borrow_status: string = 'faculty_confirmed';
-
+  
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {

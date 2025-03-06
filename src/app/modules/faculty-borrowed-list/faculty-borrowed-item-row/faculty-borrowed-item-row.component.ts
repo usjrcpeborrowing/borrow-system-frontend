@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { take } from 'rxjs';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { scan, take, takeLast } from 'rxjs';
 import { Item } from 'src/app/models/Items';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -19,11 +20,12 @@ interface BorrowedItem {
   templateUrl: './faculty-borrowed-item-row.component.html',
   styleUrls: ['./faculty-borrowed-item-row.component.css'],
 })
-export class FacultyBorrowedItemRowComponent implements OnInit {
+export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
   @Input() borrowId: string = '';
   @Input() itemborrowed!: Item;
   @Input() selected: boolean = false;
   @Input() histories: any[] = [];
+  disabled: boolean = false;
 
   constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
@@ -33,12 +35,29 @@ export class FacultyBorrowedItemRowComponent implements OnInit {
       .pipe(take(1))
       .subscribe({
         next: (resp) => {
-          console.log('meet me halfway')
           if (this.selected === true) {
-            this.updateBorrowedItemStatus(resp)
+            this.updateBorrowedItemStatus(resp);
           }
         },
       });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['itemborrowed']) {
+      this.disabled = this.itemborrowed['status'] === 'faculty_confirmed';
+    }
+
+    if (changes['selected'] && this.disabled == true) {
+      this.selected = false;
+    }
+
+    if (changes['selected'] && this.disabled == false) {
+      this.borrowedItemService.itemSelectedSubject.next(this.selected);
+    }
+  }
+
+  onCheckBoxChanged(event: MatCheckboxChange) {
+    this.borrowedItemService.itemSelectedSubject.next(event.checked);
   }
 
   updateBorrowedItemStatus(status: string) {
@@ -102,6 +121,11 @@ export class FacultyBorrowedItemRowComponent implements OnInit {
         items: updates,
         status: status,
       });
+      // this.updateItemStatusEvent.emit({
+      //   borrowedItemId: this.borrowId,
+      //   items: updates,
+      //   status: status,
+      // });
     }
   }
 }

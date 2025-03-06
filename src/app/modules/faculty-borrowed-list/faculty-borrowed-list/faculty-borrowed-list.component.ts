@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Observable, scan, shareReplay, take, takeLast, takeUntil, tap, toArray } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,22 +22,38 @@ export class FacultyBorrowedListComponent implements OnInit {
     search: '',
   };
   user: User;
+  selected_count: number = 0;
+  subscribe_counter: number = 0;
   constructor(private activatedRoute: ActivatedRoute, private borrowListService: BorrowedItemsService, private authService: AuthService, private snackbarService: SnackbarService) {
     this.user = authService.getCurrentUser() as User;
   }
-
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
 
-    this.borrowListService.onChangeBorrowStatus().subscribe({
-      next: (resp) => {
-        if (resp.status == 'faculty_confirmed') {
-          this.updateBorrowedItemStatus(resp.items, resp.status, resp.borrowedItemId);
-        }
-      },
+    this.borrowListService.onItemSelected().subscribe((resp) => {
+      this.selected_count = resp === true ? this.selected_count + 1 : this.selected_count == 0 ? 0 : this.selected_count - 1;
     });
+
+    this.borrowListService
+      .onChangeBorrowStatus()
+      .pipe(
+        scan<any[], any>((acc, data) => {
+          acc.push(data);
+          return acc;
+        }, [])
+      )
+      .subscribe({
+        next: (resp) => {
+          let items = resp.map((x: any) => x.items).flat(1);
+          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+          this.subscribe_counter = this.subscribe_counter + 1;
+          if (data.status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+            this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          }
+        },
+      });
   }
 
   fetchBorrowedItems(): void {

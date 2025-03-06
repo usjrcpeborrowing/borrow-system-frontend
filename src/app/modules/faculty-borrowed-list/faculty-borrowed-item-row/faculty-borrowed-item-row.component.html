@@ -14,5 +14,5 @@
       <app-custom-stepper [histories]="histories"></app-custom-stepper>
     </mat-expansion-panel>
   </div>
-  <mat-checkbox [(ngModel)]="selected"></mat-checkbox>
+  <mat-checkbox [(ngModel)]="selected" [disabled]="disabled" (change)="onCheckBoxChanged($event)"></mat-checkbox>
 </div>
