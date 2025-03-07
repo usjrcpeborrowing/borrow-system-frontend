@@ -26,6 +26,7 @@ export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
   @Input() selected: boolean = false;
   @Input() histories: any[] = [];
   disabled: boolean = false;
+  defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
@@ -53,6 +54,10 @@ export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
 
     if (changes['selected'] && this.disabled == false) {
       this.borrowedItemService.itemSelectedSubject.next(this.selected);
+    }
+
+    if (changes['histories']) {
+      this.histories = this.histories.sort((a: any, b: any) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt));
     }
   }
 

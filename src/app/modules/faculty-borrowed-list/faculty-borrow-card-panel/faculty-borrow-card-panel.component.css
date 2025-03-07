@@ -99,4 +99,8 @@
   .checkbox-container {
     padding: 0;
   }
+
+  .item-row {
+    padding: 15px 0;
+  }
 }

@@ -60,16 +60,16 @@ export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
     }
 
     if (changes['selected'] && changes['selected'].currentValue) {
-      console.log(changes['selected'].currentValue, this.item._id);
       this.item['selected'] = changes['selected'].currentValue;
     }
   }
 
   getHistoryLabel() {
-    this.history = this.history.map((x) => {
-      let updatedAt = this.datePipe.transform(x.updatedAt, 'mediumDate');
-      return { ...x, label: `${x.status} | ${x.doer?.lastName}, ${x.doer?.firstName} ${updatedAt}` };
-    });
+    this.history = this.history
+      .map((x) => {
+        let updatedAt = this.datePipe.transform(x.updatedAt, 'mediumDate');
+        return { ...x, label: `${x.status} | ${x.doer?.lastName}, ${x.doer?.firstName} ${updatedAt}` };
+      })
   }
 
   onQuantityChanged(event: InputEvent) {
