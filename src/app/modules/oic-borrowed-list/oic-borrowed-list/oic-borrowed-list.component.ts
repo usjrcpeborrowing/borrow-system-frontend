@@ -1,9 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { AuthService } from 'src/app/services/auth.service';
-import { scan, take } from 'rxjs';
+import { distinctUntilChanged, scan, Subscription, take, tap } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 @Component({
@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './oic-borrowed-list.component.html',
   styleUrls: ['./oic-borrowed-list.component.css'],
 })
-export class OicBorrowedListComponent implements OnInit {
+export class OicBorrowedListComponent implements OnInit, OnDestroy {
   openedCategory: boolean = false;
   borrowedItems: any[] = [];
   borrowedItemFilter: BorrowedItemFilter = {
@@ -23,6 +23,7 @@ export class OicBorrowedListComponent implements OnInit {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
+  subscription!: Subscription;
   constructor(private borrowListService: BorrowedItemsService, private snackbarService: SnackbarService, private activatedRoute: ActivatedRoute, private authService: AuthService) {
     this.user = authService.getCurrentUser() as User;
   }
@@ -41,17 +42,27 @@ export class OicBorrowedListComponent implements OnInit {
       .pipe(
         scan<any[], any>((acc, data) => {
           acc.push(data);
+          while (acc.length > this.selected_count) {
+            acc.shift();
+          }
           return acc;
         }, [])
       )
       .subscribe({
         next: (resp) => {
-          if (['oic_approved', 'oic_rejected'].includes(resp.status)) {
-            this.updateBorrowedItemStatus(resp.items, resp.status, resp.borrowedItemId);
+          console.log(resp);
+          let items = resp.map((x: any) => x.items).flat(1);
+          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+          this.subscribe_counter = this.subscribe_counter + 1;
+          if (['oic_approved', 'oic_rejected'].includes(data.status) && this.subscribe_counter == this.selected_count) {
+            // console.log('hooneey', data, this.subscribe_counter);
+            this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
           }
         },
       });
   }
+
+  ngOnDestroy(): void {}
 
   fetchBorrowedItems(): void {
     this.borrowedItems = [];
@@ -72,6 +83,9 @@ export class OicBorrowedListComponent implements OnInit {
         this.snackbarService.openSnackBar(resp.message, 'OK');
       },
       complete: () => {
+        // this.subscription.unsubscribe();
+        this.selected_count = 0;
+        this.subscribe_counter = 0;
         this.fetchBorrowedItems();
       },
     });

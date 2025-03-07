@@ -45,7 +45,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['itemborrowed']) {
-      this.disabled = this.itemborrowed['status'] === 'faculty_confirmed';
+      this.disabled = !['faculty_confirmed'].includes(this.itemborrowed['status']);
     }
 
     if (changes['selected'] && this.disabled == true) {

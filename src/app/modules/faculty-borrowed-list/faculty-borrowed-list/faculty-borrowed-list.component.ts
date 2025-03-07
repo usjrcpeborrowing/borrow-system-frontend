@@ -41,6 +41,9 @@ export class FacultyBorrowedListComponent implements OnInit {
       .pipe(
         scan<any[], any>((acc, data) => {
           acc.push(data);
+          while (acc.length > this.selected_count) {
+            acc.shift();
+          }
           return acc;
         }, [])
       )
@@ -75,6 +78,8 @@ export class FacultyBorrowedListComponent implements OnInit {
         this.snackbarService.openSnackBar(resp.message, 'OK');
       },
       complete: () => {
+        this.subscribe_counter = 0;
+        this.selected_count = 0;
         this.fetchBorrowedItems();
       },
     });

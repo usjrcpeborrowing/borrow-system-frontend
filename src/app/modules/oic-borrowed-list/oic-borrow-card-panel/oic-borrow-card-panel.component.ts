@@ -9,7 +9,6 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 export class OicBorrowCardPanelComponent implements OnChanges {
   @Input() borrowedItem: any;
   selected: boolean = false;
-  borrow_status: string = 'faculty_confirmed';
 
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
@@ -23,7 +22,7 @@ export class OicBorrowCardPanelComponent implements OnChanges {
     }
   }
 
-  updateSelectedBorrowedItem() {
-    this.borrowedItemService.returnSelectedItemSubject.next(this.borrow_status);
+  updateSelectedBorrowedItem(status: string) {
+    this.borrowedItemService.returnSelectedItemSubject.next(status);
   }
 }

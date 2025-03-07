@@ -40,7 +40,6 @@ export class BorrowedItemsService {
     });
     return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: headers, params }).pipe(
       map((response) => {
-        console.log(response);
         response.data.forEach((data: any) => {
           data.itemborrowed.forEach((item: any) => {
             let history = data.history.filter((his: any) => his.borrowItemId == item._id);
@@ -97,7 +96,7 @@ export class BorrowedItemsService {
     return this.returnSelectedItemSubject.asObservable();
   }
 
-  onItemSelected(){
+  onItemSelected() {
     return this.itemSelectedSubject.asObservable();
   }
 

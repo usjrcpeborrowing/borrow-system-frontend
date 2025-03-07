@@ -120,7 +120,6 @@ export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
           remarks: this.itemborrowed.remarks,
         },
       ];
-
       this.borrowedItemService.changeBorrowStatus.next({
         borrowedItemId: this.borrowId,
         items: updates,

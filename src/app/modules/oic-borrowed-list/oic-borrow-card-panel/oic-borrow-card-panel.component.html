@@ -56,9 +56,16 @@
       <button
         mat-raised-button
         color="accent"
-        (click)="updateSelectedBorrowedItem()"
+        (click)="updateSelectedBorrowedItem('oic_approved')"
       >
-        Return Selected
+        Approve Selected
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="updateSelectedBorrowedItem('oic_rejected')"
+      >
+        Reject Selected
       </button>
     </div>
   </mat-card-content>
