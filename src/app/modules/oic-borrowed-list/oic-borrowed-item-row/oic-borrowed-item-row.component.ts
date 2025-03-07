@@ -1,5 +1,5 @@
-import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { take } from 'rxjs';
 import { Item } from 'src/app/models/Items';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
@@ -21,42 +21,54 @@ interface BorrowedItem {
   styleUrls: ['./oic-borrowed-item-row.component.css'],
 })
 export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
-  @Input() item!: Item;
   @Input() borrowId: string = '';
+  @Input() itemborrowed!: Item;
   @Input() selected: boolean = false;
+  @Input() histories: any[] = [];
+  disabled: boolean = false;
+  defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
-  constructor(private datePipe: DatePipe, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
+  constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
-    this.selected = false;
     this.borrowedItemService
       .onReturnSelectedItem()
       .pipe(take(1))
       .subscribe({
         next: (resp) => {
-          if (this.item['selected'] === true) {
+          if (this.selected === true) {
+            this.updateBorrowedItemStatus(resp);
           }
         },
       });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['item'] && changes['item'].currentValue) {
-      this.item['selected'] = false;
-      this.item['selectedQty'] = this.item.quantity;
-      this.item['selectedCondition'] = this.item.condition;
-      this.item['selectedRemarks'] = this.item.remarks;
-      this.item['disabled'] = !['released', 'unreturned'].includes(changes['item'].currentValue.status);
+    if (changes['itemborrowed']) {
+      this.disabled = this.itemborrowed['status'] === 'faculty_confirmed';
     }
 
-    if (changes['selected'] && changes['selected'].currentValue) {
-      this.item['selected'] = this.selected;
+    if (changes['selected'] && this.disabled == true) {
+      this.selected = false;
+    }
+
+    if (changes['selected'] && this.disabled == false) {
+      this.borrowedItemService.itemSelectedSubject.next(this.selected);
+    }
+
+    if (changes['histories']) {
+      this.histories = this.histories.sort((a: any, b: any) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt));
     }
   }
 
-  updateBorrowStatus(status: string) {
-    let exceed = this.item['selectedQty'] > this.item.quantity;
-    let lack = this.item['selectedQty'] < 1;
+  onCheckBoxChanged(event: MatCheckboxChange) {
+    this.borrowedItemService.itemSelectedSubject.next(event.checked);
+  }
+
+  updateBorrowedItemStatus(status: string) {
+    let exceed = this.itemborrowed['selectedQty'] > this.itemborrowed.quantity;
+    let lack = this.itemborrowed['selectedQty'] < 1;
+
     if (exceed) {
       this.snackbarService.openSnackBar('Updated items exceeds on approved quantity', 'OK');
       return;
@@ -67,26 +79,26 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (this.item.quantity !== this.item['selectedQty']) {
+    if (this.itemborrowed.quantity !== this.itemborrowed['selectedQty']) {
       let partial_return: BorrowedItem = {
         _id: null,
-        equipment: this.item['equipment']._id,
-        quantity: this.item['selectedQty'],
-        condition: this.item['selectedCondition'],
-        prevCondition: this.item.condition,
+        equipment: this.itemborrowed['equipment']._id,
+        quantity: this.itemborrowed['selectedQty'],
+        condition: this.itemborrowed['selectedCondition'],
+        prevCondition: this.itemborrowed.condition,
         status: status,
-        remarks: this.item.remarks,
+        remarks: this.itemborrowed.remarks,
       };
 
       let updates: BorrowedItem[] = [
         {
-          _id: this.item._id,
-          equipment: this.item['equipment']._id,
-          quantity: this.item.quantity - this.item['selectedQty'],
-          condition: this.item['selectedCondition'],
-          prevCondition: this.item.condition,
-          status: this.item['status'],
-          remarks: this.item.remarks,
+          _id: this.itemborrowed._id,
+          equipment: this.itemborrowed['equipment']._id,
+          quantity: this.itemborrowed.quantity - this.itemborrowed['selectedQty'],
+          condition: this.itemborrowed['selectedCondition'],
+          prevCondition: this.itemborrowed.condition,
+          status: this.itemborrowed['status'],
+          remarks: this.itemborrowed.remarks,
         },
       ];
 
@@ -99,13 +111,13 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
     } else {
       let updates: BorrowedItem[] = [
         {
-          _id: this.item._id,
-          equipment: this.item['equipment']._id,
-          quantity: this.item.quantity,
-          condition: this.item['selectedCondition'],
-          prevCondition: this.item.condition,
+          _id: this.itemborrowed._id,
+          equipment: this.itemborrowed['equipment']._id,
+          quantity: this.itemborrowed.quantity,
+          condition: this.itemborrowed['selectedCondition'],
+          prevCondition: this.itemborrowed.condition,
           status: status,
-          remarks: this.item.remarks,
+          remarks: this.itemborrowed.remarks,
         },
       ];
 

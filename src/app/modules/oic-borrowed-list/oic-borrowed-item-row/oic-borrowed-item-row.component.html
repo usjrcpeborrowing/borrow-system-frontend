@@ -1,12 +1,35 @@
 <div class="expansion-panel-container">
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> {{ item["equipment"].name }} </mat-panel-title>
-      <mat-panel-description class="borrowed-item-detail">
-        <div>{{ item["quantity"] }}</div>
-        <div>{{ item.condition }}</div>
-        <div>{{ item["status"] }}</div>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-  </mat-expansion-panel>
+  <div class="expansion-panel-wrapper">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="img-wrapper">
+            <img
+              [src]="
+                itemborrowed['equipment'].images?.thumbnailUrl ?? defaultImage
+              "
+              alt="Equipment Image"
+            />
+          </div>
+          {{ itemborrowed["equipment"].name }}
+        </mat-panel-title>
+        <mat-panel-description class="borrowed-item-detail">
+          <div>{{ itemborrowed["quantity"] }}</div>
+          <div>{{ itemborrowed.condition }}</div>
+          <div>{{ itemborrowed["status"] }}</div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="borrowed-item-detail-mobile">
+        <div>Quantity: {{ itemborrowed["quantity"] }}</div>
+        <div>Condition: {{ itemborrowed.condition }}</div>
+        <div>Status: {{ itemborrowed["status"] }}</div>
+      </div>
+      <app-custom-stepper [histories]="histories"></app-custom-stepper>
+    </mat-expansion-panel>
+  </div>
+  <mat-checkbox
+    [(ngModel)]="selected"
+    [disabled]="disabled"
+    (change)="onCheckBoxChanged($event)"
+  ></mat-checkbox>
 </div>
