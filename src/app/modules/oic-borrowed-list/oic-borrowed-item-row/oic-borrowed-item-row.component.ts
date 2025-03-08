@@ -81,7 +81,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
 
     if (this.itemborrowed.quantity !== this.itemborrowed['selectedQty']) {
       let partial_return: BorrowedItem = {
-        _id: null,
+        _id: this.itemborrowed._id,
         equipment: this.itemborrowed['equipment']._id,
         quantity: this.itemborrowed['selectedQty'],
         condition: this.itemborrowed['selectedCondition'],
@@ -92,7 +92,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
 
       let updates: BorrowedItem[] = [
         {
-          _id: this.itemborrowed._id,
+          _id: null,
           equipment: this.itemborrowed['equipment']._id,
           quantity: this.itemborrowed.quantity - this.itemborrowed['selectedQty'],
           condition: this.itemborrowed['selectedCondition'],
