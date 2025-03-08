@@ -19,6 +19,7 @@ export class StudentBorrowedListComponent implements OnInit {
     instructor: '',
     borrower: '',
     search: '',
+    department: ''
   };
   currentUser: any;
   openedCategory: boolean = false;

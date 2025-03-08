@@ -19,6 +19,7 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
     instructor: '',
     borrower: '',
     search: '',
+    department: '',
   };
   user: User;
   selected_count: number = 0;
@@ -94,9 +95,9 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
   queryParamsHandling(params: Params) {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
-    this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : this.user._id;
+    this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : '';
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
-
+    this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
     this.fetchBorrowedItems();
   }
 }

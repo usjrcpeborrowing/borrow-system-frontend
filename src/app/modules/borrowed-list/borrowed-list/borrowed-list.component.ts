@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
+import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -13,18 +14,20 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class BorrowedListComponent implements OnInit {
   @Input() items: any[] = [];
   borrowedItems: any[] = [];
-  currentUser: any;
+  user: User;
   borrowedItemFilter: BorrowedItemFilter = {
     status: '',
     instructor: '',
     borrower: '',
     search: '',
+    department: '',
   };
   openedCategory: boolean = false;
-  constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {}
+  constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {
+    this.user = this.authService.getCurrentUser() as User;
+  }
 
   ngOnInit(): void {
-    this.currentUser = this.authService.getCurrentUser();
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
@@ -81,6 +84,7 @@ export class BorrowedListComponent implements OnInit {
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : '';
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
+    this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
     this.fetchBorrowedItems();
   }
 }

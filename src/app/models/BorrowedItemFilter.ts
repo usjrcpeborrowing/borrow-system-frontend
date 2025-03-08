@@ -3,4 +3,5 @@ export interface BorrowedItemFilter {
     instructor: string;
     status: string;
     search: string;
+    department: string;
 }

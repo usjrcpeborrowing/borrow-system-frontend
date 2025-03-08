@@ -20,6 +20,7 @@ export class FacultyBorrowedListComponent implements OnInit {
     instructor: '',
     borrower: '',
     search: '',
+    department: ''
   };
   user: User;
   selected_count: number = 0;
