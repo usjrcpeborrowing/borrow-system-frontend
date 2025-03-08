@@ -42,6 +42,19 @@
   display: none;
 }
 
+.action-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 5px 20px;
+  gap: 20px;
+  background-color: antiquewhite;
+}
+
+.spacer {
+  flex: 1 1 0;
+}
+
 @media screen and (max-width: 480px) {
   .borrowed-item-detail {
     display: none;
@@ -53,5 +66,19 @@
     justify-content: flex-start;
     color: rgba(0, 0, 0, 0.54);
     padding: 15px 10px;
+  }
+
+  .spacer {
+    display: none;
+  }
+  
+  .action-wrapper {
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .action-wrapper .mdc-button.mat-mdc-raised-button {
+    width: 100%;
   }
 }

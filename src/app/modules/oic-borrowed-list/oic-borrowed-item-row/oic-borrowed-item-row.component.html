@@ -24,6 +24,19 @@
         <div>Condition: {{ itemborrowed.condition }}</div>
         <div>Status: {{ itemborrowed["status"] }}</div>
       </div>
+      <div class="action-wrapper">
+        <mat-form-field>
+          <mat-label>No. of items to return</mat-label>
+          <input
+            matInput
+            [(ngModel)]="itemborrowed['selectedQty']"
+            [readonly]="itemborrowed.quantity == 1"
+          />
+        </mat-form-field>
+        <span class="spacer"></span>
+        <button mat-raised-button color="accent">Approve</button>
+        <button mat-raised-button color="warn">Reject</button>
+      </div>
       <app-custom-stepper [histories]="histories"></app-custom-stepper>
     </mat-expansion-panel>
   </div>
