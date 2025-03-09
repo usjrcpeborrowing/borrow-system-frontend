@@ -56,9 +56,16 @@
       <button
         mat-raised-button
         color="accent"
-        (click)="updateSelectedBorrowedItem('faculty_confirmed')"
+        (click)="updateSelectedBorrowedItem('released')"
       >
         Release Selected
+      </button>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="updateSelectedBorrowedItem('returned')"
+      >
+        Confirm Returns
       </button>
     </div>
   </mat-card-content>
