@@ -68,7 +68,10 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
   fetchBorrowedItems(): void {
     this.borrowedItems = [];
     this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
-      next: (resp) => (this.borrowedItems = resp),
+      next: (resp) => {
+        this.borrowedItems = resp;
+        console.log(this.borrowedItems)
+      },
       error: (err) => console.error(err),
     });
   }
@@ -84,7 +87,6 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
         this.snackbarService.openSnackBar(resp.message, 'OK');
       },
       complete: () => {
-        // this.subscription.unsubscribe();
         this.selected_count = 0;
         this.subscribe_counter = 0;
         this.fetchBorrowedItems();
@@ -93,9 +95,10 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
   }
 
   queryParamsHandling(params: Params) {
+    console.log(this.user.department)
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
-    this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : '';
+    this.borrowedItemFilter.instructor = params['instructor'] ? '' : '';
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
     this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
     this.fetchBorrowedItems();

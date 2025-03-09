@@ -45,7 +45,8 @@ export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['itemborrowed']) {
-      this.disabled = this.itemborrowed['status'] === 'faculty_confirmed';
+      console.log('itemborrowed', this.itemborrowed['status']);
+      this.disabled = this.itemborrowed['status'] !== 'pending_faculty_confirmation';
     }
 
     if (changes['selected'] && this.disabled == true) {

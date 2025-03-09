@@ -36,6 +36,7 @@ export class BorrowedItemsService {
         status: filter.status,
         borrower: filter.borrower,
         instructor: filter.instructor,
+        department: filter.department
       },
     });
     return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: headers, params }).pipe(
@@ -45,6 +46,11 @@ export class BorrowedItemsService {
             let history = data.history.filter((his: any) => his.borrowItemId == item._id);
             item.history = history;
           });
+
+          let instructor_fullname = `${data.instructor.firstName} ${data.instructor.lastName}`;
+          let borrower_fullname = `${data.borrower.firstName} ${data.borrower.lastName}`;
+          data.instructor.fullname = instructor_fullname;
+          data.borrower.fullname = borrower_fullname;
           return data;
         });
 
