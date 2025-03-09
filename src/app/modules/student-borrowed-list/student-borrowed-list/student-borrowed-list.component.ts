@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
-import { scan } from 'rxjs';
+import { scan, tap } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
@@ -33,9 +33,15 @@ export class StudentBorrowedListComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
+
+    this.borrowListService.onItemSelected().subscribe((resp) => {
+      this.selected_count = resp === true ? this.selected_count + 1 : this.selected_count == 0 ? 0 : this.selected_count - 1;
+    });
+
     this.borrowListService
       .onChangeBorrowStatus()
       .pipe(
+        tap((data) => console.log('hayyy', data)),
         scan<any[], any>((acc, data) => {
           acc.push(data);
           while (acc.length > this.selected_count) {
@@ -46,8 +52,13 @@ export class StudentBorrowedListComponent implements OnInit {
       )
       .subscribe({
         next: (resp) => {
-          if (resp.status == 'pending_return') {
-            this.returnBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
+          console.log({ resp });
+          let items = resp.map((x: any) => x.items).flat(1);
+          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+
+          this.subscribe_counter = this.subscribe_counter + 1;
+          if (['pending_return'].includes(data.status) && this.subscribe_counter == this.selected_count) {
+            this.returnBorrowedItems(data.items, data.status, data.borrowedItemId);
           }
         },
       });

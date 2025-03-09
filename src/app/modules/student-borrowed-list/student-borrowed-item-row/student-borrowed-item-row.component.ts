@@ -46,8 +46,7 @@ export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['itemborrowed']) {
-      console.log('itemborrowed', this.itemborrowed['status']);
-      this.disabled = this.itemborrowed['status'] !== 'pending_faculty_confirmation';
+      this.disabled = this.itemborrowed['status'] !== 'released';
     }
 
     if (changes['selected'] && this.disabled == true) {
@@ -83,7 +82,7 @@ export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
 
     if (this.itemborrowed.quantity !== this.itemborrowed['selectedQty']) {
       let partial_return: BorrowedItem = {
-        _id: null,
+        _id: this.itemborrowed._id,
         equipment: this.itemborrowed['equipment']._id,
         quantity: this.itemborrowed['selectedQty'],
         condition: this.itemborrowed['selectedCondition'],
@@ -94,7 +93,7 @@ export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
 
       let updates: BorrowedItem[] = [
         {
-          _id: this.itemborrowed._id,
+          _id: null,
           equipment: this.itemborrowed['equipment']._id,
           quantity: this.itemborrowed.quantity - this.itemborrowed['selectedQty'],
           condition: this.itemborrowed['selectedCondition'],
