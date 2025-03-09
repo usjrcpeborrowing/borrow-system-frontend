@@ -88,10 +88,8 @@ export class FacultyBorrowedListComponent implements OnInit {
 
   queryParamsHandling(params: Params) {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
-    this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : this.user._id;
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
-
     this.fetchBorrowedItems();
   }
 }

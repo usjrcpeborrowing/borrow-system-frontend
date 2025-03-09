@@ -1,95 +1,35 @@
-<!-- <mat-expansion-panel >
-  <mat-expansion-panel-header>
-    <mat-panel-title> Item Name </mat-panel-title>
-    <mat-panel-description class="borrowed-item-detail">
-      <div>Quantity</div>
-      <div>Condition</div>
-      <div>Status</div>
-    </mat-panel-description>
-  </mat-expansion-panel-header>
-</mat-expansion-panel> -->
 <div class="expansion-panel-container">
-  <mat-expansion-panel>
-    <div class="action-wrapper">
-      <div class="img-wrapper">
-        <img
-          [src]="item['equipment']?.images?.thumbnailUrl ?? defaultImage"
-          alt="Equipment Image"
-        />
+  <div class="expansion-panel-wrapper">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="img-wrapper">
+            <img
+              [src]="
+                itemborrowed['equipment'].images?.thumbnailUrl ?? defaultImage
+              "
+              alt="Equipment Image"
+            />
+          </div>
+          {{ itemborrowed["equipment"].name }}
+        </mat-panel-title>
+        <mat-panel-description class="borrowed-item-detail">
+          <div>{{ itemborrowed["quantity"] }}</div>
+          <div>{{ itemborrowed.condition }}</div>
+          <div>{{ itemborrowed["status"] }}</div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="borrowed-item-detail-mobile">
+        <div>Quantity: {{ itemborrowed["quantity"] }}</div>
+        <div>Condition: {{ itemborrowed.condition }}</div>
+        <div>Status: {{ itemborrowed["status"] }}</div>
       </div>
-      <mat-form-field>
-        <mat-label>No. of items to return</mat-label>
-        <input
-          matInput
-          [(ngModel)]="item['selectedQty']"
-          [readonly]="item.quantity == 1"
-          (input)="onQuantityChanged($any($event))"
-        />
-      </mat-form-field>
-      <span class="spacer"></span>
-      <button
-        mat-raised-button
-        color="accent"
-        (click)="returnItem(status_return)"
-      >
-        Return
-      </button>
-    </div>
-    <div class="item-detail-mobile-container">
-      <div class="img-wrapper">
-        <img
-          [src]="item['equipment']?.images?.thumbnailUrl ?? defaultImage"
-          alt="Equipment Image"
-        />
-      </div>
-      <div class="item-detail-mobile-wrapper">
-        <div><span>Quantity:</span> {{ item["quantity"] }}</div>
-        <div><span>Condition:</span> {{ item.condition }}</div>
-        <div><span>Status:</span> {{ item["status"] }}</div>
-      </div>
-    </div>
-    <div class="action-wrapper-mobile">
-      <mat-form-field>
-        <mat-label>No. of items to return</mat-label>
-        <input
-          matInput
-          [(ngModel)]="item['selectedQty']"
-          [readonly]="item.quantity == 1"
-          (input)="onQuantityChanged($any($event))"
-        />
-      </mat-form-field>
-      <button
-        mat-raised-button
-        color="accent"
-        (click)="returnItem(status_return)"
-      >
-        Return
-      </button>
-    </div>
-    <mat-expansion-panel-header>
-      <mat-panel-title> {{ item["equipment"].name }} </mat-panel-title>
-      <mat-panel-description class="borrowed-item-detail">
-        <div>{{ item["quantity"] }}</div>
-        <div>{{ item.condition }}</div>
-        <div>{{ item["status"] }}</div>
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <mat-horizontal-stepper orientation="vertical" selectedIndex="2">
-      <ng-template matStepperIcon="edit">
-        <mat-icon>check</mat-icon>
-      </ng-template>
-      <!-- <mat-step [label]="item['status']" [completed]="true">
-          <span>1</span>
-        </mat-step>
-        <mat-step label="Step 2" [completed]="true">
-          <span>2</span>
-        </mat-step>
-        <mat-step label="Step 3" [completed]="true">
-          <span>3</span>
-        </mat-step> -->
-      <mat-step *ngFor="let h of history" [label]="h.label" [completed]="true">
-        <!-- <span>{{ h?.updatedAt | date: "mediumDate" }}</span> -->
-      </mat-step>
-    </mat-horizontal-stepper>
-  </mat-expansion-panel>
+      <app-custom-stepper [histories]="histories"></app-custom-stepper>
+    </mat-expansion-panel>
+  </div>
+  <mat-checkbox
+    [(ngModel)]="selected"
+    [disabled]="disabled"
+    (change)="onCheckBoxChanged($event)"
+  ></mat-checkbox>
 </div>

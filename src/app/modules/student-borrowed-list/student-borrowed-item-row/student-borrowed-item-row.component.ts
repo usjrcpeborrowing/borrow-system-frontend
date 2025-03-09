@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { take } from 'rxjs';
 import { Item } from 'src/app/models/Items';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
@@ -21,66 +22,55 @@ interface BorrowedItem {
   styleUrls: ['./student-borrowed-item-row.component.css'],
 })
 export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
-  @Input() item!: Item;
-  @Input() history: any[] = [];
   @Input() borrowId: string = '';
+  @Input() itemborrowed!: Item;
   @Input() selected: boolean = false;
-
-  status_return: string = 'pending_return';
+  @Input() histories: any[] = [];
+  disabled: boolean = false;
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
-  constructor(private datePipe: DatePipe, private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
+  constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
-    this.selected = false;
     this.borrowedItemService
       .onReturnSelectedItem()
       .pipe(take(1))
       .subscribe({
         next: (resp) => {
-          if (this.item['selected'] === true) {
-            this.returnItem(this.status_return);
+          if (this.selected === true) {
+            this.updateBorrowedItemStatus(resp);
           }
         },
       });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log('changes', changes);
-    if (changes['item'] && changes['item'].currentValue) {
-      this.item['selected'] = false;
-      this.item['selectedQty'] = changes['item'].currentValue.quantity;
-      this.item['selectedCondition'] = changes['item'].currentValue.condition;
-      this.item['selectedRemarks'] = changes['item'].currentValue.remarks;
-      this.item['disabled'] = !['released', 'unreturned'].includes(changes['item'].currentValue.status);
+    if (changes['itemborrowed']) {
+      console.log('itemborrowed', this.itemborrowed['status']);
+      this.disabled = this.itemborrowed['status'] !== 'pending_faculty_confirmation';
     }
 
-    if (changes['history']) {
-      this.getHistoryLabel();
+    if (changes['selected'] && this.disabled == true) {
+      this.selected = false;
     }
 
-    if (changes['selected'] && changes['selected'].currentValue) {
-      this.item['selected'] = changes['selected'].currentValue;
+    if (changes['selected'] && this.disabled == false) {
+      this.borrowedItemService.itemSelectedSubject.next(this.selected);
     }
-  }
 
-  getHistoryLabel() {
-    this.history = this.history
-      .map((x) => {
-        let updatedAt = this.datePipe.transform(x.updatedAt, 'mediumDate');
-        return { ...x, label: `${x.status} | ${x.doer?.lastName}, ${x.doer?.firstName} ${updatedAt}` };
-      })
-  }
-
-  onQuantityChanged(event: InputEvent) {
-    if (event.data && parseInt(event.data) !== this.item.quantity) {
-      // create service to disable everytime there is change in quantity
+    if (changes['histories']) {
+      this.histories = this.histories.sort((a: any, b: any) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt));
     }
   }
 
-  returnItem(status: string) {
-    let exceed = this.item['selectedQty'] > this.item.quantity;
-    let lack = this.item['selectedQty'] < 1;
+  onCheckBoxChanged(event: MatCheckboxChange) {
+    this.borrowedItemService.itemSelectedSubject.next(event.checked);
+  }
+
+  updateBorrowedItemStatus(status: string) {
+    let exceed = this.itemborrowed['selectedQty'] > this.itemborrowed.quantity;
+    let lack = this.itemborrowed['selectedQty'] < 1;
+
     if (exceed) {
       this.snackbarService.openSnackBar('Updated items exceeds on approved quantity', 'OK');
       return;
@@ -90,27 +80,27 @@ export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
       this.snackbarService.openSnackBar('Updated items less than minimum quantity', 'OK');
       return;
     }
-    // console.log('okkkey?', this.item['selected'], this.item._id, this.item.quantity, this.item['selectedQty']);
-    if (this.item.quantity !== this.item['selectedQty']) {
+
+    if (this.itemborrowed.quantity !== this.itemborrowed['selectedQty']) {
       let partial_return: BorrowedItem = {
         _id: null,
-        equipment: this.item['equipment']._id,
-        quantity: this.item['selectedQty'],
-        condition: this.item['selectedCondition'],
-        prevCondition: this.item.condition,
+        equipment: this.itemborrowed['equipment']._id,
+        quantity: this.itemborrowed['selectedQty'],
+        condition: this.itemborrowed['selectedCondition'],
+        prevCondition: this.itemborrowed.condition,
         status: status,
-        remarks: this.item.remarks,
+        remarks: this.itemborrowed.remarks,
       };
 
       let updates: BorrowedItem[] = [
         {
-          _id: this.item._id,
-          equipment: this.item['equipment']._id,
-          quantity: this.item.quantity - this.item['selectedQty'],
-          condition: this.item['selectedCondition'],
-          prevCondition: this.item.condition,
-          status: this.item['status'],
-          remarks: this.item.remarks,
+          _id: this.itemborrowed._id,
+          equipment: this.itemborrowed['equipment']._id,
+          quantity: this.itemborrowed.quantity - this.itemborrowed['selectedQty'],
+          condition: this.itemborrowed['selectedCondition'],
+          prevCondition: this.itemborrowed.condition,
+          status: this.itemborrowed['status'],
+          remarks: this.itemborrowed.remarks,
         },
       ];
 
@@ -118,26 +108,30 @@ export class StudentBorrowedItemRowComponent implements OnInit, OnChanges {
       this.borrowedItemService.changeBorrowStatus.next({
         borrowedItemId: this.borrowId,
         items: updates,
-        status: this.status_return,
+        status: status,
       });
     } else {
       let updates: BorrowedItem[] = [
         {
-          _id: this.item._id,
-          equipment: this.item['equipment']._id,
-          quantity: this.item.quantity,
-          condition: this.item['selectedCondition'],
-          prevCondition: this.item.condition,
+          _id: this.itemborrowed._id,
+          equipment: this.itemborrowed['equipment']._id,
+          quantity: this.itemborrowed.quantity,
+          condition: this.itemborrowed['selectedCondition'],
+          prevCondition: this.itemborrowed.condition,
           status: status,
-          remarks: this.item.remarks,
+          remarks: this.itemborrowed.remarks,
         },
       ];
-
       this.borrowedItemService.changeBorrowStatus.next({
         borrowedItemId: this.borrowId,
         items: updates,
-        status: this.status_return,
+        status: status,
       });
+      // this.updateItemStatusEvent.emit({
+      //   borrowedItemId: this.borrowId,
+      //   items: updates,
+      //   status: status,
+      // });
     }
   }
 }
