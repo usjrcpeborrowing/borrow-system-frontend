@@ -6,10 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./borrow-card.component.css']
 })
 export class BorrowCardComponent {
-  @Input() items: any[] = [];
-  
+  @Input() borrowedItems: any[] = [];
 
-  
-  ngOnInit(): void {
-  }
 }

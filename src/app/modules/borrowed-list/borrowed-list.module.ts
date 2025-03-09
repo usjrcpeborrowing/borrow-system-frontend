@@ -16,11 +16,13 @@ import { MaterialModule } from '../material.module';
 import { SharedModule } from '../shared/shared.module';
 import { BorrowCardPanelComponent } from './borrow-card-panel/borrow-card-panel.component';
 import { BorrowCardComponent } from './borrow-card/borrow-card.component';
+import { BorrowedItemRowComponent } from './borrowed-item-row/borrowed-item-row.component';
 @NgModule({
   declarations: [
     BorrowedListComponent,
     BorrowCardComponent,
-    BorrowCardPanelComponent
+    BorrowCardPanelComponent,
+    BorrowedItemRowComponent
   ],
   imports: [
     CommonModule,

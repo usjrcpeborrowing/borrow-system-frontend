@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
+import { scan } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
@@ -12,9 +13,8 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   styleUrls: ['./borrowed-list.component.css'],
 })
 export class BorrowedListComponent implements OnInit {
-  @Input() items: any[] = [];
+  openedCategory: boolean = false;
   borrowedItems: any[] = [];
-  user: User;
   borrowedItemFilter: BorrowedItemFilter = {
     status: '',
     instructor: '',
@@ -22,7 +22,9 @@ export class BorrowedListComponent implements OnInit {
     search: '',
     department: '',
   };
-  openedCategory: boolean = false;
+  user: User;
+  selected_count: number = 0;
+  subscribe_counter: number = 0;
   constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {
     this.user = this.authService.getCurrentUser() as User;
   }
@@ -31,49 +33,57 @@ export class BorrowedListComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
       this.queryParamsHandling(params);
     });
-    this.borrowListService.onChangeBorrowStatus().subscribe({
-      next: (resp) => {
-        console.log(resp);
-        if (['released', 'returned', 'unreturned'].includes(resp.status)) {
-          this.updateBorrowedItems(resp.items, resp.status, resp.borrowedItemId);
-        }
-      },
+
+    this.borrowListService.onItemSelected().subscribe((resp) => {
+      this.selected_count = resp === true ? this.selected_count + 1 : this.selected_count == 0 ? 0 : this.selected_count - 1;
     });
+    this.borrowListService
+      .onChangeBorrowStatus()
+      .pipe(
+        scan<any[], any>((acc, data) => {
+          acc.push(data);
+          while (acc.length > this.selected_count) {
+            acc.shift();
+          }
+          return acc;
+        }, [])
+      )
+      .subscribe({
+        next: (resp) => {
+          let items = resp.map((x: any) => x.items).flat(1);
+          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+          this.subscribe_counter = this.subscribe_counter + 1;
+          if (['released', 'returned', 'unreturned'].includes(data.status) && this.subscribe_counter == this.selected_count) {
+            this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          }
+        },
+      });
   }
 
   fetchBorrowedItems(): void {
-    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe(
-      (data) => {
-        this.borrowedItems = data;
-        console.log(data);
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
+      next: (resp) => {
+        this.borrowedItems = resp;
+        console.log(this.borrowedItems);
       },
-      (error) => {
-        console.error('Failed to load borrowed items:', error);
-      }
-    );
+      error: (err) => console.error(err),
+    });
   }
 
   categoryClicked() {
     this.openedCategory = !this.openedCategory;
   }
 
-  updateBorrowedItems(items: any[], status: string, id: string) {
+  updateBorrowedItemStatus(items: any[], status: string, id: string) {
     const body = {
       items,
       status,
     };
-    // console.log({ body });
-    // console.log(this.borrowedItems);
-
-    // const changed_status_items = this.borrowedItems.filter((x) => x._id == id).itemborrowed.filter((item: any) => body.items.some((x) => x.equipment._id == item.equipment));
-    // console.log(changed_status_items);
     this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
-      next: (resp) => {
-        this.snackbarService.openSnackBar(resp.message, 'OK');
-        console.log(resp);
-      },
+      next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
       complete: () => {
-        console.log('complete');
+        this.selected_count = 0;
+        this.subscribe_counter = 0;
         this.fetchBorrowedItems();
       },
     });

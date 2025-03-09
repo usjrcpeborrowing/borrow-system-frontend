@@ -1,6 +1,7 @@
 <div class="header">
   <app-header></app-header>
 </div>
+
 <div class="page">
   <div class="dashboard-content">
     <app-dashboard-buttons></app-dashboard-buttons>
@@ -9,19 +10,18 @@
     <div class="page-title">
       <div
         class="view-category-container clickable"
-        [class.cart-openside]="openedCategory"
-        (click)="categoryClicked()"
+        (click)="openedCategory = !openedCategory"
       >
         <mat-icon>tune</mat-icon>
       </div>
-      <h1 class="title-page underlined">Borrowed Items</h1>
+      <div class="title underlined">Borrowed Items</div>
     </div>
     <mat-drawer-container [hasBackdrop]="false">
       <mat-drawer mode="push" [opened]="openedCategory" position="start">
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
-      <mat-drawer-content class="custom-drawer-itmes">
-        <app-borrow-card [items]="borrowedItems"></app-borrow-card>
+      <mat-drawer-content>
+        <app-borrow-card [borrowedItems]="borrowedItems"></app-borrow-card>
       </mat-drawer-content>
     </mat-drawer-container>
   </div>

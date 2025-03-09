@@ -1,128 +1,64 @@
-<mat-card appearance="outlined">
+<mat-card>
   <mat-card-content class="panel-description">
     <div class="class-detail-wrapper">
       <div class="class-wrapper">
         <div class="class-details">
-          <span>CLASS: </span>{{ data.className }}
+          <span>CLASS: </span>{{ borrowedItem.className }}
         </div>
         <div class="class-details">
-          <span> PERIOD: </span>{{ data.startPeriod }} - {{ data.endPeriod }}
+          <span> PERIOD: </span>{{ borrowedItem.startPeriod }} -
+          {{ borrowedItem.endPeriod }}
         </div>
         <div class="class-details">
-          <span>PURPOSE: </span>{{ data.purpose }}
+          <span>PURPOSE: </span>{{ borrowedItem.purpose }}
         </div>
         <div class="class-details">
-          <span>INSTRUCTOR: </span>{{ instructor }}
+          <span>INSTRUCTOR: </span>{{ borrowedItem.instructor.fullname }}
         </div>
         <div class="class-details">
-          <span>DEPARTMENT: </span>{{ data.department }}
+          <span>DEPARTMENT: </span>{{ borrowedItem.department }}
         </div>
         <div class="class-details">
           <span>DATE OF USE: </span
-          >{{ data.startDate | date : "mediumDate" }} -{{
-            data.endDate | date : "mediumDate"
+          >{{ borrowedItem.startDate | date : "mediumDate" }} -{{
+            borrowedItem.endDate | date : "mediumDate"
           }}
         </div>
       </div>
       <div class="borrower-wrapper">
-        <div class="borrower">{{ borrower }}</div>
+        <div class="borrower">{{ borrowedItem.borrower.fullname }}</div>
         <mat-card-subtitle>
-          {{ data.dateborrowed | date : "mediumDate" }}
+          {{ borrowedItem.dateborrowed | date : "mediumDate" }}
         </mat-card-subtitle>
       </div>
     </div>
     <div class="hline"></div>
     <div class="checkbox-container">
       <div class="detail-select">Select All</div>
-      <mat-checkbox
-        [(ngModel)]="selectAll"
-        (change)="toggleSelectAll($event)"
-      ></mat-checkbox>
+      <mat-checkbox (change)="selected = $event.checked"></mat-checkbox>
     </div>
     <div class="item-container">
       <div
-        *ngFor="let item of items; let i = index"
-        [class.last-item]="i === items.length - 1"
+        class="item-row"
+        *ngFor="let itemborrowed of borrowedItem.itemborrowed"
       >
-        <div class="item-row">
-          <div class="img-wrapper">
-            <img
-              [src]="item?.equipment?.images?.thumbnailUrl ?? defaultImage"
-              alt="Equipment Image"
-            />
-          </div>
-          <div class="detail-wrapper">
-            <mat-form-field>
-              <mat-label>Quantity</mat-label>
-              <input
-                matInput
-                [(ngModel)]="item.selectedQty"
-                [readonly]="item.quantity == 1"
-              />
-            </mat-form-field>
-            <div>{{ item.equipment.name }}</div>
-            <mat-form-field>
-              <mat-label>Condition</mat-label>
-              <input
-                matInput
-                [matAutocomplete]="autocondition"
-                [readonly]="item.disabled"
-                [(ngModel)]="item.selectedCondition"
-                (input)="onFilterCondition($event)"
-              />
-              <mat-autocomplete
-                #autocondition="matAutocomplete"
-                (optionSelected)="item.selectedCondition = $event.option.value"
-              >
-                <mat-option
-                  *ngFor="let condition of filteredconditions | async"
-                  [value]="condition"
-                >
-                  {{ condition }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Remarks</mat-label>
-              <input
-                matInput
-                [(ngModel)]="item.selectedRemarks"
-                [readonly]="item.disabled"
-              />
-            </mat-form-field>
-            <div class="status">
-              <span>{{ formatStatus(item.status) }}</span>
-              <mat-icon [matMenuTriggerFor]="menu">help</mat-icon>
-              <mat-menu #menu="matMenu">
-                <app-borrow-status-menu></app-borrow-status-menu>
-              </mat-menu>
-            </div>
-          </div>
-          <mat-checkbox
-            [(ngModel)]="item.selected"
-            (change)="onItemChange(item)"
-            [disabled]="item.disabled"
-          ></mat-checkbox>
+        <div class="item-row-wrapper">
+          <app-borrowed-item-row
+            [borrowId]="borrowedItem._id"
+            [itemborrowed]="itemborrowed"
+            [selected]="selected"
+            [histories]="itemborrowed.history"
+          ></app-borrowed-item-row>
         </div>
       </div>
     </div>
-
     <div class="action-wrapper">
       <button
         mat-raised-button
-        color="primary"
-        (click)="releaseItems(status_released)"
-        [disabled]="releaseBtnDisabled()"
-      >
-        Release
-      </button>
-      <button
-        mat-raised-button
         color="accent"
-        (click)="returnItems(status_return)"
-        [disabled]="returnBtnDisabled()"
+        (click)="updateSelectedBorrowedItem('faculty_confirmed')"
       >
-        Return
+        Release Selected
       </button>
     </div>
   </mat-card-content>

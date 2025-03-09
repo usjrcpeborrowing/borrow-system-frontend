@@ -11,7 +11,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
   templateUrl: './oic-borrowed-list.component.html',
   styleUrls: ['./oic-borrowed-list.component.css'],
 })
-export class OicBorrowedListComponent implements OnInit, OnDestroy {
+export class OicBorrowedListComponent implements OnInit {
   openedCategory: boolean = false;
   borrowedItems: any[] = [];
   borrowedItemFilter: BorrowedItemFilter = {
@@ -24,7 +24,6 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
-  subscription!: Subscription;
   constructor(private borrowListService: BorrowedItemsService, private snackbarService: SnackbarService, private activatedRoute: ActivatedRoute, private authService: AuthService) {
     this.user = authService.getCurrentUser() as User;
   }
@@ -51,26 +50,22 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (resp) => {
-          console.log(resp);
           let items = resp.map((x: any) => x.items).flat(1);
           let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
           this.subscribe_counter = this.subscribe_counter + 1;
           if (['oic_approved', 'oic_rejected'].includes(data.status) && this.subscribe_counter == this.selected_count) {
-            // console.log('hooneey', data, this.subscribe_counter);
             this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
           }
         },
       });
   }
 
-  ngOnDestroy(): void {}
-
   fetchBorrowedItems(): void {
     this.borrowedItems = [];
     this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
       next: (resp) => {
         this.borrowedItems = resp;
-        console.log(this.borrowedItems)
+        console.log(this.borrowedItems);
       },
       error: (err) => console.error(err),
     });
@@ -95,7 +90,7 @@ export class OicBorrowedListComponent implements OnInit, OnDestroy {
   }
 
   queryParamsHandling(params: Params) {
-    console.log(this.user.department)
+    console.log(this.user.department);
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? '' : '';
