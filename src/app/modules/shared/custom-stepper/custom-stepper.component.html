@@ -10,6 +10,8 @@
       <div class="title">{{ history.status }}</div>
       <div class="subtitle">{{ getDoerName(history) }}</div>
       <div class="subtitle">Quantity: {{ history.quantity }}</div>
+      <div class="subtitle">Condition: {{ history?.condition }}</div>
+      <div class="subtitle">Remarks: {{ history?.remarks }}</div>
       <div class="subtitle">{{ history.updatedAt | date : "medium" }}</div>
     </div>
   </div>
