@@ -30,12 +30,16 @@
           <input
             matInput
             [(ngModel)]="itemborrowed['selectedQty']"
-            [readonly]="itemborrowed.quantity == 1"
+            [readonly]="disabled"
           />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Remarks</mat-label>
-          <input matInput [(ngModel)]="itemborrowed['selectedRemarks']" />
+          <input
+            matInput
+            [(ngModel)]="itemborrowed['selectedRemarks']"
+            [readonly]="disabled"
+          />
         </mat-form-field>
         <span class="spacer"></span>
       </div>

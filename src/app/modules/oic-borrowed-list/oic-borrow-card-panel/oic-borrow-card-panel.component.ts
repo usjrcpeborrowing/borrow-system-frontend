@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 
 @Component({
@@ -9,6 +10,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 export class OicBorrowCardPanelComponent implements OnChanges {
   @Input() borrowedItem: any;
   selected: boolean = false;
+  selected_counter: number = 0;
 
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
@@ -24,5 +26,9 @@ export class OicBorrowCardPanelComponent implements OnChanges {
 
   updateSelectedBorrowedItem(status: string) {
     this.borrowedItemService.returnSelectedItemSubject.next(status);
+  }
+
+  onSelectedEvent(event: boolean) {
+    this.selected_counter = event == true ? this.selected_counter + 1 : this.selected_counter - 1;
   }
 }

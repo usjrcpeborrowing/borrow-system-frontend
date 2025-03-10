@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { take } from 'rxjs';
 import { Item } from 'src/app/models/Items';
@@ -25,6 +25,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
   @Input() itemborrowed!: Item;
   @Input() selected: boolean = false;
   @Input() histories: any[] = [];
+  @Output() onSelectedEvent = new EventEmitter<boolean>();
   disabled: boolean = false;
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
@@ -52,8 +53,9 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
       this.selected = false;
     }
 
-    if (changes['selected'] && this.disabled == false) {
+    if (changes['selected'] && !changes['selected'].firstChange && this.disabled == false) {
       this.borrowedItemService.itemSelectedSubject.next(this.selected);
+      this.onSelectedEvent.emit(changes['selected'].currentValue);
     }
 
     if (changes['histories']) {
@@ -63,6 +65,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
 
   onCheckBoxChanged(event: MatCheckboxChange) {
     this.borrowedItemService.itemSelectedSubject.next(event.checked);
+    this.onSelectedEvent.emit(event.checked);
   }
 
   updateBorrowedItemStatus(status: string) {
