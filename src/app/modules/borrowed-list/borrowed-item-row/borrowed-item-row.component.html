@@ -33,6 +33,7 @@
             [readonly]="itemborrowed.quantity == 1"
           />
         </mat-form-field>
+
         <mat-form-field>
           <mat-label>Condition</mat-label>
           <input
@@ -42,7 +43,9 @@
           />
           <mat-autocomplete
             #autocondition="matAutocomplete"
-            (optionSelected)="itemborrowed['selectedCondition'] = $event.option.value"
+            (optionSelected)="
+              itemborrowed['selectedCondition'] = $event.option.value
+            "
           >
             <mat-option
               *ngFor="let condition of filteredconditions | async"
@@ -52,9 +55,11 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Remarks</mat-label>
+          <input matInput [(ngModel)]="itemborrowed['selectedRemarks']" />
+        </mat-form-field>
         <span class="spacer"></span>
-        <button mat-raised-button color="accent">Approve</button>
-        <button mat-raised-button color="warn">Reject</button>
       </div>
       <app-custom-stepper [histories]="histories"></app-custom-stepper>
     </mat-expansion-panel>

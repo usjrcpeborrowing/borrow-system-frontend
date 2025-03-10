@@ -87,7 +87,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
         condition: this.itemborrowed['selectedCondition'],
         prevCondition: this.itemborrowed.condition,
         status: status,
-        remarks: this.itemborrowed.remarks,
+        remarks: this.itemborrowed['selectedRemarks'],
       };
 
       let updates: BorrowedItem[] = [
@@ -117,7 +117,7 @@ export class OicBorrowedItemRowComponent implements OnInit, OnChanges {
           condition: this.itemborrowed['selectedCondition'],
           prevCondition: this.itemborrowed.condition,
           status: status,
-          remarks: this.itemborrowed.remarks,
+          remarks: this.itemborrowed['selectedRemarks'],
         },
       ];
 

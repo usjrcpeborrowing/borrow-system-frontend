@@ -56,6 +56,7 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['itemborrowed']) {
       this.disabled = !['oic_approved', 'pending_return'].includes(this.itemborrowed['status']);
+      this.conditionControl.patchValue(this.itemborrowed['selectedCondition'])
     }
 
     if (changes['selected'] && this.disabled == true) {
@@ -97,7 +98,7 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
         condition: this.itemborrowed['selectedCondition'],
         prevCondition: this.itemborrowed.condition,
         status: status,
-        remarks: this.itemborrowed.remarks,
+        remarks: this.itemborrowed['selectedRemarks'],
       };
 
       let updates: BorrowedItem[] = [
@@ -127,10 +128,10 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
           condition: this.itemborrowed['selectedCondition'],
           prevCondition: this.itemborrowed.condition,
           status: status,
-          remarks: this.itemborrowed.remarks,
+          remarks: this.itemborrowed['selectedRemarks'],
         },
       ];
-      console.log({updates})
+      console.log({ updates });
       this.borrowedItemService.changeBorrowStatus.next({
         borrowedItemId: this.borrowId,
         items: updates,
