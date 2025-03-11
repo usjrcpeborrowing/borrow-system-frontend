@@ -9,7 +9,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 export class StudentBorrowCardPanelComponent implements OnChanges {
   @Input() borrowedItem: any;
   selected: boolean = false;
-
+  selected_counter: number = 0;
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -24,5 +24,9 @@ export class StudentBorrowCardPanelComponent implements OnChanges {
 
   updateSelectedBorrowedItem(status:string) {
     this.borrowedItemService.returnSelectedItemSubject.next(status);
+  }
+
+  onSelectedEvent(event: boolean) {
+    this.selected_counter = event == true ? this.selected_counter + 1 : this.selected_counter - 1;
   }
 }

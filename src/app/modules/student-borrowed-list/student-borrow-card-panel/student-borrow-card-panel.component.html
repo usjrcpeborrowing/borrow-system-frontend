@@ -48,6 +48,7 @@
             [itemborrowed]="itemborrowed"
             [selected]="selected"
             [histories]="itemborrowed.history"
+            (onSelectedEvent)="onSelectedEvent($event)"
           ></app-student-borrowed-item-row>
         </div>
       </div>

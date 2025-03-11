@@ -9,8 +9,9 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 export class FacultyBorrowCardPanelComponent implements OnChanges {
   @Input() borrowedItem: any;
   selected: boolean = false;
+  selected_counter: number = 0;
   borrow_status: string = 'faculty_confirmed';
-  
+
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -25,5 +26,9 @@ export class FacultyBorrowCardPanelComponent implements OnChanges {
 
   updateSelectedBorrowedItem() {
     this.borrowedItemService.returnSelectedItemSubject.next(this.borrow_status);
+  }
+
+  onSelectedEvent(event: boolean) {
+    this.selected_counter = event == true ? this.selected_counter + 1 : this.selected_counter - 1;
   }
 }

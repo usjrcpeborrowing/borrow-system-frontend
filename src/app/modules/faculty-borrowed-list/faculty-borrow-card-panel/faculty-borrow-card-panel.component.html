@@ -48,6 +48,7 @@
             [itemborrowed]="itemborrowed"
             [selected]="selected"
             [histories]="itemborrowed.history"
+            (onSelectedEvent)="onSelectedEvent($event)"
           ></app-faculty-borrowed-item-row>
         </div>
       </div>
@@ -57,6 +58,7 @@
         mat-raised-button
         color="accent"
         (click)="updateSelectedBorrowedItem()"
+        [disabled]="selected_counter == 0"
       >
        Confirm Selected
       </button>
