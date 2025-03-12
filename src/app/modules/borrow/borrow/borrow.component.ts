@@ -191,6 +191,11 @@ export class BorrowComponent implements OnInit {
 
   updateItemQuantityInAddedEquipment({ item, quantity }: { item: Item; quantity: number }) {
     const index = this.addedEquipment.findIndex((e) => e._id === item._id);
+    const found = this.equipmentlist.find((e) => e._id === item._id);
+    if (found && quantity > found.totalQuantity) {
+      this.openSnackBar('Input greater than total quantity', 'OK');
+      return;
+    }
     if (index > -1) {
       this.addedEquipment[index].quantity = quantity;
     }
