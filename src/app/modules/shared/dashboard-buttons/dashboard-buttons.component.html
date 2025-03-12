@@ -1,21 +1,28 @@
 <div class="dashboard-button">
-    <h1 class="page-title">
-      <div class="toggle-button">
-        <button class="toggle-button" (click)="toggleSidebar()" mat-icon-button>
-          <mat-icon>{{ isSidebarExpanded ? 'chevron_left' : 'menu' }}</mat-icon>
+  <h1 class="page-title">
+    <div class="toggle-button">
+      <button class="toggle-button" (click)="toggleSidebar()" mat-icon-button>
+        <mat-icon>{{ isSidebarExpanded ? "chevron_left" : "menu" }}</mat-icon>
+      </button>
+    </div>
+  </h1>
+  <div class="dashboard-content">
+    <div class="sidebar" [class.expanded]="isSidebarExpanded">
+      <div class="buttons">
+        <!-- Loop through navigation items based on the current role -->
+        <button
+          *ngFor="let navItem of navigations[currentRole]"
+          (click)="navigateTo(navItem.url)"
+          mat-raised-button
+          [matTooltip]="navItem.name"
+          matTooltipPosition="right"
+        >
+          <mat-icon>{{ navItem.icon }}</mat-icon>
+          <span class="button-text" *ngIf="isSidebarExpanded">{{
+            navItem.name
+          }}</span>
         </button>
-      </div>
-    </h1>
-    <div class="dashboard-content">
-      <div class="sidebar" [class.expanded]="isSidebarExpanded">
-        <div class="buttons">
-          <!-- Loop through navigation items based on the current role -->
-          <button *ngFor="let navItem of navigations[currentRole]" (click)="navigateTo(navItem.url)" mat-raised-button>
-            <mat-icon>{{ navItem.icon }}</mat-icon>
-            <span class="button-text" *ngIf="isSidebarExpanded">{{ navItem.name }}</span>
-          </button>
-        </div>
       </div>
     </div>
   </div>
-  
+</div>

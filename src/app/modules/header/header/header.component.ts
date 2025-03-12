@@ -30,48 +30,45 @@ export class HeaderComponent implements OnInit {
   notification_messages: string[] = [];
   navigations: { [key: string]: NavigationItem[] } = {
     administrator: [
-      { name: 'Dashboard', url: '/dashboard/admin', icon: 'menu' },
-      { name: 'Inventory', url: '/inventory', icon: 'menu' },
-      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
-      { name: 'Accounts', url: '/account-request', icon: 'menu' },
-      { name: 'History', url: '/history/admin', icon: 'menu' },
+      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'check_box' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
+      { name: 'Accounts', url: '/account-request', icon: 'volunteer_activism' },
     ],
     oic: [
-      { name: 'Dashboard', url: '/dashboard/oic', icon: 'menu' },
-      { name: 'Inventory', url: '/inventory', icon: 'menu' },
-      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
-      { name: 'Accounts', url: '/account-request', icon: 'menu' },
-      { name: 'History', url: '/history/oic', icon: 'menu' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
+      { name: 'Borrow Request', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Account Request', url: '/account-request', icon: 'person_add' },
+      { name: 'Manage User', url: '/student-list', icon: 'manage_accounts' },
+      { name: 'Approval Request', url: '/oic-borrowed-list', icon: 'volunteer_activism' },
     ],
     reads: [
-      { name: 'Dashboard', url: '/dashboard/reads', icon: 'menu' },
-      { name: 'Inventory', url: '/inventory', icon: 'menu' },
-      { name: 'Requests', url: '/borrowed-list', icon: 'menu' },
-      { name: 'History', url: '/history/reads', icon: 'menu' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
+      { name: 'Borrow Request', url: '/borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Borrow History', url: '/student-borrowed-list', icon: 'history' },
     ],
     faculty: [
-      { name: 'Dashboard', url: '/dashboard/faculty', icon: 'menu' },
-      { name: 'Browse Items', url: '/borrow', icon: 'inbox' },
-      { name: 'Inventory', url: '/inventory', icon: 'inbox' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
-      { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
-      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'assignment' },
-      { name: 'History', url: '/history/faculty', icon: 'menu' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
+      { name: 'Borrow Requests', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
     ],
     chairman: [
-      { name: 'Dashboard', url: '/dashboard/faculty', icon: 'menu' },
-      { name: 'Browse Items', url: '/borrow', icon: 'inbox' },
-      { name: 'Inventory', url: '/inventory', icon: 'inbox' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
-      { name: 'Inventory Details', url: '/item-details', icon: 'assignment' },
-      { name: 'Student Requests', url: '/faculty-borrowed-list', icon: 'assignment' },
-      { name: 'History', url: '/history/faculty', icon: 'menu' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
+      { name: 'Borrow Request', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Account Request', url: '/account-request', icon: 'person_add' },
+      { name: 'Manage User', url: '/student-list', icon: 'manage_accounts' },
+      { name: 'Approval Request', url: '/oic-borrowed-list', icon: 'volunteer_activism' },
     ],
     student: [
-      { name: 'Dashboard', url: '/dashboard/student', icon: 'menu' },
-      { name: 'Browse Items', url: '/borrow', icon: 'menu' },
-      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'menu' },
-      { name: 'History', url: '/history/student', icon: 'menu' },
+      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Borrow History', url: '/student-borrowed-list', icon: 'history' },
     ],
   };
   currentNavigations: any[] = [];
@@ -112,7 +109,6 @@ export class HeaderComponent implements OnInit {
     this.notificationService.onMarkAllAsRead().subscribe((resp) => {
       this.notificationService.updateAllNotificationsAsViewed(this.currentUser._id).subscribe({
         next: (resp) => {
-          console.log(resp);
           this.getNotifications();
         },
       });
@@ -125,7 +121,6 @@ export class HeaderComponent implements OnInit {
         this.notifications = resp.data;
         this.notification_count = resp.unread;
         this.total = resp.total;
-        console.log(resp);
       },
     });
   }
@@ -134,7 +129,6 @@ export class HeaderComponent implements OnInit {
     const user = this.authService.getCurrentUser();
     if (user && Array.isArray(user.role) && user.role.length > 0) {
       const primaryRole = user.role[0];
-      console.log({ primaryRole });
       if (this.navigations[primaryRole]) {
         this.currentNavigations = this.navigations[primaryRole];
       } else {
