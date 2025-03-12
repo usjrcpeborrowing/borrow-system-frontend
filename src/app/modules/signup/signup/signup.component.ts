@@ -74,6 +74,7 @@ export class SignupComponent {
             },
             duration: 3000,
           });
+          this.signupForm.reset()
         },
         (error) => {
           console.error('Error adding user', error);

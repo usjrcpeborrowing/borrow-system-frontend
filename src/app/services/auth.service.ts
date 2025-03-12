@@ -84,10 +84,6 @@ export class AuthService {
 
   hasAnyRoles(allowedRoles: string[], userRoles: string[]) {
     // return allowedRoles.some((allowedrole) => userRoles.some((userrole) => userrole == allowedrole));
-    console.log(
-      'has any roles',
-      allowedRoles.some((allowedrole) => userRoles.includes(allowedrole))
-    );
     return allowedRoles.some((allowedrole) => userRoles.includes(allowedrole));
   }
 

@@ -90,7 +90,6 @@ export class OicBorrowedListComponent implements OnInit {
   }
 
   queryParamsHandling(params: Params) {
-    console.log(this.user.department);
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? '' : '';
