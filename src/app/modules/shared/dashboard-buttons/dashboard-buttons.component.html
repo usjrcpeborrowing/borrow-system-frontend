@@ -12,10 +12,11 @@
         <!-- Loop through navigation items based on the current role -->
         <button
           *ngFor="let navItem of navigations[currentRole]"
-          (click)="navigateTo(navItem.url)"
+          [routerLink]="[navItem.url]"
           mat-raised-button
           [matTooltip]="navItem.name"
           matTooltipPosition="right"
+          routerLinkActive="router-active "
         >
           <mat-icon>{{ navItem.icon }}</mat-icon>
           <span class="button-text" *ngIf="isSidebarExpanded">{{
