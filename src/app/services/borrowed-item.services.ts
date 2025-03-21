@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BorrowedItemFilter } from '../models/BorrowedItemFilter';
+import { Pagination } from '../models/Pagination';
 
 interface Response {
   data: any[];
@@ -28,7 +29,7 @@ export class BorrowedItemsService {
     this.borrowedItems.next([...currentItems, item]);
   }
 
-  getBorrowedList(filter: BorrowedItemFilter) {
+  getBorrowedList(filter: BorrowedItemFilter, pagination: Pagination) {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     let params = new HttpParams({
@@ -36,7 +37,9 @@ export class BorrowedItemsService {
         status: filter.status,
         borrower: filter.borrower,
         instructor: filter.instructor,
-        department: filter.department
+        department: filter.department,
+        page: pagination.page,
+        limit: pagination.limit,
       },
     });
     return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: headers, params }).pipe(
@@ -54,7 +57,7 @@ export class BorrowedItemsService {
           return data;
         });
 
-        return response.data;
+        return response;
       }),
       catchError(this.handleError)
     );

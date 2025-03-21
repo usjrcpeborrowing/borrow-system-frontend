@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { Observable, scan, shareReplay, take, takeLast, takeUntil, tap, toArray } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { Pagination } from 'src/app/models/Pagination';
@@ -33,7 +33,13 @@ export class FacultyBorrowedListComponent implements OnInit {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
-  constructor(private activatedRoute: ActivatedRoute, private borrowListService: BorrowedItemsService, private authService: AuthService, private snackbarService: SnackbarService) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private borrowListService: BorrowedItemsService,
+    private authService: AuthService,
+    private snackbarService: SnackbarService,
+    private router: Router
+  ) {
     this.user = authService.getCurrentUser() as User;
   }
   ngOnInit(): void {
@@ -70,8 +76,11 @@ export class FacultyBorrowedListComponent implements OnInit {
 
   fetchBorrowedItems(): void {
     this.borrowedItems = [];
-    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
-      next: (resp) => (this.borrowedItems = resp),
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
+      next: (resp) => {
+        this.borrowedItems = resp.data;
+        this.pagination.length = resp.total;
+      },
       error: (err) => console.error(err),
     });
   }
@@ -95,13 +104,22 @@ export class FacultyBorrowedListComponent implements OnInit {
   }
 
   paginate(event: PageEvent) {
-    console.log(event);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/faculty-borrowed-list'], navigationExtras);
   }
 
   queryParamsHandling(params: Params) {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : this.user._id;
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.fetchBorrowedItems();
   }
 }

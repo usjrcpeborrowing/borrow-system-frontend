@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { scan, tap } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
+import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
@@ -22,10 +24,23 @@ export class StudentBorrowedListComponent implements OnInit {
     search: '',
     department: '',
   };
+  pagination: Pagination = {
+    length: 0,
+    page: 1,
+    limit: 10,
+    pageSizeOption: [5, 10, 25, 50],
+  };
+
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
-  constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {
+  constructor(
+    private borrowListService: BorrowedItemsService,
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.user = authService.getCurrentUser() as User;
   }
 
@@ -66,8 +81,11 @@ export class StudentBorrowedListComponent implements OnInit {
 
   fetchBorrowedItems(): void {
     this.borrowedItems = [];
-    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
-      next: (resp) => (this.borrowedItems = resp),
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
+      next: (resp) => {
+        this.borrowedItems = resp.data;
+        this.pagination.length = resp.total;
+      },
       error: (err) => console.error(err),
     });
   }
@@ -88,6 +106,17 @@ export class StudentBorrowedListComponent implements OnInit {
         this.fetchBorrowedItems();
       },
     });
+  }
+
+  paginate(event: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/student-borrowed-list'], navigationExtras);
   }
 
   queryParamsHandling(params: Params) {

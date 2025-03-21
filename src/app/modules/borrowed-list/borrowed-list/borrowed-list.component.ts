@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { scan } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
+import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
@@ -22,10 +24,22 @@ export class BorrowedListComponent implements OnInit {
     search: '',
     department: '',
   };
+  pagination: Pagination = {
+    length: 0,
+    page: 1,
+    limit: 10,
+    pageSizeOption: [5, 10, 25, 50],
+  };
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
-  constructor(private borrowListService: BorrowedItemsService, private activatedRoute: ActivatedRoute, private snackbarService: SnackbarService, private authService: AuthService) {
+  constructor(
+    private borrowListService: BorrowedItemsService,
+    private activatedRoute: ActivatedRoute,
+    private snackbarService: SnackbarService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.user = this.authService.getCurrentUser() as User;
   }
 
@@ -61,7 +75,7 @@ export class BorrowedListComponent implements OnInit {
   }
 
   fetchBorrowedItems(): void {
-    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
       next: (resp) => {
         this.borrowedItems = resp;
         console.log(this.borrowedItems);
@@ -89,12 +103,25 @@ export class BorrowedListComponent implements OnInit {
     });
   }
 
+  paginate(event: PageEvent) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/borrowed-list'], navigationExtras);
+  }
+
   queryParamsHandling(params: Params) {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : '';
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
     this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.fetchBorrowedItems();
   }
 }

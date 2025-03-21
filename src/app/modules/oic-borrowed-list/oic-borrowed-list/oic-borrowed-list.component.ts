@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { AuthService } from 'src/app/services/auth.service';
 import { distinctUntilChanged, scan, Subscription, take, tap } from 'rxjs';
@@ -33,7 +33,14 @@ export class OicBorrowedListComponent implements OnInit {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
-  constructor(private borrowListService: BorrowedItemsService, private snackbarService: SnackbarService, private activatedRoute: ActivatedRoute, private authService: AuthService) {
+
+  constructor(
+    private borrowListService: BorrowedItemsService,
+    private snackbarService: SnackbarService,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.user = authService.getCurrentUser() as User;
   }
 
@@ -71,10 +78,10 @@ export class OicBorrowedListComponent implements OnInit {
 
   fetchBorrowedItems(): void {
     this.borrowedItems = [];
-    this.borrowListService.getBorrowedList(this.borrowedItemFilter).subscribe({
+    this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
       next: (resp) => {
-        this.borrowedItems = resp;
-        console.log(this.borrowedItems);
+        this.borrowedItems = resp.data;
+        this.pagination.length = resp.total;
       },
       error: (err) => console.error(err),
     });
@@ -99,7 +106,14 @@ export class OicBorrowedListComponent implements OnInit {
   }
 
   paginate(event: PageEvent) {
-    console.log(event);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        page: event.pageIndex + 1,
+        limit: event.pageSize,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate(['/oic-borrowed-list'], navigationExtras);
   }
 
   queryParamsHandling(params: Params) {
@@ -108,6 +122,8 @@ export class OicBorrowedListComponent implements OnInit {
     this.borrowedItemFilter.instructor = params['instructor'] ? '' : '';
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
     this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.fetchBorrowedItems();
   }
 }
