@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, scan, shareReplay, take, takeLast, takeUntil, tap, toArray } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
+import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
@@ -20,7 +22,13 @@ export class FacultyBorrowedListComponent implements OnInit {
     instructor: '',
     borrower: '',
     search: '',
-    department: ''
+    department: '',
+  };
+  pagination: Pagination = {
+    length: 0,
+    page: 1,
+    limit: 10,
+    pageSizeOption: [5, 10, 25, 50],
   };
   user: User;
   selected_count: number = 0;
@@ -84,6 +92,10 @@ export class FacultyBorrowedListComponent implements OnInit {
         this.fetchBorrowedItems();
       },
     });
+  }
+
+  paginate(event: PageEvent) {
+    console.log(event);
   }
 
   queryParamsHandling(params: Params) {

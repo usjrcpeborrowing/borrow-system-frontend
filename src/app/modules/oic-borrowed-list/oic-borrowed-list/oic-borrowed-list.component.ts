@@ -6,6 +6,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { distinctUntilChanged, scan, Subscription, take, tap } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { PageEvent } from '@angular/material/paginator';
+import { Pagination } from 'src/app/models/Pagination';
 @Component({
   selector: 'app-oic-borrowed-list',
   templateUrl: './oic-borrowed-list.component.html',
@@ -21,6 +23,13 @@ export class OicBorrowedListComponent implements OnInit {
     search: '',
     department: '',
   };
+  pagination: Pagination = {
+    length: 0,
+    page: 1,
+    limit: 10,
+    pageSizeOption: [5, 10, 25, 50],
+  };
+
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
@@ -87,6 +96,10 @@ export class OicBorrowedListComponent implements OnInit {
         this.fetchBorrowedItems();
       },
     });
+  }
+
+  paginate(event: PageEvent) {
+    console.log(event);
   }
 
   queryParamsHandling(params: Params) {
