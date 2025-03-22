@@ -77,8 +77,8 @@ export class BorrowedListComponent implements OnInit {
   fetchBorrowedItems(): void {
     this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
       next: (resp) => {
-        this.borrowedItems = resp;
-        console.log(this.borrowedItems);
+        this.borrowedItems = resp.data;
+        this.pagination.length = resp.total;
       },
       error: (err) => console.error(err),
     });

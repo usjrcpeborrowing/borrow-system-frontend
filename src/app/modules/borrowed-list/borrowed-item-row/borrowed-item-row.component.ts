@@ -141,7 +141,6 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
   }
 
   private _filter(value: string, options: string[]): string[] {
-    console.log('wwweeee');
     const filtervalue = value.toLowerCase();
     return options.filter((option) => option.toLowerCase().includes(filtervalue));
   }
