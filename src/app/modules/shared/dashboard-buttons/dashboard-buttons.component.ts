@@ -38,7 +38,7 @@ export class DashboardButtonsComponent implements OnInit {
       { name: 'Borrowing System', label: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
       { name: 'Inventory', label: 'Inventory', url: '/inventory', icon: 'handyman' },
       { name: 'Inventory Updates', label: 'Inventory Update Approval', url: '/inventory-equipment-request', icon: 'handyman' },
-      { name: 'Borrow Request', label: 'Borrow Request', url: '/borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Borrow Requests', label: 'Borrow Requests', url: '/borrowed-list', icon: 'volunteer_activism' },
       { name: 'My Borrowed Items', label: 'My  Borrowed Items', url: '/student-borrowed-list', icon: 'volunteer_activism' },
     ],
     faculty: [
