@@ -6,6 +6,7 @@ interface NavigationItem {
   name: string;
   url: string;
   icon: string;
+  label: string;
 }
 
 @Component({
@@ -19,63 +20,44 @@ export class DashboardButtonsComponent implements OnInit {
   currentRole: string = '';
   navigations: { [key: string]: NavigationItem[] } = {
     administrator: [
-      // { name: 'Dashboard', url: '/dashboard/admin', icon: 'home' },
-      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
-      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'check_box' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
-      // { name: 'Inventory Report', url: '/item-details', icon: 'assignment' },
-      { name: 'Accounts', url: '/account-request', icon: 'volunteer_activism' },
-      // { name: 'History', url: '/history/admin', icon: 'book' },
+      { name: 'Inventory', url: '/inventory', icon: 'handyman', label: '' },
+      { name: 'Requests', url: '/faculty-borrowed-list', icon: 'check_box', label: '' },
+      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add', label: '' },
+      { name: 'Accounts', url: '/account-request', icon: 'volunteer_activism', label: '' },
     ],
     oic: [
-      // { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
-      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
-      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
-      // { name: 'Inventory Report', url: '/item-details', icon: 'assignment' },
-      { name: 'Borrow Request', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
-      { name: 'Account Request', url: '/account-request', icon: 'person_add' },
-      { name: 'Manage User', url: '/student-list', icon: 'manage_accounts' },
-      { name: 'Approval Request', url: '/oic-borrowed-list', icon: 'volunteer_activism' },
-
-      // { name: 'History', url: '/history/faculty', icon: 'book' },
+      { name: 'Borrowing System', label: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', label: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Updates', label: 'Inventory Update Approval', url: '/inventory-equipment-request', icon: 'handyman' },
+      { name: 'Borrow Request Approval (Faculty)', label: 'Borrow Request Approval (Faculty)', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Borrow Request Approval (OIC)', label: 'Borrow Request Approval (OIC/Chairman)', url: '/oic-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Account Request Approval', label: 'Account Request Approval', url: '/account-request', icon: 'manage_accounts' },
+      { name: 'Account Management', label: 'Account Management', url: '/student-list', icon: 'manage_accounts' },
     ],
     reads: [
-      // { name: 'Dashboard', url: '/dashboard/reads', icon: 'home' },
-      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
-      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'assignment' },
-      // { name: 'Inventory Report', url: '/item-details', icon: 'assignment' },
-      { name: 'Borrow Request', url: '/borrowed-list', icon: 'volunteer_activism' },
-      { name: 'Borrow History', url: '/student-borrowed-list', icon: 'history' },
-      // { name: 'History', url: '/history/reads', icon: 'book' },
+      { name: 'Borrowing System', label: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', label: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Updates', label: 'Inventory Update Approval', url: '/inventory-equipment-request', icon: 'handyman' },
+      { name: 'Borrow Request', label: 'Borrow Request', url: '/borrowed-list', icon: 'volunteer_activism' },
+      { name: 'My Borrowed Items', label: 'My  Borrowed Items', url: '/student-borrowed-list', icon: 'volunteer_activism' },
     ],
     faculty: [
-      // { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
-      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
-      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
-      // { name: 'Inventory Report', url: '/item-details', icon: 'description' },
-      { name: 'Borrow Requests', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
-      // { name: 'History', url: '/history/faculty', icon: 'book' },
+      { name: 'Borrowing System', label: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Borrow Request Approval (Faculty)', label: 'Borrow Request Approval (Faculty)', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'My Borrowed Items', label: 'My  Borrowed Items', url: '/student-borrowed-list', icon: 'volunteer_activism' },
     ],
     chairman: [
-      // { name: 'Dashboard', url: '/dashboard/faculty', icon: 'home' },
-      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
-      { name: 'Inventory', url: '/inventory', icon: 'handyman' },
-      { name: 'Inventory Request', url: '/inventory-equipment-request', icon: 'note_add' },
-      // { name: 'Inventory Report', url: '/item-details', icon: 'description' },
-      { name: 'Borrow Request', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
-      { name: 'Account Request', url: '/account-request', icon: 'person_add' },
-      { name: 'Manage User', url: '/student-list', icon: 'manage_accounts' },
-      { name: 'Approval Request', url: '/oic-borrowed-list', icon: 'volunteer_activism' },
-      // { name: 'History', url: '/history/faculty', icon: 'book' },
+      { name: 'Borrowing System', label: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'Inventory', label: 'Inventory', url: '/inventory', icon: 'handyman' },
+      { name: 'Inventory Updates', label: 'Inventory Update Approval', url: '/inventory-equipment-request', icon: 'handyman' },
+      { name: 'Borrow Request Approval (Faculty)', label: 'Borrow Request Approval (Faculty)', url: '/faculty-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Borrow Request Approval (OIC)', label: 'Borrow Request Approval (OIC/Chairman)', url: '/oic-borrowed-list', icon: 'volunteer_activism' },
+      { name: 'Account Request Approval', label: 'Account Request Approval', url: '/account-request', icon: 'manage_accounts' },
+      { name: 'Account Management', label: 'Account Management', url: '/student-list', icon: 'manage_accounts' },
     ],
     student: [
-      // { name: 'Dashboard', url: '/dashboard/student', icon: 'home' },
-      { name: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
-      { name: 'Borrow History', url: '/student-borrowed-list', icon: 'history' },
-      // { name: 'History', url: '/history/student', icon: 'book' },
+      { name: 'Borrowing System', label: 'Borrow Items', url: '/borrow', icon: 'shopping_cart' },
+      { name: 'My Borrowed Items', label: 'My  Borrowed Items', url: '/student-borrowed-list', icon: 'volunteer_activism' },
     ],
   };
 
