@@ -3,7 +3,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { AuthService } from 'src/app/services/auth.service';
-import { distinctUntilChanged, scan, Subscription, take, tap } from 'rxjs';
+import { distinctUntilChanged, scan, Subject, Subscription, take, tap } from 'rxjs';
 import { User } from 'src/app/models/User';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -33,6 +33,7 @@ export class OicBorrowedListComponent implements OnInit {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
+  data_tapped: any[] = [];
 
   constructor(
     private borrowListService: BorrowedItemsService,
@@ -53,23 +54,30 @@ export class OicBorrowedListComponent implements OnInit {
       this.selected_count = resp === true ? this.selected_count + 1 : this.selected_count == 0 ? 0 : this.selected_count - 1;
     });
 
+    this.borrowListService.changeBorrowStatus = new Subject<any>();
     this.borrowListService
       .onChangeBorrowStatus()
       .pipe(
-        scan<any[], any>((acc, data) => {
-          acc.push(data);
-          while (acc.length > this.selected_count) {
-            acc.shift();
-          }
-          return acc;
-        }, [])
+        tap((data) => {
+          this.data_tapped.push(data);
+        })
       )
       .subscribe({
         next: (resp) => {
-          let items = resp.map((x: any) => x.items).flat(1);
-          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+          let borrowedItemId = resp.borrowedItemId;
+          let items = this.data_tapped
+            .filter((data) => data.borrowedItemId == borrowedItemId)
+            .map((x: any) => x.items)
+            .flat(1);
+          let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (['oic_approved', 'oic_rejected'].includes(data.status) && this.subscribe_counter == this.selected_count) {
+          if (items.length && ['oic_approved', 'oic_rejected'].includes(status) && this.subscribe_counter == this.selected_count) {
+            let items = this.data_tapped.map((x: any) => x.items).flat(1);
+            let data = {
+              borrowedItemId: borrowedItemId,
+              items: items,
+              status: status,
+            };
             this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
           }
         },
@@ -100,6 +108,7 @@ export class OicBorrowedListComponent implements OnInit {
       complete: () => {
         this.selected_count = 0;
         this.subscribe_counter = 0;
+        this.data_tapped = [];
         this.fetchBorrowedItems();
       },
     });

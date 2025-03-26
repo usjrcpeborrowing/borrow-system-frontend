@@ -72,18 +72,18 @@ export class FacultyBorrowedListComponent implements OnInit {
       )
       .subscribe({
         next: (resp) => {
-          // let items = resp.map((x: any) => x.items).flat(1);
-          // let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+          let borrowedItemId = resp.borrowedItemId;
+          let items = this.data_tapped
+            .filter((data) => data.borrowedItemId == borrowedItemId)
+            .map((x: any) => x.items)
+            .flat(1);
+          let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          // if (data.status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
-          //   this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
-          // }
-          if (this.data_tapped.length && this.data_tapped[0].status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
-            let items = this.data_tapped.map((x: any) => x.items).flat(1);
+          if (items.length && status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
             let data = {
-              borrowedItemId: this.data_tapped[0].borrowedItemId,
+              borrowedItemId: borrowedItemId,
               items: items,
-              status: this.data_tapped[0].status,
+              status: status,
             };
             this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
           }

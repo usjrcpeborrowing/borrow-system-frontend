@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
-import { scan, tap } from 'rxjs';
+import { scan, Subject, tap } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
@@ -34,6 +34,8 @@ export class StudentBorrowedListComponent implements OnInit {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
+  data_tapped: any[] = [];
+
   constructor(
     private borrowListService: BorrowedItemsService,
     private activatedRoute: ActivatedRoute,
@@ -53,26 +55,26 @@ export class StudentBorrowedListComponent implements OnInit {
       this.selected_count = resp === true ? this.selected_count + 1 : this.selected_count == 0 ? 0 : this.selected_count - 1;
     });
 
+    this.borrowListService.changeBorrowStatus = new Subject<any>();
     this.borrowListService
       .onChangeBorrowStatus()
-      .pipe(
-        tap((data) => console.log('hayyy', data)),
-        scan<any[], any>((acc, data) => {
-          acc.push(data);
-          while (acc.length > this.selected_count) {
-            acc.shift();
-          }
-          return acc;
-        }, [])
-      )
+      .pipe(tap((data) => this.data_tapped.push(data)))
       .subscribe({
         next: (resp) => {
-          console.log({ resp });
-          let items = resp.map((x: any) => x.items).flat(1);
-          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
-
+          let borrowedItemId = resp.borrowedItemId;
+          let items = this.data_tapped
+            .filter((data) => data.borrowedItemId == borrowedItemId)
+            .map((x: any) => x.items)
+            .flat(1);
+          let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (['pending_return'].includes(data.status) && this.subscribe_counter == this.selected_count) {
+          if (items.length && ['pending_return'].includes(status) && this.subscribe_counter == this.selected_count) {
+            let items = this.data_tapped.map((x: any) => x.items).flat(1);
+            let data = {
+              borrowedItemId: borrowedItemId,
+              items: items,
+              status: status,
+            };
             this.returnBorrowedItems(data.items, data.status, data.borrowedItemId);
           }
         },
@@ -103,6 +105,7 @@ export class StudentBorrowedListComponent implements OnInit {
       complete: () => {
         this.subscribe_counter = 0;
         this.selected_count = 0;
+        this.data_tapped = [];
         this.fetchBorrowedItems();
       },
     });
