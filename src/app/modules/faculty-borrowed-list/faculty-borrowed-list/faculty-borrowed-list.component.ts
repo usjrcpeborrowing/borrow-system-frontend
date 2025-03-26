@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
-import { Observable, scan, shareReplay, take, takeLast, takeUntil, tap, toArray } from 'rxjs';
+import { Observable, scan, shareReplay, Subject, take, takeLast, takeUntil, tap, toArray } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
@@ -33,6 +33,7 @@ export class FacultyBorrowedListComponent implements OnInit {
   user: User;
   selected_count: number = 0;
   subscribe_counter: number = 0;
+  data_tapped: any[] = [];
   constructor(
     private activatedRoute: ActivatedRoute,
     private borrowListService: BorrowedItemsService,
@@ -51,23 +52,39 @@ export class FacultyBorrowedListComponent implements OnInit {
       this.selected_count = resp === true ? this.selected_count + 1 : this.selected_count == 0 ? 0 : this.selected_count - 1;
     });
 
+    this.borrowListService.changeBorrowStatus = new Subject<any>();
     this.borrowListService
       .onChangeBorrowStatus()
       .pipe(
-        scan<any[], any>((acc, data) => {
-          acc.push(data);
-          while (acc.length > this.selected_count) {
-            acc.shift();
-          }
-          return acc;
-        }, [])
+        tap((data) => {
+          this.data_tapped.push(data);
+        })
+        // scan<any[], any>((acc, data) => {
+
+        //   acc.push(data);
+        //   if(acc.length > )
+        //   while (acc.length > this.selected_count) {
+        //     acc.shift();
+        //   }
+        //   console.log('after', { acc: acc.length, selected_count: this.selected_count });
+        //   return acc;
+        // }, [])
       )
       .subscribe({
         next: (resp) => {
-          let items = resp.map((x: any) => x.items).flat(1);
-          let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
+          // let items = resp.map((x: any) => x.items).flat(1);
+          // let data = { borrowedItemId: resp[0].borrowedItemId, items: items, status: resp[0].status };
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (data.status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+          // if (data.status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+          //   this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          // }
+          if (this.data_tapped.length && this.data_tapped[0].status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+            let items = this.data_tapped.map((x: any) => x.items).flat(1);
+            let data = {
+              borrowedItemId: this.data_tapped[0].borrowedItemId,
+              items: items,
+              status: this.data_tapped[0].status,
+            };
             this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
           }
         },
@@ -98,6 +115,7 @@ export class FacultyBorrowedListComponent implements OnInit {
       complete: () => {
         this.subscribe_counter = 0;
         this.selected_count = 0;
+        this.data_tapped = [];
         this.fetchBorrowedItems();
       },
     });
