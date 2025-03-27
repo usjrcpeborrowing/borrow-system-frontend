@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="borrower-wrapper">
-        <div class="borrower">{{ "borrower" }}</div>
+        <div class="borrower">{{ borrowedItem.borrower.fullname }}</div>
         <mat-card-subtitle>
           {{ borrowedItem.dateborrowed | date : "mediumDate" }}
         </mat-card-subtitle>
