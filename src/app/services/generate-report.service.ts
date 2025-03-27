@@ -160,8 +160,8 @@ export class GenerateReportService {
       map((resp) => {
         console.log(resp.data[0]);
         return resp.data.map((item) => {
-          let { conditionAndQuantity, available, borrowed } = item;
-          let availability = `available (${available})\nborrowed (${borrowed})`;
+          let { conditionAndQuantity } = item;
+          let availability = `available (${item['availability'].available})\nborrowed (${item['availability'].borrowed})`;
           let conditionAndQuantityDisplay = conditionAndQuantity ? conditionAndQuantity.map((x) => `${x.condition} (${x.quantity})`).join('\n') : '';
           return {
             ...item,

@@ -277,6 +277,7 @@ export class BorrowComponent implements OnInit {
   getEquipmentList() {
     this.isFetching = true;
     this.equipmentService.getAvailableEquipment(this.pagination, this.inventoryFilter).subscribe((resp) => {
+      console.log('equipments', resp)
       this.isFetching = false;
       this.noItems = true;
       this.equipmentlist = resp.data;
@@ -310,7 +311,7 @@ export class BorrowComponent implements OnInit {
 
   openSnackBar(message: string, action: string, isError: boolean = false): void {
     let config: MatSnackBarConfig = {
-      duration: 3000,
+      duration: 4500,
       verticalPosition: 'top',
       horizontalPosition: 'center',
     };
@@ -372,6 +373,7 @@ export class BorrowComponent implements OnInit {
         this.isFetching = false;
         this.borrowForm.reset();
         this.addedEquipment = [];
+        this.getEquipmentList()
       },
     });
   }

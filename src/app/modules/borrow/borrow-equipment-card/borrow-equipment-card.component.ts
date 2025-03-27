@@ -31,7 +31,7 @@ export class BorrowEquipmentCardComponent implements OnInit {
       this.dialogWidth = state.matches ? '100%' : '45%';
     });
 
-    this.available = this.equipment.availability == 'available' ? 'available' : 'unavailable';
+    this.available = this.equipment.availability.availability == 'available' ? 'available' : 'unavailable';
   }
 
   addEquipment() {
