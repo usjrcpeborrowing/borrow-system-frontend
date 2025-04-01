@@ -6,7 +6,9 @@
           <div class="img-wrapper">
             <img
               [src]="
-                itemborrowed['equipment'].images?.thumbnailUrl ?? defaultImage
+                itemborrowed['equipment'].images?.thumbnailUrl
+                  ? itemborrowed['equipment'].images?.thumbnailUrl
+                  : defaultImage
               "
               alt="Equipment Image"
             />
