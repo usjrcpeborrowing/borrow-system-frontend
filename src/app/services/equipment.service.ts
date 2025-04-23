@@ -176,11 +176,15 @@ export class EquipmentService {
     return this.http.get<Response>(environment.API_URL + '/api/equipment', { params, headers: headers }).pipe(catchError(this.handleError));
   }
 
+  getEquipmentUpdateHistory(equipmentId: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+    return this.http.get<Response>(environment.API_URL + '/api/equipment/getequipmentupdate/' + equipmentId, { headers }).pipe(catchError(this.handleError));
+  }
+
   addEquipment(item: Item): Observable<any> {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
-
-    console.log('thizis token', headers);
 
     return this.http.post<any>(environment.API_URL + '/api/equipment', item, { headers: headers }).pipe(
       // tap((data) => console.log('Equipment added:', data, { headers })),

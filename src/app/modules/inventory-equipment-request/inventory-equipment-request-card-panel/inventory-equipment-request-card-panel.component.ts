@@ -9,6 +9,7 @@ import { EquipmentService } from 'src/app/services/equipment.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/User';
+import { EquipmentDetailViewDialogComponent } from '../../shared/equipment-detail-view-dialog/equipment-detail-view-dialog.component';
 @Component({
   selector: 'app-inventory-equipment-request-card-panel',
   templateUrl: './inventory-equipment-request-card-panel.component.html',
@@ -38,11 +39,8 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
 
   viewItem(item: Item): void {
     console.log('view');
-    const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
-      data: {
-        action: 'Confirm',
-        item: item,
-      },
+    const dialogRef = this.dialog.open(EquipmentDetailViewDialogComponent, {
+      data: item,
     });
 
     dialogRef.afterClosed().subscribe((resp) => {

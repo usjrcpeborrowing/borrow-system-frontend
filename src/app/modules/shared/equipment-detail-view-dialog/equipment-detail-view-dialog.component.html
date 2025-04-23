@@ -1,0 +1,82 @@
+<div class="dialog-detail">
+  <h2 mat-dialog-title>Item Details</h2>
+  <div mat-dialog-content>
+    <div class="item-details-container">
+      <div class="image-container">
+        <img
+          class="fit-image"
+          [src]="
+            equipment?.images?.midSizeUrl
+              ? equipment?.images?.midSizeUrl
+              : defaultImage
+          "
+          alt=""
+        />
+      </div>
+      <div class="item-details">
+        <div class="row">
+          <div class="label">Serial No:</div>
+          <div class="detail">{{ equipment.serialNo }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Name:</div>
+          <div class="detail">{{ equipment.name }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Equipment Type:</div>
+          <div class="detail">{{ equipment.equipmentType }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Categories:</div>
+          <div class="detail">{{ equipment.categories }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Model:</div>
+          <div class="detail">{{ equipment.modelNo }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Brand:</div>
+          <div class="detail">{{ equipment.brand }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Matter:</div>
+          <div class="detail">{{ equipment.matter }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Color:</div>
+          <div class="detail">{{ equipment.color }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Inventory Type:</div>
+          <div class="detail">{{ equipment.inventorytype }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Condition:</div>
+          <div class="detail">{{ equipment.condition }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Location:</div>
+          <div class="detail">{{ equipment.location }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Condition:</div>
+          <div class="detail">
+            <span *ngFor="let conditionQty of equipment.conditionAndQuantity">
+              {{ conditionQty.condition }}({{ conditionQty.quantity }}) <br />
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Total Quantity:</div>
+          <div class="detail">{{ equipment.totalQuantity }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="item-updates-container">
+      <app-item-update-custom-stepper [updates]="updates"></app-item-update-custom-stepper>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button>Close</button>
+  </mat-dialog-actions>
+</div>

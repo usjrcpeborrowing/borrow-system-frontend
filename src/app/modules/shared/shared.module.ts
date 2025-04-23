@@ -17,6 +17,7 @@ import { BorrowStatusMenuComponent } from './borrow-status-menu/borrow-status-me
 import { AccountRequestCategoryComponent } from './account-request-category/account-request-category.component';
 import { CustomStepperComponent } from './custom-stepper/custom-stepper.component';
 import { ItemUpdateCustomStepperComponent } from './item-update-custom-stepper/item-update-custom-stepper.component';
+import { EquipmentDetailViewDialogComponent } from './equipment-detail-view-dialog/equipment-detail-view-dialog.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ItemUpdateCustomStepperComponent } from './item-update-custom-stepper/i
     AccountRequestCategoryComponent,
     CustomStepperComponent,
     ItemUpdateCustomStepperComponent,
+    EquipmentDetailViewDialogComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
