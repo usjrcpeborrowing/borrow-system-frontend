@@ -85,7 +85,6 @@ export class EquipmentDetailDialogComponent implements OnInit {
       isborrow: [data.item.isborrow],
       conditionAndQuantity: this.fb.array([]),
       totalQuantity: [data.item.totalQuantity],
-
     });
     this.user = this.authService.getCurrentUser() as User;
     this.imageUrl = this.data.item.images.midSizeUrl;
@@ -95,6 +94,7 @@ export class EquipmentDetailDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data);
     this.equipmentService.onAddEquipmentImage().subscribe({
       next: (resp) => {
         (this.equipmentForm.controls['images'] as FormGroup).controls['url'].setValue(resp);

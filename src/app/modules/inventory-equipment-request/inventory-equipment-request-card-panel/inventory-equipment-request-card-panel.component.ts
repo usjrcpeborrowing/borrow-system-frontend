@@ -18,6 +18,7 @@ import { EquipmentDetailViewDialogComponent } from '../../shared/equipment-detai
 })
 export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnChanges {
   @Input() equipments: Item[] = [];
+  defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   equipmentStatus = Constants.equipmentStatus;
   selectAll = false;
@@ -38,9 +39,23 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   }
 
   viewItem(item: Item): void {
-    console.log('view');
     const dialogRef = this.dialog.open(EquipmentDetailViewDialogComponent, {
       data: item,
+    });
+
+    dialogRef.afterClosed().subscribe((resp) => {
+      if (resp == 'confirm') {
+        this.equipmentService.confirmEquipmentSubject.next(item);
+      }
+    });
+  }
+
+  editItem(item: Item) {
+    const dialogRef = this.dialog.open(EquipmentDetailDialogComponent, {
+      data: {
+        item,
+        action: 'Confirm',
+      },
     });
 
     dialogRef.afterClosed().subscribe((resp) => {

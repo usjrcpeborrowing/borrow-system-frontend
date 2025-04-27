@@ -81,18 +81,9 @@
   </mat-card>
    -->
 
-<mat-card appearance="outlined">
+<!-- code starts here -->
+<!-- <mat-card appearance="outlined">
   <mat-card-content class="panel-description">
-    <!-- <div>
-      <div mat-card-title class="detail-name">Reads John Doe</div>
-      <div mat-card-title class="detail-name">| ID: 202000320</div>
-    </div>
-
-    <div mat-card-title class="detail-info">
-      <div class="borrowed-items-class">Edited Items</div>
-      <div class="detail-date">Sep 12, 2024 - 4:32 PM</div>
-    </div> -->
-    <!-- <div class="hline"></div> -->
     <div class="checkbox-container">
       <div class="detail-select">Select All</div>
       <mat-checkbox
@@ -124,7 +115,65 @@
       >
         Confirm
       </button>
-      <!-- <button mat-raised-button (click)="rejectSelectedEquipments()">Reject</button> -->
     </div>
   </mat-card-content>
-</mat-card>
+</mat-card> -->
+<!-- code ends here -->
+
+<div class="header-container">
+  <div class="header">
+    <div></div>
+    <div>SERIAL NO</div>
+    <div>NAME</div>
+    <div>BRAND</div>
+    <div>TYPE</div>
+    <div>
+      <mat-checkbox
+        [(ngModel)]="selectAll"
+        (change)="toggleSelectAll($event)"
+        labelPosition="before"
+      >
+      SELECT ALL
+    </mat-checkbox>
+    </div>
+  </div>
+</div>
+<mat-divider></mat-divider>
+<div class="equipment-request-container">
+  <div class="equipment-request-wrapper" *ngFor="let equipment of equipments">
+    <div>
+      <div class="img-wrapper">
+        <img
+          [src]="
+            equipment.images?.thumbnailUrl
+              ? equipment.images?.thumbnailUrl
+              : defaultImage
+          "
+          alt="Equipment Image"
+        />
+      </div>
+    </div>
+    <div>{{ equipment.serialNo }}</div>
+    <div>{{ equipment.name }}</div>
+    <div>{{ equipment.brand }}</div>
+    <div>{{ equipment.equipmentType }}</div>
+    <div class="action-wrapper">
+      <mat-icon
+        class="view-button view-button"
+        (click)="viewItem(equipment)"
+        matTooltip="View Updates"
+      >
+        visibility
+      </mat-icon>
+      <mat-icon class="view-button view-button" matTooltip="Edit">
+        edit
+      </mat-icon>
+      <mat-checkbox
+        [(ngModel)]="equipment['selected']"
+        [disabled]="equipment['disabled']"
+        (change)="onItemChange($event, equipment)"
+        matTooltip="Select"
+      ></mat-checkbox>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,7 @@
 <div class="panel-name"></div>
-
 <div class="scrollable-panel">
   <div class="table-content">
     <ng-container matColumnDef="itemPanel">
-      <!-- <div *ngFor="let item of items">
-          <app-inventory-equipment-request-card-panel [data]="item" [items]="item.itemborrowed"></app-inventory-equipment-request-card-panel>
-        
-        </div> -->
       <app-inventory-equipment-request-card-panel
         [equipments]="equipments"
       ></app-inventory-equipment-request-card-panel>
@@ -15,4 +10,7 @@
       <p>No Results Found</p>
     </ng-template>
   </div>
+</div>
+<div class="action-wrapper">
+  <button mat-raised-button color="primary">Confirm Selected</button>
 </div>
