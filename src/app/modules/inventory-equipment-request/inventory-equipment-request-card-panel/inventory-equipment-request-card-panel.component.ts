@@ -44,8 +44,8 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
     });
 
     dialogRef.afterClosed().subscribe((resp) => {
-      if (resp) {
-        this.equipmentService.confirmEquipmentSubject.next(resp);
+      if (resp == 'confirm') {
+        this.equipmentService.confirmEquipmentSubject.next(item);
       }
     });
   }

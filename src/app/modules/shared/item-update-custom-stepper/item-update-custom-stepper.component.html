@@ -9,7 +9,7 @@
     <div class="content">
       <div class="title">{{ update.updatedField }}</div>
       <div class="subtitle">{{ update.oldValue }} → {{ update.newValue }}</div>
-      <div class="subtitle">Updated by: John Doe</div>
+      <div class="subtitle">{{update.doer.firstName}} {{update.doer.lastName}}</div>
       <div class="subtitle">{{ update.date | date : "mediumDate" }}</div>
     </div>
   </div>

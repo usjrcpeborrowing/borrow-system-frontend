@@ -34,7 +34,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     location: '',
     categories: '',
     recentlyBorrowed: '',
-    condition: ''
+    condition: '',
   };
 
   currentUser: any;
@@ -49,7 +49,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
     });
     this.equipmentService.onConfirmEquipment().subscribe((resp) => {
       console.log(resp);
-      this.equipmentService.confirmEquipment(resp._id, { ...resp, confirmed: true }).subscribe({
+      this.equipmentService.confirmEquipmentByIds({ equipmentIds: [resp._id], confirmed: true }).subscribe({
         next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
         error: (err) => this.snackbarService.openSnackBar(err.message, 'OK', true),
         complete: () => this.getUnconfirmedEquipments(),

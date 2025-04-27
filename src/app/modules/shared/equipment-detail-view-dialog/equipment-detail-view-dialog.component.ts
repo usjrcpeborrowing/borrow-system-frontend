@@ -13,7 +13,7 @@ export class EquipmentDetailViewDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public equipment: any, private equipmentService: EquipmentService) {}
 
   ngOnInit(): void {
-    this.equipmentService.getEquipmentUpdateHistory('6702bb7ab27a4d212f2cee08').subscribe((resp) => {
+    this.equipmentService.getEquipmentUpdateHistory(this.equipment._id).subscribe((resp) => {
       if (resp.success) {
         console.log(resp.data[0]);
         this.updates = resp.data[0]['revision'];
