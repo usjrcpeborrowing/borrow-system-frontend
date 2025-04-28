@@ -10,6 +10,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/User';
 import { EquipmentDetailViewDialogComponent } from '../../shared/equipment-detail-view-dialog/equipment-detail-view-dialog.component';
+import { InventoryUpdateService } from 'src/app/services/inventory-update.service';
 @Component({
   selector: 'app-inventory-equipment-request-card-panel',
   templateUrl: './inventory-equipment-request-card-panel.component.html',
@@ -23,7 +24,14 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   equipmentStatus = Constants.equipmentStatus;
   selectAll = false;
   currentUser: User;
-  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef, private equipmentService: EquipmentService, private snackbarService: SnackbarService, private authService: AuthService) {
+  constructor(
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef,
+    private equipmentService: EquipmentService,
+    private snackbarService: SnackbarService,
+    private authService: AuthService,
+    private inventoryUpdateService: InventoryUpdateService
+  ) {
     this.currentUser = authService.getCurrentUser() as User;
   }
 
@@ -72,7 +80,10 @@ export class InventoryEquipmentRequestCardPanelComponent implements OnInit, OnCh
   }
 
   onItemChange(event: MatCheckboxChange, item: Item): void {
-    item['selected'] = event.checked;
+    this.inventoryUpdateService.selectedInventoryUpdateSubject.next({
+      equipmentId: item._id,
+      selected: event.checked,
+    });
   }
 
   confirmSelectedEquipments() {
