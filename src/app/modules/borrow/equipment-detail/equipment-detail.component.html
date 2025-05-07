@@ -68,6 +68,12 @@
         </div>
       </div>
     </div>
+  <h2 mat-dialog-title>Item Changes</h2>
+    <div class="item-updates-container">
+      <app-item-update-custom-stepper
+        [updates]="updates"
+      ></app-item-update-custom-stepper>
+    </div>
   </div>
   <mat-dialog-actions align="end">
     <button mat-button (click)="dialogRef.close()">Close</button>

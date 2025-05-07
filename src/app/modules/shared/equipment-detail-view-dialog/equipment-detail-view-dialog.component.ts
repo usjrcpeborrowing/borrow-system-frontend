@@ -15,9 +15,7 @@ export class EquipmentDetailViewDialogComponent implements OnInit {
   ngOnInit(): void {
     this.equipmentService.getEquipmentUpdateHistory(this.equipment._id).subscribe((resp) => {
       if (resp.success) {
-        console.log(resp.data[0]);
         this.updates = resp.data[0]['revision'];
-        console.log(this.updates);
       }
     });
   }

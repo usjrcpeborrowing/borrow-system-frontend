@@ -49,7 +49,8 @@ import { EquipmentDetailViewDialogComponent } from './equipment-detail-view-dial
     NoResultsComponent,
     BorrowStatusMenuComponent,
     AccountRequestCategoryComponent,
-    CustomStepperComponent
+    ItemUpdateCustomStepperComponent,
+    CustomStepperComponent,
   ],
 })
 export class SharedModule {}

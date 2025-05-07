@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
+import { Subject, take } from 'rxjs';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Pagination } from 'src/app/models/Pagination';
 import { User } from 'src/app/models/User';
@@ -32,7 +33,7 @@ export class InventoryComponent implements OnInit {
     location: '',
     categories: '',
     recentlyBorrowed: '',
-    condition: ''
+    condition: '',
   };
   equipmentlist: any[] = [];
 
@@ -54,12 +55,13 @@ export class InventoryComponent implements OnInit {
       this.queryParamsHandling(params);
     });
 
+    this.equipmentService.updateEquipmentSubject = new Subject<any>();
     this.equipmentService.onUpdateEquipment().subscribe((resp) => {
       console.log('haha resp item on update', resp);
       this.equipmentService.updateItem(resp._id, resp).subscribe({
         next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
         error: (err) => this.snackbarService.openSnackBar(err.message, 'OK', true),
-        complete: ()=> this.getEquipmentList()
+        complete: () => this.getEquipmentList(),
       });
     });
   }

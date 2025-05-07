@@ -7,6 +7,8 @@ import { EquipmentDetailComponent } from '../../borrow/equipment-detail/equipmen
 import { EquipmentDetailDialogComponent } from '../../shared/equipment-detail-dialog/equipment-detail-dialog.component';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { BorrowHistoryDialogComponent } from '../../shared/borrow-history-dialog/borrow-history-dialog.component';
+import { ItemUpdateCustomStepperComponent } from '../../shared/item-update-custom-stepper/item-update-custom-stepper.component';
+import { EquipmentDetailViewDialogComponent } from '../../shared/equipment-detail-view-dialog/equipment-detail-view-dialog.component';
 
 @Component({
   selector: 'app-item-panel',

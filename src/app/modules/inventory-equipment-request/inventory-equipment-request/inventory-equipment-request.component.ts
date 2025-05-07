@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationExtras, Params, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { BorrowedItemFilter } from 'src/app/models/BorrowedItemFilter';
 import { InventoryFilter } from 'src/app/models/InventoryFilter';
 import { Item } from 'src/app/models/Items';
@@ -55,7 +56,7 @@ export class InventoryEquipmentRequestComponent implements OnInit {
         complete: () => this.getUnconfirmedEquipments(),
       });
     });
-
+    this.equipmentService.confirmSelectedEquipments = new Subject();
     this.equipmentService.onConfirmSelectedEquipments().subscribe({
       next: (resp) => {
         if (resp.equipmentIds.length) {
