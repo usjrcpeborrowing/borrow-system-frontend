@@ -98,7 +98,7 @@
   gap: 15px;
 }
 
-::ng-deep .mat-mdc-text-field-wrapper {
+::ng-deep .detail-wrapper .mat-mdc-text-field-wrapper {
   min-width: 280px;
 }
 
