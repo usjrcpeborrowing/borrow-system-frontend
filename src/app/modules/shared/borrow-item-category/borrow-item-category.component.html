@@ -1,22 +1,39 @@
 <div class="panel-name underlined">Filters</div>
-<div class="form-fields-container">
-  <mat-form-field floatLabel="always">
-    <mat-label>Search</mat-label>
-    <input matInput placeholder="Type Here" autocomplete="off" />
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-  <mat-form-field class="form-field">
-    <mat-label>Borrow Status</mat-label>
-    <mat-select (selectionChange)="navigate($event)">
-      <mat-option *ngFor="let status of borrowstatus" [value]="status">
-        {{ status }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<form [formGroup]="filterForm">
+  <div class="form-fields-container">
+    <mat-form-field floatLabel="always">
+      <mat-label>Search</mat-label>
+      <input matInput placeholder="Type Here" autocomplete="off" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <mat-label>Borrow Status</mat-label>
+      <mat-select
+        formControlName="status"
+        (selectionChange)="navigate('status')"
+      >
+        <mat-option *ngFor="let status of borrowstatus" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <div class="action-wrapper">
-    <button mat-raised-button color="accent" (click)="resetFilters()">
-      Reset Filter
-    </button>
+    <mat-form-field class="form-field">
+      <mat-label>Class Names</mat-label>
+      <mat-select
+        formControlName="className"
+        (selectionChange)="navigate('className')"
+      >
+        <mat-option *ngFor="let class of classNames" [value]="class">
+          {{ class }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="action-wrapper">
+      <button mat-raised-button color="accent" (click)="resetFilters()">
+        Reset Filter
+      </button>
+    </div>
   </div>
-</div>
+</form>

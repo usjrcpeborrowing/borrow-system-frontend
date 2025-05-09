@@ -38,6 +38,7 @@ export class BorrowedItemsService {
         borrower: filter.borrower,
         instructor: filter.instructor,
         department: filter.department,
+        className: filter.className,
         page: pagination.page,
         limit: pagination.limit,
       },
@@ -83,6 +84,19 @@ export class BorrowedItemsService {
         }),
         catchError(this.handleError)
       );
+  }
+
+  getClassNamesByIntructor(instructorId: string) {
+    const token = localStorage.getItem('token') as string;
+    const headers = { Authorization: token };
+
+    return this.http.get<Response>(environment.API_URL + '/api/borroweditems/getclassnamesbyintructor/' + instructorId, { headers: headers }).pipe(
+      map((response) => {
+        response.data = response.data.map((x) => x._id);
+        return response;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   updateBorrowedItemStatus(body: any, id: string) {

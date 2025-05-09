@@ -4,4 +4,5 @@ export interface BorrowedItemFilter {
     status: string;
     search: string;
     department: string;
+    className: string;
 }

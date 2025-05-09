@@ -23,6 +23,7 @@ export class StudentBorrowedListComponent implements OnInit {
     borrower: '',
     search: '',
     department: '',
+    className: ''
   };
   pagination: Pagination = {
     length: 0,
@@ -126,6 +127,7 @@ export class StudentBorrowedListComponent implements OnInit {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : this.user._id;
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
+    this.borrowedItemFilter.className = params['className'] ? params['className'] : '';
     this.fetchBorrowedItems();
   }
 }
