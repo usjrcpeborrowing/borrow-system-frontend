@@ -18,6 +18,8 @@ import { AccountRequestCategoryComponent } from './account-request-category/acco
 import { CustomStepperComponent } from './custom-stepper/custom-stepper.component';
 import { ItemUpdateCustomStepperComponent } from './item-update-custom-stepper/item-update-custom-stepper.component';
 import { EquipmentDetailViewDialogComponent } from './equipment-detail-view-dialog/equipment-detail-view-dialog.component';
+import { BorrowRequestDetailComponent } from './borrow-request-detail/borrow-request-detail.component';
+import { BorrowedItemRowComponent } from './borrowed-item-row/borrowed-item-row.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { EquipmentDetailViewDialogComponent } from './equipment-detail-view-dial
     CustomStepperComponent,
     ItemUpdateCustomStepperComponent,
     EquipmentDetailViewDialogComponent,
+    BorrowRequestDetailComponent,
+    BorrowedItemRowComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -51,6 +55,8 @@ import { EquipmentDetailViewDialogComponent } from './equipment-detail-view-dial
     AccountRequestCategoryComponent,
     ItemUpdateCustomStepperComponent,
     CustomStepperComponent,
+    BorrowRequestDetailComponent,
+    BorrowedItemRowComponent,
   ],
 })
 export class SharedModule {}

@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.detail-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-wrapper .subtitle {
+  font-weight: 600;
+  font-size: 11px;
+  color: rgb(62, 112, 62);
+}

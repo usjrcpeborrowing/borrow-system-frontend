@@ -1,0 +1,49 @@
+<div class="expansion-panel-container">
+  <div class="expansion-panel-wrapper">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="img-wrapper">
+            <img
+              [src]="borrowedItem.itemborrowed.equipment?.images?.thumbnailUrl ?? defaultImage"
+              alt="Equipment Image"
+            />
+          </div>
+          <div class="panel-title-wrapper">
+            <div>{{ borrowedItem.itemborrowed.equipment.name }}</div>
+            <div class="classdetail">
+              <div>{{ borrowedItem.className }}</div>
+              <div>{{ borrowedItem.dateborrowed | date : "mediumDate" }}</div>
+            </div>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description class="borrowed-item-detail">
+          <div>{{ borrowedItem.borrower.fullName }}</div>
+          <div>{{ borrowedItem.itemborrowed.quantity }}</div>
+          <div>{{ borrowedItem.itemborrowed.status }}</div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="borrowed-item-detail-mobile">
+        <div>{{ borrowedItem.itemborrowed.quantity }}</div>
+        <div>{{ borrowedItem.itemborrowed.status }}</div>
+      </div>
+      <div class="wrapper">
+        <div class="detail-card">
+          <app-borrow-request-detail
+            [borrowedItem]="borrowedItem"
+          ></app-borrow-request-detail>
+        </div>
+        <div class="detail-card">
+          <app-custom-stepper
+            [histories]="borrowedItem.history"
+          ></app-custom-stepper>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div>
+  <mat-checkbox
+    [(ngModel)]="selected"
+    [disabled]="disabled"
+    (change)="onCheckBoxChanged($event)"
+  ></mat-checkbox>
+</div>

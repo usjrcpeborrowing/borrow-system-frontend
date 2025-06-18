@@ -26,7 +26,14 @@
         <div>Condition: {{ itemborrowed.condition }}</div>
         <div>Status: {{ itemborrowed["status"] }}</div>
       </div>
-      <app-custom-stepper [histories]="histories"></app-custom-stepper>
+      <div class="wrapper">
+        <div class="detail-card">
+          <app-borrow-request-detail [borrowedItem]="borrowedItem"></app-borrow-request-detail>
+        </div>
+        <div class="detail-card">
+          <app-custom-stepper [histories]="histories"></app-custom-stepper>
+        </div>
+      </div>
     </mat-expansion-panel>
   </div>
   <mat-checkbox

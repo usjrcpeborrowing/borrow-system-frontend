@@ -23,7 +23,7 @@ export class FacultyBorrowedListComponent implements OnInit {
     borrower: '',
     search: '',
     department: '',
-    className: ''
+    className: '',
   };
   pagination: Pagination = {
     length: 0,
@@ -96,6 +96,7 @@ export class FacultyBorrowedListComponent implements OnInit {
     this.borrowedItems = [];
     this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
       next: (resp) => {
+        console.log({ resp });
         this.borrowedItems = resp.data;
         this.pagination.length = resp.total;
       },

@@ -58,6 +58,19 @@
   width: 30%;
 }
 
+.panel-title-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-title-wrapper .classdetail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  gap: 10px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
 @media screen and (max-width: 480px) {
   .borrowed-item-detail {
     display: none;
@@ -76,9 +89,9 @@
   }
 
   .detail-card {
-  padding: 5px;
-  background-color: hsla(175, 93%, 42%, 0.05);
-  border-radius: 10px;
-  width: 100%;
-}
+    padding: 5px;
+    background-color: hsla(175, 93%, 42%, 0.05);
+    border-radius: 10px;
+    width: 100%;
+  }
 }

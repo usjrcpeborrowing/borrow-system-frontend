@@ -44,22 +44,22 @@ export class BorrowedItemsService {
       },
     });
     return this.http.get<any>(environment.API_URL + '/api/borroweditems', { headers: headers, params }).pipe(
-      map((response) => {
-        response.data.forEach((data: any) => {
-          data.itemborrowed.forEach((item: any) => {
-            let history = data.history.filter((his: any) => his.borrowItemId == item._id);
-            item.history = history;
-          });
+      // map((response) => {
+      //   response.data.forEach((data: any) => {
+      //     data.itemborrowed.forEach((item: any) => {
+      //       let history = data.history.filter((his: any) => his.borrowItemId == item._id);
+      //       item.history = history;
+      //     });
 
-          let instructor_fullname = `${data.instructor.firstName} ${data.instructor.lastName}`;
-          let borrower_fullname = `${data.borrower.firstName} ${data.borrower.lastName}`;
-          data.instructor.fullname = instructor_fullname;
-          data.borrower.fullname = borrower_fullname;
-          return data;
-        });
+      //     let instructor_fullname = `${data.instructor.firstName} ${data.instructor.lastName}`;
+      //     let borrower_fullname = `${data.borrower.firstName} ${data.borrower.lastName}`;
+      //     data.instructor.fullname = instructor_fullname;
+      //     data.borrower.fullname = borrower_fullname;
+      //     return data;
+      //   });
 
-        return response;
-      }),
+      //   return response;
+      // }),
       catchError(this.handleError)
     );
   }

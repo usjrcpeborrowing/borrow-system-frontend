@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { scan, take, takeLast } from 'rxjs';
+import { take } from 'rxjs';
 import { Item } from 'src/app/models/Items';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -16,11 +16,11 @@ interface BorrowedItem {
 }
 
 @Component({
-  selector: 'app-faculty-borrowed-item-row',
-  templateUrl: './faculty-borrowed-item-row.component.html',
-  styleUrls: ['./faculty-borrowed-item-row.component.css'],
+  selector: 'app-borrowed-item-row',
+  templateUrl: './borrowed-item-row.component.html',
+  styleUrls: ['./borrowed-item-row.component.css'],
 })
-export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
+export class BorrowedItemRowComponent implements OnInit, OnChanges {
   @Input() borrowId: string = '';
   @Input() borrowedItem: any;
   @Input() itemborrowed!: Item;
@@ -31,7 +31,6 @@ export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
-
   ngOnInit(): void {
     this.borrowedItemService
       .onReturnSelectedItem()
@@ -129,7 +128,6 @@ export class FacultyBorrowedItemRowComponent implements OnInit, OnChanges {
         items: updates,
         status: status,
       });
-
     }
   }
 }
