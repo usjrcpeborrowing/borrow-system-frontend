@@ -7,9 +7,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 })
 export class OicBorrowCardComponent {
   @Input() borrowedItems: any[] = [];
-
   selected_counter: number = 0;
-
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -18,7 +16,6 @@ export class OicBorrowCardComponent {
         item.itemborrowed.selectedQty = item.itemborrowed.quantity;
         item.itemborrowed.selectedCondition = item.itemborrowed.condition;
         item.itemborrowed.selectedRemarks = item.itemborrowed.remarks;
-        console.log('item.itemborrowed.status', item.itemborrowed.status)
         item.itemborrowed.selectedDisabled = !['faculty confirmed'].includes(item.itemborrowed.status)
       });
     }

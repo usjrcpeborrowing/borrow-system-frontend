@@ -18,7 +18,7 @@ interface BorrowedItem {
 }
 
 @Component({
-  selector: 'app-borrowed-item-row',
+  selector: 'app-borrowed-item-row-testtt',
   templateUrl: './borrowed-item-row.component.html',
   styleUrls: ['./borrowed-item-row.component.css'],
 })
