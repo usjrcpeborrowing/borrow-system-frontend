@@ -23,7 +23,6 @@ interface BorrowedItem {
 export class BorrowedItemRowComponent implements OnInit, OnChanges {
   @Input() borrowedItem: any;
   @Output() onSelectedEvent = new EventEmitter<boolean>();
-  disabled: boolean = false;
   selected: boolean = false;
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
