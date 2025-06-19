@@ -21,13 +21,10 @@ interface BorrowedItem {
   styleUrls: ['./borrowed-item-row.component.css'],
 })
 export class BorrowedItemRowComponent implements OnInit, OnChanges {
-  @Input() borrowId: string = '';
   @Input() borrowedItem: any;
-  @Input() itemborrowed!: Item;
-  @Input() selected: boolean = false;
-  @Input() histories: any[] = [];
   @Output() onSelectedEvent = new EventEmitter<boolean>();
   disabled: boolean = false;
+  selected: boolean = false;
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
 
   constructor(private borrowedItemService: BorrowedItemsService, private snackbarService: SnackbarService) {}
@@ -44,24 +41,7 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['itemborrowed']) {
-      this.disabled = this.itemborrowed['status'] !== 'pending_faculty_confirmation';
-    }
-
-    if (changes['selected'] && this.disabled == true) {
-      this.selected = false;
-    }
-
-    if (changes['selected'] && !changes['selected'].firstChange && this.disabled == false) {
-      this.borrowedItemService.itemSelectedSubject.next(this.selected);
-      this.onSelectedEvent.emit(changes['selected'].currentValue);
-    }
-
-    if (changes['histories']) {
-      this.histories = this.histories.sort((a: any, b: any) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt));
-    }
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   onCheckBoxChanged(event: MatCheckboxChange) {
     this.borrowedItemService.itemSelectedSubject.next(event.checked);
@@ -69,8 +49,8 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
   }
 
   updateBorrowedItemStatus(status: string) {
-    let exceed = this.itemborrowed['selectedQty'] > this.itemborrowed.quantity;
-    let lack = this.itemborrowed['selectedQty'] < 1;
+    let exceed = this.borrowedItem.itemborrowed['selectedQty'] > this.borrowedItem.itemborrowed.quantity;
+    let lack = this.borrowedItem.itemborrowed['selectedQty'] < 1;
 
     if (exceed) {
       this.snackbarService.openSnackBar('Updated items exceeds on approved quantity', 'OK');
@@ -82,49 +62,50 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
       return;
     }
 
-    if (this.itemborrowed.quantity !== this.itemborrowed['selectedQty']) {
+    if (this.borrowedItem.itemborrowed.quantity !== this.borrowedItem.itemborrowed['selectedQty']) {
       let partial_return: BorrowedItem = {
         _id: null,
-        equipment: this.itemborrowed['equipment']._id,
-        quantity: this.itemborrowed['selectedQty'],
-        condition: this.itemborrowed['selectedCondition'],
-        prevCondition: this.itemborrowed.condition,
+        equipment: this.borrowedItem.itemborrowed['equipment']._id,
+        quantity: this.borrowedItem.itemborrowed['selectedQty'],
+        condition: this.borrowedItem.itemborrowed['selectedCondition'],
+        prevCondition: this.borrowedItem.itemborrowed.condition,
         status: status,
-        remarks: this.itemborrowed.remarks,
+        remarks: this.borrowedItem.itemborrowed.remarks,
       };
 
       let updates: BorrowedItem[] = [
         {
-          _id: this.itemborrowed._id,
-          equipment: this.itemborrowed['equipment']._id,
-          quantity: this.itemborrowed.quantity - this.itemborrowed['selectedQty'],
-          condition: this.itemborrowed['selectedCondition'],
-          prevCondition: this.itemborrowed.condition,
-          status: this.itemborrowed['status'],
-          remarks: this.itemborrowed.remarks,
+          _id: this.borrowedItem.itemborrowed._id,
+          equipment: this.borrowedItem.itemborrowed['equipment']._id,
+          quantity: this.borrowedItem.itemborrowed.quantity - this.borrowedItem.itemborrowed['selectedQty'],
+          condition: this.borrowedItem.itemborrowed['selectedCondition'],
+          prevCondition: this.borrowedItem.itemborrowed.condition,
+          status: this.borrowedItem.itemborrowed['status'],
+          remarks: this.borrowedItem.itemborrowed.remarks,
         },
       ];
 
       updates.push(partial_return);
       this.borrowedItemService.changeBorrowStatus.next({
-        borrowedItemId: this.borrowId,
+        borrowedItemId: this.borrowedItem._id,
         items: updates,
         status: status,
       });
     } else {
       let updates: BorrowedItem[] = [
         {
-          _id: this.itemborrowed._id,
-          equipment: this.itemborrowed['equipment']._id,
-          quantity: this.itemborrowed.quantity,
-          condition: this.itemborrowed['selectedCondition'],
-          prevCondition: this.itemborrowed.condition,
+          _id: this.borrowedItem.itemborrowed._id,
+          equipment: this.borrowedItem.itemborrowed['equipment']._id,
+          quantity: this.borrowedItem.itemborrowed.quantity,
+          condition: this.borrowedItem.itemborrowed['selectedCondition'],
+          prevCondition: this.borrowedItem.itemborrowed.condition,
           status: status,
-          remarks: this.itemborrowed.remarks,
+          remarks: this.borrowedItem.itemborrowed.remarks,
         },
       ];
+
       this.borrowedItemService.changeBorrowStatus.next({
-        borrowedItemId: this.borrowId,
+        borrowedItemId: this.borrowedItem._id,
         items: updates,
         status: status,
       });

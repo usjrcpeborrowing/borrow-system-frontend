@@ -86,6 +86,7 @@ export class FacultyBorrowedListComponent implements OnInit {
               items: items,
               status: status,
             };
+            console.log({ data });
             this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
           }
         },
@@ -96,7 +97,6 @@ export class FacultyBorrowedListComponent implements OnInit {
     this.borrowedItems = [];
     this.borrowListService.getBorrowedList(this.borrowedItemFilter, this.pagination).subscribe({
       next: (resp) => {
-        console.log({ resp });
         this.borrowedItems = resp.data;
         this.pagination.length = resp.total;
       },
