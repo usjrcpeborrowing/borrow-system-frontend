@@ -1,7 +1,21 @@
 <div class="scrollable-panel">
-  <div *ngFor="let borrowedItem of borrowedItems">
-    <app-student-borrow-card-panel
-      [borrowedItem]="borrowedItem"
-    ></app-student-borrow-card-panel>
+  <app-no-results *ngIf="!borrowedItems.length; else elseblock">
+  </app-no-results>
+  <ng-template #elseblock>
+    <div *ngFor="let borrowedItem of borrowedItems">
+      <app-borrowed-item-row
+        [borrowedItem]="borrowedItem"
+        (onSelectedEvent)="onSelectedEvent($event)"
+      ></app-borrowed-item-row>
+    </div>
+  </ng-template>
+  <div class="action-wrapper">
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="updateSelectedBorrowedItem('pending_return')"
+    >
+      Return Selected
+    </button>
   </div>
 </div>
