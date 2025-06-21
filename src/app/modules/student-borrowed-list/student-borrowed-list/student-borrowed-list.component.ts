@@ -136,6 +136,8 @@ export class StudentBorrowedListComponent implements OnInit {
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : this.user._id;
     this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
     this.borrowedItemFilter.className = params['className'] ? params['className'] : '';
+    this.pagination.page = params['page'] ? params['page'] : 1;
+    this.pagination.limit = params['limit'] ? params['limit'] : 25;
     this.fetchBorrowedItems();
   }
 }

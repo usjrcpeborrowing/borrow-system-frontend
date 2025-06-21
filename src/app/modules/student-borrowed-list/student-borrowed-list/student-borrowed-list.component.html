@@ -21,8 +21,21 @@
         <app-borrow-item-category></app-borrow-item-category>
       </mat-drawer>
       <mat-drawer-content>
-        <app-student-borrow-card [borrowedItems]="borrowedItems"></app-student-borrow-card>
+        <app-student-borrow-card
+          [borrowedItems]="borrowedItems"
+        ></app-student-borrow-card>
       </mat-drawer-content>
     </mat-drawer-container>
+    <section id="pagination">
+      <mat-paginator
+        [length]="pagination.length"
+        [pageSize]="pagination.limit"
+        [pageIndex]="pagination.page - 1"
+        [pageSizeOptions]="pagination.pageSizeOption"
+        [showFirstLastButtons]="true"
+        (page)="paginate($event)"
+      >
+      </mat-paginator>
+    </section>
   </div>
 </div>
