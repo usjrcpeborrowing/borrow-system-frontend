@@ -9,6 +9,12 @@ import { User } from 'src/app/models/User';
 import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+
+interface DataTapped {
+  borrowedItemId: string;
+  items: any[];
+  status: string;
+}
 @Component({
   selector: 'app-borrowed-list',
   templateUrl: './borrowed-list.component.html',
@@ -60,21 +66,11 @@ export class BorrowedListComponent implements OnInit {
       .pipe(tap((data) => this.data_tapped.push(data)))
       .subscribe({
         next: (resp) => {
-          let borrowedItemId = resp.borrowedItemId;
-          let items = this.data_tapped
-            .filter((data) => data.borrowedItemId == borrowedItemId)
-            .map((x: any) => x.items)
-            .flat(1);
           let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (items.length && ['released', 'returned', 'unreturned'].includes(status) && this.subscribe_counter == this.selected_count) {
-            let items = this.data_tapped.map((x: any) => x.items).flat(1);
-            let data = {
-              borrowedItemId: borrowedItemId,
-              items: items,
-              status: status,
-            };
-            this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          if (['released', 'returned', 'unreturned'].includes(status) && this.subscribe_counter == this.selected_count) {
+            let data = this.borrowListService.mapDataTapped(this.data_tapped);
+            this.updateBorrowedItemStatus(data);
           }
         },
       });
@@ -94,16 +90,12 @@ export class BorrowedListComponent implements OnInit {
     this.openedCategory = !this.openedCategory;
   }
 
-  updateBorrowedItemStatus(items: any[], status: string, id: string) {
-    const body = {
-      items,
-      status,
-    };
-    this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
-      next: (resp) => this.snackbarService.openSnackBar(resp.message, 'OK'),
+  updateBorrowedItemStatus(data: DataTapped[]) {
+    this.borrowListService.updateBorrowedItemStatus(data, '').subscribe({
+      next: (resp) => this.snackbarService.openSnackBar(resp[0].message, 'OK'),
       complete: () => {
-        this.selected_count = 0;
         this.subscribe_counter = 0;
+        this.selected_count = 0;
         this.data_tapped = [];
         this.fetchBorrowedItems();
       },
