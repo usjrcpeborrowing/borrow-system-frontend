@@ -17,6 +17,7 @@ export class BorrowCardComponent implements OnChanges {
         item.itemborrowed.selectedCondition = item.itemborrowed.condition;
         item.itemborrowed.selectedRemarks = item.itemborrowed.remarks;
         item.itemborrowed.selectedDisabled = !['oic approved', 'pending return'].includes(item.itemborrowed.status);
+        item.itemborrowed.selectedDisabled = !(item.purpose == 'class_use' && item.itemborrowed.status == 'faculty confirmed');
       });
     }
   }
