@@ -8,6 +8,12 @@ import { User } from 'src/app/models/User';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PageEvent } from '@angular/material/paginator';
 import { Pagination } from 'src/app/models/Pagination';
+
+interface DataTapped {
+  borrowedItemId: string;
+  items: any[];
+  status: string;
+}
 @Component({
   selector: 'app-oic-borrowed-list',
   templateUrl: './oic-borrowed-list.component.html',
@@ -22,7 +28,7 @@ export class OicBorrowedListComponent implements OnInit {
     borrower: '',
     search: '',
     department: '',
-    className: ''
+    className: '',
   };
   pagination: Pagination = {
     length: 0,
@@ -65,21 +71,11 @@ export class OicBorrowedListComponent implements OnInit {
       )
       .subscribe({
         next: (resp) => {
-          let borrowedItemId = resp.borrowedItemId;
-          let items = this.data_tapped
-            .filter((data) => data.borrowedItemId == borrowedItemId)
-            .map((x: any) => x.items)
-            .flat(1);
           let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (items.length && ['oic_approved', 'oic_rejected'].includes(status) && this.subscribe_counter == this.selected_count) {
-            let items = this.data_tapped.map((x: any) => x.items).flat(1);
-            let data = {
-              borrowedItemId: borrowedItemId,
-              items: items,
-              status: status,
-            };
-            this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          if (!['oic_rejected', 'oic_approved'].includes(status) && this.subscribe_counter == this.selected_count) {
+            let data = this.borrowListService.mapDataTapped(this.data_tapped);
+            this.updateBorrowedItemStatus(data);
           }
         },
       });
@@ -96,19 +92,14 @@ export class OicBorrowedListComponent implements OnInit {
     });
   }
 
-  updateBorrowedItemStatus(items: any[], status: string, id: string) {
-    const body = {
-      items,
-      status,
-    };
-
-    this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
+  updateBorrowedItemStatus(data: DataTapped[]) {
+    this.borrowListService.updateBorrowedItemStatus(data, '').subscribe({
       next: (resp) => {
-        this.snackbarService.openSnackBar(resp.message, 'OK');
+        this.snackbarService.openSnackBar(resp[0].message, 'OK');
       },
       complete: () => {
-        this.selected_count = 0;
         this.subscribe_counter = 0;
+        this.selected_count = 0;
         this.data_tapped = [];
         this.fetchBorrowedItems();
       },
