@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, firstValueFrom, forkJoin, map, Subject, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BorrowedItemFilter } from '../models/BorrowedItemFilter';
 import { Pagination } from '../models/Pagination';
@@ -9,6 +9,12 @@ interface Response {
   data: any[];
   message: string;
   success: boolean;
+}
+
+interface DataTapped {
+  borrowedItemId: string;
+  items: any[];
+  status: string;
 }
 
 @Injectable({
@@ -90,16 +96,34 @@ export class BorrowedItemsService {
     );
   }
 
-  updateBorrowedItemStatus(body: any, id: string) {
+  updateBorrowedItemStatus(body: DataTapped[], id: string) {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
-    return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: headers }).pipe(catchError(this.handleError));
+    return forkJoin(body.map(bd=> {
+      return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + bd.borrowedItemId, bd, { headers: headers }).pipe(catchError(this.handleError))
+    }))
+    // return this.http.patch<any>(environment.API_URL + '/api/borroweditems/' + id, body, { headers: headers }).pipe(catchError(this.handleError));
   }
 
   getBorrowedItemHistory(equipmentId: string) {
     const token = localStorage.getItem('token') as string;
     const headers = { Authorization: token };
     return this.http.get<Response>(environment.API_URL + '/api/borroweditems/getborrowhistory/' + equipmentId, { headers: headers }).pipe(catchError(this.handleError));
+  }
+
+  mapDataTapped(datatapped: DataTapped[]) {
+    let mapped: DataTapped[] = [];
+    for (let tapped of datatapped) {
+      let filtered = datatapped.filter((x) => x.borrowedItemId == tapped.borrowedItemId);
+      let temp: DataTapped = {
+        borrowedItemId: tapped.borrowedItemId,
+        items: filtered.map((x) => x.items).flat(1),
+        status: tapped.status,
+      };
+      mapped.push(temp);
+    }
+
+    return [...new Map(mapped.map((item) => [item['borrowedItemId'], item])).values()];
   }
 
   onChangeBorrowStatus() {

@@ -9,6 +9,12 @@ import { AuthService } from 'src/app/services/auth.service';
 import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 
+interface DataTapped {
+  borrowedItemId: string;
+  items: any[];
+  status: string;
+}
+
 @Component({
   selector: 'app-faculty-borrowed-list',
   templateUrl: './faculty-borrowed-list.component.html',
@@ -60,34 +66,32 @@ export class FacultyBorrowedListComponent implements OnInit {
         tap((data) => {
           this.data_tapped.push(data);
         })
-        // scan<any[], any>((acc, data) => {
-
-        //   acc.push(data);
-        //   if(acc.length > )
-        //   while (acc.length > this.selected_count) {
-        //     acc.shift();
-        //   }
-        //   console.log('after', { acc: acc.length, selected_count: this.selected_count });
-        //   return acc;
-        // }, [])
       )
       .subscribe({
         next: (resp) => {
-          let borrowedItemId = resp.borrowedItemId;
-          let items = this.data_tapped
-            .filter((data) => data.borrowedItemId == borrowedItemId)
-            .map((x: any) => x.items)
-            .flat(1);
+          // let borrowedItemId = resp.borrowedItemId;
+          // let items = this.data_tapped
+          //   .filter((data) => data.borrowedItemId == borrowedItemId)
+          //   .map((x: any) => x.items)
+          //   .flat(1);
+          // let status = resp.status;
+          // this.subscribe_counter = this.subscribe_counter + 1;
+          // if (items.length && status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+          //   let data = {
+          //     borrowedItemId: borrowedItemId,
+          //     items: items,
+          //     status: status,
+          //   };
+          //   this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          // }
+          /**
+           *
+           */
           let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (items.length && status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
-            let data = {
-              borrowedItemId: borrowedItemId,
-              items: items,
-              status: status,
-            };
-            console.log({ data });
-            this.updateBorrowedItemStatus(data.items, data.status, data.borrowedItemId);
+          if (status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+            let data = this.borrowListService.mapDataTapped(this.data_tapped);
+            this.updateBorrowedItemStatus(data);
           }
         },
       });
@@ -104,15 +108,10 @@ export class FacultyBorrowedListComponent implements OnInit {
     });
   }
 
-  updateBorrowedItemStatus(items: any[], status: string, id: string) {
-    const body = {
-      items,
-      status,
-    };
-
-    this.borrowListService.updateBorrowedItemStatus(body, id).subscribe({
+  updateBorrowedItemStatus(data: DataTapped[]) {
+    this.borrowListService.updateBorrowedItemStatus(data, '').subscribe({
       next: (resp) => {
-        this.snackbarService.openSnackBar(resp.message, 'OK');
+        this.snackbarService.openSnackBar(resp[0].message, 'OK');
       },
       complete: () => {
         this.subscribe_counter = 0;
