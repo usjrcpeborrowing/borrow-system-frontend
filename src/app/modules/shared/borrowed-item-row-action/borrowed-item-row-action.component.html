@@ -53,3 +53,12 @@
     Reject
   </button>
 </div>
+<div class="action-btn-wrapper" *ngIf="isStudent && isDisplay">
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="updateBorrow('pending_return')"
+  >
+    Return
+  </button>
+</div>

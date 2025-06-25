@@ -18,6 +18,7 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
 
   isReads: boolean = false;
   isOIC: boolean = false;
+  isStudent: boolean = false;
   isDisplay: boolean = false;
   filteredconditions!: Observable<string[]>;
   conditionControl = new FormControl('');
@@ -48,6 +49,7 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
     if (changes['roles']) {
       this.isReads = this.roles.includes('reads');
       this.isOIC = this.roles.includes('oic');
+      this.isStudent = this.roles.includes('student');
 
       if (this.isOIC) {
         this.isDisplay = ['faculty confirmed', 'pending faculty confirmation'].includes(this.itemborrowed.status);
@@ -55,6 +57,10 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
 
       if (this.isReads) {
         this.isDisplay = ['oic approved', 'pending return', 'faculty confirmed'].includes(this.itemborrowed.status);
+      }
+
+      if (this.isStudent) {
+        this.isDisplay = ['released'].includes(this.itemborrowed.status);
       }
     }
 
