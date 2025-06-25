@@ -16,7 +16,7 @@ export class OicBorrowCardComponent {
         item.itemborrowed.selectedQty = item.itemborrowed.quantity;
         item.itemborrowed.selectedCondition = item.itemborrowed.condition;
         item.itemborrowed.selectedRemarks = item.itemborrowed.remarks;
-        item.itemborrowed.selectedDisabled = !['faculty confirmed'].includes(item.itemborrowed.status)
+        item.itemborrowed.selectedDisabled = !['faculty confirmed', 'pending faculty confirmation'].includes(item.itemborrowed.status);
       });
     }
   }

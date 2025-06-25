@@ -5,7 +5,10 @@
         <mat-panel-title>
           <div class="img-wrapper">
             <img
-              [src]="borrowedItem.itemborrowed.equipment?.images?.thumbnailUrl ?? defaultImage"
+              [src]="
+                borrowedItem.itemborrowed.equipment?.images?.thumbnailUrl ??
+                defaultImage
+              "
               alt="Equipment Image"
             />
           </div>
@@ -37,6 +40,17 @@
           <app-custom-stepper
             [histories]="borrowedItem.history"
           ></app-custom-stepper>
+        </div>
+        <div class="detail-card">
+          <app-borrowed-item-row-action
+            [roles]="user.role"
+            [itemborrowed]="borrowedItem.itemborrowed"
+            (borrowUpdateEvent)="onUpdateBorrowTrigger($event)"
+            (onNoOfItemReturnEvent)="onNoOfItemReturnTrigger($event)"
+            (onRemarkUpdateEvent)="onRemarkUpdateTrigger($event)"
+            (onConditionUpdateEvent)="onConditionUpdateTrigger($event)"
+          >
+          </app-borrowed-item-row-action>
         </div>
       </div>
     </mat-expansion-panel>

@@ -20,6 +20,7 @@ import { ItemUpdateCustomStepperComponent } from './item-update-custom-stepper/i
 import { EquipmentDetailViewDialogComponent } from './equipment-detail-view-dialog/equipment-detail-view-dialog.component';
 import { BorrowRequestDetailComponent } from './borrow-request-detail/borrow-request-detail.component';
 import { BorrowedItemRowComponent } from './borrowed-item-row/borrowed-item-row.component';
+import { BorrowedItemRowActionComponent } from './borrowed-item-row-action/borrowed-item-row-action.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { BorrowedItemRowComponent } from './borrowed-item-row/borrowed-item-row.
     EquipmentDetailViewDialogComponent,
     BorrowRequestDetailComponent,
     BorrowedItemRowComponent,
+    BorrowedItemRowActionComponent,
   ],
   imports: [CommonModule, MaterialModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [

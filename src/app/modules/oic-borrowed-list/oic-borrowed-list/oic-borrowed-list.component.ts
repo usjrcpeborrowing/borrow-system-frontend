@@ -73,7 +73,8 @@ export class OicBorrowedListComponent implements OnInit {
         next: (resp) => {
           let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (!['oic_rejected', 'oic_approved'].includes(status) && this.subscribe_counter == this.selected_count) {
+          if (['oic_rejected', 'oic_approved'].includes(status) && this.subscribe_counter == this.selected_count) {
+            console.log('nice');
             let data = this.borrowListService.mapDataTapped(this.data_tapped);
             this.updateBorrowedItemStatus(data);
           }
