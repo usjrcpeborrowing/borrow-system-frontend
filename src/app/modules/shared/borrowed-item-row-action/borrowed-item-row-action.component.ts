@@ -18,6 +18,7 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
 
   isReads: boolean = false;
   isOIC: boolean = false;
+  isDisplay: boolean = false;
   filteredconditions!: Observable<string[]>;
   conditionControl = new FormControl('');
   conditions: string[] = Constants.equipmentStatus;
@@ -32,6 +33,10 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
     });
   }
 
+  get noItemsReturnValue() {
+    return this.borrowUpdateForm.get('noItemsReturn')?.value;
+  }
+
   ngOnInit(): void {
     this.filteredconditions = this.conditionControl.valueChanges.pipe(
       startWith(''),
@@ -43,6 +48,14 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
     if (changes['roles']) {
       this.isReads = this.roles.includes('reads');
       this.isOIC = this.roles.includes('oic');
+
+      if (this.isOIC) {
+        this.isDisplay = ['faculty confirmed', 'pending faculty confirmation'].includes(this.itemborrowed.status);
+      }
+
+      if (this.isReads) {
+        this.isDisplay = ['oic approved', 'pending return', 'faculty confirmed'].includes(this.itemborrowed.status);
+      }
     }
 
     if (changes['itemborrowed']) {

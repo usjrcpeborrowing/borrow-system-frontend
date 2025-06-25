@@ -1,4 +1,11 @@
 <div class="scrollable-panel">
+  <div class="info-text-wrapper">
+    <mat-icon>info</mat-icon>
+    <p>
+      You can only update items in oic approved, faculty confirmed (class use),
+      and pending return status.
+    </p>
+  </div>
   <app-no-results *ngIf="!borrowedItems.length; else elseblock">
   </app-no-results>
   <ng-template #elseblock>
@@ -10,19 +17,19 @@
     </div>
   </ng-template>
   <div class="action-wrapper">
-      <button
-        mat-raised-button
-        color="accent"
-        (click)="updateSelectedBorrowedItem('released')"
-      >
-        Release Selected
-      </button>
-      <button
-        mat-raised-button
-        color="accent"
-        (click)="updateSelectedBorrowedItem('returned')"
-      >
-        Confirm Returns
-      </button>
-    </div>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="updateSelectedBorrowedItem('released')"
+    >
+      Release Selected
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="updateSelectedBorrowedItem('returned')"
+    >
+      Confirm Returns
+    </button>
+  </div>
 </div>

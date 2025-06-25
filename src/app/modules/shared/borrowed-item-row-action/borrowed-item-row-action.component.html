@@ -2,7 +2,13 @@
   <div class="action-container">
     <mat-form-field>
       <mat-label>No. of items to return</mat-label>
-      <input type="number" matInput formControlName="noItemsReturn" (input)="onItemsReturned()"/>
+      <input
+        type="number"
+        matInput
+        formControlName="noItemsReturn"
+        (input)="onItemsReturned()"
+        [readonly]="noItemsReturnValue == 1 || !isDisplay"
+      />
     </mat-form-field>
     <mat-form-field>
       <mat-label>Condition</mat-label>
@@ -10,6 +16,7 @@
         matInput
         [matAutocomplete]="autocondition"
         formControlName="condition"
+        [readonly]="!isDisplay"
       />
       <mat-autocomplete #autocondition="matAutocomplete">
         <mat-option
@@ -22,15 +29,24 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>Remarks</mat-label>
-      <input matInput formControlName="remarks" />
+      <input matInput formControlName="remarks" [readonly]="!isDisplay" />
     </mat-form-field>
   </div>
 </form>
-<div class="action-btn-wrapper" *ngIf="isReads">
-  <button mat-raised-button color="accent">reads</button>
+<div class="action-btn-wrapper" *ngIf="isReads && isDisplay">
+  <button mat-raised-button color="accent" (click)="updateBorrow('released')">
+    Release
+  </button>
+  <button mat-raised-button color="accent" (click)="updateBorrow('returned')">
+    Confirm Return
+  </button>
 </div>
-<div class="action-btn-wrapper" *ngIf="isOIC">
-  <button mat-raised-button color="accent" (click)="updateBorrow('oic_approved')">
+<div class="action-btn-wrapper" *ngIf="isOIC && isDisplay">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updateBorrow('oic_approved')"
+  >
     Approve
   </button>
   <button mat-raised-button color="warn" (click)="updateBorrow('oic_rejected')">
