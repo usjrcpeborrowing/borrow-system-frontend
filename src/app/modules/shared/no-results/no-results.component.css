@@ -1,5 +1,10 @@
 .wrapper {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  white-space: pre-wrap;
   justify-content: center;
   align-items: center;
   min-height: 300px;

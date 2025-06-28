@@ -1,3 +1,11 @@
 <div class="wrapper">
-    No Results Found
+  <div>{{ message }}</div>
+  <button
+    mat-raised-button
+    color="primary"
+    *ngIf="isDisplay"
+    (click)="navigate()"
+  >
+    View All Requests
+  </button>
 </div>
