@@ -9,6 +9,8 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 export class BorrowCardComponent implements OnChanges {
   @Input() borrowedItems: any[] = [];
   selected_counter: number = 0;
+  noresult_message: string = 'No items to release/return \n  ૮(˶ㅠ︿ㅠ)ა';
+
   constructor(private borrowedItemService: BorrowedItemsService) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['borrowedItems'] && changes['borrowedItems']?.currentValue) {

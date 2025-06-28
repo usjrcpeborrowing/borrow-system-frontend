@@ -10,6 +10,7 @@ export class FacultyBorrowCardComponent implements OnChanges {
   @Input() borrowedItems: any[] = [];
   selected_counter: number = 0;
   borrow_status: string = 'faculty_confirmed';
+  noresult_message: string = 'No pending/searched results \n  ૮(˶ㅠ︿ㅠ)ა';
 
   constructor(private borrowedItemService: BorrowedItemsService) {}
 

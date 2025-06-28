@@ -23,7 +23,7 @@ export class OicBorrowedListComponent implements OnInit {
   openedCategory: boolean = false;
   borrowedItems: any[] = [];
   borrowedItemFilter: BorrowedItemFilter = {
-    status: '',
+    status: [],
     instructor: '',
     borrower: '',
     search: '',
@@ -122,7 +122,7 @@ export class OicBorrowedListComponent implements OnInit {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? '' : '';
-    this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
+    this.borrowedItemFilter.status = params['status'] ? (params['status'] == 'all' ? [] : params['status']) : ['pending_faculty_confirmation', 'faculty_confirmed'];
     this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
     this.borrowedItemFilter.className = params['className'] ? params['className'] : '';
     this.pagination.page = params['page'] ? params['page'] : 1;

@@ -6,7 +6,11 @@
       and pending return status.
     </p>
   </div>
-  <app-no-results *ngIf="!borrowedItems.length; else elseblock">
+  <app-no-results
+    *ngIf="!borrowedItems.length; else elseblock"
+    [message]="noresult_message"
+    [isDisplay]="true"
+  >
   </app-no-results>
   <ng-template #elseblock>
     <div *ngFor="let borrowedItem of borrowedItems">

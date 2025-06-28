@@ -24,7 +24,7 @@ export class BorrowedListComponent implements OnInit {
   openedCategory: boolean = false;
   borrowedItems: any[] = [];
   borrowedItemFilter: BorrowedItemFilter = {
-    status: '',
+    status: [],
     instructor: '',
     borrower: '',
     search: '',
@@ -117,7 +117,7 @@ export class BorrowedListComponent implements OnInit {
     this.borrowedItemFilter.search = params['search'] ? params['search'] : '';
     this.borrowedItemFilter.borrower = params['borrower'] ? params['borrower'] : '';
     this.borrowedItemFilter.instructor = params['instructor'] ? params['instructor'] : '';
-    this.borrowedItemFilter.status = params['status'] ? params['status'] : '';
+    this.borrowedItemFilter.status = params['status'] ? (params['status'] == 'all' ? [] : params['status']) : ['oic_approved', 'faculty_confirmed', 'pending_return'];
     this.borrowedItemFilter.department = params['department'] ? this.user.department[0] : this.user.department[0];
     this.borrowedItemFilter.className = params['className'] ? params['className'] : '';
     this.pagination.page = params['page'] ? params['page'] : 1;

@@ -9,6 +9,8 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 export class StudentBorrowCardComponent {
   @Input() borrowedItems: any[] = [];
   selected_counter: number = 0;
+  noresult_message: string = 'No released/searched results\n  ૮(˶ㅠ︿ㅠ)ა';
+
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {

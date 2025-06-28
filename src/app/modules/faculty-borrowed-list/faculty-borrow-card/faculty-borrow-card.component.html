@@ -6,7 +6,12 @@
     <mat-icon>info</mat-icon>
     <p>You can only update items in pending faculty confirmation status.</p>
   </div>
-  <app-no-results *ngIf="!borrowedItems.length; else elseblock">
+
+  <app-no-results
+    *ngIf="!borrowedItems.length; else elseblock"
+    [message]="noresult_message"
+    [isDisplay]="true"
+  >
   </app-no-results>
   <ng-template #elseblock>
     <div *ngFor="let borrowedItem of borrowedItems">
