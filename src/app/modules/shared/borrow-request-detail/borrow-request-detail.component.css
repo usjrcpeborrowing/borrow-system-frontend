@@ -1,7 +1,14 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
+}
+
+.title {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: 600;
+  padding: 10px 0 20px 0;
 }
 
 .detail-wrapper {
@@ -13,4 +20,5 @@
   font-weight: 600;
   font-size: 11px;
   color: rgb(62, 112, 62);
+  line-height: 1;
 }

@@ -1,34 +1,35 @@
 <div class="container">
+  <div class="title underlined">Details</div>
   <div class="detail-wrapper">
     <div>{{ borrowedItem.borrower.fullName }}</div>
     <div class="subtitle">Borrower</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>{{ borrowedItem.className }}</div>
     <div class="subtitle">Class</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>{{ borrowedItem.startPeriod }}</div>
     <div class="subtitle">Period</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>{{ borrowedItem.purpose }}</div>
     <div class="subtitle">Purpose</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>{{ borrowedItem.instructor.fullName }}</div>
     <div class="subtitle">Instructor</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>{{ borrowedItem.department }}</div>
     <div class="subtitle">Department</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>
       {{ borrowedItem.startDate | date : "mediumDate" }} -{{
@@ -37,7 +38,7 @@
     </div>
     <div class="subtitle">Date of Use</div>
   </div>
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
   <div class="detail-wrapper">
     <div>{{ borrowedItem.dateborrowed | date : "mediumDate" }}</div>
     <div class="subtitle">Date Requested</div>

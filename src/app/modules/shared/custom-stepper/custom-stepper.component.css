@@ -2,6 +2,13 @@
   width: 25%;
 } */
 
+.wrapper-title {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: 600;
+  padding: 10px 0 20px 0;
+}
+
 .step {
   padding: 10px;
   display: flex;
@@ -37,17 +44,17 @@
 
 .step.completed .circle {
   visibility: visible;
-  background-color: rgb(6, 150, 215);
-  border-color: rgb(6, 150, 215);
+  background-color: rgb(62, 112, 62);
+  border-color: rgb(62, 112, 62);
 }
 
 .step.completed .line {
-  border-left: 3px solid rgb(6, 150, 215);
+  border-left: 3px solid rgb(62, 112, 62);
 }
 
 .step.active .circle {
   visibility: visible;
-  border-color: rgb(6, 150, 215);
+  border-color: rgb(62, 112, 62);
 }
 
 .step.empty .circle {
@@ -71,17 +78,17 @@
   display: inline-block;
 }
 
-.content .title  {
+.content .title {
   padding: 2px 0;
   min-width: 110px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   color: rgb(62, 112, 62);
   display: inline-block;
 }
 
 .content .subtitle {
   color: rgba(0, 0, 0, 0.54);
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.2;
 }
