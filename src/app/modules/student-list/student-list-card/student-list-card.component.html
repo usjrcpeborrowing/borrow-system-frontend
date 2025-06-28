@@ -11,12 +11,21 @@
   </div>
   <mat-divider></mat-divider>
   <div class="student-detail-container">
-    <div class="student-detail-wrapper" *ngFor="let student of students">
+    <div
+      class="student-detail-wrapper"
+      *ngFor="let student of students"
+      [class.deactivated]="student.status == 'deactivated'"
+    >
       <div>{{ student.schoolId }}</div>
       <div>{{ student.lastName }}, {{ student.firstName }}</div>
       <div>{{ student.department }}</div>
       <div>{{ student.role }}</div>
-      <div>{{ student.status }}</div>
+      <div
+        [class.s-deactivated]="student.status == 'deactivated'"
+        [class.s-active]="student.status == 'active'"
+      >
+        {{ student.status }}
+      </div>
       <div>
         <mat-checkbox (change)="onCheckBoxChanged($event, student._id)">
         </mat-checkbox>

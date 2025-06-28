@@ -26,6 +26,22 @@
   padding: 10px;
 }
 
+.s-active {
+  text-transform: uppercase;
+  font-weight: 600;
+  /* color: rgb(62, 112, 62);
+   */
+  color: rgb(15, 124, 15);
+}
+.s-deactivated {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.deactivated {
+  color: rgba(0, 0, 0, 0.54);
+}
+
 .action-wrapper {
   display: flex;
   justify-content: flex-end;
