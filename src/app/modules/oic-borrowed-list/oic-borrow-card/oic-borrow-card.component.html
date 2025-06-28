@@ -1,4 +1,11 @@
 <div class="scrollable-panel">
+  <div class="info-text-wrapper">
+    <mat-icon>info</mat-icon>
+    <p>
+      You can update faculty confirmed and override pending faculty confirmation
+      request
+    </p>
+  </div>
   <app-no-results *ngIf="!borrowedItems.length; else elseblock">
   </app-no-results>
   <ng-template #elseblock>

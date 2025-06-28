@@ -2,6 +2,10 @@
   <div class="checkbox-container">
     <!-- <mat-checkbox labelPosition="before">Select All</mat-checkbox> -->
   </div>
+  <div class="info-text-wrapper">
+    <mat-icon>info</mat-icon>
+    <p>You can only update items in pending faculty confirmation status.</p>
+  </div>
   <app-no-results *ngIf="!borrowedItems.length; else elseblock">
   </app-no-results>
   <ng-template #elseblock>

@@ -23,6 +23,19 @@
   gap: 20px;
 }
 
+.info-text-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 10px 0 20px 0;
+  gap: 5px;
+  p {
+    margin: 0;
+    font-style: italic;
+    font-size: 12px;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .scrollable-panel {
     padding: 20px 5px;
