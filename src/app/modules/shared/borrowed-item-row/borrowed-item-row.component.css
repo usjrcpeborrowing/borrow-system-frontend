@@ -69,6 +69,7 @@
 .panel-title-wrapper {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .panel-title-wrapper .classdetail {
@@ -77,6 +78,10 @@
   font-size: 12px;
   gap: 10px;
   color: rgba(0, 0, 0, 0.54);
+}
+
+.qty-header {
+  padding: 10px;
 }
 
 @media screen and (max-width: 480px) {

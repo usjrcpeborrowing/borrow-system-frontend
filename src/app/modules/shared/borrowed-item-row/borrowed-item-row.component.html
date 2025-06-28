@@ -3,6 +3,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
+          <div class="qty-header">{{ borrowedItem.itemborrowed.quantity }}</div>
           <div class="img-wrapper">
             <img
               [src]="
@@ -15,19 +16,20 @@
           <div class="panel-title-wrapper">
             <div>{{ borrowedItem.itemborrowed.equipment.name }}</div>
             <div class="classdetail">
-              <div>{{ borrowedItem.className }}</div>
+              <div>{{ borrowedItem.purpose }}</div>
+              <div>{{ borrowedItem.department | departmentAcronym }}</div>
               <div>{{ borrowedItem.dateborrowed | date : "mediumDate" }}</div>
             </div>
           </div>
         </mat-panel-title>
         <mat-panel-description class="borrowed-item-detail">
           <div>{{ borrowedItem.borrower.fullName }}</div>
-          <div>{{ borrowedItem.itemborrowed.quantity }}</div>
+          <div>{{ borrowedItem.className }}</div>
           <div>{{ borrowedItem.itemborrowed.status }}</div>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="borrowed-item-detail-mobile">
-        <div>{{ borrowedItem.itemborrowed.quantity }}</div>
+        <div>{{ borrowedItem.className }}</div>
         <div>{{ borrowedItem.itemborrowed.status }}</div>
       </div>
       <div class="wrapper">
