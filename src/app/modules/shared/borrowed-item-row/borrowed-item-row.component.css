@@ -21,6 +21,14 @@
   padding: 0 5px;
 }
 
+/* ::ng-deep .mat-expansion-panel-header {
+  height: 100px !important;
+}
+
+::ng-deep .mat-expansion-panel-header .mat-expanded {
+  height: 100px;
+} */
+
 .mat-expansion-panel {
   box-shadow: none;
   /* background-color: rgb(186 205 186); */

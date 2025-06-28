@@ -62,3 +62,13 @@
     Return
   </button>
 </div>
+
+<div class="action-btn-wrapper" *ngIf="isFaculty && !isOIC && isDisplay">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="updateBorrow('faculty_confirmed')"
+  >
+    Confirm
+  </button>
+</div>

@@ -19,6 +19,7 @@ export class FacultyBorrowCardComponent implements OnChanges {
         item.itemborrowed.selectedQty = item.itemborrowed.quantity;
         item.itemborrowed.selectedCondition = item.itemborrowed.condition;
         item.itemborrowed.selectedRemarks = item.itemborrowed.remarks;
+        item.itemborrowed.selectedDisabled = !['pending faculty confirmation'].includes(item.itemborrowed.status);
       });
     }
   }
