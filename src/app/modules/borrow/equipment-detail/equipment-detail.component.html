@@ -1,5 +1,5 @@
-<div class="dialog-detail">
-  <h2 mat-dialog-title>Item Details</h2>
+<!-- <div class="dialog-detail">
+  <h2 mat-dialog-title>Item Detailsss</h2>
   <div mat-dialog-content>
     <div class="item-details-container">
       <div class="image-container">
@@ -78,4 +78,167 @@
   <mat-dialog-actions align="end">
     <button mat-button (click)="dialogRef.close()">Close</button>
   </mat-dialog-actions>
+</div> -->
+
+<!-- <div class="dialog-detail">
+  <h2 mat-dialog-title>Item Details</h2>
+  <div mat-dialog-content>
+    <div class="item-details-container">
+      <div class="image-container">
+        <img
+          class="fit-image"
+          [src]="
+            equipment?.images?.midSizeUrl
+              ? equipment?.images?.midSizeUrl
+              : defaultImage
+          "
+          alt=""
+        />
+      </div>
+      <div class="item-details">
+        <div class="row">
+          <div class="label">Serial No:</div>
+          <div class="detail">{{ equipment.serialNo }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Name:</div>
+          <div class="detail">{{ equipment.name }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Equipment Type:</div>
+          <div class="detail">{{ equipment.equipmentType }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Categories:</div>
+          <div class="detail">{{ equipment.categories }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Model:</div>
+          <div class="detail">{{ equipment.modelNo }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Brand:</div>
+          <div class="detail">{{ equipment.brand }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Matter:</div>
+          <div class="detail">{{ equipment.matter }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Color:</div>
+          <div class="detail">{{ equipment.color }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Inventory Type:</div>
+          <div class="detail">{{ equipment.inventorytype }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Condition:</div>
+          <div class="detail">{{ equipment.condition }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Location:</div>
+          <div class="detail">{{ equipment.location }}</div>
+        </div>
+        <div class="row">
+          <div class="label">Condition:</div>
+          <div class="detail">
+            <span *ngFor="let conditionQty of equipment.conditionAndQuantity">
+              {{ conditionQty.condition }}({{ conditionQty.quantity }}) <br />
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">Total Quantity:</div>
+          <div class="detail">{{ equipment.totalQuantity }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="item-updates-container">
+      <app-item-update-custom-stepper
+        [updates]="updates"
+      ></app-item-update-custom-stepper>
+    </div>
+  </div>
+  <mat-dialog-actions align="end">
+    <button mat-button [mat-dialog-close]="'confirm'" cdkFocusInitial>
+      Confirm
+    </button>
+    <button mat-button>Close</button>
+  </mat-dialog-actions>
+</div> -->
+
+<div class="wrapper">
+  <div class="detail-card">
+    <div class="title underlined">Equipment Details</div>
+    <div class="image-container">
+      <div class="image-wrapper">
+        <img
+          class="fit-image"
+          [src]="itemDetails?.images?.midSizeUrl ?? defaultImage"
+        />
+      </div>
+    </div>
+    <div class="detail-wrapper">
+      <div class="label-wrapper">
+        <div class="subtitle">Name</div>
+        <div class="label">{{ itemDetails.name }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Equipment Type</div>
+        <div class="label">{{ itemDetails.equipmentType }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Categories</div>
+        <div class="label">{{ itemDetails.categories }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Serial No</div>
+        <div class="label">{{ itemDetails.serialNo }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Model</div>
+        <div class="label">{{ itemDetails.modelNo }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Brand</div>
+        <div class="label">{{ itemDetails.brand }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Matter</div>
+        <div class="label">{{ itemDetails.matter }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Color</div>
+        <div class="label">{{ itemDetails.color }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Inventory Type</div>
+        <div class="label">{{ itemDetails.inventorytype }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="label-wrapper">
+        <div class="subtitle">Location</div>
+        <div class="label">{{ itemDetails.location }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div
+        class="label-wrapper"
+        *ngFor="let conditionQty of itemDetails.conditionAndQuantity"
+      >
+        <div class="subtitle">Condtion</div>
+        <div class="label">
+          {{ conditionQty.condition }}  ({{ conditionQty.quantity }})
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

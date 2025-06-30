@@ -1,4 +1,4 @@
-<div class="dialog-container">
+<!-- <div class="dialog-container">
   <h2 mat-dialog-title>Equipment Details ({{ data.item._id }})</h2>
   <form [formGroup]="equipmentForm">
     <mat-dialog-content>
@@ -82,10 +82,6 @@
           <mat-label>Description</mat-label>
           <input matInput formControlName="description" [readonly]="!canEdit" />
         </mat-form-field>
-        <!-- <mat-form-field>
-          <mat-label>Quantity</mat-label>
-          <input matInput formControlName="quantity" [readonly]="!canEdit" />
-        </mat-form-field> -->
         <mat-form-field>
           <mat-label>Unit</mat-label>
           <input matInput formControlName="unit" [readonly]="!canEdit" />
@@ -262,7 +258,6 @@
 
     <mat-dialog-actions align="end">
       <button mat-button mat-dialog-close>Cancel</button>
-      <!-- <button mat-button (click)="canEdit = !canEdit">Enable Edit</button> -->
       <button
         [disabled]="data.action == 'Confirm' && !isOIC"
         mat-button
@@ -273,4 +268,227 @@
       </button>
     </mat-dialog-actions>
   </form>
-</div>
+</div> -->
+<form [formGroup]="equipmentForm">
+  <div class="wrapper">
+    <div class="detail-card">
+      <div class="title underlined">Details</div>
+      <div class="image-container">
+        <div class="image-wrapper">
+          <img class="fit-image" [src]="imageUrl ?? defaultImage" />
+        </div>
+      </div>
+      <div class="detail-wrapper">
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Brand</mat-label>
+          <input
+            matInput
+            formControlName="brand"
+            [matAutocomplete]="autobrands"
+          />
+          <mat-autocomplete #autobrands="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredbrands | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Color</mat-label>
+          <input matInput formControlName="color" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Model No</mat-label>
+          <input matInput formControlName="modelNo" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Unit</mat-label>
+          <input matInput formControlName="unit" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Matter</mat-label>
+          <input
+            matInput
+            formControlName="matter"
+            [matAutocomplete]="automatter"
+          />
+          <mat-autocomplete #automatter="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredmatters | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Department</mat-label>
+          <input
+            matInput
+            formControlName="department"
+            [readonly]="true"
+            [matAutocomplete]="autodepartment"
+          />
+          <mat-autocomplete #autodepartment="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filtereddepartments | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <div class="detail-wrapper">
+        <mat-form-field>
+          <mat-label>Serial No.</mat-label>
+          <input matInput formControlName="serialNo" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Equipment Type</mat-label>
+          <input matInput formControlName="equipmentType" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Category</mat-label>
+          <input
+            matInput
+            formControlName="categories"
+            [matAutocomplete]="autocategories"
+          />
+          <mat-autocomplete #autocategories="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredcategories | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Inventory Type</mat-label>
+          <input
+            matInput
+            formControlName="inventorytype"
+            [matAutocomplete]="autoinventorytype"
+          />
+          <mat-autocomplete #autoinventorytype="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredinventorytypes | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Date Acquired</mat-label>
+          <input
+            matInput
+            [value]="
+              equipmentForm.get('dateAcquired')?.value | date : 'mediumDate'
+            "
+            [readonly]="true"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Location</mat-label>
+          <input
+            matInput
+            formControlName="location"
+            [matAutocomplete]="autoLocations"
+          />
+          <mat-autocomplete #autoLocations="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredlocations | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Checked By</mat-label>
+          <input matInput formControlName="checkedBy" [readonly]="true" />
+        </mat-form-field>
+        <mat-checkbox formControlName="isborrow">
+          Can be borrowed
+        </mat-checkbox>
+      </div>
+
+      <div
+        class="condition-quantity-container"
+        formArrayName="conditionAndQuantity"
+      >
+        <div
+          class="condition-quantity-wrapper"
+          *ngFor="
+            let conditionQty of conditionAndQuantity.controls;
+            let i = index
+          "
+          [formGroupName]="i"
+        >
+          <mat-form-field>
+            <mat-label>Condition</mat-label>
+            <input
+              matInput
+              formControlName="condition"
+              [matAutocomplete]="autocondition"
+            />
+            <mat-autocomplete #autocondition="matAutocomplete">
+              <mat-option
+                *ngFor="let condition of filteredconditions | async"
+                [value]="condition"
+              >
+                {{ condition }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput formControlName="quantity" />
+          </mat-form-field>
+          <div class="action-wrapper">
+            <button
+              type="button"
+              (click)="addConditionAndQuantity()"
+              mat-mini-fab
+              color="primary"
+              aria-label="Add condition and quantity"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+            <button
+              type="button"
+              (click)="removeConditionAndQuantity(i)"
+              mat-mini-fab
+              color="warn"
+              aria-label="Remove condition and quantity"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-wrapper">
+      <button mat-button color="accent" [mat-dialog-close]="'confirm'">
+        Confirm
+      </button>
+      <button mat-button>Close</button>
+    </div>
+  </div>
+</form>

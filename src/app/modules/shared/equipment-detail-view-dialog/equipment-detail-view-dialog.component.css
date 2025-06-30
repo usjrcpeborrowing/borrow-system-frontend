@@ -131,6 +131,7 @@
   flex-direction: column;
 
   .label {
+    text-align: end;
     padding-top: 3px;
   }
 
