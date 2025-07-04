@@ -175,7 +175,11 @@
       <div class="image-wrapper">
         <img
           class="fit-image"
-          [src]="itemDetails?.images?.midSizeUrl ?? defaultImage"
+          [src]="
+            itemDetails?.images?.midSizeUrl
+              ? itemDetails?.images?.midSizeUrl
+              : defaultImage
+          "
         />
       </div>
     </div>

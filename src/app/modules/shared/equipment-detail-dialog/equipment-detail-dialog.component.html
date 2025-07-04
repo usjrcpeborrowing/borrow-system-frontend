@@ -275,7 +275,7 @@
       <div class="title underlined">Update Equipment</div>
       <div class="image-container">
         <div class="image-wrapper">
-          <img class="fit-image" [src]="imageUrl ?? defaultImage" />
+          <img class="fit-image" [src]="imageUrl ? imageUrl : defaultImage" />
         </div>
       </div>
       <div class="detail-wrapper">

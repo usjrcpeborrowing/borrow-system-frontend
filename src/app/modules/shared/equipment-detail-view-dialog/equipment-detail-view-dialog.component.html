@@ -89,11 +89,17 @@
 <div class="wrapper">
   <div class="detail-card">
     <div class="title underlined">Equipment Details</div>
-    <div class="image-wrapper">
-      <img
-        class="fit-image"
-        [src]="equipment?.images?.midSizeUrl ?? defaultImage"
-      />
+    <div class="image-container">
+      <div class="image-wrapper">
+        <img
+          class="fit-image"
+          [src]="
+            equipment?.images?.midSizeUrl
+              ? equipment?.images?.midSizeUrl
+              : defaultImage
+          "
+        />
+      </div>
     </div>
     <div class="detail-wrapper">
       <div class="label-wrapper">
@@ -139,11 +145,6 @@
       <div class="label-wrapper">
         <div class="subtitle">Inventory Type</div>
         <div class="label">{{ equipment.inventorytype }}</div>
-      </div>
-      <mat-divider></mat-divider>
-      <div class="label-wrapper">
-        <div class="subtitle">Condition</div>
-        <div class="label">{{ equipment.condition }}</div>
       </div>
       <mat-divider></mat-divider>
       <div class="label-wrapper">
