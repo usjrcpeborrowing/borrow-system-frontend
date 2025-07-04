@@ -8,7 +8,7 @@ import { BorrowedItemsService } from 'src/app/services/borrowed-item.services';
 export class OicBorrowCardComponent {
   @Input() borrowedItems: any[] = [];
   selected_counter: number = 0;
-  noresult_message: string = 'No pending/searched results \n  ૮(˶ㅠ︿ㅠ)ა';
+  noresult_message: string = 'No pending items to approve/reject\n  ૮(˶ㅠ︿ㅠ)ა';
   constructor(private borrowedItemService: BorrowedItemsService) {}
 
   ngOnChanges(changes: SimpleChanges): void {

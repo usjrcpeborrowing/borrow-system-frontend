@@ -7,8 +7,9 @@
           <div class="img-wrapper">
             <img
               [src]="
-                borrowedItem.itemborrowed.equipment?.images?.thumbnailUrl ??
-                defaultImage
+                borrowedItem.itemborrowed.equipment?.images?.thumbnailUrl
+                  ? borrowedItem.itemborrowed.equipment?.images?.thumbnailUrl
+                  : defaultImage
               "
               alt="Equipment Image"
             />

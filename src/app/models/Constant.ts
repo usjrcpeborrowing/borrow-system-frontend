@@ -3,7 +3,7 @@ export const Constants = {
   equipmentAvailability: ['available', 'borrowed', 'unreturned '],
   equipmentMatterType: ['solid', 'liquid', 'gas '],
   equipmentInventoryType: ['inventory', 'non_inventory'],
-  borrowStatus: ['all', 'requested', 'faculty_confirmed', 'oic_approved', 'oic_rejected', 'released', 'unreturned', 'pending_faculty_confirmation', 'pending_return', 'returned', 'system_reset'],
+  borrowStatus: ['all', 'pending_faculty_confirmation','faculty_confirmed', 'oic_approved', 'oic_rejected', 'released', 'pending_return', 'returned'],
   userRoles: ['student', 'reads', 'oic', 'faculty', 'chairman', 'administrator'],
   departments: [
     'civil_engineering',
