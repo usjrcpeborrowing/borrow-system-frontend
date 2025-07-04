@@ -272,7 +272,7 @@
 <form [formGroup]="equipmentForm">
   <div class="wrapper">
     <div class="detail-card">
-      <div class="title underlined">Details</div>
+      <div class="title underlined">Update Equipment</div>
       <div class="image-container">
         <div class="image-wrapper">
           <img class="fit-image" [src]="imageUrl ?? defaultImage" />
@@ -485,8 +485,12 @@
     </div>
 
     <div class="action-wrapper">
-      <button mat-button color="accent" [mat-dialog-close]="'confirm'">
-        Confirm
+      <button
+        mat-button
+        color="accent"
+        [mat-dialog-close]="equipmentForm.value"
+      >
+        Confirm haha
       </button>
       <button mat-button>Close</button>
     </div>

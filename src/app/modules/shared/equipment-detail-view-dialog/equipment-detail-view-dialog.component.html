@@ -88,7 +88,7 @@
 
 <div class="wrapper">
   <div class="detail-card">
-    <div class="title underlined">Details</div>
+    <div class="title underlined">Equipment Details</div>
     <div class="image-wrapper">
       <img
         class="fit-image"
@@ -96,43 +96,75 @@
       />
     </div>
     <div class="detail-wrapper">
-      <div class="label">{{ equipment.name }}</div>
-      <div class="subtitle">Name</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Name</div>
+        <div class="label">{{ equipment.name }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.equipmentType }}</div>
-      <div class="subtitle">Equipment Type</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Equipment Type</div>
+        <div class="label">{{ equipment.equipmentType }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.categories }}</div>
-      <div class="subtitle">Categories</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Categories</div>
+        <div class="label">{{ equipment.categories }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.serialNo }}</div>
-      <div class="subtitle">Serial No</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Serial No</div>
+        <div class="label">{{ equipment.serialNo }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.modelNo }}</div>
-      <div class="subtitle">Model</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Model</div>
+        <div class="label">{{ equipment.modelNo }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.brand }}</div>
-      <div class="subtitle">Brand</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Brand</div>
+        <div class="label">{{ equipment.brand }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.matter }}</div>
-      <div class="subtitle">Matter</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Matter</div>
+        <div class="label">{{ equipment.matter }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.color }}</div>
-      <div class="subtitle">Color</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Color</div>
+        <div class="label">{{ equipment.color }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.inventorytype }}</div>
-      <div class="subtitle">Inventory Type</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Inventory Type</div>
+        <div class="label">{{ equipment.inventorytype }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.condition }}</div>
-      <div class="subtitle">Condition</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Condition</div>
+        <div class="label">{{ equipment.condition }}</div>
+      </div>
       <mat-divider></mat-divider>
-      <div class="label">{{ equipment.location }}</div>
-      <div class="subtitle">Location</div>
+      <div class="label-wrapper">
+        <div class="subtitle">Location</div>
+        <div class="label">{{ equipment.location }}</div>
+      </div>
+      <mat-divider></mat-divider>
+      <div
+        class="label-wrapper"
+        *ngFor="let conditionQty of equipment.conditionAndQuantity"
+      >
+        <div class="subtitle">Condition</div>
+        <div class="label">
+          {{ conditionQty.condition }} ({{ conditionQty.quantity }})
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="detail-card">
-    <div class="title underlined">History</div>
+    <div class="title underlined">Equipment Changes</div>
     <app-item-update-custom-stepper [updates]="updates">
     </app-item-update-custom-stepper>
   </div>

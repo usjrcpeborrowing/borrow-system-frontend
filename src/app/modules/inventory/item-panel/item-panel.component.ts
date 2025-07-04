@@ -53,7 +53,7 @@ export class ItemPanelComponent implements OnInit {
   // }
 
   viewItemDetails() {
-    this.dialog.open(EquipmentDetailComponent, {
+    this.dialog.open(EquipmentDetailViewDialogComponent, {
       data: this.item,
     });
   }

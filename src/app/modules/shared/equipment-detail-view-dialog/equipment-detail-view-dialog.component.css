@@ -130,17 +130,25 @@
   display: flex;
   flex-direction: column;
 
+  .label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+  }
+
   .label {
     text-align: end;
     padding-top: 3px;
   }
 
   .subtitle {
-    font-weight: 600;
+    /* font-weight: 600;
     font-size: 11px;
     color: rgb(62, 112, 62);
     padding-bottom: 3px;
-    line-height: 1.1;
+    line-height: 1.5; */
+    color: rgba(0, 0, 0, 0.5);
   }
 }
 
