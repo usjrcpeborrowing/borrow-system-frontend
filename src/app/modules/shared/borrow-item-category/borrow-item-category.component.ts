@@ -37,15 +37,14 @@ export class BorrowItemCategoryComponent implements OnInit {
   }
 
   navigate(param: string) {
-    if (this.filterForm.controls[param].value) {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          [param]: this.filterForm.controls[param].value,
-        },
-        queryParamsHandling: 'merge',
-      };
-      this.router.navigate([this.router.url.split('?')[0]], navigationExtras);
-    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        status: 'all',
+        [param]: this.filterForm.controls[param].value,
+      },
+      queryParamsHandling: 'merge',
+    };
+    this.router.navigate([this.router.url.split('?')[0]], navigationExtras);
   }
 
   resetFilters(): void {
