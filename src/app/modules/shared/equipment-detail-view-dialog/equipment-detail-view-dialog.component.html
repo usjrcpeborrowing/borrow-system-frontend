@@ -170,7 +170,7 @@
     </app-item-update-custom-stepper>
   </div>
 
-  <div class="action-wrapper">
+  <div class="action-wrapper" *ngIf="isOIC">
     <button mat-button color="accent" [mat-dialog-close]="'confirm'">
       Confirm
     </button>

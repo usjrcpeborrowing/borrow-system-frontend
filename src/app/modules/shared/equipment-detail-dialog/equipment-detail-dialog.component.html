@@ -277,6 +277,12 @@
         <div class="image-wrapper">
           <img class="fit-image" [src]="imageUrl ? imageUrl : defaultImage" />
         </div>
+        <input
+          type="file"
+          accept="image/*"
+          (change)="loadImageFromFile($event)"
+          [disabled]="!canEdit"
+        />
       </div>
       <div class="detail-wrapper">
         <mat-form-field>
