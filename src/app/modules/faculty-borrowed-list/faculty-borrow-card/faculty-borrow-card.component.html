@@ -26,9 +26,17 @@
       mat-raised-button
       color="accent"
       [disabled]="selected_counter == 0"
-      (click)="updateSelectedBorrowedItem()"
+      (click)="updateSelectedBorrowedItem('faculty_confirmed')"
     >
       Confirm Selected
+    </button>
+    <button
+      mat-raised-button
+      color="warn"
+      [disabled]="selected_counter == 0"
+      (click)="updateSelectedBorrowedItem('faculty_rejected')"
+    >
+      Reject Selected
     </button>
   </div>
 </div>

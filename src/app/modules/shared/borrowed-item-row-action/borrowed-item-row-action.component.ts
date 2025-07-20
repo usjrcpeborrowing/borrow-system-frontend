@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { map, Observable, startWith } from 'rxjs';
 import { Constants } from 'src/app/models/Constant';
 
@@ -21,12 +22,13 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
   isStudent: boolean = false;
   isFaculty: boolean = false;
   isDisplay: boolean = false;
+  url: string = '';
   filteredconditions!: Observable<string[]>;
   conditionControl = new FormControl('');
   conditions: string[] = Constants.equipmentStatus;
   borrowUpdateForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.borrowUpdateForm = this.fb.group({
       noItemsReturn: ['1', Validators.pattern(/^\d+$/)],
       condition: ['functional'],
@@ -52,20 +54,13 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
       this.isOIC = this.roles.includes('oic');
       this.isStudent = this.roles.includes('student');
       this.isFaculty = this.roles.includes('faculty');
-
-      if (this.isOIC) {
+      if (this.isOIC && this.url == '/oic-borrowed-list') {
         this.isDisplay = ['faculty confirmed', 'pending faculty confirmation'].includes(this.itemborrowed.status);
-      }
-
-      if (this.isReads) {
+      } else if (this.isReads && this.url == '/borrowed-list') {
         this.isDisplay = ['oic approved', 'pending return', 'faculty confirmed'].includes(this.itemborrowed.status);
-      }
-
-      if (this.isStudent) {
+      } else if (this.isStudent && this.url == '/student-borrowed-list') {
         this.isDisplay = ['released'].includes(this.itemborrowed.status);
-      }
-
-      if (this.isFaculty) {
+      } else if (this.isFaculty && this.url == '/faculty-borrowed-list') {
         this.isDisplay = ['pending faculty confirmation'].includes(this.itemborrowed.status);
       }
     }

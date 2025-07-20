@@ -34,7 +34,10 @@
     </mat-form-field>
   </div>
 </form>
-<div class="action-btn-wrapper" *ngIf="isReads && isDisplay">
+<div
+  class="action-btn-wrapper"
+  *ngIf="isReads && isDisplay && url == '/borrowed-list'"
+>
   <button mat-raised-button color="accent" (click)="updateBorrow('released')">
     Release
   </button>
@@ -42,7 +45,10 @@
     Confirm Return
   </button>
 </div>
-<div class="action-btn-wrapper" *ngIf="isOIC && isDisplay">
+<div
+  class="action-btn-wrapper"
+  *ngIf="isOIC && isDisplay && url == '/oic-borrowed-list'"
+>
   <button
     mat-raised-button
     color="accent"
@@ -54,7 +60,10 @@
     Reject
   </button>
 </div>
-<div class="action-btn-wrapper" *ngIf="isStudent && isDisplay">
+<div
+  class="action-btn-wrapper"
+  *ngIf="isStudent && isDisplay && url == '/student-borrowed-list'"
+>
   <button
     mat-raised-button
     color="warn"
@@ -64,12 +73,22 @@
   </button>
 </div>
 
-<div class="action-btn-wrapper" *ngIf="isFaculty && !isOIC && isDisplay">
+<div
+  class="action-btn-wrapper"
+  *ngIf="isFaculty && isDisplay && url == '/faculty-borrowed-list'"
+>
   <button
     mat-raised-button
     color="accent"
     (click)="updateBorrow('faculty_confirmed')"
   >
     Confirm
+  </button>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="updateBorrow('faculty_rejected')"
+  >
+    Reject
   </button>
 </div>

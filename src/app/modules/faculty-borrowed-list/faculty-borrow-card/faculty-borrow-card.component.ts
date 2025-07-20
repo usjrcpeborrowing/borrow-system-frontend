@@ -29,7 +29,7 @@ export class FacultyBorrowCardComponent implements OnChanges {
     this.selected_counter = event == true ? this.selected_counter + 1 : this.selected_counter - 1;
   }
 
-  updateSelectedBorrowedItem() {
-    this.borrowedItemService.returnSelectedItemSubject.next(this.borrow_status);
+  updateSelectedBorrowedItem(status: string) {
+    this.borrowedItemService.returnSelectedItemSubject.next(status);
   }
 }

@@ -89,7 +89,7 @@ export class FacultyBorrowedListComponent implements OnInit {
            */
           let status = resp.status;
           this.subscribe_counter = this.subscribe_counter + 1;
-          if (status == 'faculty_confirmed' && this.subscribe_counter == this.selected_count) {
+          if (['faculty_confirmed', 'faculty_rejected'].includes(status) && this.subscribe_counter == this.selected_count) {
             let data = this.borrowListService.mapDataTapped(this.data_tapped);
             this.updateBorrowedItemStatus(data);
           }

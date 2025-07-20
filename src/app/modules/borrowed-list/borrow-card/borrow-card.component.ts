@@ -20,7 +20,7 @@ export class BorrowCardComponent implements OnChanges {
         item.itemborrowed.selectedRemarks = item.itemborrowed.remarks;
         item.itemborrowed.selectedDisabled = !['oic approved', 'pending return'].includes(item.itemborrowed.status);
         if (item.itemborrowed.selectedDisabled) {
-          item.itemborrowed.selectedDisabled = !(item.purpose == 'class_use' && item.itemborrowed.status == 'faculty confirmed');
+          item.itemborrowed.selectedDisabled = !(item.purpose == 'class_use' && ['faculty confirmed', 'oic approved'].includes(item.itemborrowed.status));
         }
       });
     }
