@@ -61,6 +61,6 @@
   <mat-checkbox
     [(ngModel)]="selected"
     [disabled]="borrowedItem.itemborrowed.selectedDisabled"
-    (change)="onCheckBoxChanged($event)"
+    (change)="onCheckBoxChanged($event.checked)"
   ></mat-checkbox>
 </div>

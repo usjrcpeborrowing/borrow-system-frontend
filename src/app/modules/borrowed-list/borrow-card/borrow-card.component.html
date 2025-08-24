@@ -5,6 +5,13 @@
       You can only update items in oic approved, faculty confirmed (class use),
       and pending return status.
     </p>
+    <span class="spacer"></span>
+    <mat-checkbox
+      labelPosition="before"
+      [(ngModel)]="selected_all"
+      (change)="selected_all = $event.checked"
+      >Select All</mat-checkbox
+    >
   </div>
   <app-no-results
     *ngIf="!borrowedItems.length; else elseblock"
@@ -16,6 +23,7 @@
     <div *ngFor="let borrowedItem of borrowedItems">
       <app-borrowed-item-row
         [borrowedItem]="borrowedItem"
+        [selected]="selected_all"
         (onSelectedEvent)="onSelectedEvent($event)"
       ></app-borrowed-item-row>
     </div>

@@ -5,6 +5,13 @@
   <div class="info-text-wrapper">
     <mat-icon>info</mat-icon>
     <p>You can only update items in pending faculty confirmation status.</p>
+    <span class="spacer"></span>
+    <mat-checkbox
+      labelPosition="before"
+      [(ngModel)]="selected_all"
+      (change)="selected_all = $event.checked"
+      >Select All</mat-checkbox
+    >
   </div>
 
   <app-no-results
@@ -17,6 +24,7 @@
     <div *ngFor="let borrowedItem of borrowedItems">
       <app-borrowed-item-row
         [borrowedItem]="borrowedItem"
+        [selected]="selected_all"
         (onSelectedEvent)="onSelectedEvent($event)"
       ></app-borrowed-item-row>
     </div>

@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DepartmentAcronymPipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): unknown {
-    console.log({ value, args: args });
     return value
       .split('_')
       .map((word) => {

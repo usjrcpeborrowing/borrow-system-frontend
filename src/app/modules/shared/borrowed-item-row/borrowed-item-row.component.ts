@@ -25,7 +25,7 @@ interface BorrowedItem {
 export class BorrowedItemRowComponent implements OnInit, OnChanges {
   @Input() borrowedItem: any;
   @Output() onSelectedEvent = new EventEmitter<boolean>();
-  selected: boolean = false;
+  @Input() selected: boolean = false;
   defaultImage: string = '../../../../assets/equipment_default_image_thumbnail.png';
   user: User;
 
@@ -45,11 +45,16 @@ export class BorrowedItemRowComponent implements OnInit, OnChanges {
       });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selected'] && changes['selected'].previousValue !== undefined) {
+      this.selected = this.borrowedItem.itemborrowed.selectedDisabled ? false : this.selected;
+      this.onCheckBoxChanged(this.selected);
+    } 
+  }
 
-  onCheckBoxChanged(event: MatCheckboxChange) {
-    this.borrowedItemService.itemSelectedSubject.next(event.checked);
-    this.onSelectedEvent.emit(event.checked);
+  onCheckBoxChanged(checked: boolean) {
+    this.borrowedItemService.itemSelectedSubject.next(checked);
+    this.onSelectedEvent.emit(checked);
   }
 
   onNoOfItemReturnTrigger(event: number) {

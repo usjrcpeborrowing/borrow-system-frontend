@@ -35,6 +35,8 @@ export class BorrowedItemRowActionComponent implements OnInit, OnChanges {
       remarks: [''],
       status: [''],
     });
+
+    this.url = this.router.url.split('?')[0];
   }
 
   get noItemsReturnValue() {
